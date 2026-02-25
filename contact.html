@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Élevia Nutrition</title>
-  <meta name="description" content="Une question sur nos offres ou sur Cockpit ? Écris-nous. Réponse sous 48 heures ouvrées.">
+  <meta name="description" content="Une question sur nos offres ou sur Cockpit ? Écris-nous. Réponse sous 72 heures ouvrées.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -488,7 +488,7 @@
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+    [data-reveal][data-reveal].revealed { opacity: 1 !important; transform: none !important; }
     [data-reveal-delay="1"] { transition-delay: 0.1s; }
     [data-reveal-delay="2"] { transition-delay: 0.2s; }
     [data-reveal-delay="3"] { transition-delay: 0.3s; }
@@ -582,7 +582,7 @@
       <div class="section-inner" data-reveal>
         <p class="label">Contact</p>
         <h1>Une question ? <em>Écris-nous.</em></h1>
-        <p class="hero-subtitle">Réponse sous 48 heures ouvrées.</p>
+        <p class="hero-subtitle">Réponse sous 72 heures ouvrées.</p>
       </div>
     </section>
 
@@ -642,7 +642,7 @@
             </form>
 
             <div class="form-success" id="formSuccess">
-              <span>✓</span> Message envoyé. On te répond sous 48h.
+              <span>✓</span> Message envoyé. On te répond sous 72h.
             </div>
           </div>
 
@@ -688,7 +688,7 @@
               </div>
               <div class="info-content">
                 <p class="info-label">Délai de réponse</p>
-                <p class="info-value">48 heures ouvrées</p>
+                <p class="info-value">72 heures ouvrées</p>
               </div>
             </div>
 
@@ -743,7 +743,7 @@
             <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="faq-answer">
-            <div class="faq-answer-inner">Chaque plan est calculé individuellement par un diététicien diplômé, basé en Belgique. Tes cibles, tes équivalences, tes conseils — tout est adapté à ton profil, tes objectifs et tes contraintes. Ce n'est pas un plan générique copié-collé d'un client à l'autre.</div>
+            <div class="faq-answer-inner">Chaque plan est calculé individuellement par un diététicien diplômé, basé en Belgique. Tes cibles, tes équivalences, tes conseils — tout est adapté à ton profil, tes objectifs et tes contraintes. Je construis chaque plan avec soin, à partir de ton profil. Mon objectif : que ça marche vraiment pour toi.</div>
           </div>
         </div>
       </div>
@@ -752,9 +752,9 @@
     <!-- CTA FINAL -->
     <section class="cta-section">
       <div class="section-inner">
-        <h2 data-reveal>Prêt à transformer ta <em>nutrition</em> ?</h2>
+        <h2 data-reveal>Une question ou envie de se lancer ?</h2>
         <p class="cta-subtitle" data-reveal data-reveal-delay="1">
-          Construit par un diététicien <span>·</span> Livré sous 72h <span>·</span> Résultats durables
+          Je suis là pour répondre <span>·</span> Réponse sous 72h <span>·</span> Sans engagement
         </p>
         <a href="/offre.html" class="btn-cta" data-reveal data-reveal-delay="2">
           Recevoir mon plan en 72h <span class="arrow">→</span>
@@ -806,7 +806,13 @@
     // ── Reveal animations ──
     const revealEls = document.querySelectorAll('[data-reveal]');
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const revealObserver = new IntersectionObserver((entries) => {
+    /* Viewport reveal fix */
+  document.querySelectorAll('[data-reveal]').forEach(function(el){
+    var r=el.getBoundingClientRect();
+    if(r.top < window.innerHeight * 0.98) el.classList.add('revealed');
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
