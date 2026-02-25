@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Élevia — La nutrition qui te ressemble</title>
 <meta name="description" content="Plans nutritionnels sur mesure par un diététicien diplômé. Système d'équivalences alimentaires + app compagnon. Résultats durables dès 89€.">
+<link rel="canonical" href="https://elevia.be/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Élevia — La nutrition qui te ressemble">
+<meta property="og:description" content="Plans nutritionnels sur mesure par un diététicien diplômé. Système d'équivalences alimentaires + app compagnon. Résultats durables dès 89€.">
+<meta property="og:url" content="https://elevia.be/">
+<meta property="og:image" content="https://elevia.be/og-image.jpg">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Élevia Nutrition">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Élevia — La nutrition qui te ressemble">
+<meta name="twitter:description" content="Plans nutritionnels sur mesure par un diététicien diplômé. Résultats durables dès 89€.">
+<meta name="twitter:image" content="https://elevia.be/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -30,13 +47,13 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .header-logo { width: 140px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
 .header-logo:hover { opacity: 1; }
 .header-nav { display: flex; align-items: center; gap: 2.4rem; }
-.header-nav a { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; color: var(--cream); text-decoration: none; opacity: 0.65; transition: opacity 0.3s, color 0.3s; position: relative; }
+.header-nav a { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; color: var(--cream); text-decoration: none; opacity: 0.75; transition: opacity 0.3s, color 0.3s; position: relative; }
 .header-nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
 .header-nav a:hover { opacity: 1; }
 .header-nav a:hover::after { width: 100%; }
 .header-cta { font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.6rem 1.6rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; white-space: nowrap; }
 .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(198, 160, 91, 0.25); }
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; z-index: 1002; background: none; border: none; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 12px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; z-index: 1002; background: none; border: none; }
 .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--cream); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
 .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
@@ -48,28 +65,29 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .mobile-nav .header-cta { font-family: var(--sans); font-size: 0.8rem; padding: 0.8rem 2rem; margin-top: 1rem; }
 
 /* ===== LINES ===== */
-.anim-line { position: absolute; width: 1px; height: 60px; background: linear-gradient(to top, transparent, rgba(198, 160, 91, 0.4), transparent); animation: moveUp 6s linear infinite; }
-@keyframes moveUp { 0% { top: 100%; } 100% { top: -80px; } }
+.anim-line { position: absolute; width: 1px; height: 60px; top: 0; background: linear-gradient(to top, transparent, rgba(198, 160, 91, 0.4), transparent); animation: moveUp 6s linear infinite; will-change: transform; }
+@keyframes moveUp { 0% { transform: translateY(100vh); } 100% { transform: translateY(-80px); } }
 
 /* ===== HERO ===== */
-.hero { position: relative; height: 100vh; min-height: 600px; background: var(--navy); overflow: hidden; }
+.hero { position: relative; height: 100dvh; min-height: 600px; background: var(--navy); overflow: hidden; }
 .hero-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; text-align: center; padding: 0 2rem; width: 100%; }
 .hero-tagline { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.8rem); font-weight: 300; color: var(--cream); letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
 .hero-tagline em { font-style: italic; color: var(--gold); }
 .hero-sub { font-family: var(--sans); font-size: clamp(0.85rem, 1.6vw, 1.05rem); font-weight: 300; color: var(--text-soft); letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
 .hero-sub span { margin: 0 0.8em; opacity: 0.4; }
-.hero-scroll { position: absolute; bottom: 2.5rem; left: 0; right: 0; margin: 0 auto; width: fit-content; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards; }
-.hero-scroll-text { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-soft); opacity: 0.5; }
+.hero-scroll { position: absolute; bottom: 2.5rem; left: 0; right: 0; margin: 0 auto; width: fit-content; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards; text-decoration: none; }
+.hero-scroll-text { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-soft); opacity: 0.6; }
 .hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
 @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
 
 /* ===== WORD SECTIONS ===== */
-.word-section { height: 80vh; display: flex; align-items: center; justify-content: center; background: var(--navy); position: relative; overflow: hidden; }
-.scroll-word { font-family: var(--serif); font-size: clamp(3.5rem, 10vw, 9rem); font-weight: 300; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; position: relative; z-index: 5; opacity: 0; transform: translateY(50px) scale(0.96); }
-.scroll-word.revealed { opacity: 1; transform: translateY(0) scale(1); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.word-section { height: 60vh; display: flex; align-items: center; justify-content: center; background: var(--navy); position: relative; overflow: hidden; }
+.scroll-word { font-family: var(--serif); font-size: clamp(3.5rem, 10vw, 9rem); font-weight: 300; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; position: relative; z-index: 5; opacity: 0; transform: translateY(50px) scale(0.96); clip-path: inset(0 100% 0 0); }
+.scroll-word.revealed { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(0 0% 0 0); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), clip-path 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s; }
 .scroll-word .dot { color: var(--gold); }
 
-.divider-gold { height: 1px; background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); opacity: 0.2; }
+.divider-gold { height: 1px; background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); opacity: 0.2; transform: scaleX(0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.divider-gold.revealed { transform: scaleX(1); }
 
 /* ===== SECTIONS ===== */
 .section-inner { max-width: 960px; margin: 0 auto; }
@@ -77,7 +95,8 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .section-label.revealed { opacity: 1; transform: none; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 .section-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 400; color: var(--text-dark); line-height: 1.2; margin-bottom: 2rem; opacity: 0; transform: translateY(30px); }
 .section-headline.revealed { opacity: 1; transform: none; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s; }
-.section-headline em { font-style: italic; color: var(--gold); }
+.section-headline em { font-style: italic; color: var(--gold); background: linear-gradient(90deg, rgba(198,160,91,0.18) 50%, transparent 50%); background-size: 200% 100%; background-position: 100% 0; transition: background-position 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s; padding: 0 0.08em; }
+.section-headline.revealed em { background-position: 0% 0; }
 .section-body { font-family: var(--sans); font-size: clamp(1rem, 1.8vw, 1.15rem); font-weight: 300; color: var(--text-muted); line-height: 1.8; max-width: 640px; opacity: 0; transform: translateY(25px); }
 .section-body.revealed { opacity: 1; transform: none; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s; }
 
@@ -114,7 +133,9 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .proof-desc { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0.05em; }
 .proof-line { width: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 3rem auto 2.5rem; opacity: 0.3; }
 .proof-line.revealed { width: 200px; transition: width 0.8s ease-in-out 0.4s; }
-.proof-badge { text-align: center; font-family: var(--sans); font-size: 0.72rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0.1em; opacity: 0; transform: translateY(15px); }
+.proof-handshake { display: block; width: 36px; height: 36px; margin: 0 auto 0.8rem; color: var(--gold); opacity: 0; transform: translateY(15px); }
+.proof-handshake.revealed { opacity: 0.45; transform: none; transition: all 0.7s ease 0.4s; }
+.proof-badge { text-align: center; font-family: var(--serif); font-style: italic; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0.02em; opacity: 0; transform: translateY(15px); }
 .proof-badge.revealed { opacity: 0.7; transform: none; transition: all 0.7s ease 0.6s; }
 
 /* ===== APP ===== */
@@ -147,7 +168,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .plan-visual:nth-child(1) .plan-inner { background: linear-gradient(160deg, #0E1E2E 0%, #1A3350 50%, #0E1E2E 100%); }
 .plan-visual:nth-child(2) .plan-inner { background: linear-gradient(160deg, var(--cream) 0%, var(--cream-dark) 100%); }
 .plan-visual:nth-child(3) .plan-inner { background: linear-gradient(160deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%); }
-.plan-badge { font-family: var(--sans); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(198,160,91,0.3); border-radius: 20px; padding: 0.3em 1em; display: inline-block; width: fit-content; }
+.plan-badge { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(198,160,91,0.3); border-radius: 20px; padding: 0.3em 1em; display: inline-block; width: fit-content; }
 .plan-visual:nth-child(2) .plan-badge { color: var(--navy); border-color: rgba(14,30,46,0.2); }
 .plan-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--cream); margin-top: auto; line-height: 1.3; }
 .plan-visual:nth-child(2) .plan-title { color: var(--navy); }
@@ -167,7 +188,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .pricing-teaser-card:hover { border-color: var(--gold-pale); box-shadow: 0 8px 40px rgba(198,160,91,0.1); transform: translateY(-3px); }
 .pricing-teaser-card.recommended { border-color: rgba(198,160,91,0.3); box-shadow: 0 4px 30px rgba(198,160,91,0.08); }
 .pricing-teaser-card.recommended::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-.pricing-rec-badge { font-family: var(--sans); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+.pricing-rec-badge { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
 .pricing-teaser-name { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.5rem; }
 .pricing-teaser-price { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 300; color: var(--text-dark); margin-bottom: 0.3rem; }
 .pricing-teaser-price .currency { font-size: 0.5em; vertical-align: super; color: var(--text-muted); margin-left: 0.15em; }
@@ -197,7 +218,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .cta-btn-arrow { font-size: 1.1rem; transition: transform 0.3s; }
 .cta-btn:hover .cta-btn-arrow { transform: translateX(4px); }
 .cta-trust { margin-top: 2rem; font-size: 0.78rem; color: var(--text-muted); opacity: 0; transform: translateY(15px); }
-.cta-trust.revealed { opacity: 0.6; transform: none; transition: all 0.7s ease 0.5s; }
+.cta-trust.revealed { opacity: 0.7; transform: none; transition: all 0.7s ease 0.5s; }
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 1px solid rgba(198,160,91,0.08); }
@@ -205,7 +226,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--text-soft); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
 .footer-links a:hover { color: var(--gold); }
-.footer-copy { font-size: 0.72rem; color: var(--text-soft); opacity: 0.4; }
+.footer-copy { font-size: 0.75rem; color: var(--text-soft); opacity: 0.5; }
 
 /* ===== STICKY CTA MOBILE ===== */
 .sticky-cta-mobile { display: none; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999; padding: 0.8rem 1.2rem; padding-bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px)); background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid rgba(198, 160, 91, 0.12); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -213,11 +234,31 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 .sticky-cta-mobile a { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 0.85rem; background: var(--gold); color: var(--navy); font-family: var(--sans); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 60px; transition: background 0.3s; }
 .sticky-cta-mobile a:hover { background: var(--gold-light); }
 
+/* ===== SEPARATOR ===== */
+.separator-wrap { background: var(--cream); padding: 0 clamp(1.5rem, 5vw, 4rem); }
+.separator-line { max-width: 960px; margin: 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); opacity: 0.15; transform: scaleX(0); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.separator-line.revealed { transform: scaleX(1); }
+.section-cta-inner { position: relative; z-index: 1; }
+
+/* ===== SKIP LINK ===== */
+.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+.skip-link:focus { top: 0; }
+
+/* ===== FOCUS STYLES ===== */
+*:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.header-cta:focus-visible, .cta-btn:focus-visible { outline-offset: 4px; }
+.hamburger:focus-visible { outline-offset: 2px; border-radius: 8px; }
+
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 .grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 10000; }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .method-grid { grid-template-columns: 1fr; }
+  .pricing-teaser-grid { grid-template-columns: 1fr 1fr; max-width: 600px; }
+  .pricing-teaser-card:nth-child(3) { grid-column: 1 / -1; max-width: 340px; margin: 0 auto; }
+}
 @media (max-width: 768px) {
   .section-headline { font-size: clamp(1.65rem, 4.5vw, 3.8rem); }
   .method-grid { grid-template-columns: 1fr; }
@@ -233,17 +274,43 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .sticky-cta-mobile { display: block; }
   .site-header { height: 60px; }
   .header-logo { width: 110px; }
+  .footer-links { gap: 1rem; }
+  .footer-links a { padding: 0.4rem 0.2rem; }
+  main { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  .pricing-teaser-grid { grid-template-columns: 1fr; max-width: 340px; }
+  .pricing-teaser-card:nth-child(3) { max-width: none; }
 }
 @media (max-width: 480px) {
   .proof-grid { gap: 2rem; }
   .proof-number { font-size: 2.4rem; }
 }
 
+/* ===== EFFECT 7: Shimmer on recommended card ===== */
+@keyframes shimmerLine { 0%, 80% { left: -80%; } 95%, 100% { left: 120%; } }
+.pricing-teaser-card.recommended::after { content: ''; position: absolute; top: 0; left: -80%; width: 60%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); animation: shimmerLine 8s ease-in-out infinite; pointer-events: none; z-index: 1; }
+
+/* ===== EFFECT 8: Ambient gradient drift ===== */
+@keyframes ambientDrift { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(12px, -8px); } 66% { transform: translate(-10px, 10px); } }
+.section-cta::before { animation: ambientDrift 20s ease-in-out infinite; }
+.section-problem::before { animation: ambientDrift 22s ease-in-out infinite reverse; }
+
+/* ===== EFFECT 10: Proof number pulse ===== */
+@keyframes proofPulse { 0% { transform: scale(1.06); } 100% { transform: scale(1); } }
+.proof-number.pulse-done { animation: proofPulse 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ===== EFFECT 4: Gold halo on card hover ===== */
+.method-card, .app-feature { position: relative; }
+.method-card::after, .app-feature::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(198,160,91,0.07), transparent 60%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.method-card:hover::after, .app-feature:hover::after { opacity: 1; }
+.pricing-teaser-card:not(.recommended) { position: relative; }
+.pricing-teaser-card:not(.recommended)::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(198,160,91,0.07), transparent 60%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.pricing-teaser-card:not(.recommended):hover::after { opacity: 1; }
+
 /* ===== PREFERS REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .hero-tagline, .hero-sub, .hero-scroll { opacity: 1; transform: none; }
-  .scroll-word { opacity: 1; transform: none; }
+  .scroll-word { opacity: 1; transform: none; clip-path: none; }
   .section-label, .section-headline, .section-body { opacity: 1; transform: none; }
   .method-card, .app-feature, .plan-visual, .pricing-teaser-card { opacity: 1; transform: none; }
   .cta-headline, .cta-sub, .cta-btn, .cta-trust { opacity: 1; transform: none; }
@@ -251,10 +318,49 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .proof-line { width: 200px; }
   .pricing-teaser-link { opacity: 1; transform: none; }
   .pricing-teaser-note { opacity: 0.7; transform: none; }
+  .divider-gold, .separator-line { transform: scaleX(1); }
+  .section-headline em { background-position: 0% 0; }
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Élevia Nutrition",
+  "description": "Plans nutritionnels sur mesure par un diététicien diplômé. Système d'équivalences alimentaires + application compagnon.",
+  "url": "https://elevia.be",
+  "areaServed": "BE",
+  "serviceType": "Diététique et nutrition personnalisée",
+  "priceRange": "89€ - 229€",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Plans nutritionnels",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Plan seul",
+        "price": "89",
+        "priceCurrency": "EUR"
+      },
+      {
+        "@type": "Offer",
+        "name": "Plan + Cockpit 6 mois",
+        "price": "169",
+        "priceCurrency": "EUR"
+      },
+      {
+        "@type": "Offer",
+        "name": "Plan + Cockpit 12 mois",
+        "price": "229",
+        "priceCurrency": "EUR"
+      }
+    ]
+  }
+}
+</script>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="grain"></div>
 
@@ -271,19 +377,21 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <a href="/offre.html">Offre</a>
     <a href="/cockpit.html">Cockpit</a>
     <a href="/apropos.html">À propos</a>
+    <a href="/contact.html">Contact</a>
     <a href="/offre.html" class="header-cta">Recevoir mon plan en 72h</a>
   </nav>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
-<nav class="mobile-nav" id="mobileNav">
+<nav class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu de navigation">
   <a href="/systeme.html" data-nav>Le Système</a>
   <a href="/offre.html" data-nav>Offre</a>
   <a href="/cockpit.html" data-nav>Cockpit</a>
   <a href="/apropos.html" data-nav>À propos</a>
+  <a href="/contact.html" data-nav>Contact</a>
   <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
 
-<main>
+<main id="main-content">
 
 <!-- HERO -->
 <section class="hero">
@@ -300,20 +408,21 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <h1 class="hero-tagline">La nutrition qui <em>te</em> ressemble</h1>
     <p class="hero-sub">Plans sur mesure <span>·</span> Suivi intelligent <span>·</span> Résultats durables</p>
   </div>
-  <div class="hero-scroll"><span class="hero-scroll-text">Découvrir</span><div class="hero-scroll-line"></div></div>
+  <a href="#constat" class="hero-scroll"><span class="hero-scroll-text">Découvrir</span><div class="hero-scroll-line"></div></a>
 </section>
 
 <!-- SCROLL WORDS -->
-<div class="word-section"><div class="anim-line" style="left:15%;animation-delay:0s"></div><div class="anim-line" style="left:35%;animation-delay:-2s"></div><div class="anim-line" style="left:55%;animation-delay:-4s"></div><div class="anim-line" style="left:75%;animation-delay:-1s"></div><div class="anim-line" style="left:90%;animation-delay:-3s"></div><div class="scroll-word" data-reveal>Structure<span class="dot">.</span></div></div>
+<div class="word-section" id="constat"><div class="anim-line" style="left:15%;animation-delay:0s"></div><div class="anim-line" style="left:35%;animation-delay:-2s"></div><div class="anim-line" style="left:55%;animation-delay:-4s"></div><div class="anim-line" style="left:75%;animation-delay:-1s"></div><div class="anim-line" style="left:90%;animation-delay:-3s"></div><div class="scroll-word" data-reveal>Structure<span class="dot">.</span></div></div>
 <div class="word-section"><div class="anim-line" style="left:12%;animation-delay:-2s"></div><div class="anim-line" style="left:32%;animation-delay:-4s"></div><div class="anim-line" style="left:48%;animation-delay:0s"></div><div class="anim-line" style="left:68%;animation-delay:-3s"></div><div class="anim-line" style="left:88%;animation-delay:-1s"></div><div class="scroll-word" data-reveal>Liberté<span class="dot">.</span></div></div>
 <div class="word-section"><div class="anim-line" style="left:8%;animation-delay:-1s"></div><div class="anim-line" style="left:25%;animation-delay:-3s"></div><div class="anim-line" style="left:45%;animation-delay:-5s"></div><div class="anim-line" style="left:65%;animation-delay:-2s"></div><div class="anim-line" style="left:82%;animation-delay:-4s"></div><div class="scroll-word" data-reveal>Résultats<span class="dot">.</span></div></div>
-<div class="divider-gold"></div>
+<div class="divider-gold" data-reveal></div>
 
 <!-- PROBLEM -->
 <section class="section-problem"><div class="section-inner">
   <p class="section-label" data-reveal>Le constat</p>
   <h2 class="section-headline" data-reveal>Les plans génériques <em>échouent</em>.<br>Toujours.</h2>
-  <p class="section-body" data-reveal>Copier un plan trouvé en ligne, suivre des portions standards, appliquer des conseils sans contexte — ça ne fonctionne pas. Que tu veuilles perdre du poids, prendre du muscle, mieux manger ou adapter ton alimentation (végé, sans lactose, sans gluten), ton métabolisme, ton quotidien et tes objectifs ne sont pas ceux de quelqu'un d'autre. Tu mérites un plan conçu <strong>pour toi</strong>, par un professionnel qui comprend ta réalité.</p>
+  <p class="section-body" data-reveal>Copier un plan trouvé en ligne, suivre des portions standards, appliquer des conseils sans contexte — ça ne fonctionne pas.</p>
+  <p class="section-body" data-reveal style="margin-top: 1.2rem;">Que tu veuilles perdre du poids, prendre du muscle ou mieux manger, ton métabolisme, ton quotidien et tes objectifs ne sont pas ceux de quelqu'un d'autre. Tu mérites un plan conçu <strong>pour toi</strong>, par un professionnel qui comprend ta réalité.</p>
 </div></section>
 
 <!-- METHOD -->
@@ -337,17 +446,28 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="proof-item" data-reveal><div class="proof-number">Diplômé<span class="gold">.</span></div><p class="proof-desc">Diététicien diplômé</p></div>
   </div>
   <div class="proof-line" data-reveal></div>
-  <p class="proof-badge" data-reveal>Créé par un diététicien diplômé en Belgique</p>
+  <svg class="proof-handshake" data-reveal viewBox="-0.15 -0.15 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="m14.318750000000001 8.146875 -3.521425 1.1573499999999999a1.1721625 1.1721625 0 0 1 -0.88875 -2.1616375000000003l3.4118125000000004 -1.7054125000000002A2.3966625 2.3966625 0 0 1 15.207500000000001 5.3325000000000005l5.03625 1.8268750000000002v6.9125000000000005l-5.930925 1.1267375000000002" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+    <path d="M3.4562500000000003 14.071875H5.925000000000001l3.545125 3.9737a1.3538625 1.3538625 0 0 0 2.379875 -0.8838125000000001v-0.6211375l0.1767625 0.0711A1.6718375 1.6718375 0 0 0 14.318750000000001 15.059375000000001h0.49375a1.4812500000000002 1.4812500000000002 0 0 0 1.185 -2.37L12.8375 8.640625" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+    <path d="m10.4201 6.8818875 -0.361425 -0.29625a2.1172000000000004 2.1172000000000004 0 0 0 -2.0441249999999997 -0.2656375L3.4562500000000003 8.146875" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+    <path d="M0.49375 6.171875h1.975a0.9875 0.9875 0 0 1 0.9875 0.9875v6.9125000000000005a0.9875 0.9875 0 0 1 -0.9875 0.9875h-1.975" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+    <path d="M23.20625 15.059375000000001h-1.975a0.9875 0.9875 0 0 1 -0.9875 -0.9875v-6.9125000000000005a0.9875 0.9875 0 0 1 0.9875 -0.9875h1.975" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+    <path d="m11.850000000000001 16.540625000000002 -0.9875 -0.9875" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+    <path d="m12.8375 13.578125 1.4812500000000002 1.4812500000000002" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"/>
+  </svg>
+  <p class="proof-badge" data-reveal>« Ce qui est simple à suivre a demandé le plus de rigueur à concevoir. »</p>
 </div></section>
 
 <!-- SEPARATOR -->
-<div style="background:var(--cream);padding:0 clamp(1.5rem,5vw,4rem)"><div style="max-width:960px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold) 70%,transparent);opacity:0.15"></div></div>
+<div class="separator-wrap"><div class="separator-line" data-reveal></div></div>
 
 <!-- APP -->
 <section class="section-app" id="cockpit"><div class="section-inner">
   <p class="section-label" data-reveal>L'application</p>
   <h2 class="section-headline" data-reveal>Ton plan <em>prend vie</em>.</h2>
-  <p class="section-body" data-reveal>L'app Élevia transforme ton plan en compagnon quotidien. Suivi en quelques secondes, feedback intelligent, conseils personnalisés — tout ce qu'il faut pour rester sur la bonne voie.</p>
+  <p class="section-body" data-reveal>L'app Élevia transforme ton plan en compagnon quotidien.</p>
+  <div class="divider-gold" style="max-width:60px;margin:2rem 0;opacity:0.4" data-reveal></div>
+  <p class="section-body" data-reveal>Suivi en quelques secondes, feedback intelligent, conseils personnalisés — tout ce qu'il faut pour rester sur la bonne voie.</p>
   <div class="app-features">
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div class="feature-text"><h4>Suivi en un tap</h4><p>Logge tes repas avec des unités naturelles : tranches, cuillères, fruits. Pas de pesée, pas de calculs.</p></div></div>
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feature-text"><h4>Feedback intelligent</h4><p>L'app te guide sans te juger. Alertes bienveillantes, bilans hebdomadaires, conseils liés à tes habitudes réelles.</p></div></div>
@@ -395,7 +515,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 </div></section>
 
 <!-- CTA -->
-<section class="section-cta"><div class="section-inner" style="position:relative;z-index:1">
+<section class="section-cta"><div class="section-inner section-cta-inner">
   <h2 class="cta-headline" data-reveal>Prêt à transformer<br>ta <em>nutrition</em> ?</h2>
   <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure · Accompagnement continu</p>
   <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
@@ -406,7 +526,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 
 <!-- FOOTER -->
 <footer>
-  <svg class="footer-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g><g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g></svg>
+  <svg class="footer-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g><g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g></svg>
   <div class="footer-links"><a href="/systeme.html">Le Système</a><a href="/offre.html">Offre</a><a href="/articles.html">Articles</a><a href="/contact.html">Contact</a><a href="/mentions-legales.html">Mentions légales</a><a href="/confidentialite.html">Politique de confidentialité</a></div>
   <p class="footer-copy">© 2026 Élevia Nutrition. Tous droits réservés.</p>
 </footer>
@@ -415,16 +535,29 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <div class="sticky-cta-mobile" id="stickyCta"><a href="/offre.html">Recevoir mon plan en 72h <span>→</span></a></div>
 
 <script>
-const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');if(x.target.hasAttribute('data-countup')){const n=x.target.querySelector('[data-target]');if(n){const t=parseInt(n.dataset.target);n.textContent='0';const d=1200,s=performance.now();const a=now=>{const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);n.textContent=Math.round(t*ease);if(p<1)requestAnimationFrame(a)};requestAnimationFrame(a)}}ro.unobserve(x.target)}})},{threshold:0.2});
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');if(x.target.hasAttribute('data-countup')){const n=x.target.querySelector('[data-target]');if(n){const t=parseInt(n.dataset.target);n.textContent='0';const d=1200,s=performance.now();const pn=x.target.querySelector('.proof-number');const a=now=>{const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);n.textContent=Math.round(t*ease);if(p<1)requestAnimationFrame(a);else if(pn)pn.classList.add('pulse-done')};requestAnimationFrame(a)}}ro.unobserve(x.target)}})},{threshold:0.2});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
 window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
 const header=document.getElementById('siteHeader');
 window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>80)},{passive:true});
 const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');mobileNav.classList.toggle('open');document.body.style.overflow=mobileNav.classList.contains('open')?'hidden':''});
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');mobileNav.classList.toggle('open');const isOpen=mobileNav.classList.contains('open');document.body.style.overflow=isOpen?'hidden':'';hamburger.setAttribute('aria-expanded',isOpen)});
 document.querySelectorAll('[data-nav]').forEach(a=>{a.addEventListener('click',()=>{hamburger.classList.remove('active');mobileNav.classList.remove('open');document.body.style.overflow=''})});
 const stickyCta=document.getElementById('stickyCta');
 if(stickyCta){let prev=0;const th=window.innerHeight*0.6;window.addEventListener('scroll',()=>{const c=window.scrollY;if(c>th&&c>prev)stickyCta.classList.add('visible');else if(c<prev)stickyCta.classList.remove('visible');if(c<th)stickyCta.classList.remove('visible');prev=c},{passive:true})}
+
+/* === Premium micro-animations (reduced-motion aware) === */
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+/* Effect 1: Hero parallax fade-out */
+const heroC=document.querySelector('.hero-content');
+if(heroC){let ticking=false;window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{const s=window.scrollY,h=window.innerHeight;if(s<h){const p=s/h;heroC.style.opacity=1-p;heroC.style.transform='translate(-50%, calc(-50% - '+s*0.3+'px))'}ticking=false})}},{passive:true})}
+
+/* Effect 4: Gold halo cursor on cards */
+document.querySelectorAll('.method-card,.pricing-teaser-card,.app-feature').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')})});
+
+/* Effect 5: Magnetic CTA buttons */
+document.querySelectorAll('.cta-btn').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;const dx=(e.clientX-cx)*0.15,dy=(e.clientY-cy)*0.15;const mx=Math.max(-8,Math.min(8,dx)),my=Math.max(-8,Math.min(8,dy));btn.style.transform='translate('+mx+'px,'+my+'px)'});btn.addEventListener('mouseleave',()=>{btn.style.transform=''})});
+}
 </script>
 </body>
 </html>
