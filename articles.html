@@ -402,7 +402,11 @@
       [data-reveal] { opacity: 1; transform: none; }
       .scroll-progress { display: none; }
     }
-  </style>
+  
+  /* ── Global reveal override ── */
+  [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
+
+</style>
 </head>
 
 <body>
@@ -811,6 +815,12 @@
     }
 
     // ── Reveal ──
+    /* Viewport reveal fix */
+    document.querySelectorAll('[data-reveal]').forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.top<window.innerHeight*0.98)el.classList.add('revealed');
+    });
+
     const revealObs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); revealObs.unobserve(e.target); } });
     }, { threshold: 0.12 });

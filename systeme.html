@@ -179,6 +179,10 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   [data-reveal], .sys-hero h1, .sys-hero .hero-body, .contrast-block, .response-body, .response-highlight,
   .layer-card, .premium-col, .devise-text, .cta-headline, .cta-sub, .cta-btn, .cta-trust { opacity: 1 !important; transform: none !important; }
 }
+
+  /* ── Global reveal override ── */
+  [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
+
 </style>
 </head>
 <body>
@@ -356,6 +360,11 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 </footer>
 
 <script>
+/* Viewport reveal fix */
+document.querySelectorAll('[data-reveal]').forEach(function(el){
+  var r=el.getBoundingClientRect();
+  if(r.top<window.innerHeight*0.98)el.classList.add('revealed');
+});
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');ro.unobserve(x.target)}})},{threshold:0.15});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
 window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});

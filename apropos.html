@@ -564,7 +564,11 @@
             [data-reveal], .photo-reveal { opacity: 1; transform: none; }
             html { scroll-behavior: auto; }
         }
-    </style>
+    
+  /* ── Global reveal override ── */
+  [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
+
+</style>
 </head>
 <body>
 
@@ -796,6 +800,12 @@
             const h = document.documentElement.scrollHeight - window.innerHeight;
             const p = (window.scrollY / h) * 100;
             document.querySelector('.scroll-progress').style.width = p + '%';
+        });
+
+        /* Viewport reveal fix */
+        document.querySelectorAll('[data-reveal]').forEach(function(el){
+          var r=el.getBoundingClientRect();
+          if(r.top<window.innerHeight*0.98)el.classList.add('revealed');
         });
 
         /* Reveal on Scroll */

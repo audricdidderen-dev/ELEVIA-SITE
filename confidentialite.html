@@ -117,6 +117,10 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   [data-reveal] { opacity: 1; transform: none; }
 }
+
+  /* ── Global reveal override ── */
+  [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
+
 </style>
 </head>
 <body>
@@ -269,7 +273,13 @@ window.addEventListener('scroll', () => { const h = document.documentElement; do
 const hamburger = document.querySelector('.hamburger');
 const mobileNav = document.querySelector('.mobile-nav');
 hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileNav.classList.toggle('open'); document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : ''; });
-const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } }); }, { threshold: 0.1 });
+/* Viewport reveal fix */
+  document.querySelectorAll('[data-reveal]').forEach(function(el){
+    var r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight*0.98)el.classList.add('revealed');
+  });
+
+  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } }); }, { threshold: 0.1 });
 document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
 (function(){ const b = document.getElementById('cookieBanner'); if (!localStorage.getItem('elevia_cookies')) setTimeout(() => b.classList.remove('hidden'), 1200); document.getElementById('cookieAccept').addEventListener('click', () => { localStorage.setItem('elevia_cookies','accepted'); b.classList.add('hidden'); }); document.getElementById('cookieRefuse').addEventListener('click', () => { localStorage.setItem('elevia_cookies','refused'); b.classList.add('hidden'); }); })();
 </script>
