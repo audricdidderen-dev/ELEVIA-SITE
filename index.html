@@ -52,14 +52,13 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 @keyframes moveUp { 0% { top: 100%; } 100% { top: -80px; } }
 
 /* ===== HERO ===== */
-.hero { position: relative; height: 100vh; min-height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--navy); overflow: hidden; }
-.hero-content { position: relative; z-index: 5; text-align: center; padding: 0 2rem; }
-.hero-logo { width: 180px; height: auto; margin-bottom: 3rem; opacity: 0; transform: translateY(20px); animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
-.hero-tagline { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.8rem); font-weight: 300; color: var(--cream); letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+.hero { position: relative; height: 100vh; min-height: 600px; background: var(--navy); overflow: hidden; }
+.hero-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; text-align: center; padding: 0 2rem; width: 100%; }
+.hero-tagline { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.8rem); font-weight: 300; color: var(--cream); letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
 .hero-tagline em { font-style: italic; color: var(--gold); }
-.hero-sub { font-family: var(--sans); font-size: clamp(0.85rem, 1.6vw, 1.05rem); font-weight: 300; color: var(--text-soft); letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards; }
+.hero-sub { font-family: var(--sans); font-size: clamp(0.85rem, 1.6vw, 1.05rem); font-weight: 300; color: var(--text-soft); letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
 .hero-sub span { margin: 0 0.8em; opacity: 0.4; }
-.hero-scroll { position: absolute; bottom: 2.5rem; left: 0; right: 0; margin: 0 auto; width: fit-content; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards; }
+.hero-scroll { position: absolute; bottom: 2.5rem; left: 0; right: 0; margin: 0 auto; width: fit-content; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards; }
 .hero-scroll-text { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-soft); opacity: 0.5; }
 .hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
 @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
@@ -173,6 +172,9 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .pricing-teaser-price { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 300; color: var(--text-dark); margin-bottom: 0.3rem; }
 .pricing-teaser-price .currency { font-size: 0.5em; vertical-align: super; color: var(--text-muted); margin-left: 0.15em; }
 .pricing-teaser-detail { font-family: var(--sans); font-size: 0.75rem; font-weight: 300; color: var(--text-muted); line-height: 1.5; }
+.pricing-teaser-note { margin-top: 1.5rem; font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-muted); opacity: 0; transform: translateY(15px); }
+.pricing-teaser-note.revealed { opacity: 0.7; transform: none; transition: all 0.7s ease 0.3s; }
+.pricing-teaser-note span { color: var(--gold); font-weight: 400; }
 .pricing-teaser-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; color: var(--navy); text-decoration: none; opacity: 0; transform: translateY(15px); transition: color 0.3s; }
 .pricing-teaser-link.revealed { opacity: 1; transform: none; transition: all 0.7s ease 0.4s; }
 .pricing-teaser-link:hover { color: var(--gold); }
@@ -217,7 +219,6 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .hero-logo { width: 130px; margin-bottom: 2rem; }
   .section-headline { font-size: clamp(1.65rem, 4.5vw, 3.8rem); }
   .method-grid { grid-template-columns: 1fr; }
   .app-features { grid-template-columns: 1fr; }
@@ -241,7 +242,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 /* ===== PREFERS REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .hero-logo, .hero-tagline, .hero-sub, .hero-scroll { opacity: 1; transform: none; }
+  .hero-tagline, .hero-sub, .hero-scroll { opacity: 1; transform: none; }
   .scroll-word { opacity: 1; transform: none; }
   .section-label, .section-headline, .section-body { opacity: 1; transform: none; }
   .method-card, .app-feature, .plan-visual, .pricing-teaser-card { opacity: 1; transform: none; }
@@ -249,6 +250,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .proof-item, .proof-line, .proof-badge { opacity: 1; transform: none; }
   .proof-line { width: 200px; }
   .pricing-teaser-link { opacity: 1; transform: none; }
+  .pricing-teaser-note { opacity: 0.7; transform: none; }
 }
 </style>
 </head>
@@ -269,7 +271,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <a href="/offre.html">Offre</a>
     <a href="/cockpit.html">Cockpit</a>
     <a href="/apropos.html">À propos</a>
-    <a href="/offre.html" class="header-cta">Recevoir mon plan en 48h</a>
+    <a href="/offre.html" class="header-cta">Recevoir mon plan en 72h</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
@@ -278,9 +280,10 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <a href="/offre.html" data-nav>Offre</a>
   <a href="/cockpit.html" data-nav>Cockpit</a>
   <a href="/apropos.html" data-nav>À propos</a>
-  <a href="/contact.html" data-nav>Contact</a>
-  <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 48h</a>
+  <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
+
+<main>
 
 <!-- HERO -->
 <section class="hero">
@@ -294,12 +297,6 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <div class="anim-line" style="left:82%; animation-delay: -4s;"></div>
   <div class="anim-line" style="left:92%; animation-delay: -1s;"></div>
   <div class="hero-content">
-    <svg class="hero-logo" viewBox="0 0 375 375" xmlns="http://www.w3.org/2000/svg">
-      <g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g>
-      <g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z M 22.0625 -67.234375 L 32.34375 -73.3125 C 33.820312 -74.21875 35.078125 -74.878906 36.109375 -75.296875 C 37.140625 -75.722656 38.179688 -75.9375 39.234375 -75.9375 C 40.128906 -75.9375 40.851562 -75.695312 41.40625 -75.21875 C 41.957031 -74.738281 42.234375 -74.050781 42.234375 -73.15625 C 42.234375 -72.3125 41.691406 -71.585938 40.609375 -70.984375 C 39.535156 -70.378906 38.097656 -69.863281 36.296875 -69.4375 L 26.8125 -67.234375 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g>
-      <g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g>
-      <g transform="matrix(1, 0, 0, 1, 211, 209)"><g fill="#f6f3ee"><g transform="translate(2.024276, 15.031741)"><path d="M 0.703125 -9.5 L 3.15625 -9.5 L 6.625 -3.234375 L 6.671875 -3.234375 L 6.671875 -9.5 L 8.765625 -9.5 L 8.765625 0.015625 L 6.28125 0.015625 L 2.828125 -6.015625 L 2.796875 -6.015625 L 2.796875 0.015625 L 0.703125 0.015625 Z"/></g><g transform="translate(10.749242, 15.031741)"><path d="M 4.65625 0.140625 C 3.5 0.140625 2.550781 -0.195312 1.8125 -0.875 C 1.070312 -1.5625 0.703125 -2.65625 0.703125 -4.15625 L 0.703125 -9.5 L 2.8125 -9.5 L 2.8125 -4.296875 C 2.8125 -2.691406 3.425781 -1.890625 4.65625 -1.890625 C 5.3125 -1.890625 5.78125 -2.109375 6.0625 -2.546875 C 6.34375 -2.992188 6.484375 -3.578125 6.484375 -4.296875 L 6.484375 -9.5 L 8.578125 -9.5 L 8.578125 -4.15625 C 8.578125 -2.65625 8.207031 -1.5625 7.46875 -0.875 C 6.738281 -0.195312 5.800781 0.140625 4.65625 0.140625 Z"/></g><g transform="translate(19.297821, 15.031741)"><path d="M 7.5625 -7.65625 L 5.078125 -7.65625 L 5.078125 0 L 2.96875 0 L 2.96875 -7.65625 L 0.46875 -7.65625 L 0.46875 -9.5 L 7.5625 -9.5 Z"/></g><g transform="translate(26.584464, 15.031741)"><path d="M 3.90625 -3.328125 L 2.8125 -3.328125 L 2.8125 0 L 0.703125 0 L 0.703125 -9.5 L 4.3125 -9.5 C 5.0625 -9.5 5.695312 -9.351562 6.21875 -9.0625 C 6.738281 -8.769531 7.125 -8.382812 7.375 -7.90625 C 7.625 -7.4375 7.75 -6.925781 7.75 -6.375 C 7.75 -5.757812 7.59375 -5.203125 7.28125 -4.703125 C 6.976562 -4.210938 6.53125 -3.847656 5.9375 -3.609375 L 7.96875 0 L 5.765625 0 Z M 2.8125 -5.046875 L 3.96875 -5.046875 C 4.457031 -5.046875 4.867188 -5.144531 5.203125 -5.34375 C 5.535156 -5.550781 5.703125 -5.894531 5.703125 -6.375 C 5.703125 -6.832031 5.535156 -7.160156 5.203125 -7.359375 C 4.878906 -7.554688 4.46875 -7.65625 3.96875 -7.65625 L 2.8125 -7.65625 Z"/></g><g transform="translate(34.25104, 15.031741)"><path d="M 0.796875 -9.5 L 2.921875 -9.5 L 2.921875 0 L 0.796875 0 Z"/></g><g transform="translate(37.249841, 15.031741)"><path d="M 7.5625 -7.65625 L 5.078125 -7.65625 L 5.078125 0 L 2.96875 0 L 2.96875 -7.65625 L 0.46875 -7.65625 L 0.46875 -9.5 L 7.5625 -9.5 Z"/></g><g transform="translate(44.536485, 15.031741)"><path d="M 0.796875 -9.5 L 2.921875 -9.5 L 2.921875 0 L 0.796875 0 Z"/></g><g transform="translate(47.535286, 15.031741)"><path d="M 4.890625 0.125 C 3.941406 0.125 3.132812 -0.09375 2.46875 -0.53125 C 1.8125 -0.96875 1.316406 -1.554688 0.984375 -2.296875 C 0.660156 -3.035156 0.5 -3.851562 0.5 -4.75 C 0.5 -5.644531 0.664062 -6.46875 1 -7.21875 C 1.332031 -7.96875 1.828125 -8.566406 2.484375 -9.015625 C 3.148438 -9.460938 3.953125 -9.6875 4.890625 -9.6875 C 5.816406 -9.6875 6.609375 -9.460938 7.265625 -9.015625 C 7.921875 -8.578125 8.410156 -7.976562 8.734375 -7.21875 C 9.066406 -6.46875 9.234375 -5.640625 9.234375 -4.734375 C 9.234375 -3.828125 9.066406 -3.003906 8.734375 -2.265625 C 8.410156 -1.535156 7.921875 -0.953125 7.265625 -0.515625 C 6.609375 -0.0859375 5.816406 0.125 4.890625 0.125 Z M 4.875 -1.765625 C 5.550781 -1.765625 6.070312 -2.046875 6.4375 -2.609375 C 6.800781 -3.179688 6.984375 -3.898438 6.984375 -4.765625 C 6.984375 -5.609375 6.800781 -6.320312 6.4375 -6.90625 C 6.082031 -7.5 5.5625 -7.796875 4.875 -7.796875 C 4.414062 -7.796875 4.023438 -7.65625 3.703125 -7.375 C 3.390625 -7.09375 3.148438 -6.722656 2.984375 -6.265625 C 2.828125 -5.804688 2.75 -5.304688 2.75 -4.765625 C 2.75 -3.921875 2.929688 -3.207031 3.296875 -2.625 C 3.671875 -2.050781 4.195312 -1.765625 4.875 -1.765625 Z"/></g><g transform="translate(56.58592, 15.031741)"><path d="M 0.703125 -9.5 L 3.15625 -9.5 L 6.625 -3.234375 L 6.671875 -3.234375 L 6.671875 -9.5 L 8.765625 -9.5 L 8.765625 0.015625 L 6.28125 0.015625 L 2.828125 -6.015625 L 2.796875 -6.015625 L 2.796875 0.015625 L 0.703125 0.015625 Z"/></g></g></g>
-    </svg>
     <h1 class="hero-tagline">La nutrition qui <em>te</em> ressemble</h1>
     <p class="hero-sub">Plans sur mesure <span>·</span> Suivi intelligent <span>·</span> Résultats durables</p>
   </div>
@@ -308,7 +305,6 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 
 <!-- SCROLL WORDS -->
 <div class="word-section"><div class="anim-line" style="left:15%;animation-delay:0s"></div><div class="anim-line" style="left:35%;animation-delay:-2s"></div><div class="anim-line" style="left:55%;animation-delay:-4s"></div><div class="anim-line" style="left:75%;animation-delay:-1s"></div><div class="anim-line" style="left:90%;animation-delay:-3s"></div><div class="scroll-word" data-reveal>Structure<span class="dot">.</span></div></div>
-<div class="word-section"><div class="anim-line" style="left:10%;animation-delay:-3s"></div><div class="anim-line" style="left:30%;animation-delay:-1s"></div><div class="anim-line" style="left:50%;animation-delay:-5s"></div><div class="anim-line" style="left:70%;animation-delay:-2s"></div><div class="anim-line" style="left:85%;animation-delay:-4s"></div><div class="scroll-word" data-reveal>Précision<span class="dot">.</span></div></div>
 <div class="word-section"><div class="anim-line" style="left:12%;animation-delay:-2s"></div><div class="anim-line" style="left:32%;animation-delay:-4s"></div><div class="anim-line" style="left:48%;animation-delay:0s"></div><div class="anim-line" style="left:68%;animation-delay:-3s"></div><div class="anim-line" style="left:88%;animation-delay:-1s"></div><div class="scroll-word" data-reveal>Liberté<span class="dot">.</span></div></div>
 <div class="word-section"><div class="anim-line" style="left:8%;animation-delay:-1s"></div><div class="anim-line" style="left:25%;animation-delay:-3s"></div><div class="anim-line" style="left:45%;animation-delay:-5s"></div><div class="anim-line" style="left:65%;animation-delay:-2s"></div><div class="anim-line" style="left:82%;animation-delay:-4s"></div><div class="scroll-word" data-reveal>Résultats<span class="dot">.</span></div></div>
 <div class="divider-gold"></div>
@@ -316,8 +312,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- PROBLEM -->
 <section class="section-problem"><div class="section-inner">
   <p class="section-label" data-reveal>Le constat</p>
-  <h2 class="section-headline" data-reveal>Les régimes génériques <em>échouent</em>.<br>Toujours.</h2>
-  <p class="section-body" data-reveal>Copier un plan trouvé en ligne, suivre des portions standards, compter des calories sans contexte — ça ne fonctionne pas. Parce que ton métabolisme, ton quotidien et tes préférences ne sont pas ceux de quelqu'un d'autre. Tu mérites un plan conçu <strong>pour toi</strong>, par un professionnel qui comprend ta réalité.</p>
+  <h2 class="section-headline" data-reveal>Les plans génériques <em>échouent</em>.<br>Toujours.</h2>
+  <p class="section-body" data-reveal>Copier un plan trouvé en ligne, suivre des portions standards, appliquer des conseils sans contexte — ça ne fonctionne pas. Que tu veuilles perdre du poids, prendre du muscle, mieux manger ou adapter ton alimentation (végé, sans lactose, sans gluten), ton métabolisme, ton quotidien et tes objectifs ne sont pas ceux de quelqu'un d'autre. Tu mérites un plan conçu <strong>pour toi</strong>, par un professionnel qui comprend ta réalité.</p>
 </div></section>
 
 <!-- METHOD -->
@@ -328,7 +324,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <div class="method-grid">
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>Personnalisé</h3><p>Un questionnaire approfondi, un plan ajusté à ton profil, des conseils calibrés sur tes habitudes réelles. Rien de générique — chaque détail est pensé pour toi.</p></div>
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><h3>Structuré</h3><p>Des équivalences claires, des repères hebdomadaires, un cadre qui te guide sans te contraindre. La semaine est ta boussole, le plan ta carte.</p></div>
-    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><h3>Flexible</h3><p>Organise ta semaine comme tu le sens. L'app ne bloque jamais — elle te guide, même dans les situations complexes : restos, apéros, imprévus.</p></div>
+    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><h3>Flexible</h3><p>Organise ta semaine comme tu le sens. L'app s'adapte à ton rythme et te guide même dans les situations complexes : restos, apéros, imprévus.</p></div>
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Progressif</h3><p>Chaque recette, chaque conseil, chaque bilan te rapproche de l'autonomie. Sans t'en rendre compte, tu apprends à maîtriser ta nutrition.</p></div>
   </div>
 </div></section>
@@ -336,13 +332,16 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- PROOF / CREDIBILITY -->
 <section class="section-proof"><div class="section-inner">
   <div class="proof-grid">
-    <div class="proof-item" data-reveal data-countup><div class="proof-number"><span data-target="48">0</span><span class="gold">h</span></div><p class="proof-desc">Délai de livraison moyen</p></div>
-    <div class="proof-item" data-reveal data-countup><div class="proof-number"><span data-target="100">0</span><span class="gold">%</span></div><p class="proof-desc">Plans personnalisés</p></div>
-    <div class="proof-item" data-reveal><div class="proof-number">Diplômé<span class="gold">.</span></div><p class="proof-desc">Diététicien certifié</p></div>
+    <div class="proof-item" data-reveal data-countup><div class="proof-number"><span data-target="72">72</span><span class="gold">h</span></div><p class="proof-desc">Plan livré sous 72h ouvrées</p></div>
+    <div class="proof-item" data-reveal data-countup><div class="proof-number"><span data-target="60">60</span><span class="gold">+</span></div><p class="proof-desc">Questions dans le questionnaire</p></div>
+    <div class="proof-item" data-reveal><div class="proof-number">Diplômé<span class="gold">.</span></div><p class="proof-desc">Diététicien diplômé</p></div>
   </div>
   <div class="proof-line" data-reveal></div>
   <p class="proof-badge" data-reveal>Créé par un diététicien diplômé en Belgique</p>
 </div></section>
+
+<!-- SEPARATOR -->
+<div style="background:var(--cream);padding:0 clamp(1.5rem,5vw,4rem)"><div style="max-width:960px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold) 70%,transparent);opacity:0.15"></div></div>
 
 <!-- APP -->
 <section class="section-app" id="cockpit"><div class="section-inner">
@@ -377,7 +376,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="pricing-teaser-card" data-reveal>
       <div class="pricing-teaser-name">Plan seul</div>
       <div class="pricing-teaser-price">89<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Plan nutritionnel personnalisé + recettes du mois + support 7 jours</p>
+      <p class="pricing-teaser-detail">Plan nutritionnel personnalisé + recettes du mois + support email 7j/7</p>
     </div>
     <div class="pricing-teaser-card recommended" data-reveal>
       <span class="pricing-rec-badge">Recommandé</span>
@@ -391,6 +390,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 12 mois · Engagement long terme</p>
     </div>
   </div>
+  <p class="pricing-teaser-note" data-reveal>L'app Cockpit est aussi disponible à <span>10€/mois</span> après achat du plan — sans engagement.</p>
   <a href="/offre.html" class="pricing-teaser-link" data-reveal>Voir les offres en détail <span class="arrow">→</span></a>
 </div></section>
 
@@ -398,22 +398,24 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <section class="section-cta"><div class="section-inner" style="position:relative;z-index:1">
   <h2 class="cta-headline" data-reveal>Prêt à transformer<br>ta <em>nutrition</em> ?</h2>
   <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure · Accompagnement continu</p>
-  <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 48h <span class="cta-btn-arrow">→</span></a>
+  <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
   <p class="cta-trust" data-reveal>Créé par un diététicien diplômé · Données 100% privées · Sans engagement</p>
 </div></section>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
   <svg class="footer-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g><g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g></svg>
-  <div class="footer-links"><a href="/systeme.html">Le Système</a><a href="/offre.html">Offre</a><a href="/contact.html">Contact</a><a href="/mentions-legales.html">Mentions légales</a><a href="/confidentialite.html">Politique de confidentialité</a></div>
+  <div class="footer-links"><a href="/systeme.html">Le Système</a><a href="/offre.html">Offre</a><a href="/articles.html">Articles</a><a href="/contact.html">Contact</a><a href="/mentions-legales.html">Mentions légales</a><a href="/confidentialite.html">Politique de confidentialité</a></div>
   <p class="footer-copy">© 2026 Élevia Nutrition. Tous droits réservés.</p>
 </footer>
 
 <!-- STICKY CTA MOBILE -->
-<div class="sticky-cta-mobile" id="stickyCta"><a href="/offre.html">Recevoir mon plan en 48h <span>→</span></a></div>
+<div class="sticky-cta-mobile" id="stickyCta"><a href="/offre.html">Recevoir mon plan en 72h <span>→</span></a></div>
 
 <script>
-const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');if(x.target.hasAttribute('data-countup')){const n=x.target.querySelector('[data-target]');if(n){const t=parseInt(n.dataset.target),d=1200,s=performance.now();const a=now=>{const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);n.textContent=Math.round(t*ease);if(p<1)requestAnimationFrame(a)};requestAnimationFrame(a)}}ro.unobserve(x.target)}})},{threshold:0.2});
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');if(x.target.hasAttribute('data-countup')){const n=x.target.querySelector('[data-target]');if(n){const t=parseInt(n.dataset.target);n.textContent='0';const d=1200,s=performance.now();const a=now=>{const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);n.textContent=Math.round(t*ease);if(p<1)requestAnimationFrame(a)};requestAnimationFrame(a)}}ro.unobserve(x.target)}})},{threshold:0.2});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
 window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
 const header=document.getElementById('siteHeader');
