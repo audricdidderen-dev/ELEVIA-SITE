@@ -250,6 +250,12 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .proof-line { width: 200px; }
   .pricing-teaser-link { opacity: 1; transform: none; }
 }
+
+  /* ── Global reveal override ── */
+  [data-reveal].revealed,
+  [data-reveal].revealed * { opacity: 1 !important; }
+  [data-reveal].revealed { transform: none !important; }
+
 </style>
 </head>
 <body>
@@ -269,7 +275,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <a href="#offre">Offre</a>
     <a href="#cockpit">Cockpit</a>
     <a href="#apropos">À propos</a>
-    <a href="#offre" class="header-cta">Recevoir mon plan en 48h</a>
+    <a href="#offre" class="header-cta">Recevoir mon plan en 72h</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
@@ -279,7 +285,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <a href="#cockpit" data-nav>Cockpit</a>
   <a href="#apropos" data-nav>À propos</a>
   <a href="#contact" data-nav>Contact</a>
-  <a href="#offre" class="header-cta" data-nav>Recevoir mon plan en 48h</a>
+  <a href="#offre" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
 
 <!-- HERO -->
@@ -398,7 +404,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <section class="section-cta"><div class="section-inner" style="position:relative;z-index:1">
   <h2 class="cta-headline" data-reveal>Prêt à transformer<br>ta <em>nutrition</em> ?</h2>
   <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure · Accompagnement continu</p>
-  <a href="#offre" class="cta-btn" data-reveal>Recevoir mon plan en 48h <span class="cta-btn-arrow">→</span></a>
+  <a href="#offre" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
   <p class="cta-trust" data-reveal>Créé par un diététicien diplômé · Données 100% privées · Sans engagement</p>
 </div></section>
 
@@ -410,9 +416,14 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 </footer>
 
 <!-- STICKY CTA MOBILE -->
-<div class="sticky-cta-mobile" id="stickyCta"><a href="#offre">Recevoir mon plan en 48h <span>→</span></a></div>
+<div class="sticky-cta-mobile" id="stickyCta"><a href="#offre">Recevoir mon plan en 72h <span>→</span></a></div>
 
 <script>
+/* Viewport reveal fix */
+document.querySelectorAll('[data-reveal]').forEach(function(el){
+  var r=el.getBoundingClientRect();
+  if(r.top<window.innerHeight*0.98)el.classList.add('revealed');
+});
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');if(x.target.hasAttribute('data-countup')){const n=x.target.querySelector('[data-target]');if(n){const t=parseInt(n.dataset.target),d=1200,s=performance.now();const a=now=>{const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);n.textContent=Math.round(t*ease);if(p<1)requestAnimationFrame(a)};requestAnimationFrame(a)}}ro.unobserve(x.target)}})},{threshold:0.2});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
 window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
