@@ -191,6 +191,10 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   [data-reveal], .offer-hero .section-label, .offer-hero h1, .offer-hero .hero-sub, .trust-badges, .anchor-block,
   .pricing-card, .include-card, .process-step, .cta-headline, .cta-sub, .cta-btn, .cta-trust, .early-access { opacity: 1 !important; transform: none !important; }
 }
+
+  /* ── Global reveal override ── */
+  [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
+
 </style>
 </head>
 <body>
@@ -443,6 +447,11 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 
 <script>
 /* Reveal observer */
+/* Viewport reveal fix */
+document.querySelectorAll('[data-reveal]').forEach(function(el){
+  var r=el.getBoundingClientRect();
+  if(r.top<window.innerHeight*0.98)el.classList.add('revealed');
+});
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');ro.unobserve(x.target)}})},{threshold:0.15});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
 
