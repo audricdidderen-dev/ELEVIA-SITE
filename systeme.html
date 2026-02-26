@@ -128,7 +128,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 /* ===== POURQUOI PREMIUM ===== */
 .section-premium { background: var(--cream); padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 4rem); }
 .premium-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
-.premium-col { opacity: 0; transform: translateY(30px); }
+.premium-col { opacity: 0; transform: translateY(30px); min-width: 0; }
 .premium-col-label { font-family: var(--sans); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem; }
 .premium-col-label svg { width: 16px; height: 16px; stroke-width: 2; fill: none; stroke-linecap: round; }
 .premium-col.dont .premium-col-label { color: #B85C5C; }
@@ -136,7 +136,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .premium-col.do .premium-col-label { color: var(--gold); }
 .premium-col.do .premium-col-label svg { stroke: var(--gold); }
 .premium-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-.premium-list li { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; padding: 1rem 1.2rem; border-radius: 12px; }
+.premium-list li { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; padding: 1rem 1.2rem; border-radius: 12px; overflow-wrap: break-word; min-width: 0; }
 .premium-col.dont .premium-list li { background: rgba(184, 92, 92, 0.04); border: 1px solid rgba(184, 92, 92, 0.08); }
 .premium-col.do .premium-list li { background: rgba(198, 160, 91, 0.04); border: 1px solid rgba(198, 160, 91, 0.1); }
 
@@ -162,7 +162,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .cta-trust { margin-top: 2rem; font-size: 0.78rem; color: var(--text-muted); opacity: 0; transform: translateY(15px); }
 
 /* ===== FOOTER ===== */
-footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 1px solid rgba(198,160,91,0.08); }
+footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 0.3px solid rgba(198,160,91,0.25); }
 .footer-logo { width: 100px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--text-soft); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
@@ -242,7 +242,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- HERO — LE PROBLÈME -->
 <section class="sys-hero">
   <p class="section-label" data-reveal>Le système</p>
-  <h1 data-reveal>Pourquoi 90% des régimes<br><em>échouent</em>.</h1>
+  <h1 data-reveal>Pourquoi 90% des régimes <em>échouent</em>.</h1>
   <p class="hero-body" data-reveal>Plans figés trouvés en ligne, portions copiées-collées, aucune adaptation à ton quotidien. Tu suis un cadre qui n'a pas été pensé pour toi&nbsp;— et quand les résultats ne viennent pas, c'est toi qui&nbsp;culpabilises.</p>
 
   <div class="contrast-block" data-reveal>
@@ -344,7 +344,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <ul class="premium-list">
         <li>De templates génériques copiés d'un client à l'autre</li>
         <li>De plans générés par IA sans expertise nutritionnelle derrière</li>
-        <li>Des menus figés impossibles à adapter à ton quotidien</li>
+        <li>De menus figés impossibles à adapter à ton quotidien</li>
         <li>De coaching Instagram avec des promesses irréalistes</li>
         <li>De suivi basé sur la pesée obsessionnelle des aliments</li>
       </ul>

@@ -113,6 +113,11 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .method-card:nth-child(2).revealed { transition-delay: 0.1s; }
 .method-card:nth-child(3).revealed { transition-delay: 0.2s; }
 .method-card:nth-child(4).revealed { transition-delay: 0.3s; }
+.method-card:nth-child(5) { grid-column: 1 / -1; max-width: 100%; margin: 0 auto; display: flex; align-items: center; gap: 2rem; padding: 1.8rem 2.5rem; }
+.method-card:nth-child(5) .method-icon { flex-shrink: 0; }
+.method-card:nth-child(5) h3 { margin-bottom: 0.3rem; }
+.method-card:nth-child(5) p { margin: 0; }
+.method-card:nth-child(5).revealed { transition-delay: 0.4s; }
 .method-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.4; }
 .method-card:hover { border-color: rgba(198,160,91,0.25); background: rgba(255,255,255,0.05); }
 .method-icon { margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(198,160,91,0.08); position: relative; }
@@ -181,7 +186,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 /* ===== TEASER PRICING ===== */
 .section-pricing-teaser { background: var(--cream); padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
 .section-pricing-teaser::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 700px; height: 500px; background: radial-gradient(ellipse, var(--gold-glow), transparent 70%); opacity: 0.3; pointer-events: none; }
-.pricing-teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 820px; margin: 3rem auto 0; }
+.pricing-teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 960px; margin: 3rem auto 0; }
 .pricing-teaser-card { background: var(--white); border: 1px solid var(--border-soft); border-radius: 16px; padding: 2rem 1.5rem; text-align: center; opacity: 0; transform: translateY(30px); transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; position: relative; }
 .pricing-teaser-card.revealed { opacity: 1; transform: none; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 .pricing-teaser-card:nth-child(2).revealed { transition-delay: 0.1s; }
@@ -194,6 +199,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .pricing-teaser-price { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 300; color: var(--text-dark); margin-bottom: 0.3rem; }
 .pricing-teaser-price .currency { font-size: 0.5em; vertical-align: super; color: var(--text-muted); margin-left: 0.15em; }
 .pricing-teaser-detail { font-family: var(--sans); font-size: 0.75rem; font-weight: 300; color: var(--text-muted); line-height: 1.5; }
+.pricing-teaser-detail .mb { display: none; }
 .pricing-teaser-note { margin-top: 1.5rem; font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-muted); opacity: 0; transform: translateY(15px); }
 .pricing-teaser-note.revealed { opacity: 0.7; transform: none; transition: all 0.7s ease 0.3s; }
 .pricing-teaser-note span { color: var(--gold); font-weight: 400; }
@@ -205,13 +211,13 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 
 /* ===== CTA ===== */
 .section-cta { position: relative; padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 4rem); text-align: center; background: var(--cream); }
-.section-cta::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse 70% 70% at 50% 50%, var(--gold-glow), transparent); pointer-events: none; }
+.section-cta::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse 80% 60% at 50% 70%, var(--gold-glow), transparent); pointer-events: none; }
 .cta-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400; color: var(--text-dark); margin-bottom: 1.2rem; opacity: 0; transform: translateY(30px); }
 .cta-headline.revealed { opacity: 1; transform: none; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .cta-headline em { font-style: italic; color: var(--gold); }
 .cta-sub { font-size: 1rem; font-weight: 300; color: var(--text-muted); margin-bottom: 2.5rem; opacity: 0; transform: translateY(20px); }
 .cta-sub.revealed { opacity: 1; transform: none; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s; }
-.cta-btn { display: inline-flex; align-items: center; gap: 0.7rem; padding: 1rem 2.8rem; background: var(--navy); color: var(--cream); font-family: var(--sans); font-size: 0.9rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 60px; border: none; cursor: pointer; opacity: 0; transform: translateY(20px); position: relative; overflow: hidden; transition: all 0.4s; }
+.cta-btn { display: inline-flex; align-items: center; gap: 0.7rem; padding: 1rem 2.8rem; background: var(--navy); color: var(--cream); font-family: var(--sans); font-size: 0.9rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 60px; border: none; cursor: pointer; opacity: 0; transform: translateY(20px); position: relative; overflow: hidden; transition: all 0.4s; white-space: nowrap; }
 .cta-btn.revealed { opacity: 1; transform: none; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s; }
 .cta-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(198,160,91,0.15), transparent); transition: left 0.6s; }
 .cta-btn:hover::before { left: 100%; }
@@ -222,7 +228,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .cta-trust.revealed { opacity: 0.7; transform: none; transition: all 0.7s ease 0.5s; }
 
 /* ===== FOOTER ===== */
-footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 1px solid rgba(198,160,91,0.08); }
+footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 0.3px solid rgba(198,160,91,0.25); }
 .footer-logo { width: 100px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--text-soft); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
@@ -261,15 +267,19 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .pricing-teaser-card:nth-child(3) { grid-column: 1 / -1; max-width: 340px; margin: 0 auto; }
 }
 @media (max-width: 768px) {
+  .pricing-teaser-detail .mb { display: inline; }
   .hero-sub { letter-spacing: 0.1em; font-size: 0.72rem; }
   .hero-sub span { margin: 0 0.5em; }
   .section-headline { font-size: clamp(1.65rem, 4.5vw, 3.8rem); }
   .method-grid { grid-template-columns: 1fr; }
+  .method-card:nth-child(5) { flex-direction: column; text-align: left; align-items: flex-start; padding: 2.5rem 2rem; gap: 0.5rem; }
+  .db { display: none; }
+  .method-card:nth-child(5) h3 { margin-bottom: 0.8rem; }
   .app-features { grid-template-columns: 1fr; }
   .plans-showcase { flex-direction: column; align-items: center; }
   .plan-visual { width: 240px; height: 320px; }
   .plan-visual, .plan-visual.revealed, .plan-visual:nth-child(2), .plan-visual:nth-child(2).revealed, .plan-visual:nth-child(3), .plan-visual:nth-child(3).revealed { transform: translateY(0) rotate(0deg) !important; }
-  .pricing-teaser-grid { grid-template-columns: 1fr; max-width: 340px; }
+  .pricing-teaser-grid { grid-template-columns: 1fr; max-width: 400px; }
   .pricing-teaser-card.recommended { order: -1; }
   .header-nav { display: none; }
   .hamburger { display: flex; }
@@ -280,7 +290,6 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .footer-links { gap: 1rem; }
   .footer-links a { padding: 0.4rem 0.2rem; }
   main { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
-  .pricing-teaser-grid { grid-template-columns: 1fr; max-width: 340px; }
   .pricing-teaser-card:nth-child(3) { max-width: none; }
 }
 @media (max-width: 480px) {
@@ -438,6 +447,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><h3>Structuré</h3><p>Des équivalences claires, des repères hebdomadaires, un cadre qui te guide sans te&nbsp;contraindre. La semaine est ta boussole, le plan ta&nbsp;carte.</p></div>
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><h3>Flexible</h3><p>Organise ta semaine comme tu le sens. L'app s'adapte à ton rythme et te guide même dans les situations complexes : restos, apéros, imprévus.</p></div>
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Progressif</h3><p>Chaque recette, chaque conseil, chaque bilan te rapproche de l'autonomie. Sans t'en rendre compte, tu apprends à maîtriser ta&nbsp;nutrition.</p></div>
+    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 2C12 2 7 9 7 13a5 5 0 0 0 10 0c0-4-5-11-5-11z"/><path d="M10 16.5c0-1.5 2-4 2-4s2 2.5 2 4a2 2 0 0 1-4 0z" fill="none"/></svg></div><h3>Du goût, toujours</h3><p>Sauces et assaisonnements&nbsp;— chauds, froids, variés&nbsp;— intégrés à ton plan.<br class="db"> Manger équilibré sans sacrifier le&nbsp;goût.</p></div>
   </div>
 </div></section>
 
@@ -475,7 +485,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div class="feature-text"><h4>Suivi en un tap</h4><p>Logge tes repas avec des unités naturelles : tranches, cuillères, fruits. Pas de pesée, pas de&nbsp;calculs.</p></div></div>
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feature-text"><h4>Feedback intelligent</h4><p>L'app te guide sans te juger. Alertes bienveillantes, bilans hebdomadaires, conseils liés à tes habitudes réelles.</p></div></div>
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><div class="feature-text"><h4>Recettes personnalisées</h4><p>Chaque recette s'adapte automatiquement à tes portions. Les grammes affichés sont les tiens&nbsp;— pas ceux d'un plan&nbsp;générique.</p></div></div>
-    <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="feature-text"><h4>Suivi & progrès</h4><p>Poids, tour de taille, composition corporelle. Des courbes claires pour visualiser ta progression dans le temps.</p></div></div>
+    <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="feature-text"><h4>Évolution visible</h4><p>Poids, tour de taille, composition corporelle. Des courbes claires pour visualiser ta progression dans le temps.</p></div></div>
   </div>
 </div></section>
 
@@ -499,18 +509,18 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="pricing-teaser-card" data-reveal>
       <div class="pricing-teaser-name">Plan seul</div>
       <div class="pricing-teaser-price">89<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Plan nutritionnel personnalisé + recettes du mois + support email 7j/7</p>
+      <p class="pricing-teaser-detail">Plan nutritionnel personnalisé<br class="mb"> + recettes du mois + support email&nbsp;7j/7</p>
     </div>
     <div class="pricing-teaser-card recommended" data-reveal>
       <span class="pricing-rec-badge">Recommandé</span>
       <div class="pricing-teaser-name">Plan + Cockpit 6 mois</div>
       <div class="pricing-teaser-price">169<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 6&nbsp;mois · Le&nbsp;meilleur&nbsp;équilibre</p>
+      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 6&nbsp;mois<br>· Le&nbsp;meilleur&nbsp;équilibre</p>
     </div>
     <div class="pricing-teaser-card" data-reveal>
       <div class="pricing-teaser-name">Plan + Cockpit 12 mois</div>
       <div class="pricing-teaser-price">229<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 12&nbsp;mois · Engagement long&nbsp;terme</p>
+      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 12&nbsp;mois<br>· Engagement long&nbsp;terme</p>
     </div>
   </div>
   <p class="pricing-teaser-note" data-reveal>L'app Cockpit est aussi disponible à <span>10€/mois</span> après achat du plan — sans engagement.</p>
@@ -520,7 +530,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- CTA -->
 <section class="section-cta"><div class="section-inner section-cta-inner">
   <h2 class="cta-headline" data-reveal>Prêt à transformer<br>ta <em>nutrition</em> ?</h2>
-  <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure · Accompagnement&nbsp;continu</p>
+  <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure<br class="mb">Accompagnement&nbsp;continu</p>
   <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
   <p class="cta-trust" data-reveal>Créé par un diététicien diplômé · Données&nbsp;100%&nbsp;privées · Sans&nbsp;engagement</p>
 </div></section>
