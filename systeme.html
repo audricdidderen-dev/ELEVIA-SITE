@@ -57,6 +57,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .mobile-nav.open { opacity: 1; pointer-events: all; }
 .mobile-nav a { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--cream); text-decoration: none; opacity: 0.7; transition: opacity 0.3s, color 0.3s; }
 .mobile-nav a:hover { opacity: 1; color: var(--gold); }
+.mobile-nav a.active { display: none; }
 .mobile-nav .header-cta { font-family: var(--sans); font-size: 0.8rem; padding: 0.8rem 2rem; margin-top: 1rem; }
 
 /* ===== UTILITIES ===== */
@@ -230,7 +231,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 </header>
 <nav class="mobile-nav" id="mobileNav">
   <a href="/" data-nav>Accueil</a>
-  <a href="/systeme.html" data-nav>Le Système</a>
+  <a href="/systeme.html" class="active" data-nav>Le Système</a>
   <a href="/offre.html" data-nav>Offre</a>
   <a href="/cockpit.html" data-nav>Cockpit</a>
   <a href="/apropos.html" data-nav>À propos</a>
