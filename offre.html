@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Offre — Élevia Nutrition</title>
 <meta name="description" content="Plans nutritionnels personnalisés dès 89€. Créé par un diététicien diplômé. Plan sur mesure + app compagnon Cockpit. Livraison sous 72h.">
+<link rel="canonical" href="https://www.elevianutrition.com/offre.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Offre — Élevia Nutrition">
+<meta property="og:description" content="Plans nutritionnels personnalisés dès 89€. Créé par un diététicien diplômé. Plan sur mesure + app compagnon Cockpit. Livraison sous 72h.">
+<meta property="og:url" content="https://www.elevianutrition.com/offre.html">
+<meta property="og:image" content="https://www.elevianutrition.com/og-image.jpg">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Élevia Nutrition">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -21,12 +31,12 @@
   --sans: 'Outfit', -apple-system, sans-serif;
   --header-h: 72px;
 }
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body { font-family: var(--sans); color: var(--text-dark); background: var(--cream); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { font-family: var(--sans); color: var(--text-dark); background: var(--cream); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 
 /* ===== HEADER ===== */
 .site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
-.header-logo { width: 140px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
+.header-logo { width: 130px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
 .header-logo:hover { opacity: 1; }
 .header-nav { display: flex; align-items: center; gap: 2.4rem; }
 .header-nav a { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; color: var(--cream); text-decoration: none; opacity: 0.65; transition: opacity 0.3s; position: relative; }
@@ -160,7 +170,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 1px solid rgba(198,160,91,0.08); }
-.footer-logo { width: 160px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
+.footer-logo { width: 100px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--text-soft); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
 .footer-links a:hover { color: var(--gold); }
@@ -177,7 +187,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   .site-header { height: 60px; }
-  .header-logo { width: 110px; }
+  .header-logo { width: 95px; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
   .pricing-card.recommended { order: -1; }
   .includes-grid { grid-template-columns: 1fr; }
@@ -278,7 +288,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <p class="pricing-desc">Le plan nutritionnel complet, sans l'app.</p>
       <ul class="pricing-features">
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Plan nutritionnel 100% personnalisé</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Zéro balance — tout en valeurs usuelles</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Zéro balance&nbsp;— tout en valeurs&nbsp;usuelles</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Recettes du mois adaptées</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Support clarification 7 jours</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Communauté WhatsApp</li>
@@ -295,7 +305,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <p class="pricing-desc">Le meilleur équilibre entre plan et suivi.</p>
       <ul class="pricing-features">
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tout du Plan seul</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>App Cockpit — 6 mois d'accès</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>App Cockpit&nbsp;— 6&nbsp;mois d'accès</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Suivi quotidien rapide et intuitif</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Feedback intelligent + bilans hebdo</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Recettes en portions personnalisées</li>
@@ -308,10 +318,10 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="pricing-card" data-reveal>
       <div class="pricing-name">Plan + Cockpit 12 mois</div>
       <div class="pricing-price">229<span class="currency">€</span></div>
-      <p class="pricing-desc">L'engagement long terme pour des résultats durables.</p>
+      <p class="pricing-desc">L'engagement long terme pour des résultats&nbsp;durables.</p>
       <ul class="pricing-features">
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tout du Plan seul</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>App Cockpit — 12 mois d'accès</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>App Cockpit&nbsp;— 12&nbsp;mois d'accès</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Suivi quotidien rapide et intuitif</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Feedback intelligent + bilans hebdo</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Recettes en portions personnalisées</li>
@@ -321,15 +331,15 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     </div>
   </div>
 
-  <p class="pricing-micro">Questionnaire détaillé après paiement · Paiement sécurisé par Stripe · Sans abonnement</p>
-  <p class="pricing-micro" style="margin-top:0.8rem;opacity:0.8">L'app Cockpit est aussi disponible à <strong style="color:var(--gold)">10&nbsp;&euro;/mois</strong> après achat du plan — sans engagement.</p>
+  <p class="pricing-micro">Questionnaire détaillé après paiement · Paiement sécurisé par&nbsp;Stripe · Sans&nbsp;abonnement</p>
+  <p class="pricing-micro" style="margin-top:0.8rem;opacity:0.8">L'app Cockpit est aussi disponible à <strong style="color:var(--gold)">10&nbsp;&euro;/mois</strong> après achat du&nbsp;plan<br>— sans engagement.</p>
 
   <!-- EARLY ACCESS -->
   <div class="early-access" data-reveal>
     <div class="early-access-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
     <div class="early-access-content">
-      <h3>Accès prioritaire — <span class="gold">25 places</span></h3>
-      <p>Groupe WhatsApp dédié · Réponse sous 24h ouvrées · 1 adaptation stratégique incluse · Tarif préférentiel sur les futures offres.</p>
+      <h3>Accès prioritaire&nbsp;— <span class="gold">25&nbsp;places</span></h3>
+      <p>Groupe WhatsApp&nbsp;dédié · Réponse sous&nbsp;24h&nbsp;ouvrées · 1&nbsp;adaptation stratégique&nbsp;incluse · Tarif préférentiel sur les futures&nbsp;offres.</p>
     </div>
   </div>
 </section>
@@ -347,7 +357,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <ul>
         <li>Cibles kcal et macros calculées pour toi</li>
         <li>Système d'équivalences alimentaires</li>
-        <li>Zéro balance — tout en valeurs usuelles et en grammes</li>
+        <li>Zéro balance&nbsp;— tout en valeurs&nbsp;usuelles et en grammes</li>
         <li>Fréquences et quantités adaptées à tes objectifs</li>
         <li>Conseils spécifiques du diététicien</li>
         <li>Design soigné et navigable</li>
@@ -420,39 +430,39 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <div class="faq-list">
     <div class="faq-item">
       <button class="faq-question">Qu'est-ce que j'obtiens exactement ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Un plan nutritionnel PDF interactif créé sur mesure par un diététicien diplômé, avec tes cibles caloriques et macros, un système d'équivalences alimentaires adapté à ton profil, et les recettes du mois (~8 recettes renouvelées). Tu as aussi accès à la communauté WhatsApp Élevia. Si tu choisis une formule avec Cockpit, tu as en plus l'app compagnon pour suivre ton plan au quotidien — rapide, intuitive, pensée pour te prendre le moins de temps possible.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Un plan nutritionnel PDF interactif créé sur mesure par un diététicien diplômé, avec tes cibles caloriques et macros, un système d'équivalences alimentaires adapté à ton profil, et les recettes du mois (~8 recettes renouvelées). Tu as aussi accès à la communauté WhatsApp Élevia. Si tu choisis une formule avec Cockpit, tu as en plus l'app compagnon pour suivre ton plan au quotidien&nbsp;— rapide, intuitive, pensée pour te prendre le moins de temps&nbsp;possible.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">C'est adapté à mon cas ? (allergies, intolérances…)<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Les allergies alimentaires sont prises en compte — le questionnaire les couvre et ton plan est construit en conséquence. Côté régimes et intolérances, je gère : sans lactose, sans gluten, végétarien, pesco-végétarien et flexitarien. Chaque plan est adapté avec des équivalences spécifiques à ton profil. Si tu as un doute sur ta situation, n'hésite pas à me contacter avant de commander.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Les allergies alimentaires sont prises en compte&nbsp;— le questionnaire les couvre et ton plan est construit en&nbsp;conséquence. Côté régimes et intolérances, je gère : sans lactose, sans gluten, végétarien, pesco-végétarien et&nbsp;flexitarien. Chaque plan est adapté avec des équivalences spécifiques à ton&nbsp;profil. Si tu as un doute sur ta situation, n'hésite pas à me contacter avant de&nbsp;commander.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">Combien de temps avant de recevoir mon plan ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Ton plan est livré sous 72 heures ouvrées après réception de ton questionnaire complété. Tu reçois un email avec ton document PDF et les instructions pour démarrer.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Ton plan est livré sous 72&nbsp;heures ouvrées après réception de ton questionnaire&nbsp;complété. Tu reçois un email avec ton document PDF et les instructions pour&nbsp;démarrer.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">C'est quoi l'app Cockpit ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Cockpit est l'app compagnon d'Élevia. Elle transforme ton plan en outil quotidien : tu logges tes repas en quelques secondes avec des unités naturelles (tranches, cuillères, fruits), tu reçois du feedback intelligent, et tu suis ta progression avec des bilans hebdomadaires. Les recettes s'affichent en portions personnalisées pour ton plan. L'app est conçue pour être la plus rapide et intuitive possible — le suivi ne doit jamais devenir une corvée.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Cockpit est l'app compagnon d'Élevia. Elle transforme ton plan en outil quotidien : tu logges tes repas en quelques secondes avec des unités naturelles (tranches, cuillères, fruits), tu reçois du feedback intelligent, et tu suis ta progression avec des bilans hebdomadaires. Les recettes s'affichent en portions personnalisées pour ton plan. L'app est conçue pour être la plus rapide et intuitive possible&nbsp;— le suivi ne doit jamais devenir une&nbsp;corvée.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">Je peux modifier mon plan après ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Ton plan est conçu pour évoluer avec toi. Le système d'équivalences te permet de varier tes repas au quotidien tout en restant dans ton cadre nutritionnel. Si après quelques mois tu changes d'objectif ou que ta situation évolue significativement, une réévaluation complète sera disponible à tarif préférentiel.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Ton plan est conçu pour évoluer avec&nbsp;toi. Le système d'équivalences te permet de varier tes repas au quotidien tout en restant dans ton cadre&nbsp;nutritionnel. Si après quelques mois tu changes d'objectif ou que ta situation évolue significativement, une réévaluation complète sera disponible à tarif&nbsp;préférentiel.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">C'est un abonnement ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Non. C'est un paiement unique. Tu paies une fois et tu reçois ton plan. L'accès à l'app Cockpit est inclus pour la durée choisie (6 ou 12 mois) sans renouvellement automatique.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Non. C'est un paiement&nbsp;unique. Tu paies une fois et tu reçois ton&nbsp;plan. L'accès à l'app Cockpit est inclus pour la durée choisie (6 ou 12&nbsp;mois) sans renouvellement&nbsp;automatique.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">Comment fonctionne le support ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Tu bénéficies d'un support par email 7j/7, de 8h à 20h. Je réponds personnellement sous 24h. Que ce soit pour comprendre une équivalence, adapter un repas ou clarifier une consigne — je suis là pour que tu démarres sereinement et que tu te sentes accompagné dès le premier jour.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Tu bénéficies d'un support par email 7j/7, de 8h à&nbsp;20h. Je réponds personnellement sous&nbsp;24h. Que ce soit pour comprendre une équivalence, adapter un repas ou clarifier une consigne&nbsp;— je suis là pour que tu démarres sereinement et que tu te sentes accompagné dès le premier&nbsp;jour.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">C'est quoi la communauté WhatsApp ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Chaque client Élevia rejoint la communauté WhatsApp — un espace pour poser des questions générales, partager tes avancées et échanger avec d'autres personnes qui suivent le même type de démarche. Ce n'est pas du coaching individuel, mais un cadre bienveillant pour rester motivé. Les 25 premiers clients bénéficient en plus d'un groupe privé avec accès prioritaire au diététicien.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Chaque client Élevia rejoint la communauté WhatsApp&nbsp;— un espace pour poser des questions générales, partager tes avancées et échanger avec d'autres personnes qui suivent le même type de&nbsp;démarche. Ce n'est pas du coaching individuel, mais un cadre bienveillant pour rester&nbsp;motivé. Les 25&nbsp;premiers clients bénéficient en plus d'un groupe privé avec accès prioritaire au&nbsp;diététicien.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-question">Vous êtes diététicien diplômé ?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Oui. Élevia est créé par un diététicien diplômé en Belgique, inscrit au registre professionnel. Chaque plan est construit selon les recommandations nutritionnelles validées, avec une approche personnalisée basée sur ton profil réel.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Oui. Élevia est créé par un diététicien diplômé en Belgique, inscrit au registre&nbsp;professionnel. Chaque plan est construit selon les recommandations nutritionnelles validées, avec une approche personnalisée basée sur ton profil&nbsp;réel.</div></div>
     </div>
   </div>
 </div></section>
@@ -460,9 +470,9 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- CTA FINAL -->
 <section class="section-cta"><div class="section-inner" style="position:relative;z-index:1">
   <h2 class="cta-headline" data-reveal>Prêt à commencer <em>maintenant</em> ?</h2>
-  <p class="cta-sub" data-reveal>Questionnaire détaillé · Plan en 72h · Résultats durables</p>
+  <p class="cta-sub" data-reveal>Questionnaire&nbsp;détaillé · Plan en&nbsp;72h · Résultats&nbsp;durables</p>
   <a href="#" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
-  <p class="cta-trust" data-reveal>Paiement unique · Sans abonnement · Données 100% privées</p>
+  <p class="cta-trust" data-reveal>Paiement&nbsp;unique · Sans&nbsp;abonnement · Données&nbsp;100%&nbsp;privées</p>
 </div></section>
 
 <!-- FOOTER -->

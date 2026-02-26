@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Le Système — Élevia Nutrition</title>
 <meta name="description" content="Pourquoi Élevia est différent. Un système propriétaire en 3 couches : plan personnalisé, app compagnon Cockpit, cadre de suivi par un diététicien diplômé.">
+<link rel="canonical" href="https://www.elevianutrition.com/systeme.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Le Système — Élevia Nutrition">
+<meta property="og:description" content="Pourquoi Élevia est différent. Un système propriétaire en 3 couches : plan personnalisé, app compagnon Cockpit, cadre de suivi par un diététicien diplômé.">
+<meta property="og:url" content="https://www.elevianutrition.com/systeme.html">
+<meta property="og:image" content="https://www.elevianutrition.com/og-image.jpg">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Élevia Nutrition">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -22,12 +32,12 @@
   --header-h: 72px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body { font-family: var(--sans); color: var(--text-dark); background: var(--cream); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { font-family: var(--sans); color: var(--text-dark); background: var(--cream); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 
 /* ===== HEADER ===== */
 .site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
-.header-logo { width: 140px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
+.header-logo { width: 130px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
 .header-logo:hover { opacity: 1; }
 .header-nav { display: flex; align-items: center; gap: 2.4rem; }
 .header-nav a { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; color: var(--cream); text-decoration: none; opacity: 0.65; transition: opacity 0.3s; position: relative; }
@@ -152,7 +162,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 1px solid rgba(198,160,91,0.08); }
-.footer-logo { width: 160px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
+.footer-logo { width: 100px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--text-soft); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
 .footer-links a:hover { color: var(--gold); }
@@ -164,7 +174,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   .site-header { height: 60px; }
-  .header-logo { width: 110px; }
+  .header-logo { width: 95px; }
   .contrast-block { flex-direction: column; }
   .contrast-chaos { border-radius: 16px 16px 0 0; border-right: 1px solid rgba(255,255,255,0.05); border-bottom: none; }
   .contrast-arrow-col { width: 100%; padding: 0.8rem 0; justify-content: center; }
@@ -232,7 +242,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <section class="sys-hero">
   <p class="section-label" data-reveal>Le système</p>
   <h1 data-reveal>Pourquoi 90% des régimes<br><em>échouent</em>.</h1>
-  <p class="hero-body" data-reveal>Plans figés trouvés en ligne, portions copiées-collées, aucune adaptation à ton quotidien. Tu suis un cadre qui n'a pas été pensé pour toi — et quand les résultats ne viennent pas, c'est toi qui culpabilises.</p>
+  <p class="hero-body" data-reveal>Plans figés trouvés en ligne, portions copiées-collées, aucune adaptation à ton quotidien. Tu suis un cadre qui n'a pas été pensé pour toi&nbsp;— et quand les résultats ne viennent pas, c'est toi qui&nbsp;culpabilises.</p>
 
   <div class="contrast-block" data-reveal>
     <div class="contrast-side contrast-chaos">
@@ -262,8 +272,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <div class="response-content">
     <p class="section-label" data-reveal>La réponse</p>
     <h2 class="section-headline" data-reveal>Structure + liberté.<br><em>C'est possible.</em></h2>
-    <p class="response-body" data-reveal>Élevia repose sur un système d'équivalences alimentaires. Ton plan te donne une structure claire — combien manger, à quelle fréquence, avec quels repères. Les équivalences rendent le suivi simple et naturel : tu sais exactement quoi choisir sans te perdre dans les calculs. Et à l'intérieur de ce cadre, tu gardes ta liberté — pas de menu imposé, pas de rigidité.</p>
-    <p class="response-body" data-reveal>Tu n'as jamais besoin de peser quoi que ce soit. Tout est exprimé en valeurs usuelles — tranches, cuillères, portions — avec les grammes correspondants si tu veux plus de précision. La balance reste dans le placard.</p>
+    <p class="response-body" data-reveal>Élevia repose sur un système d'équivalences alimentaires. Ton plan te donne une structure claire — combien manger, à quelle fréquence, avec quels repères. Les équivalences rendent le suivi simple et naturel : tu sais exactement quoi choisir sans te perdre dans les calculs. Et à l'intérieur de ce cadre, tu gardes ta liberté&nbsp;— pas de menu imposé, pas de&nbsp;rigidité.</p>
+    <p class="response-body" data-reveal>Tu n'as jamais besoin de peser quoi que ce soit. Tout est exprimé en valeurs usuelles — tranches, cuillères, portions — avec les grammes correspondants si tu veux plus de précision. La balance reste dans le&nbsp;placard.</p>
     <div class="response-highlight" data-reveal>
       Les équivalences rendent tout <em>simple</em>.<br>La structure te donne la <em>liberté</em>.
     </div>
@@ -284,7 +294,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <ul class="layer-features">
         <li>Cibles kcal et macros personnalisées</li>
         <li>Système d'équivalences alimentaires</li>
-        <li>Tout en valeurs usuelles — zéro balance</li>
+        <li>Tout en valeurs usuelles&nbsp;— zéro&nbsp;balance</li>
         <li>Recettes du mois adaptées</li>
         <li>Design soigné et navigable</li>
       </ul>
@@ -333,7 +343,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <ul class="premium-list">
         <li>De templates génériques copiés d'un client à l'autre</li>
         <li>De plans générés par IA sans expertise nutritionnelle derrière</li>
-        <li>De menus figés impossibles à adapter à ton quotidien</li>
+        <li>Des menus figés impossibles à adapter à ton quotidien</li>
         <li>De coaching Instagram avec des promesses irréalistes</li>
         <li>De suivi basé sur la pesée obsessionnelle des aliments</li>
       </ul>
@@ -344,8 +354,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
         <li>Des calculs personnalisés pour chaque profil, par un diététicien diplômé</li>
         <li>Un système d'équivalences pensé pour rendre le suivi simple et naturel au quotidien</li>
         <li>Une app compagnon conçue sur mesure pour exécuter ton plan</li>
-        <li>Un cadre conçu pour que suivre un plan alimentaire ne soit jamais un poids — tes objectifs, sans pression</li>
-        <li>Un design soigné à chaque étape — du PDF à l'app</li>
+        <li>Un cadre conçu pour que suivre un plan alimentaire ne soit jamais un poids&nbsp;— tes objectifs, sans&nbsp;pression</li>
+        <li>Un design soigné à chaque étape&nbsp;— du PDF à&nbsp;l'app</li>
       </ul>
     </div>
   </div>
@@ -361,9 +371,9 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- CTA FINAL -->
 <section class="section-cta"><div class="section-inner" style="position:relative;z-index:1">
   <h2 class="cta-headline" data-reveal>Prêt à découvrir <em>ton plan</em> ?</h2>
-  <p class="cta-sub" data-reveal>Construit par un diététicien · Livré sous 72h · Résultats durables</p>
+  <p class="cta-sub" data-reveal>Construit par un diététicien · Livré sous&nbsp;72h · Résultats&nbsp;durables</p>
   <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
-  <p class="cta-trust" data-reveal>Diététicien diplômé · Paiement unique · Données 100% privées</p>
+  <p class="cta-trust" data-reveal>Diététicien diplômé · Paiement unique · Données&nbsp;100%&nbsp;privées</p>
 </div></section>
 
 <!-- FOOTER -->

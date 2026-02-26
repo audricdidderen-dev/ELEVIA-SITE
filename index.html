@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Élevia — La nutrition qui te ressemble</title>
 <meta name="description" content="Plans nutritionnels sur mesure par un diététicien diplômé. Système d'équivalences alimentaires + app compagnon. Résultats durables dès 89€.">
-<link rel="canonical" href="https://elevia.be/">
+<link rel="canonical" href="https://www.elevianutrition.com/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Élevia — La nutrition qui te ressemble">
 <meta property="og:description" content="Plans nutritionnels sur mesure par un diététicien diplômé. Système d'équivalences alimentaires + app compagnon. Résultats durables dès 89€.">
-<meta property="og:url" content="https://elevia.be/">
-<meta property="og:image" content="https://elevia.be/og-image.jpg">
+<meta property="og:url" content="https://www.elevianutrition.com/">
+<meta property="og:image" content="https://www.elevianutrition.com/og-image.jpg">
 <meta property="og:locale" content="fr_BE">
 <meta property="og:site_name" content="Élevia Nutrition">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Élevia — La nutrition qui te ressemble">
 <meta name="twitter:description" content="Plans nutritionnels sur mesure par un diététicien diplômé. Résultats durables dès 89€.">
-<meta name="twitter:image" content="https://elevia.be/og-image.jpg">
+<meta name="twitter:image" content="https://www.elevianutrition.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -38,13 +38,13 @@
   --sans: 'Outfit', -apple-system, sans-serif;
   --header-h: 72px;
 }
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body { font-family: var(--sans); color: var(--text-dark); background: var(--navy); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { font-family: var(--sans); color: var(--text-dark); background: var(--navy); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 
 /* ===== HEADER ===== */
 .site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: transparent; transition: background 0.4s, box-shadow 0.4s, backdrop-filter 0.4s; }
 .site-header.scrolled { background: rgba(14, 30, 46, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
-.header-logo { width: 140px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
+.header-logo { width: 130px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
 .header-logo:hover { opacity: 1; }
 .header-nav { display: flex; align-items: center; gap: 2.4rem; }
 .header-nav a { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; color: var(--cream); text-decoration: none; opacity: 0.75; transition: opacity 0.3s, color 0.3s; position: relative; }
@@ -222,7 +222,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; border-top: 1px solid rgba(198,160,91,0.08); }
-.footer-logo { width: 160px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
+.footer-logo { width: 100px; height: auto; margin-bottom: 1.2rem; opacity: 0.5; }
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--text-soft); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
 .footer-links a:hover { color: var(--gold); }
@@ -260,6 +260,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .pricing-teaser-card:nth-child(3) { grid-column: 1 / -1; max-width: 340px; margin: 0 auto; }
 }
 @media (max-width: 768px) {
+  .hero-sub { letter-spacing: 0.1em; font-size: 0.72rem; }
+  .hero-sub span { margin: 0 0.5em; }
   .section-headline { font-size: clamp(1.65rem, 4.5vw, 3.8rem); }
   .method-grid { grid-template-columns: 1fr; }
   .app-features { grid-template-columns: 1fr; }
@@ -273,7 +275,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .mobile-nav { display: flex; }
   .sticky-cta-mobile { display: block; }
   .site-header { height: 60px; }
-  .header-logo { width: 110px; }
+  .header-logo { width: 95px; }
   .footer-links { gap: 1rem; }
   .footer-links a { padding: 0.4rem 0.2rem; }
   main { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
@@ -328,7 +330,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   "@type": "ProfessionalService",
   "name": "Élevia Nutrition",
   "description": "Plans nutritionnels sur mesure par un diététicien diplômé. Système d'équivalences alimentaires + application compagnon.",
-  "url": "https://elevia.be",
+  "url": "https://www.elevianutrition.com",
   "areaServed": "BE",
   "serviceType": "Diététique et nutrition personnalisée",
   "priceRange": "89€ - 229€",
@@ -406,7 +408,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <div class="anim-line" style="left:92%; animation-delay: -1s;"></div>
   <div class="hero-content">
     <h1 class="hero-tagline">La nutrition qui <em>te</em> ressemble</h1>
-    <p class="hero-sub">Plans sur mesure <span>·</span> Suivi intelligent <span>·</span> Résultats durables</p>
+    <p class="hero-sub">Plans&nbsp;sur&nbsp;mesure <span>·</span> Suivi&nbsp;intelligent <span>·</span> Résultats&nbsp;durables</p>
   </div>
   <a href="#constat" class="hero-scroll"><span class="hero-scroll-text">Découvrir</span><div class="hero-scroll-line"></div></a>
 </section>
@@ -421,8 +423,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <section class="section-problem"><div class="section-inner">
   <p class="section-label" data-reveal>Le constat</p>
   <h2 class="section-headline" data-reveal>Les plans génériques <em>échouent</em>.<br>Toujours.</h2>
-  <p class="section-body" data-reveal>Copier un plan trouvé en ligne, suivre des portions standards, appliquer des conseils sans contexte — ça ne fonctionne pas.</p>
-  <p class="section-body" data-reveal style="margin-top: 1.2rem;">Que tu veuilles perdre du poids, prendre du muscle ou mieux manger, ton métabolisme, ton quotidien et tes objectifs ne sont pas ceux de quelqu'un d'autre. Tu mérites un plan conçu <strong>pour toi</strong>, par un professionnel qui comprend ta réalité.</p>
+  <p class="section-body" data-reveal>Copier un plan trouvé en ligne, suivre des portions standards, appliquer des conseils sans contexte&nbsp;— ça ne fonctionne&nbsp;pas.</p>
+  <p class="section-body" data-reveal style="margin-top: 1.2rem;">Que tu veuilles perdre du poids, prendre du muscle ou mieux manger, ton métabolisme, ton quotidien et tes objectifs ne sont pas ceux de quelqu'un d'autre. Tu mérites un plan conçu <strong>pour&nbsp;toi</strong>, par un professionnel qui comprend ta&nbsp;réalité.</p>
 </div></section>
 
 <!-- METHOD -->
@@ -431,10 +433,10 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <h2 class="section-headline" data-reveal>Un plan <em>sur mesure</em>.<br>Par un diététicien diplômé.</h2>
   <p class="section-body" data-reveal>Élevia, c'est un système d'équivalences alimentaires qui te donne de la structure sans t'enfermer. Tu choisis ce que tu manges, l'app s'assure que ton plan reste respecté.</p>
   <div class="method-grid">
-    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>Personnalisé</h3><p>Un questionnaire approfondi, un plan ajusté à ton profil, des conseils calibrés sur tes habitudes réelles. Rien de générique — chaque détail est pensé pour toi.</p></div>
-    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><h3>Structuré</h3><p>Des équivalences claires, des repères hebdomadaires, un cadre qui te guide sans te contraindre. La semaine est ta boussole, le plan ta carte.</p></div>
+    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>Personnalisé</h3><p>Un questionnaire approfondi, un plan ajusté à ton profil, des conseils calibrés sur tes habitudes réelles. Rien de générique&nbsp;— chaque détail est pensé pour&nbsp;toi.</p></div>
+    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><h3>Structuré</h3><p>Des équivalences claires, des repères hebdomadaires, un cadre qui te guide sans te&nbsp;contraindre. La semaine est ta boussole, le plan ta&nbsp;carte.</p></div>
     <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><h3>Flexible</h3><p>Organise ta semaine comme tu le sens. L'app s'adapte à ton rythme et te guide même dans les situations complexes : restos, apéros, imprévus.</p></div>
-    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Progressif</h3><p>Chaque recette, chaque conseil, chaque bilan te rapproche de l'autonomie. Sans t'en rendre compte, tu apprends à maîtriser ta nutrition.</p></div>
+    <div class="method-card" data-reveal><div class="method-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Progressif</h3><p>Chaque recette, chaque conseil, chaque bilan te rapproche de l'autonomie. Sans t'en rendre compte, tu apprends à maîtriser ta&nbsp;nutrition.</p></div>
   </div>
 </div></section>
 
@@ -465,13 +467,13 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <section class="section-app" id="cockpit"><div class="section-inner">
   <p class="section-label" data-reveal>L'application</p>
   <h2 class="section-headline" data-reveal>Ton plan <em>prend vie</em>.</h2>
-  <p class="section-body" data-reveal>L'app Élevia transforme ton plan en compagnon quotidien.</p>
+  <p class="section-body" data-reveal>L'app Élevia transforme ton plan en compagnon&nbsp;quotidien.</p>
   <div class="divider-gold" style="max-width:60px;margin:2rem 0;opacity:0.4" data-reveal></div>
-  <p class="section-body" data-reveal>Suivi en quelques secondes, feedback intelligent, conseils personnalisés — tout ce qu'il faut pour rester sur la bonne voie.</p>
+  <p class="section-body" data-reveal>Suivi en quelques secondes, feedback intelligent, conseils personnalisés&nbsp;— tout ce qu'il faut pour rester sur la bonne&nbsp;voie.</p>
   <div class="app-features">
-    <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div class="feature-text"><h4>Suivi en un tap</h4><p>Logge tes repas avec des unités naturelles : tranches, cuillères, fruits. Pas de pesée, pas de calculs.</p></div></div>
+    <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><div class="feature-text"><h4>Suivi en un tap</h4><p>Logge tes repas avec des unités naturelles : tranches, cuillères, fruits. Pas de pesée, pas de&nbsp;calculs.</p></div></div>
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feature-text"><h4>Feedback intelligent</h4><p>L'app te guide sans te juger. Alertes bienveillantes, bilans hebdomadaires, conseils liés à tes habitudes réelles.</p></div></div>
-    <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><div class="feature-text"><h4>Recettes personnalisées</h4><p>Chaque recette s'adapte automatiquement à tes portions. Les grammes affichés sont les tiens — pas ceux d'un plan générique.</p></div></div>
+    <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div><div class="feature-text"><h4>Recettes personnalisées</h4><p>Chaque recette s'adapte automatiquement à tes portions. Les grammes affichés sont les tiens&nbsp;— pas ceux d'un plan&nbsp;générique.</p></div></div>
     <div class="app-feature" data-reveal><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="feature-text"><h4>Suivi & progrès</h4><p>Poids, tour de taille, composition corporelle. Des courbes claires pour visualiser ta progression dans le temps.</p></div></div>
   </div>
 </div></section>
@@ -482,9 +484,9 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <h2 class="section-headline" data-reveal>Un plan qui fait honneur<br>à <em>tes objectifs</em>.</h2>
   <p class="section-body" data-reveal>Chaque plan Élevia est un document soigné : structure claire, équivalences détaillées, recettes adaptées. Un outil que tu auras envie d'ouvrir chaque jour.</p>
   <div class="plans-showcase">
-    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Plan nutritionnel</div><div><div class="plan-title">Un document<br>moderne & navigable</div><div class="plan-line"></div><div class="plan-desc">Équivalences, portions, cibles kcal et macros — un plan interactif conçu pour être utilisé, pas rangé dans un tiroir.</div></div></div></div>
+    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Plan nutritionnel</div><div><div class="plan-title">Un document<br>moderne & navigable</div><div class="plan-line"></div><div class="plan-desc">Équivalences, portions, cibles kcal et macros — un plan interactif conçu pour être utilisé, pas rangé dans un&nbsp;tiroir.</div></div></div></div>
     <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Recettes du mois</div><div><div class="plan-title">Des idées qui<br>s'adaptent à toi</div><div class="plan-line"></div><div class="plan-desc">Recettes en équivalences. L'app convertit en grammes personnalisés pour ton plan.</div></div></div></div>
-    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Application</div><div><div class="plan-title">Ton compagnon<br>au quotidien</div><div class="plan-line"></div><div class="plan-desc">Suivi, feedback, conseils, bilans — ton plan prend vie dans ta poche.</div></div></div></div>
+    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Application</div><div><div class="plan-title">Ton compagnon<br>au quotidien</div><div class="plan-line"></div><div class="plan-desc">Suivi, feedback, conseils, bilans&nbsp;— ton plan prend vie dans ta&nbsp;poche.</div></div></div></div>
   </div>
 </div></section>
 
@@ -502,12 +504,12 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
       <span class="pricing-rec-badge">Recommandé</span>
       <div class="pricing-teaser-name">Plan + Cockpit 6 mois</div>
       <div class="pricing-teaser-price">169<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 6 mois · Le meilleur équilibre</p>
+      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 6&nbsp;mois · Le&nbsp;meilleur&nbsp;équilibre</p>
     </div>
     <div class="pricing-teaser-card" data-reveal>
       <div class="pricing-teaser-name">Plan + Cockpit 12 mois</div>
       <div class="pricing-teaser-price">229<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 12 mois · Engagement long terme</p>
+      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 12&nbsp;mois · Engagement long&nbsp;terme</p>
     </div>
   </div>
   <p class="pricing-teaser-note" data-reveal>L'app Cockpit est aussi disponible à <span>10€/mois</span> après achat du plan — sans engagement.</p>
@@ -517,9 +519,9 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <!-- CTA -->
 <section class="section-cta"><div class="section-inner section-cta-inner">
   <h2 class="cta-headline" data-reveal>Prêt à transformer<br>ta <em>nutrition</em> ?</h2>
-  <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure · Accompagnement continu</p>
+  <p class="cta-sub" data-reveal>Analyse de profil · Plan sur mesure · Accompagnement&nbsp;continu</p>
   <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
-  <p class="cta-trust" data-reveal>Créé par un diététicien diplômé · Données 100% privées · Sans engagement</p>
+  <p class="cta-trust" data-reveal>Créé par un diététicien diplômé · Données&nbsp;100%&nbsp;privées · Sans&nbsp;engagement</p>
 </div></section>
 
 </main>
@@ -537,6 +539,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <script>
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');if(x.target.hasAttribute('data-countup')){const n=x.target.querySelector('[data-target]');if(n){const t=parseInt(n.dataset.target);n.textContent='0';const d=1200,s=performance.now();const pn=x.target.querySelector('.proof-number');const a=now=>{const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);n.textContent=Math.round(t*ease);if(p<1)requestAnimationFrame(a);else if(pn)pn.classList.add('pulse-done')};requestAnimationFrame(a)}}ro.unobserve(x.target)}})},{threshold:0.2});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
+/* Fallback scroll reveal for environments where IntersectionObserver may not fire (e.g. DevTools responsive) */
+window.addEventListener('scroll',function(){document.querySelectorAll('.scroll-word:not(.revealed),[data-reveal]:not(.revealed)').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight*0.85&&r.bottom>0)el.classList.add('revealed')})},{passive:true});
 window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
 const header=document.getElementById('siteHeader');
 window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>80)},{passive:true});
