@@ -526,12 +526,12 @@
       <a href="/contact.html" class="active">Contact</a>
       <a href="/offre.html" class="header-cta">Recevoir mon plan en 72h</a>
     </nav>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </header>
 
-  <nav class="mobile-nav" id="mobileNav">
+  <nav class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu de navigation">
     <a href="/" data-nav>Accueil</a>
     <a href="/systeme.html" data-nav>Le Système</a>
     <a href="/offre.html" data-nav>Offre</a>
@@ -771,6 +771,7 @@
       document.body.style.overflow = isOpen ? 'hidden' : '';
       hamburger.setAttribute('aria-expanded', isOpen);
     });
+    document.querySelectorAll('[data-nav]').forEach(a=>{a.addEventListener('click',()=>{hamburger.classList.remove('active');mobileNav.classList.remove('open');document.body.style.overflow=''})});
 
     // ── Reveal animations ──
     const revealEls = document.querySelectorAll('[data-reveal]');

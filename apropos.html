@@ -571,9 +571,9 @@
     <a href="/contact.html">Contact</a>
     <a href="/offre.html" class="header-cta">Recevoir mon plan en 72h</a>
   </nav>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
-<nav class="mobile-nav" id="mobileNav">
+<nav class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu de navigation">
   <a href="/" data-nav>Accueil</a>
   <a href="/systeme.html" data-nav>Le Système</a>
   <a href="/offre.html" data-nav>Offre</a>
@@ -762,6 +762,7 @@
         /* Hamburger */
         const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
         hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');mobileNav.classList.toggle('open');const isOpen=mobileNav.classList.contains('open');document.body.style.overflow=isOpen?'hidden':'';hamburger.setAttribute('aria-expanded',isOpen)});
+        document.querySelectorAll('[data-nav]').forEach(a=>{a.addEventListener('click',()=>{hamburger.classList.remove('active');mobileNav.classList.remove('open');document.body.style.overflow=''})});
 
         /* Scroll Progress */
         window.addEventListener('scroll', () => {
