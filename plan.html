@@ -86,9 +86,14 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .showcase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; max-width: 1140px; margin: 0 auto; align-items: start; }
 .showcase-item { opacity: 0; transform: translateY(30px); }
 .showcase-item:nth-child(2) { margin-top: 1.5rem; }
-.showcase-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; }
+.showcase-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; position: relative; cursor: zoom-in; }
 .showcase-frame:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(198,160,91,0.12), 0 8px 20px rgba(0,0,0,0.08); }
-.showcase-frame img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.showcase-frame img { display: block; width: 100%; height: auto; }
+.showcase-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,30,46,0.45) 0%, transparent 40%); opacity: 0; transition: opacity 0.35s; pointer-events: none; }
+.showcase-frame:hover::after { opacity: 1; }
+.showcase-zoom { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; font-family: var(--sans); font-size: 0.68rem; font-weight: 400; color: var(--cream); opacity: 0; transition: opacity 0.35s; z-index: 1; pointer-events: none; letter-spacing: 0.04em; }
+.showcase-zoom svg { width: 14px; height: 14px; stroke: var(--cream); fill: none; stroke-width: 1.5; }
+.showcase-frame:hover .showcase-zoom { opacity: 0.9; }
 
 /* ===== LIGHTBOX ===== */
 .lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-out; }
@@ -211,6 +216,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="showcase-item" data-reveal>
       <div class="showcase-frame">
         <img src="/images/plan-summary-pw.png" alt="Résumé du plan Perte de poids">
+        <span class="showcase-zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>Agrandir</span>
       </div>
       <div class="showcase-caption">
         <h3>Perte de poids</h3>
@@ -220,6 +226,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="showcase-item" data-reveal>
       <div class="showcase-frame">
         <img src="/images/plan-sommaire.png" alt="Sommaire interactif du plan">
+        <span class="showcase-zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>Agrandir</span>
       </div>
       <div class="showcase-caption">
         <h3>Navigation</h3>
@@ -229,6 +236,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="showcase-item" data-reveal>
       <div class="showcase-frame">
         <img src="/images/plan-summary-gain.png" alt="Résumé du plan Prise de masse sèche">
+        <span class="showcase-zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>Agrandir</span>
       </div>
       <div class="showcase-caption">
         <h3>Prise de masse</h3>
