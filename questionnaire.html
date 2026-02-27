@@ -97,6 +97,29 @@ input, select, textarea { font-family: inherit; }
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
   margin-bottom: 0.6rem;
 }
+.step-icon {
+  font-size: 2rem; margin-bottom: 0.4rem; display: block;
+  animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes bounceIn {
+  from { opacity: 0; transform: scale(0.5) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.step-encourage {
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 400;
+  color: var(--gold); margin-bottom: 1.5rem; font-style: italic;
+  opacity: 0; animation: fadeSlide 0.5s ease 0.2s forwards;
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.progress-pct {
+  position: fixed; top: var(--header-h); right: clamp(1rem, 3vw, 2rem);
+  height: 3px; line-height: 3px; z-index: 1002;
+  font-family: var(--sans); font-size: 0.65rem; font-weight: 500;
+  color: var(--gold); padding: 4px 0 0;
+}
 
 /* ═══════════════════════════════════════
    STEP TITLE
@@ -382,6 +405,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
 <!-- Progress -->
 <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+<div class="progress-pct" id="progressPct"></div>
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
@@ -394,8 +418,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
 <!-- Main questionnaire (hidden until params validated) -->
 <div class="q-main" id="qMain" style="display:none;">
+  <span class="step-icon" id="stepIcon"></span>
   <div class="step-indicator" id="stepIndicator"></div>
   <h2 class="step-title" id="stepTitle"></h2>
+  <p class="step-encourage" id="stepEncourage"></p>
   <div class="step-card" id="stepCard"></div>
   <div class="step-nav">
     <button class="btn-back" id="btnBack" style="visibility:hidden;">&#8592; Retour</button>
@@ -469,7 +495,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 1: Toi
     steps.push({
-      id: 'toi', title: 'Toi',
+      id: 'toi', title: 'Parle-nous de <em>toi</em>', icon: '\uD83D\uDC4B',
       fields: [
         { name: 'lastname', type: 'text', label: 'Nom', required: true, placeholder: 'Dumont' },
         { name: 'firstname', type: 'text', label: 'Prenom', required: true, placeholder: 'Lucas' },
@@ -490,7 +516,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 2: Tes mesures
     steps.push({
-      id: 'mesures', title: 'Tes <em>mesures</em>',
+      id: 'mesures', title: 'Tes <em>mesures</em>', icon: '\uD83D\uDCCF',
       fields: [
         { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', help: 'Mesure a hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains parametres.' },
         { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', help: 'Tour de hanches au plus large. Mesure optionnelle.' },
@@ -500,7 +526,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 3: Ton activite
     steps.push({
-      id: 'activite', title: 'Ton <em>activite</em>',
+      id: 'activite', title: 'Ton <em>activite</em>', icon: '\uD83C\uDFC3',
       fields: [
         { name: 'job_activity', type: 'radio', label: 'Activite professionnelle', required: true, options: [
           { label: 'Tres sedentaire (bureau, teletravail)', value: 'sedentary' },
@@ -526,7 +552,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 4: Objectifs musculaires (conditional)
     steps.push({
-      id: 'muscle_gain', title: 'Objectifs <em>musculaires</em>',
+      id: 'muscle_gain', title: 'Objectifs <em>musculaires</em>', icon: '\uD83D\uDCAA',
       condition: function() { return v('primary_goal') === 'muscle_gain'; },
       fields: [
         { name: 'mg_training_type', type: 'radio', label: 'Type d\'entrainement', options: [
@@ -592,7 +618,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 5: Ton alimentation
     steps.push({
-      id: 'alimentation', title: 'Ton <em>alimentation</em>',
+      id: 'alimentation', title: 'Ton <em>alimentation</em>', icon: '\uD83E\uDD57',
       fields: [
         { name: 'diet_profile', type: 'radio', label: 'Profil alimentaire', required: true, options: [
           { label: 'Omnivore \u2014 je mange de tout', value: 'omnivore' },
@@ -700,7 +726,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 6: Tes boissons
     steps.push({
-      id: 'boissons', title: 'Tes <em>boissons</em>',
+      id: 'boissons', title: 'Tes <em>boissons</em>', icon: '\u2615',
       fields: [
         { name: 'alcohol_freq', type: 'radio', label: 'Frequence de consommation d\'alcool', required: true, options: [
           { label: 'Jamais', value: 'never' },
@@ -782,7 +808,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 7: Tes habitudes
     steps.push({
-      id: 'habitudes', title: 'Tes <em>habitudes</em>',
+      id: 'habitudes', title: 'Tes <em>habitudes</em>', icon: '\uD83D\uDDD3\uFE0F',
       fields: [
         { name: 'spread_habit_global', type: 'radio', label: 'Garnitures a tartiner (beurre, confiture\u2026)', required: true, options: [
           { label: 'Oui, uniquement au petit-dejeuner', value: 'breakfast_only' },
@@ -814,7 +840,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 8: Ton petit-dejeuner
     steps.push({
-      id: 'petitdej', title: 'Ton <em>petit-dejeuner</em>',
+      id: 'petitdej', title: 'Ton <em>petit-dejeuner</em>', icon: '\uD83E\uDD50',
       fields: [
         { name: 'has_breakfast', type: 'radio', label: 'Prends-tu un petit-dejeuner ?', required: true, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
@@ -870,7 +896,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 9: Ton repas froid
     steps.push({
-      id: 'repasfroid', title: 'Ton <em>repas froid</em>',
+      id: 'repasfroid', title: 'Ton <em>repas froid</em>', icon: '\uD83E\uDD6A',
       fields: [
         { name: 'lunch_mode', type: 'radio', label: 'Format habituel du repas froid', required: true, options: [
           { label: 'Sandwich ou tartines', value: 'sandwich' },
@@ -921,7 +947,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 10: Repas du soir + Toi et la nourriture
     steps.push({
-      id: 'soir', title: 'Ton <em>repas du soir</em>',
+      id: 'soir', title: 'Ton <em>repas du soir</em>', icon: '\uD83C\uDF7D\uFE0F',
       fields: [
         // Soupe & collation
         { name: '_section_soupe', type: 'section', label: 'Soupe & collation' },
@@ -1029,9 +1055,28 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     if (!step) return;
 
     // Progress
-    el('progressBar').style.width = ((currentStep + 1) / totalSteps * 100) + '%';
+    var pct = Math.round((currentStep + 1) / totalSteps * 100);
+    el('progressBar').style.width = pct + '%';
+    el('progressPct').textContent = pct + '%';
     el('stepIndicator').textContent = 'Etape ' + (currentStep + 1) + ' sur ' + totalSteps;
+    el('stepIcon').textContent = step.icon || '';
     el('stepTitle').innerHTML = step.title;
+
+    // Encouragement messages
+    var encouragements = [
+      'C\'est parti !',
+      'Super, on continue.',
+      'Tu avances bien !',
+      'On est sur la bonne voie.',
+      'Deja la moitie, bravo !',
+      'Plus que quelques etapes.',
+      'On approche de la fin !',
+      'Encore un petit effort.',
+      'Derniere ligne droite !',
+      'C\'est presque fini !'
+    ];
+    var encIdx = Math.min(currentStep, encouragements.length - 1);
+    el('stepEncourage').textContent = encouragements[encIdx];
 
     // Buttons
     el('btnBack').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
@@ -1045,7 +1090,11 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     for (var i = 0; i < fields.length; i++) {
       html += renderField(fields[i]);
     }
-    el('stepCard').innerHTML = html;
+    var card = el('stepCard');
+    card.style.animation = 'none';
+    card.offsetHeight; // force reflow
+    card.style.animation = '';
+    card.innerHTML = html;
 
     // Bind events
     bindFieldEvents();
