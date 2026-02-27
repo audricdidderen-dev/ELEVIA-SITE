@@ -103,7 +103,7 @@ input, select, textarea { font-family: inherit; }
 ═══════════════════════════════════════ */
 .step-title {
   font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 300; color: var(--cream); margin-bottom: 2rem;
+  font-weight: 400; color: var(--navy); margin-bottom: 2rem;
   line-height: 1.2;
 }
 .step-title em { font-style: italic; color: var(--gold); }
@@ -112,10 +112,10 @@ input, select, textarea { font-family: inherit; }
    GLASS CARD
 ═══════════════════════════════════════ */
 .step-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(198,160,91,0.1);
+  background: var(--white);
+  border: 1px solid var(--border-soft);
   border-radius: 20px; padding: clamp(1.5rem, 4vw, 2.5rem);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
   animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @keyframes cardIn {
@@ -131,8 +131,8 @@ input, select, textarea { font-family: inherit; }
 .field-group.hidden { display: none; }
 
 .field-label {
-  display: block; font-size: 0.82rem; font-weight: 400;
-  color: var(--cream); letter-spacing: 0.03em; margin-bottom: 0.5rem;
+  display: block; font-size: 0.82rem; font-weight: 500;
+  color: var(--navy); letter-spacing: 0.03em; margin-bottom: 0.5rem;
 }
 .field-label .req { color: var(--gold); margin-left: 2px; }
 
@@ -144,16 +144,16 @@ input, select, textarea { font-family: inherit; }
 /* Text / Number inputs */
 .field-input {
   width: 100%; padding: 12px 16px;
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(198,160,91,0.15);
+  background: var(--white); border: 1px solid #D5D0C7;
   border-radius: 10px; font-family: var(--sans); font-size: 0.92rem;
-  font-weight: 300; color: var(--cream); outline: none;
+  font-weight: 300; color: var(--text-dark); outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
   -webkit-appearance: none; appearance: none;
 }
-.field-input::placeholder { color: var(--text-soft); opacity: 0.5; }
+.field-input::placeholder { color: var(--text-muted); opacity: 0.6; }
 .field-input:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(198,160,91,0.12);
+  box-shadow: 0 0 0 3px rgba(198,160,91,0.15);
 }
 
 /* Textarea */
@@ -173,19 +173,19 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 .radio-card {
   display: flex; align-items: center; gap: 0.75rem;
   padding: 12px 16px; border-radius: 12px;
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(198,160,91,0.1);
+  background: var(--white); border: 1px solid #D5D0C7;
   cursor: pointer; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
   position: relative;
 }
-.radio-card:hover { border-color: rgba(198,160,91,0.3); background: rgba(255,255,255,0.05); }
+.radio-card:hover { border-color: var(--gold-pale); background: rgba(198,160,91,0.04); }
 .radio-card.selected {
-  border-color: var(--gold); background: rgba(198,160,91,0.08);
+  border-color: var(--gold); background: rgba(198,160,91,0.06);
   box-shadow: 0 0 0 1px var(--gold);
 }
 .radio-card input { position: absolute; opacity: 0; width: 0; height: 0; }
 .radio-dot {
   width: 18px; height: 18px; min-width: 18px; border-radius: 50%;
-  border: 2px solid rgba(198,160,91,0.3); transition: border-color 0.3s, background 0.3s;
+  border: 2px solid #D5D0C7; transition: border-color 0.3s, background 0.3s;
   display: flex; align-items: center; justify-content: center;
 }
 .radio-card.selected .radio-dot {
@@ -193,10 +193,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 }
 .radio-dot::after {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--navy); opacity: 0; transition: opacity 0.2s;
+  background: var(--white); opacity: 0; transition: opacity 0.2s;
 }
 .radio-card.selected .radio-dot::after { opacity: 1; }
-.radio-text { font-size: 0.88rem; font-weight: 300; color: var(--cream); line-height: 1.4; }
+.radio-text { font-size: 0.88rem; font-weight: 300; color: var(--text-dark); line-height: 1.4; }
 
 /* ═══════════════════════════════════════
    CHECKBOX CARDS
@@ -205,38 +205,38 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 .checkbox-card {
   display: flex; align-items: center; gap: 0.75rem;
   padding: 12px 16px; border-radius: 12px;
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(198,160,91,0.1);
+  background: var(--white); border: 1px solid #D5D0C7;
   cursor: pointer; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
   position: relative;
 }
-.checkbox-card:hover { border-color: rgba(198,160,91,0.3); background: rgba(255,255,255,0.05); }
+.checkbox-card:hover { border-color: var(--gold-pale); background: rgba(198,160,91,0.04); }
 .checkbox-card.selected {
-  border-color: var(--gold); background: rgba(198,160,91,0.08);
+  border-color: var(--gold); background: rgba(198,160,91,0.06);
   box-shadow: 0 0 0 1px var(--gold);
 }
 .checkbox-card input { position: absolute; opacity: 0; width: 0; height: 0; }
 .checkbox-box {
   width: 18px; height: 18px; min-width: 18px; border-radius: 5px;
-  border: 2px solid rgba(198,160,91,0.3); transition: border-color 0.3s, background 0.3s;
+  border: 2px solid #D5D0C7; transition: border-color 0.3s, background 0.3s;
   display: flex; align-items: center; justify-content: center;
 }
 .checkbox-card.selected .checkbox-box {
   border-color: var(--gold); background: var(--gold);
 }
 .checkbox-box svg {
-  width: 10px; height: 10px; stroke: var(--navy); stroke-width: 3;
+  width: 10px; height: 10px; stroke: var(--white); stroke-width: 3;
   fill: none; opacity: 0; transition: opacity 0.2s;
 }
 .checkbox-card.selected .checkbox-box svg { opacity: 1; }
-.checkbox-text { font-size: 0.88rem; font-weight: 300; color: var(--cream); line-height: 1.4; }
+.checkbox-text { font-size: 0.88rem; font-weight: 300; color: var(--text-dark); line-height: 1.4; }
 
 /* ═══════════════════════════════════════
    SECTION DIVIDER (within step)
 ═══════════════════════════════════════ */
 .field-section-title {
-  font-family: var(--serif); font-size: 1.3rem; font-weight: 400;
-  color: var(--gold-light); margin: 2rem 0 1rem;
-  padding-top: 1.5rem; border-top: 1px solid rgba(198,160,91,0.1);
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 500;
+  color: var(--navy); margin: 2rem 0 1rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--border-soft);
 }
 .field-section-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
@@ -266,11 +266,11 @@ input[type="number"].field-input { -moz-appearance: textfield; }
   margin-top: 2rem; gap: 1rem;
 }
 .btn-back {
-  font-size: 0.85rem; font-weight: 400; color: var(--text-soft);
+  font-size: 0.85rem; font-weight: 400; color: var(--text-muted);
   background: none; padding: 0.6rem 0; transition: color 0.3s;
   letter-spacing: 0.03em;
 }
-.btn-back:hover { color: var(--cream); }
+.btn-back:hover { color: var(--navy); }
 
 .btn-next, .btn-submit-final {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -321,10 +321,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 }
 .error-screen h1, .success-screen h1 {
   font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.5rem);
-  font-weight: 300; color: var(--cream); margin-bottom: 1rem; line-height: 1.3;
+  font-weight: 400; color: var(--navy); margin-bottom: 1rem; line-height: 1.3;
 }
 .error-screen p, .success-screen p {
-  font-size: 0.95rem; color: var(--text-soft); line-height: 1.7;
+  font-size: 0.95rem; color: var(--text-muted); line-height: 1.7;
 }
 
 /* Toast messages */
