@@ -945,19 +945,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       ]
     });
 
-    // STEP 10: Collation & soupe
+    // STEP 10: Collation
     steps.push({
       id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        { name: 'soup_allowed', type: 'radio', label: 'Soupe en accompagnement ?', options: [
-          { label: 'Oui, regulierement', value: 'regular' },
-          { label: 'Oui, de temps en temps', value: 'occasional' },
-          { label: 'Non, vraiment pas mon truc', value: 'no' }
-        ]},
         { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
           { label: 'Pas de collation pour moi', value: 'none' },
           { label: 'Milieu de matinee', value: 'morning' },
-          { label: 'Apres-midi (recommande)', value: 'afternoon' },
+          { label: 'Apres-midi (recommandé)', value: 'afternoon' },
           { label: 'Soiree (apres diner)', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
@@ -970,7 +965,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         ]},
         { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplementaire', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
           { label: 'Aucune supplementaire', value: 'none' },
-          { label: 'Apres-midi (recommande)', value: 'afternoon' },
+          { label: 'Apres-midi (recommandé)', value: 'afternoon' },
           { label: 'Soiree', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
