@@ -264,30 +264,44 @@ footer a:hover { color: var(--gold); }
     return;
   }
 
-  /* State: just paid, resolve session → order */
+  /* State: just paid, resolve session → order (with retry for webhook delay) */
   if (sessionId) {
-    fetch('https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/get-order-by-session?session_id=' + encodeURIComponent(sessionId))
-      .then(function(res) {
-        if (!res.ok) throw new Error('Commande introuvable');
-        return res.json();
-      })
-      .then(function(data) {
-        if (data.questionnaire_completed) {
-          btn.textContent = 'Questionnaire déjà rempli \u2713';
+    var maxRetries = 5;
+    var attempt = 0;
+    var delays = [1000, 2000, 3000, 4000, 5000];
+
+    function resolveOrder() {
+      fetch('https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/get-order-by-session?session_id=' + encodeURIComponent(sessionId))
+        .then(function(res) {
+          if (res.status === 404 && attempt < maxRetries) {
+            attempt++;
+            btn.textContent = 'Préparation en cours…';
+            setTimeout(resolveOrder, delays[attempt - 1]);
+            return null;
+          }
+          if (!res.ok) throw new Error('Commande introuvable');
+          return res.json();
+        })
+        .then(function(data) {
+          if (!data) return;
+          if (data.questionnaire_completed) {
+            btn.textContent = 'Questionnaire déjà rempli \u2713';
+            btn.classList.remove('loading');
+            btn.classList.add('disabled');
+          } else {
+            btn.href = '/questionnaire.html?order_id=' + encodeURIComponent(data.order_id) + '&email=' + encodeURIComponent(data.email);
+            btn.textContent = 'Remplir mon questionnaire \u2192';
+            btn.classList.remove('loading');
+          }
+        })
+        .catch(function(err) {
+          console.error('get-order-by-session error:', err);
+          btn.textContent = 'Erreur — recharge la page';
           btn.classList.remove('loading');
           btn.classList.add('disabled');
-        } else {
-          btn.href = '/questionnaire.html?order_id=' + encodeURIComponent(data.order_id) + '&email=' + encodeURIComponent(data.email);
-          btn.textContent = 'Remplir mon questionnaire \u2192';
-          btn.classList.remove('loading');
-        }
-      })
-      .catch(function(err) {
-        console.error('get-order-by-session error:', err);
-        btn.textContent = 'Remplir mon questionnaire \u2192';
-        btn.href = '/questionnaire';
-        btn.classList.remove('loading');
-      });
+        });
+    }
+    resolveOrder();
     return;
   }
 
