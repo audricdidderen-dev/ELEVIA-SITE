@@ -422,6 +422,40 @@ input[type="number"].field-input { -moz-appearance: textfield; }
   var params = new URLSearchParams(window.location.search);
   var ORDER_ID = params.get('order_id');
   var EMAIL = params.get('email');
+  var SESSION_ID = params.get('session_id');
+
+  // If session_id provided, resolve to order_id + email
+  if (SESSION_ID && (!ORDER_ID || !EMAIL)) {
+    var API_BASE = 'https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1';
+    var retries = 0;
+    var maxRetries = 8;
+    var delays = [1000, 2000, 3000, 4000, 5000, 5000, 5000, 5000];
+
+    function resolveSession() {
+      fetch(API_BASE + '/get-order-by-session?session_id=' + encodeURIComponent(SESSION_ID))
+        .then(function(res) {
+          if (res.status === 404 && retries < maxRetries) {
+            retries++;
+            setTimeout(resolveSession, delays[retries - 1]);
+            return null;
+          }
+          if (!res.ok) throw new Error('Commande introuvable');
+          return res.json();
+        })
+        .then(function(data) {
+          if (!data) return;
+          // Redirect to self with resolved params (cleaner URL, enables refresh)
+          window.location.replace('/questionnaire.html?order_id=' + encodeURIComponent(data.order_id) + '&email=' + encodeURIComponent(data.email));
+        })
+        .catch(function() {
+          document.getElementById('errorScreen').querySelector('p').textContent =
+            'Le paiement est en cours de traitement. Recharge cette page dans quelques secondes.';
+          document.getElementById('errorScreen').style.display = '';
+        });
+    }
+    resolveSession();
+    return;
+  }
 
   if (!ORDER_ID || !EMAIL) {
     document.getElementById('errorScreen').style.display = '';
