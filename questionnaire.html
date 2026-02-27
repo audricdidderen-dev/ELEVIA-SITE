@@ -945,12 +945,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       ]
     });
 
-    // STEP 10: Repas du soir + Toi et la nourriture
+    // STEP 10: Collation & soupe
     steps.push({
-      id: 'soir', title: 'Ton <em>repas du soir</em>', icon: '\uD83C\uDF7D\uFE0F',
+      id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        // Soupe & collation
-        { name: '_section_soupe', type: 'section', label: 'Soupe & collation' },
         { name: 'soup_allowed', type: 'radio', label: 'Soupe en accompagnement ?', options: [
           { label: 'Oui, regulierement', value: 'regular' },
           { label: 'Oui, de temps en temps', value: 'occasional' },
@@ -990,10 +988,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui', value: 'Oui' },
           { label: 'Non', value: 'Non' },
           { label: 'Je ne sais pas encore', value: 'dunno' }
-        ]},
+        ]}
+      ]
+    });
 
-        // Repas du soir
-        { name: '_section_diner', type: 'section', label: 'Repas du soir' },
+    // STEP 11: Repas du soir + Toi et la nourriture
+    steps.push({
+      id: 'soir', title: 'Ton <em>repas du soir</em>', icon: '\uD83C\uDF7D\uFE0F',
+      fields: [
         { name: 'dinner_alt_veg_ok', type: 'radio', label: 'Repas vegetariens au diner ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
           { label: 'Non', value: 'no' },
           { label: '1x/semaine', value: '1x' },
@@ -1072,6 +1074,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       'Plus que quelques etapes.',
       'On approche de la fin !',
       'Encore un petit effort.',
+      'Bientot termine !',
       'Derniere ligne droite !',
       'C\'est presque fini !'
     ];
