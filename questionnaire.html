@@ -413,7 +413,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 <!-- Error screen (hidden by default) -->
 <div class="error-screen" id="errorScreen" style="display:none;">
   <h1>Lien invalide</h1>
-  <p>Verifie ton email de confirmation.<br>Le lien contient les parametres necessaires pour acceder a ton questionnaire.</p>
+  <p>Vérifie ton email de confirmation.<br>Le lien contient les paramètres nécessaires pour accéder à ton questionnaire.</p>
 </div>
 
 <!-- Main questionnaire (hidden until params validated) -->
@@ -427,7 +427,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     <button class="btn-back" id="btnBack" style="visibility:hidden;">&#8592; Retour</button>
     <button class="btn-next" id="btnNext">Suivant <span class="arrow">&#8594;</span></button>
     <button class="btn-submit-final" id="btnSubmit" style="display:none;">
-      <span class="btn-text">Envoyer mes reponses</span>
+      <span class="btn-text">Envoyer mes réponses</span>
       <span class="spinner"></span>
     </button>
   </div>
@@ -495,22 +495,22 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 1: Toi
     steps.push({
-      id: 'toi', title: 'Parle-nous de <em>toi</em>', icon: '\uD83D\uDC4B',
+      id: 'toi', title: 'Parle-moi de <em>toi</em>', icon: '\uD83D\uDC4B',
       fields: [
         { name: 'lastname', type: 'text', label: 'Nom', required: true, placeholder: 'Dumont' },
-        { name: 'firstname', type: 'text', label: 'Prenom', required: true, placeholder: 'Lucas' },
+        { name: 'firstname', type: 'text', label: 'Prénom', required: true, placeholder: 'Lucas' },
         { name: 'gender', type: 'radio', label: 'Genre', required: true, options: [
           { label: 'Homme', value: 'Masculin' }, { label: 'Femme', value: 'Feminin' }
         ]},
-        { name: 'age', type: 'number', label: 'Age', required: true, placeholder: '32' },
-        { name: 'weight_kg', type: 'number', label: 'Poids (kg)', required: true, placeholder: '82', help: 'Ton poids du matin, a jeun, c\'est parfait. Pas besoin d\'etre au gramme pres.' },
+        { name: 'age', type: 'number', label: 'Âge', required: true, placeholder: '32' },
+        { name: 'weight_kg', type: 'number', label: 'Poids (kg)', required: true, placeholder: '82', help: 'Ton poids du matin, à jeun, c\'est parfait. Pas besoin d\'être au gramme près.' },
         { name: 'height_m', type: 'number', label: 'Taille (m)', required: true, placeholder: '1.78', step: '0.01' },
-        { name: 'primary_goal', type: 'radio', label: 'Objectif principal', required: true, help: 'C\'est la base de tout. Ton plan sera calibre en fonction de cet objectif.', options: [
+        { name: 'primary_goal', type: 'radio', label: 'Objectif principal', required: true, help: 'C\'est la base de tout. Ton plan sera calibré en fonction de cet objectif.', options: [
           { label: 'Perdre du poids', value: 'weight_loss' },
-          { label: 'Maintien / reequilibrage alimentaire', value: 'maintenance' },
+          { label: 'Maintien / rééquilibrage alimentaire', value: 'maintenance' },
           { label: 'Prise de muscle', value: 'muscle_gain' }
         ]},
-        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', help: 'Si tu n\'as pas de chiffre precis, indique une fourchette realiste.', condition: function() { return v('primary_goal') !== 'maintenance' && v('primary_goal') !== ''; } }
+        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', help: 'Si tu n\'as pas de chiffre précis, indique une fourchette réaliste.', condition: function() { return v('primary_goal') !== 'maintenance' && v('primary_goal') !== ''; } }
       ]
     });
 
@@ -518,34 +518,34 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'mesures', title: 'Tes <em>mesures</em>', icon: '\uD83D\uDCCF',
       fields: [
-        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', help: 'Mesure a hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains parametres.' },
+        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', help: 'Mesure à hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains paramètres.' },
         { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', help: 'Tour de hanches au plus large. Mesure optionnelle.' },
-        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', help: 'Via balance impedancemetre, DEXA, ou estimation. Optionnel.' }
+        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', help: 'Via balance impédancemètre, DEXA, ou estimation. Optionnel.' }
       ]
     });
 
     // STEP 3: Ton activite
     steps.push({
-      id: 'activite', title: 'Ton <em>activite</em>', icon: '\uD83C\uDFC3',
+      id: 'activite', title: 'Ton <em>activité</em>', icon: '\uD83C\uDFC3',
       fields: [
-        { name: 'job_activity', type: 'radio', label: 'Activite professionnelle', required: true, options: [
-          { label: 'Tres sedentaire (bureau, teletravail)', value: 'sedentary' },
-          { label: 'Legerement actif (debout regulierement)', value: 'light' },
-          { label: 'Actif (en deplacement, marche frequente)', value: 'moderate' },
-          { label: 'Tres actif (travail physique)', value: 'very_active' }
+        { name: 'job_activity', type: 'radio', label: 'Activité professionnelle', required: true, options: [
+          { label: 'Très sédentaire (bureau, télétravail)', value: 'sedentary' },
+          { label: 'Légèrement actif (debout régulièrement)', value: 'light' },
+          { label: 'Actif (en déplacement, marche fréquente)', value: 'moderate' },
+          { label: 'Très actif (travail physique)', value: 'very_active' }
         ]},
-        { name: 'has_physical_activity', type: 'radio', label: 'Pratiques-tu une activite physique reguliere ?', required: true, options: [
+        { name: 'has_physical_activity', type: 'radio', label: 'Pratiques-tu une activité physique régulière ?', required: true, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'activity_frequency', type: 'radio', label: 'Frequence d\'entrainement', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
-          { label: '1 a 2 seances/semaine', value: '1_2' },
-          { label: '3 a 4 seances/semaine', value: '3_4' },
-          { label: '5 a 6 seances/semaine', value: '5_6' }
+        { name: 'activity_frequency', type: 'radio', label: 'Fréquence d\'entraînement', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+          { label: '1 à 2 séances/semaine', value: '1_2' },
+          { label: '3 à 4 séances/semaine', value: '3_4' },
+          { label: '5 à 6 séances/semaine', value: '5_6' }
         ]},
-        { name: 'activity_intensity', type: 'radio', label: 'Intensite', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
-          { label: 'Legere', value: 'light' },
-          { label: 'Moderee', value: 'moderate' },
-          { label: 'Elevee', value: 'high' }
+        { name: 'activity_intensity', type: 'radio', label: 'Intensité', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+          { label: 'Légère', value: 'light' },
+          { label: 'Modérée', value: 'moderate' },
+          { label: 'Élevée', value: 'high' }
         ]}
       ]
     });
@@ -555,60 +555,60 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       id: 'muscle_gain', title: 'Objectifs <em>musculaires</em>', icon: '\uD83D\uDCAA',
       condition: function() { return v('primary_goal') === 'muscle_gain'; },
       fields: [
-        { name: 'mg_training_type', type: 'radio', label: 'Type d\'entrainement', options: [
+        { name: 'mg_training_type', type: 'radio', label: 'Type d\'entraînement', options: [
           { label: 'Musculation / force', value: 'strength' },
           { label: 'Fonctionnel (CrossFit, HIIT\u2026)', value: 'functional' },
           { label: 'Mixte (muscu + fonctionnel)', value: 'mixed' },
-          { label: 'Sport specifique (a preciser dans le contexte)', value: 'sport' }
+          { label: 'Sport spécifique (à préciser dans le contexte)', value: 'sport' }
         ]},
-        { name: 'mg_experience', type: 'radio', label: 'Experience en entrainement', options: [
-          { label: 'Debutant (< 1 an)', value: 'beginner' },
-          { label: 'Intermediaire (1-3 ans)', value: 'intermediate' },
-          { label: 'Avance (> 3 ans)', value: 'advanced' }
+        { name: 'mg_experience', type: 'radio', label: 'Expérience en entraînement', options: [
+          { label: 'Débutant (< 1 an)', value: 'beginner' },
+          { label: 'Intermédiaire (1-3 ans)', value: 'intermediate' },
+          { label: 'Avancé (> 3 ans)', value: 'advanced' }
         ]},
-        { name: 'mg_training_time', type: 'radio', label: 'Horaire d\'entrainement habituel', options: [
-          { label: 'Tot le matin (avant 9h)', value: 'early_morning' },
-          { label: 'Fin de matinee (9h\u201312h)', value: 'late_morning' },
-          { label: 'Midi / debut d\'apres-midi', value: 'midday' },
-          { label: 'Apres-midi (14h\u201317h)', value: 'afternoon' },
-          { label: 'Soir (apres 17h)', value: 'evening' },
+        { name: 'mg_training_time', type: 'radio', label: 'Horaire d\'entraînement habituel', options: [
+          { label: 'Tôt le matin (avant 9h)', value: 'early_morning' },
+          { label: 'Fin de matinée (9h\u201312h)', value: 'late_morning' },
+          { label: 'Midi / début d\'après-midi', value: 'midday' },
+          { label: 'Après-midi (14h\u201317h)', value: 'afternoon' },
+          { label: 'Soir (après 17h)', value: 'evening' },
           { label: 'Variable', value: 'variable' }
         ]},
-        { name: 'mg_approach', type: 'radio', label: 'Approche souhaitee', help: 'La prise seche limite le surplus de gras mais demande plus de rigueur.', options: [
-          { label: 'Lean bulk \u2014 prise seche et controlee', value: 'lean' },
-          { label: 'Bulk confort \u2014 priorite performance et energie', value: 'comfort' },
-          { label: 'Je ne sais pas \u2014 a adapter selon mon profil', value: 'guide_me' }
+        { name: 'mg_approach', type: 'radio', label: 'Approche souhaitée', help: 'La prise sèche limite le surplus de gras mais demande plus de rigueur.', options: [
+          { label: 'Lean bulk \u2014 prise sèche et contrôlée', value: 'lean' },
+          { label: 'Bulk confort \u2014 priorité performance et énergie', value: 'comfort' },
+          { label: 'Je ne sais pas \u2014 à adapter selon mon profil', value: 'guide_me' }
         ]},
-        { name: 'mg_meal_frequency', type: 'radio', label: 'Frequence de repas ideale', options: [
+        { name: 'mg_meal_frequency', type: 'radio', label: 'Fréquence de repas idéale', options: [
           { label: '3 repas + 1 collation (minimum)', value: '3_1' },
           { label: '3 repas + 2 collations (recommandé)', value: '3_2' },
           { label: '4 repas + 1-2 collations (optimal)', value: '4_2' },
           { label: 'Difficile d\'avoir un rythme fixe', value: 'flexible' }
         ]},
         { name: 'mg_volume_comfort', type: 'radio', label: 'Volume alimentaire', options: [
-          { label: 'Aucun souci, j\'ai bon appetit', value: 'easy' },
-          { label: 'Ca passe, mais faut que ce soit bon', value: 'moderate' },
-          { label: 'J\'ai souvent du mal a finir mes assiettes', value: 'difficult' }
+          { label: 'Aucun souci, j\'ai bon appétit', value: 'easy' },
+          { label: 'Ça passe, mais faut que ce soit bon', value: 'moderate' },
+          { label: 'J\'ai souvent du mal à finir mes assiettes', value: 'difficult' }
         ]},
-        { name: 'mg_shake_habit', type: 'radio', label: 'Proteines en poudre (shaker)', options: [
+        { name: 'mg_shake_habit', type: 'radio', label: 'Protéines en poudre (shaker)', options: [
           { label: 'Oui, quotidiennement', value: 'daily' },
           { label: 'Oui, occasionnellement (jours de training)', value: 'training_days' },
           { label: 'Non, mais je suis ouvert', value: 'open' },
-          { label: 'Non, et je prefere m\'en passer', value: 'no' }
+          { label: 'Non, et je préfère m\'en passer', value: 'no' }
         ]},
-        { name: 'mg_creatine', type: 'radio', label: 'Creatine', options: [
+        { name: 'mg_creatine', type: 'radio', label: 'Créatine', options: [
           { label: 'Oui, quotidiennement', value: 'yes' },
-          { label: 'Non, mais ca m\'interesse', value: 'interested' },
-          { label: 'Non, et je prefere m\'en passer', value: 'no' }
+          { label: 'Non, mais ça m\'intéresse', value: 'interested' },
+          { label: 'Non, et je préfère m\'en passer', value: 'no' }
         ]},
-        { name: 'mg_pre_workout', type: 'radio', label: 'Collation pre-workout', options: [
-          { label: 'Oui, j\'ai deja une habitude', value: 'yes' },
-          { label: 'Parfois, mais pas systematiquement', value: 'sometimes' },
+        { name: 'mg_pre_workout', type: 'radio', label: 'Collation pré-workout', options: [
+          { label: 'Oui, j\'ai déjà une habitude', value: 'yes' },
+          { label: 'Parfois, mais pas systématiquement', value: 'sometimes' },
           { label: 'Non, je ne sais pas quoi manger', value: 'need_help' },
-          { label: 'Non, je prefere m\'entrainer a jeun', value: 'fasted' }
+          { label: 'Non, je préfère m\'entraîner à jeun', value: 'fasted' }
         ]},
-        { name: 'mg_post_workout', type: 'radio', label: 'Apres l\'entrainement', options: [
-          { label: 'Un shaker rapide juste apres', value: 'shake' },
+        { name: 'mg_post_workout', type: 'radio', label: 'Après l\'entraînement', options: [
+          { label: 'Un shaker rapide juste après', value: 'shake' },
           { label: 'Un vrai repas solide dans l\'heure', value: 'meal' },
           { label: 'Les deux (shaker + repas ensuite)', value: 'both' },
           { label: 'Rien de particulier pour l\'instant', value: 'nothing' }
@@ -622,13 +622,13 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       fields: [
         { name: 'diet_profile', type: 'radio', label: 'Profil alimentaire', required: true, options: [
           { label: 'Omnivore \u2014 je mange de tout', value: 'omnivore' },
-          { label: 'Flexitarien \u2014 je reduis ma consommation de viande', value: 'flexitarian' },
-          { label: 'Pesco-vegetarien \u2014 pas de viande, mais poisson', value: 'pescetarian' },
-          { label: 'Vegetarien \u2014 ni viande, ni poisson', value: 'vegetarian' }
+          { label: 'Flexitarien \u2014 je réduis ma consommation de viande', value: 'flexitarian' },
+          { label: 'Pesco-végétarien \u2014 pas de viande, mais poisson', value: 'pescetarian' },
+          { label: 'Végétarien \u2014 ni viande, ni poisson', value: 'vegetarian' }
         ]},
         { name: 'eat_everything', type: 'radio', label: 'Manges-tu de tout ?', required: true, options: [
           { label: 'Oui, je mange de tout', value: 'yes' },
-          { label: 'Pas tout, mais je suis pret(e) a faire un effort', value: 'effort' },
+          { label: 'Pas tout, mais je suis prêt(e) à faire un effort', value: 'effort' },
           { label: 'Non, j\'ai des exclusions ou des aversions', value: 'exclusions' }
         ]},
         { name: 'food_exclusions', type: 'checkbox', label: 'Exclusions alimentaires', condition: function() { return v('eat_everything') === 'exclusions'; }, options: [
@@ -636,90 +636,90 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Viandes', value: 'viandes' },
           { label: 'Aliments en provenance de la mer', value: 'mer' },
           { label: 'Oeufs', value: 'oeufs' },
-          { label: 'Fruits a coque', value: 'fruits_coque' },
+          { label: 'Fruits à coque', value: 'fruits_coque' },
           { label: 'Fromage', value: 'fromage' },
-          { label: 'Legumineuses', value: 'legumineuses' }
+          { label: 'Légumineuses', value: 'legumineuses' }
         ]},
         { name: 'allergies', type: 'checkbox', label: 'Allergies', options: [
           { label: 'Aucune allergie', value: 'none' },
           { label: 'Arachides', value: 'peanuts' },
-          { label: 'Fruits a coque', value: 'tree_nuts' },
+          { label: 'Fruits à coque', value: 'tree_nuts' },
           { label: 'Gluten', value: 'gluten' },
           { label: 'Oeufs', value: 'eggs' },
           { label: 'Soja', value: 'soy' },
-          { label: 'Crustaces / mollusques', value: 'shellfish' },
+          { label: 'Crustacés / mollusques', value: 'shellfish' },
           { label: 'Autre', value: 'other' }
         ]},
-        { name: 'allergies_other', type: 'text', label: 'Preciser l\'allergie', placeholder: 'Ex: sesame, moutarde...', condition: function() { return arrIncludes('allergies', 'other'); } },
-        { name: 'lactose_intolerance', type: 'radio', label: 'Intolerance au lactose', options: [
+        { name: 'allergies_other', type: 'text', label: 'Préciser l\'allergie', placeholder: 'Ex: sésame, moutarde...', condition: function() { return arrIncludes('allergies', 'other'); } },
+        { name: 'lactose_intolerance', type: 'radio', label: 'Intolérance au lactose', options: [
           { label: 'Non, aucun souci', value: 'no' },
-          { label: 'Oui, intolerance legere', value: 'mild' },
-          { label: 'Oui, intolerance forte', value: 'severe' },
+          { label: 'Oui, intolérance légère', value: 'mild' },
+          { label: 'Oui, intolérance forte', value: 'severe' },
           { label: 'Je ne sais pas', value: 'unknown' }
         ]},
-        { name: 'gluten_intolerance', type: 'radio', label: 'Intolerance au gluten', options: [
+        { name: 'gluten_intolerance', type: 'radio', label: 'Intolérance au gluten', options: [
           { label: 'Non, aucun souci', value: 'no' },
-          { label: 'Sensibilite legere', value: 'sensitive' },
-          { label: 'Intolerance confirmee / coeliaque', value: 'celiac' },
+          { label: 'Sensibilité légère', value: 'sensitive' },
+          { label: 'Intolérance confirmée / coeliaque', value: 'celiac' },
           { label: 'Je ne sais pas', value: 'unknown' }
         ]},
-        // Vegetarien block
-        { name: 'veg_type', type: 'radio', label: 'Type de vegetarisme', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+        // Végétarien block
+        { name: 'veg_type', type: 'radio', label: 'Type de végétarisme', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
           { label: 'Lacto-ovo', value: 'lacto_ovo' },
           { label: 'Lacto', value: 'lacto' },
           { label: 'Ovo', value: 'ovo' }
         ]},
         { name: 'veg_duration', type: 'radio', label: 'Depuis combien de temps ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
           { label: 'Moins de 6 mois', value: 'lt_6m' },
-          { label: '6 mois a 2 ans', value: '6m_2y' },
-          { label: '2 a 5 ans', value: '2y_5y' },
+          { label: '6 mois à 2 ans', value: '6m_2y' },
+          { label: '2 à 5 ans', value: '2y_5y' },
           { label: 'Plus de 5 ans', value: 'gt_5y' }
         ]},
-        { name: 'veg_protein_sources', type: 'checkbox', label: 'Sources de proteines vegetales', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
-          { label: 'Legumineuses', value: 'legumes' },
+        { name: 'veg_protein_sources', type: 'checkbox', label: 'Sources de protéines végétales', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Légumineuses', value: 'legumes' },
           { label: 'Tofu', value: 'tofu' },
           { label: 'Tempeh', value: 'tempeh' },
           { label: 'Seitan', value: 'seitan' },
           { label: 'PST', value: 'pst' },
           { label: 'Quinoa / amarante', value: 'quinoa' },
-          { label: 'Oleagineux', value: 'nuts' },
+          { label: 'Oléagineux', value: 'nuts' },
           { label: 'Aucune en particulier', value: 'none' }
         ]},
-        { name: 'veg_soy_comfort', type: 'radio', label: 'A l\'aise avec le soja ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+        { name: 'veg_soy_comfort', type: 'radio', label: 'À l\'aise avec le soja ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
           { label: 'Oui', value: 'yes' },
-          { label: 'Oui, mais je prefere varier', value: 'moderate' },
-          { label: 'Non, je prefere eviter', value: 'avoid' }
+          { label: 'Oui, mais je préfère varier', value: 'moderate' },
+          { label: 'Non, je préfère éviter', value: 'avoid' }
         ]},
-        { name: 'veg_legume_digest', type: 'radio', label: 'Digestion des legumineuses', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+        { name: 'veg_legume_digest', type: 'radio', label: 'Digestion des légumineuses', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
           { label: 'Oui, aucun souci', value: 'ok' },
           { label: 'Parfois un peu d\'inconfort', value: 'sometimes' },
           { label: 'Souvent des ballonnements', value: 'difficult' }
         ]},
-        { name: 'veg_supplements', type: 'checkbox', label: 'Supplements actuels', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+        { name: 'veg_supplements', type: 'checkbox', label: 'Suppléments actuels', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
           { label: 'Aucun', value: 'none' },
           { label: 'B12', value: 'b12' },
           { label: 'Fer', value: 'iron' },
-          { label: 'Omega-3', value: 'omega3' },
+          { label: 'Oméga-3', value: 'omega3' },
           { label: 'Vitamine D', value: 'vitd' },
           { label: 'Zinc', value: 'zinc' },
           { label: 'Multivitamines', value: 'multi' },
           { label: 'Autre', value: 'other' }
         ]},
-        { name: 'veg_blood_test', type: 'radio', label: 'Bilan sanguin recent ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+        { name: 'veg_blood_test', type: 'radio', label: 'Bilan sanguin récent ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
           { label: 'Oui, tout normal', value: 'yes_ok' },
-          { label: 'Oui, carences detectees', value: 'yes_deficiency' },
+          { label: 'Oui, carences détectées', value: 'yes_deficiency' },
           { label: 'Non, pas encore', value: 'no' }
         ]},
         // Flexitarien block
-        { name: 'flexi_meat_freq', type: 'radio', label: 'Frequence de consommation de viande', condition: function() { return v('diet_profile') === 'flexitarian'; }, options: [
-          { label: '1 a 2 fois par semaine', value: '1_2' },
-          { label: '3 a 4 fois par semaine', value: '3_4' },
-          { label: 'Quasi tous les jours, mais je veux reduire', value: 'daily_reduce' }
+        { name: 'flexi_meat_freq', type: 'radio', label: 'Fréquence de consommation de viande', condition: function() { return v('diet_profile') === 'flexitarian'; }, options: [
+          { label: '1 à 2 fois par semaine', value: '1_2' },
+          { label: '3 à 4 fois par semaine', value: '3_4' },
+          { label: 'Quasi tous les jours, mais je veux réduire', value: 'daily_reduce' }
         ]},
         { name: 'flexi_goal', type: 'radio', label: 'Objectif viande', condition: function() { return v('diet_profile') === 'flexitarian'; }, options: [
-          { label: 'Maintenir ma frequence actuelle', value: 'maintain' },
-          { label: 'Reduire un peu', value: 'reduce_light' },
-          { label: 'Reduire significativement (max 1-2x/sem)', value: 'reduce_strong' }
+          { label: 'Maintenir ma fréquence actuelle', value: 'maintain' },
+          { label: 'Réduire un peu', value: 'reduce_light' },
+          { label: 'Réduire significativement (max 1-2x/sem)', value: 'reduce_strong' }
         ]}
       ]
     });
@@ -728,78 +728,78 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'boissons', title: 'Tes <em>boissons</em>', icon: '\u2615',
       fields: [
-        { name: 'alcohol_freq', type: 'radio', label: 'Frequence de consommation d\'alcool', required: true, options: [
+        { name: 'alcohol_freq', type: 'radio', label: 'Fréquence de consommation d\'alcool', required: true, options: [
           { label: 'Jamais', value: 'never' },
-          { label: 'Tres rarement (quelques fois/an)', value: 'rarely' },
+          { label: 'Très rarement (quelques fois/an)', value: 'rarely' },
           { label: 'Occasionnellement (1-2x/mois)', value: 'occasional' },
-          { label: 'Hebdomadairement (~1x/sem)', value: 'weekly' },
+          { label: 'Chaque semaine (~1x/sem)', value: 'weekly' },
           { label: 'Plusieurs fois par semaine', value: 'several' },
           { label: 'Quasi tous les jours', value: 'daily' }
         ]},
-        { name: 'alcohol_quantity', type: 'radio', label: 'Quantite par occasion', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
-          { label: '1 a 2 verres', value: '1_2' },
-          { label: '3 a 4 verres', value: '3_4' },
-          { label: '5 a 6 verres', value: '5_6' },
+        { name: 'alcohol_quantity', type: 'radio', label: 'Quantité par occasion', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
+          { label: '1 à 2 verres', value: '1_2' },
+          { label: '3 à 4 verres', value: '3_4' },
+          { label: '5 à 6 verres', value: '5_6' },
           { label: '7 verres ou plus', value: '7_plus' }
         ]},
-        { name: 'alcohol_planned', type: 'radio', label: 'Alcool dans le plan ?', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
+        { name: 'alcohol_planned', type: 'radio', label: 'Souhaites-tu exclure l\'alcool de ton plan ?', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
           { label: 'Oui, pas d\'alcool dans le plan', value: 'yes' },
           { label: 'Non, inclure max 4 verres/semaine', value: 'no' }
         ]},
         { name: 'alcohol_type', type: 'radio', label: 'Type d\'alcool', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
-          { label: 'Alcool leger', value: 'light' },
+          { label: 'Alcool léger', value: 'light' },
           { label: 'Alcool fort', value: 'strong' },
           { label: 'Je varie', value: 'mixed' }
         ]},
         { name: 'water_intake', type: 'radio', label: 'Consommation d\'eau par jour', required: true, options: [
           { label: '< 0,5 L', value: 'lt05' },
-          { label: '0,5 a 1 L', value: '05_1' },
-          { label: '1 a 1,5 L', value: '1_15' },
-          { label: '1,5 a 2 L', value: '15_2' },
-          { label: '2 a 3 L', value: '2_3' },
+          { label: '0,5 à 1 L', value: '05_1' },
+          { label: '1 à 1,5 L', value: '1_15' },
+          { label: '1,5 à 2 L', value: '15_2' },
+          { label: '2 à 3 L', value: '2_3' },
           { label: '> 3 L', value: 'gt3' }
         ]},
-        { name: 'coffee_quantity', type: 'radio', label: 'Cafes par jour', required: true, options: [
+        { name: 'coffee_quantity', type: 'radio', label: 'Cafés par jour', required: true, options: [
           { label: '0', value: '0' },
           { label: '1', value: '1' },
           { label: '2', value: '2' },
           { label: '3', value: '3' },
           { label: 'Plus de 3', value: 'gt3' }
         ]},
-        { name: 'coffee_early', type: 'radio', label: 'Cafe des le matin (< 1h apres le lever) ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+        { name: 'coffee_early', type: 'radio', label: 'Café dès le matin (< 1h après le lever) ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'coffee_late', type: 'radio', label: 'Cafe apres 16h ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+        { name: 'coffee_late', type: 'radio', label: 'Café après 16h ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'coffee_sugar', type: 'radio', label: 'Sucre dans le cafe ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+        { name: 'coffee_sugar', type: 'radio', label: 'Sucre dans le café ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'coffee_sugar_quantity', type: 'radio', label: 'Quantite de sucre', condition: function() { return v('coffee_sugar') === 'Oui'; }, options: [
+        { name: 'coffee_sugar_quantity', type: 'radio', label: 'Quantité de sucre', condition: function() { return v('coffee_sugar') === 'Oui'; }, options: [
           { label: '\u00BD sucre ou moins', value: 'half' },
           { label: '1 sucre', value: '1' },
           { label: '2 sucres', value: '2' }
         ]},
-        { name: 'coffee_milk', type: 'radio', label: 'Lait dans le cafe ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+        { name: 'coffee_milk', type: 'radio', label: 'Lait dans le café ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
           { label: 'Non, je le bois noir', value: 'black' },
           { label: 'Un petit nuage', value: 'splash' },
-          { label: 'Cafe au lait', value: 'latte' },
-          { label: 'Lait au cafe', value: 'milk_coffee' }
+          { label: 'Café au lait', value: 'latte' },
+          { label: 'Lait au café', value: 'milk_coffee' }
         ]},
         { name: 'type_milk', type: 'radio', label: 'Type de lait', condition: function() { return v('coffee_milk') && v('coffee_milk') !== 'black'; }, options: [
           { label: 'Lait d\'origine animale', value: 'animal' },
-          { label: 'Lait d\'origine vegetale', value: 'plant' }
+          { label: 'Lait d\'origine végétale', value: 'plant' }
         ]},
-        { name: 'sweet_beverages', type: 'checkbox', label: 'Boissons sucrees', required: true, options: [
-          { label: 'Aucune, tres rarement', value: 'NONE' },
+        { name: 'sweet_beverages', type: 'checkbox', label: 'Boissons sucrées', required: true, options: [
+          { label: 'Aucune, très rarement', value: 'NONE' },
           { label: 'Jus de fruits', value: 'JUICE' },
-          { label: 'Boissons sucrees', value: 'SUGARY' },
-          { label: 'Boissons light ou zero', value: 'LIGHT' },
-          { label: 'Boissons energisantes', value: 'ENERGY' }
+          { label: 'Boissons sucrées', value: 'SUGARY' },
+          { label: 'Boissons light ou zéro', value: 'LIGHT' },
+          { label: 'Boissons énergisantes', value: 'ENERGY' }
         ]},
-        { name: 'sweet_beverages_freq', type: 'radio', label: 'Frequence boissons sucrees', condition: function() { return !arrIncludes('sweet_beverages', 'NONE') && Array.isArray(formData.sweet_beverages) && formData.sweet_beverages.length > 0; }, options: [
-          { label: '1 a 2 fois par semaine', value: '1_2' },
-          { label: '3 a 5 fois par semaine', value: '3_5' },
+        { name: 'sweet_beverages_freq', type: 'radio', label: 'Fréquence boissons sucrées', condition: function() { return !arrIncludes('sweet_beverages', 'NONE') && Array.isArray(formData.sweet_beverages) && formData.sweet_beverages.length > 0; }, options: [
+          { label: '1 à 2 fois par semaine', value: '1_2' },
+          { label: '3 à 5 fois par semaine', value: '3_5' },
           { label: 'Tous les jours ou presque', value: 'daily' },
           { label: 'Plusieurs fois par jour', value: 'multi_daily' }
         ]}
@@ -810,8 +810,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'habitudes', title: 'Tes <em>habitudes</em>', icon: '\uD83D\uDDD3\uFE0F',
       fields: [
-        { name: 'spread_habit_global', type: 'radio', label: 'Garnitures a tartiner (beurre, confiture\u2026)', required: true, options: [
-          { label: 'Oui, uniquement au petit-dejeuner', value: 'breakfast_only' },
+        { name: 'spread_habit_global', type: 'radio', label: 'Garnitures à tartiner (beurre, confiture\u2026)', required: true, options: [
+          { label: 'Oui, uniquement au petit-déjeuner', value: 'breakfast_only' },
           { label: 'Oui, uniquement aux repas froids', value: 'cold_only' },
           { label: 'Oui, aux deux moments', value: 'both' },
           { label: 'Non, jamais', value: 'never' }
@@ -823,16 +823,16 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Plusieurs fois/semaine', value: 'several' },
           { label: 'Tous les jours ou presque', value: 'daily' }
         ]},
-        { name: 'industrial_products', type: 'radio', label: 'Produits industriels / transformes', required: true, options: [
+        { name: 'industrial_products', type: 'radio', label: 'Produits industriels / transformés', required: true, options: [
           { label: 'Rarement, voire jamais', value: 'rarely' },
-          { label: '1 a 2x/semaine', value: '1_2' },
-          { label: '3 a 5x/semaine', value: '3_5' },
+          { label: '1 à 2x/semaine', value: '1_2' },
+          { label: '3 à 5x/semaine', value: '3_5' },
           { label: 'Quasi tous les jours', value: 'daily' },
           { label: 'Plusieurs fois par jour', value: 'multi' }
         ]},
-        { name: 'outdoor_meals', type: 'radio', label: 'Repas pris a l\'exterieur par semaine', required: true, options: [
+        { name: 'outdoor_meals', type: 'radio', label: 'Repas pris à l\'extérieur par semaine', required: true, options: [
           { label: 'Jamais ou rarement', value: 'rarely' },
-          { label: '1 a 2 fois', value: '1_2' },
+          { label: '1 à 2 fois', value: '1_2' },
           { label: '3 fois ou plus', value: '3_plus' }
         ]}
       ]
@@ -840,55 +840,55 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // STEP 8: Ton petit-dejeuner
     steps.push({
-      id: 'petitdej', title: 'Ton <em>petit-dejeuner</em>', icon: '\uD83E\uDD50',
+      id: 'petitdej', title: 'Ton <em>petit-déjeuner</em>', icon: '\uD83E\uDD50',
       fields: [
-        { name: 'has_breakfast', type: 'radio', label: 'Prends-tu un petit-dejeuner ?', required: true, options: [
+        { name: 'has_breakfast', type: 'radio', label: 'Prends-tu un petit-déjeuner ?', required: true, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
         { name: 'include_breakfast', type: 'radio', label: 'Souhaites-tu en inclure un dans le plan ?', condition: function() { return v('has_breakfast') === 'Non'; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'breakfast_variety', type: 'radio', label: 'Variete du petit-dejeuner', condition: function() { return v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui'; }, options: [
-          { label: 'La meme chose chaque jour', value: 'fixed' },
+        { name: 'breakfast_variety', type: 'radio', label: 'Variété du petit-déjeuner', condition: function() { return v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui'; }, options: [
+          { label: 'La même chose chaque jour', value: 'fixed' },
           { label: 'Varier les options', value: 'varied' }
         ]},
-        { name: 'breakfast_base_fixed', type: 'radio', label: 'Base du petit-dejeuner', condition: function() { return v('breakfast_variety') === 'fixed'; }, options: [
+        { name: 'breakfast_base_fixed', type: 'radio', label: 'Base du petit-déjeuner', condition: function() { return v('breakfast_variety') === 'fixed'; }, options: [
           { label: 'Tartines', value: 'Tartines' },
-          { label: 'Cereales', value: 'Cereales' }
+          { label: 'Céréales', value: 'Cereales' }
         ]},
-        { name: 'breakfast_base_varied', type: 'radio', label: 'Base preferee', condition: function() { return v('breakfast_variety') === 'varied'; }, options: [
+        { name: 'breakfast_base_varied', type: 'radio', label: 'Base préférée', condition: function() { return v('breakfast_variety') === 'varied'; }, options: [
           { label: 'Tartines', value: 'Tartines' },
-          { label: 'Cereales', value: 'Cereales' },
-          { label: 'Pas de preference', value: 'Pas de preference' }
+          { label: 'Céréales', value: 'Cereales' },
+          { label: 'Pas de préférence', value: 'Pas de preference' }
         ]},
-        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si je reduis les matieres grasses au petit-dej ?', condition: function() { return (v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && v('spread_habit_global') !== 'never'; }, options: [
-          { label: 'Oui, ca me va', value: 'yes' },
+        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si je réduis les matières grasses au petit-déj ?', condition: function() { return (v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && v('spread_habit_global') !== 'never'; }, options: [
+          { label: 'Oui, ça me va', value: 'yes' },
           { label: 'Non, j\'y tiens', value: 'no' }
         ]},
-        { name: 'breakfast_eggs', type: 'radio', label: 'Oeufs au petit-dejeuner ?', condition: function() { return (v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && !arrIncludes('food_exclusions', 'oeufs'); }, options: [
+        { name: 'breakfast_eggs', type: 'radio', label: 'Oeufs au petit-déjeuner ?', condition: function() { return (v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && !arrIncludes('food_exclusions', 'oeufs'); }, options: [
           { label: 'Oui, 1x/semaine', value: '1x' },
           { label: 'Oui, 2-3x/semaine', value: '2_3x' },
           { label: 'Non, pas pour moi', value: 'no' }
         ]},
-        { name: 'bread_sweet_yesno', type: 'radio', label: 'Viennoiseries / pain sucre au petit-dej ?', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
+        { name: 'bread_sweet_yesno', type: 'radio', label: 'Viennoiseries / pain sucré au petit-déj ?', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'bread_sweet_freq', type: 'radio', label: 'Frequence pain sucre / viennoiserie', condition: function() { return v('bread_sweet_yesno') === 'Oui'; }, options: [
+        { name: 'bread_sweet_freq', type: 'radio', label: 'Fréquence pain sucré / viennoiserie', condition: function() { return v('bread_sweet_yesno') === 'Oui'; }, options: [
           { label: 'Occasionnellement', value: 'occasional' },
-          { label: '1-2x/sem sucre', value: 'sweet' },
-          { label: '1-2x/sem sucre-gras', value: 'sweet_fat' },
+          { label: '1-2x/sem sucré', value: 'sweet' },
+          { label: '1-2x/sem sucré-gras', value: 'sweet_fat' },
           { label: '1-2x/sem les deux', value: 'both' }
         ]},
-        { name: 'bowl_sweet_yesno', type: 'radio', label: 'Sucre dans les cereales / bowl ?', condition: function() { return (v('breakfast_base_fixed') === 'Cereales' || v('breakfast_base_varied') === 'Cereales' || v('breakfast_base_varied') === 'Pas de preference'); }, options: [
+        { name: 'bowl_sweet_yesno', type: 'radio', label: 'Sucre dans les céréales / bowl ?', condition: function() { return (v('breakfast_base_fixed') === 'Cereales' || v('breakfast_base_varied') === 'Cereales' || v('breakfast_base_varied') === 'Pas de preference'); }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'morning_light_snack', type: 'radio', label: 'Collation legere le matin ?', condition: function() { return v('has_breakfast') === 'Non'; }, options: [
+        { name: 'morning_light_snack', type: 'radio', label: 'Collation légère le matin ?', condition: function() { return v('has_breakfast') === 'Non'; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
         { name: 'morning_snack_profile', type: 'radio', label: 'Type de collation matinale', condition: function() { return v('morning_light_snack') === 'Oui'; }, options: [
           { label: 'Fruit + produit laitier', value: 'fruit_dairy' },
-          { label: 'Fruit + oleagineux', value: 'fruit_nuts' },
-          { label: 'Fruit + sale leger', value: 'fruit_savory' },
+          { label: 'Fruit + oléagineux', value: 'fruit_nuts' },
+          { label: 'Fruit + salé léger', value: 'fruit_savory' },
           { label: 'Varier les options', value: 'varied' }
         ]}
       ]
@@ -900,42 +900,42 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       fields: [
         { name: 'lunch_mode', type: 'radio', label: 'Format habituel du repas froid', required: true, options: [
           { label: 'Sandwich ou tartines', value: 'sandwich' },
-          { label: 'Salade composee ou bowl froid', value: 'salad' },
-          { label: 'Plat prepare rechauffe', value: 'prepared' },
+          { label: 'Salade composée ou bowl froid', value: 'salad' },
+          { label: 'Plat préparé réchauffé', value: 'prepared' },
           { label: 'Restes de la veille', value: 'leftovers' },
-          { label: 'Repas achete a l\'exterieur', value: 'outside' }
+          { label: 'Repas acheté à l\'extérieur', value: 'outside' }
         ]},
         { name: 'lunch_full_fillings', type: 'radio', label: 'Toutes les garnitures (recommandé)', required: true, options: [
           { label: 'Oui (recommandé)', value: 'yes' },
           { label: 'Non', value: 'no' }
         ]},
-        { name: 'lunch_fillings_excl', type: 'checkbox', label: 'Garnitures a exclure', condition: function() { return v('lunch_full_fillings') === 'no'; }, options: (function() {
+        { name: 'lunch_fillings_excl', type: 'checkbox', label: 'Garnitures à exclure', condition: function() { return v('lunch_full_fillings') === 'no'; }, options: (function() {
           var base = [
             { label: 'Fromages', value: 'Fromages' },
             { label: 'Charcuteries', value: 'Charcuteries' },
             { label: 'Poissons en conserve', value: 'poissons' },
-            { label: 'Garnitures vegetales', value: 'vegetales' },
+            { label: 'Garnitures végétales', value: 'vegetales' },
             { label: 'Oeufs', value: 'oeufs' }
           ];
           return base;
         })()},
-        { name: 'lunch_rawveg_ok', type: 'radio', label: 'Crudites ?', required: true, options: [
+        { name: 'lunch_rawveg_ok', type: 'radio', label: 'Crudités ?', required: true, options: [
           { label: 'Oui (recommandé)', value: 'yes' },
           { label: 'Non, vraiment pas', value: 'no' }
         ]},
-        { name: 'lunch_spread_mustkeep', type: 'radio', label: 'Si je reduis le beurre/tartines au repas froid ?', condition: function() { return ['cold_only','both'].indexOf(v('spread_habit_global')) !== -1; }, options: [
-          { label: 'Oui, ca me va', value: 'yes' },
+        { name: 'lunch_spread_mustkeep', type: 'radio', label: 'Si je réduis le beurre/tartines au repas froid ?', condition: function() { return ['cold_only','both'].indexOf(v('spread_habit_global')) !== -1; }, options: [
+          { label: 'Oui, ça me va', value: 'yes' },
           { label: 'Non, j\'y tiens', value: 'no' }
         ]},
-        { name: 'coldmeal_type_pref', type: 'radio', label: 'Preference repas froid', required: true, options: [
-          { label: 'Plutot tartines / sandwichs', value: 'sandwich' },
-          { label: 'Plutot salades / bowls', value: 'salad' },
+        { name: 'coldmeal_type_pref', type: 'radio', label: 'Préférence repas froid', required: true, options: [
+          { label: 'Plutôt tartines / sandwichs', value: 'sandwich' },
+          { label: 'Plutôt salades / bowls', value: 'salad' },
           { label: 'Varier les deux', value: 'both' }
         ]},
         { name: 'coldmeal_variation_bias', type: 'radio', label: 'Dans la variation, tu pencherais vers\u2026', condition: function() { return v('coldmeal_type_pref') === 'both'; }, options: [
-          { label: 'Plutot tartines', value: 'sandwich' },
-          { label: 'Plutot salades', value: 'salad' },
-          { label: 'Aucune preference (50/50)', value: 'equal' }
+          { label: 'Plutôt tartines', value: 'sandwich' },
+          { label: 'Plutôt salades', value: 'salad' },
+          { label: 'Aucune préférence (50/50)', value: 'equal' }
         ]},
         { name: 'avocado_ok', type: 'radio', label: 'Avocat ?', required: true, options: [
           { label: 'Oui, j\'adore', value: 'yes' },
@@ -951,22 +951,22 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       fields: [
         { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
           { label: 'Pas de collation pour moi', value: 'none' },
-          { label: 'Milieu de matinee', value: 'morning' },
-          { label: 'Apres-midi (recommandé)', value: 'afternoon' },
-          { label: 'Soiree (apres diner)', value: 'evening' },
+          { label: 'Milieu de matinée', value: 'morning' },
+          { label: 'Après-midi (recommandé)', value: 'afternoon' },
+          { label: 'Soirée (après le repas chaud)', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
         { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') !== 'Oui'; }, options: [
           { label: 'Aucune collation', value: 'none' },
-          { label: 'Apres-midi', value: 'afternoon' },
-          { label: 'Soiree', value: 'evening' },
+          { label: 'Après-midi', value: 'afternoon' },
+          { label: 'Soirée', value: 'evening' },
           { label: 'Les deux', value: 'both' },
           { label: 'Flexible', value: 'flexible' }
         ]},
-        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplementaire', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
-          { label: 'Aucune supplementaire', value: 'none' },
-          { label: 'Apres-midi (recommandé)', value: 'afternoon' },
-          { label: 'Soiree', value: 'evening' },
+        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplémentaire', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
+          { label: 'Aucune supplémentaire', value: 'none' },
+          { label: 'Après-midi (recommandé)', value: 'afternoon' },
+          { label: 'Soirée', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
         { name: 'snack_style', type: 'radio', label: 'Style de collation', condition: function() {
@@ -987,22 +987,22 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       ]
     });
 
-    // STEP 11: Repas du soir + Toi et la nourriture
+    // STEP 11: Repas chaud + Toi et la nourriture
     steps.push({
       id: 'soir', title: 'Ton <em>repas chaud</em>', icon: '\uD83C\uDF7D\uFE0F',
       fields: [
         { name: 'soup_allowed', type: 'radio', label: 'As-tu l\'habitude de consommer de la soupe ?', options: [
-          { label: 'Oui, regulierement', value: 'regular' },
+          { label: 'Oui, régulièrement', value: 'regular' },
           { label: 'Oui, de temps en temps', value: 'occasional' },
           { label: 'Non, vraiment pas mon truc', value: 'no' }
         ]},
-        { name: 'dinner_alt_veg_ok', type: 'radio', label: 'Repas vegetariens au diner ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
+        { name: 'dinner_alt_veg_ok', type: 'radio', label: 'Repas végétariens au repas chaud ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
           { label: 'Non', value: 'no' },
           { label: '1x/semaine', value: '1x' },
-          { label: '1 a 2x/semaine', value: '1_2x' },
+          { label: '1 à 2x/semaine', value: '1_2x' },
           { label: '3x ou plus', value: '3_plus' }
         ]},
-        { name: 'dinner_cheese_ok', type: 'radio', label: 'Fromage au diner ?', required: true, condition: function() { return !arrIncludes('food_exclusions', 'fromage'); }, options: [
+        { name: 'dinner_cheese_ok', type: 'radio', label: 'Fromage au repas chaud ?', required: true, condition: function() { return !arrIncludes('food_exclusions', 'fromage'); }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
         { name: 'dinner_cheat_meal_allowed', type: 'radio', label: 'Repas plaisir (cheat meal) ?', required: true, options: [
@@ -1010,15 +1010,15 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Non, rester strict', value: 'Non' }
         ]},
         { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
-          { label: 'J\'apprecie et c\'est dans mes moyens', value: 'yes' },
+          { label: 'J\'apprécie et c\'est dans mes moyens', value: 'yes' },
           { label: 'Pas vraiment, le minimum possible', value: 'no' }
         ]},
 
         // Toi et la nourriture
         { name: '_section_toi', type: 'section', label: 'Toi et la nourriture' },
-        { name: 'food_history_story', type: 'textarea', label: 'Ton parcours avec l\'alimentation jusqu\'a aujourd\'hui', placeholder: 'Raconte librement\u2026' },
-        { name: 'current_food_difficulties', type: 'textarea', label: 'Tes principales difficultes alimentaires aujourd\'hui ?', placeholder: 'Ce qui te bloque\u2026' },
-        { name: 'emotional_relationship_food', type: 'textarea', label: 'Ta relation a la nourriture ?', placeholder: 'Comment tu vis ca\u2026' },
+        { name: 'food_history_story', type: 'textarea', label: 'Ton parcours avec l\'alimentation jusqu\'à aujourd\'hui', placeholder: 'Raconte librement\u2026' },
+        { name: 'current_food_difficulties', type: 'textarea', label: 'Tes principales difficultés alimentaires aujourd\'hui ?', placeholder: 'Ce qui te bloque\u2026' },
+        { name: 'emotional_relationship_food', type: 'textarea', label: 'Ta relation à la nourriture ?', placeholder: 'Comment tu vis ça\u2026' },
         { name: 'expectations_from_plan', type: 'textarea', label: 'Qu\'attends-tu de ton plan et de cet accompagnement ?', placeholder: 'Tes attentes\u2026' }
       ]
     });
@@ -1060,7 +1060,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     var pct = Math.round((currentStep + 1) / totalSteps * 100);
     el('progressBar').style.width = pct + '%';
     el('progressPct').textContent = pct + '%';
-    el('stepIndicator').textContent = 'Etape ' + (currentStep + 1) + ' sur ' + totalSteps;
+    el('stepIndicator').textContent = 'Étape ' + (currentStep + 1) + ' sur ' + totalSteps;
     el('stepIcon').textContent = step.icon || '';
     el('stepTitle').innerHTML = step.title;
 
@@ -1070,12 +1070,12 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       'Super, on continue.',
       'Tu avances bien !',
       'On est sur la bonne voie.',
-      'Deja la moitie, bravo !',
-      'Plus que quelques etapes.',
+      'Déjà la moitié, bravo !',
+      'Plus que quelques étapes.',
       'On approche de la fin !',
       'Encore un petit effort.',
-      'Bientot termine !',
-      'Derniere ligne droite !',
+      'Bientôt terminé !',
+      'Dernière ligne droite !',
       'C\'est presque fini !'
     ];
     var encIdx = Math.min(currentStep, encouragements.length - 1);
@@ -1364,7 +1364,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         return;
       }
       if (res.status === 409) {
-        showToast('Questionnaire deja envoye. Tu ne peux le remplir qu\'une seule fois.', 'info');
+        showToast('Questionnaire déjà envoyé. Tu ne peux le remplir qu\'une seule fois.', 'info');
         btn.classList.remove('loading');
         btn.disabled = false;
         return;
@@ -1372,7 +1372,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       return res.text().then(function(t) { throw new Error(t || 'Erreur serveur (' + res.status + ')'); });
     })
     .catch(function(err) {
-      showToast('Une erreur est survenue. Reessaie dans quelques instants.', 'error');
+      showToast('Une erreur est survenue. Réessaie dans quelques instants.', 'error');
       btn.classList.remove('loading');
       btn.disabled = false;
     });
