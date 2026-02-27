@@ -581,7 +581,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         ]},
         { name: 'mg_meal_frequency', type: 'radio', label: 'Frequence de repas ideale', options: [
           { label: '3 repas + 1 collation (minimum)', value: '3_1' },
-          { label: '3 repas + 2 collations (recommande)', value: '3_2' },
+          { label: '3 repas + 2 collations (recommandé)', value: '3_2' },
           { label: '4 repas + 1-2 collations (optimal)', value: '4_2' },
           { label: 'Difficile d\'avoir un rythme fixe', value: 'flexible' }
         ]},
@@ -905,8 +905,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Restes de la veille', value: 'leftovers' },
           { label: 'Repas achete a l\'exterieur', value: 'outside' }
         ]},
-        { name: 'lunch_full_fillings', type: 'radio', label: 'Toutes les garnitures (recommande)', required: true, options: [
-          { label: 'Oui (recommande)', value: 'yes' },
+        { name: 'lunch_full_fillings', type: 'radio', label: 'Toutes les garnitures (recommandé)', required: true, options: [
+          { label: 'Oui (recommandé)', value: 'yes' },
           { label: 'Non', value: 'no' }
         ]},
         { name: 'lunch_fillings_excl', type: 'checkbox', label: 'Garnitures a exclure', condition: function() { return v('lunch_full_fillings') === 'no'; }, options: (function() {
@@ -920,7 +920,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           return base;
         })()},
         { name: 'lunch_rawveg_ok', type: 'radio', label: 'Crudites ?', required: true, options: [
-          { label: 'Oui (recommande)', value: 'yes' },
+          { label: 'Oui (recommandé)', value: 'yes' },
           { label: 'Non, vraiment pas', value: 'no' }
         ]},
         { name: 'lunch_spread_mustkeep', type: 'radio', label: 'Si je reduis le beurre/tartines au repas froid ?', condition: function() { return ['cold_only','both'].indexOf(v('spread_habit_global')) !== -1; }, options: [
@@ -1006,7 +1006,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
         { name: 'dinner_cheat_meal_allowed', type: 'radio', label: 'Repas plaisir (cheat meal) ?', required: true, options: [
-          { label: 'Oui (recommande)', value: 'Oui' },
+          { label: 'Oui (recommandé)', value: 'Oui' },
           { label: 'Non, rester strict', value: 'Non' }
         ]},
         { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
