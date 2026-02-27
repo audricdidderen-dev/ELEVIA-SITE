@@ -100,6 +100,9 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .pricing-btn.primary:hover { border-color: var(--gold-light); }
 .pricing-btn.secondary { border-color: rgba(198,160,91,0.4); }
 .pricing-btn.secondary:hover { border-color: var(--gold); }
+.pricing-btn:disabled, .cta-btn:disabled { opacity: 0.6; cursor: wait; pointer-events: none; }
+.cancelled-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 9998; padding: 0.8rem 1.5rem; background: rgba(14,30,46,0.95); border-bottom: 1px solid rgba(198,160,91,0.3); text-align: center; font-family: var(--sans); font-size: 0.8rem; color: var(--cream); backdrop-filter: blur(8px); animation: fadeUp 0.5s ease forwards; }
+.cancelled-banner .gold { color: var(--gold); }
 .pricing-micro { text-align: center; margin-top: 2rem; font-family: var(--sans); font-size: 0.72rem; color: var(--text-soft); opacity: 0.6; }
 
 /* ===== EARLY ACCESS BANNER ===== */
@@ -228,9 +231,12 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   /* ── Global reveal override ── */
   [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
 
+.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+.skip-link:focus { top: 0; }
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="grain"></div>
 
@@ -295,7 +301,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Communauté WhatsApp</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Livraison sous 72h ouvrées</li>
       </ul>
-      <a href="#" class="pricing-btn primary">Choisir ce plan →</a>
+      <button class="pricing-btn primary" data-price-id="price_plan_solo" data-product-type="plan_solo">Choisir ce plan →</button>
     </div>
 
     <!-- Recommandé -->
@@ -312,7 +318,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Recettes en portions personnalisées</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Communauté WhatsApp</li>
       </ul>
-      <a href="#" class="pricing-btn primary">Choisir ce plan →</a>
+      <button class="pricing-btn primary" data-price-id="price_plan_cockpit_6" data-product-type="plan_cockpit_6">Choisir ce plan →</button>
     </div>
 
     <!-- 12 mois -->
@@ -328,7 +334,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Recettes en portions personnalisées</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Communauté WhatsApp</li>
       </ul>
-      <a href="#" class="pricing-btn primary">Choisir ce plan →</a>
+      <button class="pricing-btn primary" data-price-id="price_plan_cockpit_12" data-product-type="plan_cockpit_12">Choisir ce plan →</button>
     </div>
   </div>
 
@@ -472,7 +478,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 <section class="section-cta"><div class="section-inner" style="position:relative;z-index:1">
   <h2 class="cta-headline" data-reveal>Prêt à commencer <em>maintenant</em> ?</h2>
   <p class="cta-sub" data-reveal>Questionnaire&nbsp;détaillé · Plan en&nbsp;72h · Résultats&nbsp;durables</p>
-  <a href="#" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></a>
+  <button class="cta-btn" data-reveal data-price-id="price_plan_cockpit_6" data-product-type="plan_cockpit_6">Recevoir mon plan en 72h <span class="cta-btn-arrow">→</span></button>
   <p class="cta-trust" data-reveal>Paiement&nbsp;unique · Sans&nbsp;abonnement · Données&nbsp;100%&nbsp;privées</p>
 </div></section>
 
@@ -532,6 +538,47 @@ document.querySelectorAll('.pricing-card,.include-card').forEach(c=>{c.addEventL
 
 /* Effect 5: Magnetic CTA buttons */
 document.querySelectorAll('.cta-btn').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;const dx=(e.clientX-cx)*0.15,dy=(e.clientY-cy)*0.15;const mx=Math.max(-8,Math.min(8,dx)),my=Math.max(-8,Math.min(8,dy));btn.style.transform='translate('+mx+'px,'+my+'px)'});btn.addEventListener('mouseleave',()=>{btn.style.transform=''})});
+}
+
+/* === Stripe Checkout === */
+const EDGE_FN_URL = 'https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/create-checkout-session';
+
+async function handleCheckout(priceId, productType, btn) {
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'Redirection…';
+  try {
+    const res = await fetch(EDGE_FN_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ price_id: priceId, product_type: productType })
+    });
+    if (!res.ok) throw new Error('Erreur ' + res.status);
+    const { url } = await res.json();
+    window.location.href = url;
+  } catch (err) {
+    console.error('Checkout error:', err);
+    btn.textContent = originalText;
+    btn.disabled = false;
+    alert('Une erreur est survenue. Réessaie ou contacte-nous à contact@elevianutrition.com');
+  }
+}
+
+document.querySelectorAll('[data-price-id]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    handleCheckout(btn.dataset.priceId, btn.dataset.productType, btn);
+  });
+});
+
+/* Cancelled banner */
+if (new URLSearchParams(window.location.search).get('cancelled') === 'true') {
+  const banner = document.createElement('div');
+  banner.className = 'cancelled-banner';
+  banner.innerHTML = 'Paiement annulé — <span class="gold">choisis ton offre</span> pour recommencer.';
+  document.body.prepend(banner);
+  setTimeout(() => { banner.style.opacity = '0'; banner.style.transition = 'opacity 0.5s'; setTimeout(() => banner.remove(), 500); }, 6000);
+  window.history.replaceState({}, '', '/offre.html');
 }
 </script>
 </body>

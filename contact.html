@@ -502,9 +502,12 @@
       .faq-question { padding: 1rem 1.2rem; font-size: 0.88rem; }
       .faq-answer-inner { padding: 0 1.2rem 1.2rem; }
     }
-  </style>
+  .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+.skip-link:focus { top: 0; }
+</style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
   <!-- Scroll Progress -->
   <div class="scroll-progress" id="scrollProgress"></div>
@@ -545,7 +548,7 @@
   </nav>
 
   <!-- ═══════════ MAIN ═══════════ -->
-  <main>
+  <main id="main-content">
 
     <!-- HERO -->
     <section class="hero">
@@ -590,6 +593,7 @@
                   <option value="offres">Question sur les offres</option>
                   <option value="cockpit">Question sur Cockpit</option>
                   <option value="client">J'ai déjà un plan</option>
+                  <option value="partenariat">Partenariat professionnel</option>
                   <option value="autre">Autre</option>
                 </select>
                 <p class="error-text">Merci de choisir un sujet.</p>
@@ -664,6 +668,10 @@
 
             <div class="info-note">
               <p>Pour les questions sur ton plan, utilise le support email dédié inclus dans ta formule.</p>
+            </div>
+
+            <div class="info-note" style="margin-top: 1rem;">
+              <p>Professionnel du sport ou de la sant&eacute;&nbsp;? Élevia est ouvert aux collaborations. S&eacute;lectionne «&nbsp;Partenariat professionnel&nbsp;» ci-contre.</p>
             </div>
           </div>
 

@@ -60,15 +60,18 @@ body { background: var(--navy); min-height: 100vh; display: flex; align-items: c
   /* ── Global reveal override ── */
   [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
 
+.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+.skip-link:focus { top: 0; }
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
 <div class="grain"></div>
 <div class="deco-lines" aria-hidden="true"><div class="deco-line"></div><div class="deco-line"></div><div class="deco-line"></div><div class="deco-line"></div></div>
 <div class="glow" aria-hidden="true"></div>
 
-<main class="content-404">
+<main id="main-content" class="content-404">
   <div class="logo-ghost">
     <svg viewBox="0 0 375 375" xmlns="http://www.w3.org/2000/svg">
       <g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g>

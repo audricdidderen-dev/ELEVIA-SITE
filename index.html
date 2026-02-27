@@ -169,7 +169,11 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .plan-visual:nth-child(2).revealed { transform: translateY(0) rotate(1deg); transition-delay: 0.15s; }
 .plan-visual:nth-child(3) { transform: translateY(40px) rotate(-1.5deg); }
 .plan-visual:nth-child(3).revealed { transform: translateY(0) rotate(-1.5deg); transition-delay: 0.3s; }
-.plan-visual:hover { transform: translateY(-8px) rotate(0deg) !important; box-shadow: 0 30px 80px rgba(198,160,91,0.15); }
+.plan-visual:hover { transform: translateY(-8px) rotate(0deg) !important; box-shadow: 0 30px 80px rgba(198,160,91,0.15); cursor: pointer; }
+.plan-visual .plan-cta { font-family: var(--sans); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.06em; color: var(--gold); opacity: 0.5; transition: opacity 0.3s, transform 0.3s; margin-top: 0.6rem; }
+.plan-visual:hover .plan-cta { opacity: 1; }
+.plan-visual:nth-child(2) .plan-cta { color: var(--navy); }
+a.plan-visual { text-decoration: none; display: block; }
 .plan-inner { width: 100%; height: 100%; padding: 2rem 1.5rem; display: flex; flex-direction: column; justify-content: space-between; }
 .plan-visual:nth-child(1) .plan-inner { background: linear-gradient(160deg, #0E1E2E 0%, #1A3350 50%, #0E1E2E 100%); }
 .plan-visual:nth-child(2) .plan-inner { background: linear-gradient(160deg, var(--cream) 0%, var(--cream-dark) 100%); }
@@ -495,37 +499,12 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   <h2 class="section-headline" data-reveal>Un plan qui fait honneur<br>à <em>tes objectifs</em>.</h2>
   <p class="section-body" data-reveal>Chaque plan Élevia est un document soigné : structure claire, équivalences détaillées, recettes adaptées. Un outil que tu auras envie d'ouvrir chaque jour.</p>
   <div class="plans-showcase">
-    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Plan nutritionnel</div><div><div class="plan-title">Un document<br>moderne & navigable</div><div class="plan-line"></div><div class="plan-desc">Équivalences, portions, cibles kcal et macros — un plan interactif conçu pour être utilisé, pas rangé dans un&nbsp;tiroir.</div></div></div></div>
-    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Recettes du mois</div><div><div class="plan-title">Des idées qui<br>s'adaptent à toi</div><div class="plan-line"></div><div class="plan-desc">Recettes en équivalences. L'app convertit en grammes personnalisés pour ton plan.</div></div></div></div>
-    <div class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Application</div><div><div class="plan-title">Ton compagnon<br>au quotidien</div><div class="plan-line"></div><div class="plan-desc">Suivi, feedback, conseils, bilans&nbsp;— ton plan prend vie dans ta&nbsp;poche.</div></div></div></div>
+    <a href="/plan.html" class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Plan nutritionnel</div><div><div class="plan-title">Un document<br>moderne & navigable</div><div class="plan-line"></div><div class="plan-desc">Équivalences, portions, cibles kcal et macros — un plan interactif conçu pour être utilisé, pas rangé dans un&nbsp;tiroir.</div><div class="plan-cta">Découvrir →</div></div></div></a>
+    <a href="/recettes.html" class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Recettes du mois</div><div><div class="plan-title">Des idées qui<br>s'adaptent à toi</div><div class="plan-line"></div><div class="plan-desc">Recettes en équivalences. L'app convertit en grammes personnalisés pour ton plan.</div><div class="plan-cta">Découvrir →</div></div></div></a>
+    <a href="/cockpit.html" class="plan-visual" data-reveal><div class="plan-inner"><div class="plan-badge">Application</div><div><div class="plan-title">Ton compagnon<br>au quotidien</div><div class="plan-line"></div><div class="plan-desc">Suivi, feedback, conseils, bilans&nbsp;— ton plan prend vie dans ta&nbsp;poche.</div><div class="plan-cta">Découvrir →</div></div></div></a>
   </div>
 </div></section>
 
-<!-- TEASER PRICING -->
-<section class="section-pricing-teaser" id="offre"><div class="section-inner">
-  <p class="section-label" data-reveal>L'offre</p>
-  <h2 class="section-headline" data-reveal>Commence <em>maintenant</em>.</h2>
-  <div class="pricing-teaser-grid">
-    <div class="pricing-teaser-card" data-reveal>
-      <div class="pricing-teaser-name">Plan seul</div>
-      <div class="pricing-teaser-price">89<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Plan nutritionnel personnalisé<br class="mb"> + recettes du mois + support email&nbsp;7j/7</p>
-    </div>
-    <div class="pricing-teaser-card recommended" data-reveal>
-      <span class="pricing-rec-badge">Recommandé</span>
-      <div class="pricing-teaser-name">Plan + Cockpit 6 mois</div>
-      <div class="pricing-teaser-price">169<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 6&nbsp;mois<br>· Le&nbsp;meilleur&nbsp;équilibre</p>
-    </div>
-    <div class="pricing-teaser-card" data-reveal>
-      <div class="pricing-teaser-name">Plan + Cockpit 12 mois</div>
-      <div class="pricing-teaser-price">229<span class="currency">€</span></div>
-      <p class="pricing-teaser-detail">Tout ci-dessus + app compagnon 12&nbsp;mois<br>· Engagement long&nbsp;terme</p>
-    </div>
-  </div>
-  <p class="pricing-teaser-note" data-reveal>L'app Cockpit est aussi disponible à <span>10€/mois</span> après achat du plan — sans engagement.</p>
-  <a href="/offre.html" class="pricing-teaser-link" data-reveal>Voir les offres en détail <span class="arrow">→</span></a>
-</div></section>
 
 <!-- CTA -->
 <section class="section-cta"><div class="section-inner section-cta-inner">

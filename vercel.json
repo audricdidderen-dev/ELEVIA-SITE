@@ -71,6 +71,11 @@
       "source": "/a-propos",
       "destination": "/apropos.html",
       "permanent": true
+    },
+    {
+      "source": "/questionnaire",
+      "destination": "/questionnaire.html",
+      "permanent": false
     }
   ]
 }

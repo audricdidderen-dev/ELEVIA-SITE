@@ -543,10 +543,13 @@
     
   /* ── Global reveal override ── */
   [data-reveal].revealed { opacity: 1 !important; transform: none !important; }
+  .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+  .skip-link:focus { top: 0; }
 
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
     <!-- Scroll Progress -->
     <div class="scroll-progress"></div>
@@ -586,7 +589,7 @@
   <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
 
-    <main>
+    <main id="main-content">
 
         <!-- ═══════════ HERO ═══════════ -->
         <section class="hero">

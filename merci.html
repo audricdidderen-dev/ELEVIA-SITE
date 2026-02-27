@@ -161,6 +161,23 @@ h1 em { font-style: italic; color: var(--gold); }
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(198,160,91,0.25);
 }
+.btn-primary.disabled {
+  opacity: 0.5; pointer-events: none; cursor: default;
+  background: rgba(198,160,91,0.3); color: var(--text-soft);
+}
+.btn-primary.loading {
+  opacity: 0.7; pointer-events: none;
+}
+.completed-msg {
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 400;
+  color: var(--gold); margin-bottom: 1.2rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.5s forwards;
+}
+.error-msg {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 300;
+  color: #e57373; margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.5s forwards;
+}
 .note {
   font-family: var(--sans);
   font-size: 0.72rem; font-weight: 300;
@@ -177,9 +194,12 @@ footer {
 }
 footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
 footer a:hover { color: var(--gold); }
+.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+.skip-link:focus { top: 0; }
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 <div class="grain"></div>
 <div class="card">
   <div class="logo-wrap">
@@ -217,11 +237,65 @@ footer a:hover { color: var(--gold); }
       </div>
     </div>
   </div>
-  <a href="/questionnaire" class="btn-primary">Remplir mon questionnaire →</a>
+  <a id="questionnaire-btn" href="#" class="btn-primary loading">Chargement…</a>
   <p class="note">Questions ? <a href="/contact.html" style="color:var(--gold);text-decoration:none;">Écris-moi</a> — je réponds sous 24h.</p>
 </div>
 <footer>
   <p>© 2026 Élevia Nutrition &nbsp;·&nbsp; <a href="/mentions-legales.html">Mentions légales</a> &nbsp;·&nbsp; <a href="/confidentialite.html">Confidentialité</a></p>
 </footer>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  const completed = params.get('completed');
+  const btn = document.getElementById('questionnaire-btn');
+  const label = document.querySelector('.label');
+  const h1 = document.querySelector('h1');
+  const subtitle = document.querySelector('.subtitle');
+
+  /* State: questionnaire already completed (redirect from questionnaire page) */
+  if (completed === 'true') {
+    label.textContent = 'Questionnaire envoyé';
+    h1.innerHTML = 'Merci, c\u2019est <em>parfait</em>.';
+    subtitle.textContent = 'Ton questionnaire a bien été reçu. Ton plan personnalisé est en préparation \u2014 tu recevras un email dès qu\u2019il est prêt. Compte environ 72h ouvrées.';
+    btn.textContent = 'Questionnaire envoyé \u2713';
+    btn.classList.remove('loading');
+    btn.classList.add('disabled');
+    return;
+  }
+
+  /* State: just paid, resolve session → order */
+  if (sessionId) {
+    fetch('https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/get-order-by-session?session_id=' + encodeURIComponent(sessionId))
+      .then(function(res) {
+        if (!res.ok) throw new Error('Commande introuvable');
+        return res.json();
+      })
+      .then(function(data) {
+        if (data.questionnaire_completed) {
+          btn.textContent = 'Questionnaire déjà rempli \u2713';
+          btn.classList.remove('loading');
+          btn.classList.add('disabled');
+        } else {
+          btn.href = '/questionnaire.html?order_id=' + encodeURIComponent(data.order_id) + '&email=' + encodeURIComponent(data.email);
+          btn.textContent = 'Remplir mon questionnaire \u2192';
+          btn.classList.remove('loading');
+        }
+      })
+      .catch(function(err) {
+        console.error('get-order-by-session error:', err);
+        btn.textContent = 'Remplir mon questionnaire \u2192';
+        btn.href = '/questionnaire';
+        btn.classList.remove('loading');
+      });
+    return;
+  }
+
+  /* State: no session_id (direct access) */
+  btn.textContent = 'Remplir mon questionnaire \u2192';
+  btn.href = '/questionnaire';
+  btn.classList.remove('loading');
+})();
+</script>
 </body>
 </html>

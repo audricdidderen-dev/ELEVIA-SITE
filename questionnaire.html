@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire — Elevia Nutrition</title>
+<meta name="description" content="Remplis ton questionnaire nutritionnel personnalisé. Toutes tes réponses restent confidentielles.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --navy: #0E1E2E; --navy-deep: #091520; --navy-light: #152A3D;
+  --gold: #C6A05B; --gold-light: #D4B878; --gold-pale: #E8D5A8;
+  --gold-glow: rgba(198,160,91,0.15);
+  --cream: #F6F3EE; --cream-dark: #EDE8E0; --white: #FFFFFF;
+  --text-dark: #1A1A1A; --text-muted: #6B7280; --text-soft: #8B9AAC;
+  --border-soft: #F5EEE1;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', -apple-system, sans-serif;
+  --header-h: 72px;
+  --error: #C45B5B;
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  font-family: var(--sans); font-weight: 300; color: var(--cream);
+  background: var(--navy); line-height: 1.8; overflow-x: clip;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; }
+input, select, textarea { font-family: inherit; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+═══════════════════════════════════════ */
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 9999; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════
+   HEADER (minimal for questionnaire)
+═══════════════════════════════════════ */
+.site-header {
+  position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
+  z-index: 1002; display: flex; align-items: center; justify-content: center;
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+  background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08);
+}
+.header-logo { width: 130px; height: auto; opacity: 0.9; }
+
+/* ═══════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════ */
+.progress-wrap {
+  position: fixed; top: var(--header-h); left: 0; width: 100%;
+  height: 3px; background: rgba(198,160,91,0.1); z-index: 1001;
+}
+.progress-bar {
+  height: 100%; width: 0%; border-radius: 0 2px 2px 0;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative; overflow: hidden;
+}
+.progress-bar::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+@keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+
+/* ═══════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════ */
+.q-main {
+  max-width: 640px; margin: 0 auto;
+  padding: calc(var(--header-h) + 2rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  min-height: 100dvh;
+}
+
+/* ═══════════════════════════════════════
+   STEP INDICATOR
+═══════════════════════════════════════ */
+.step-indicator {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.6rem; opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════
+   STEP TITLE
+═══════════════════════════════════════ */
+.step-title {
+  font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 300; color: var(--cream); margin-bottom: 2rem;
+  line-height: 1.2;
+}
+.step-title em { font-style: italic; color: var(--gold); }
+
+/* ═══════════════════════════════════════
+   GLASS CARD
+═══════════════════════════════════════ */
+.step-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(198,160,91,0.1);
+  border-radius: 20px; padding: clamp(1.5rem, 4vw, 2.5rem);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════
+   FORM FIELDS
+═══════════════════════════════════════ */
+.field-group { margin-bottom: 1.5rem; }
+.field-group:last-child { margin-bottom: 0; }
+.field-group.hidden { display: none; }
+
+.field-label {
+  display: block; font-size: 0.82rem; font-weight: 400;
+  color: var(--cream); letter-spacing: 0.03em; margin-bottom: 0.5rem;
+}
+.field-label .req { color: var(--gold); margin-left: 2px; }
+
+.field-help {
+  font-size: 0.75rem; font-weight: 300; color: var(--text-soft);
+  margin-bottom: 0.6rem; line-height: 1.6; font-style: italic;
+}
+
+/* Text / Number inputs */
+.field-input {
+  width: 100%; padding: 12px 16px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(198,160,91,0.15);
+  border-radius: 10px; font-family: var(--sans); font-size: 0.92rem;
+  font-weight: 300; color: var(--cream); outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  -webkit-appearance: none; appearance: none;
+}
+.field-input::placeholder { color: var(--text-soft); opacity: 0.5; }
+.field-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(198,160,91,0.12);
+}
+
+/* Textarea */
+textarea.field-input { resize: vertical; min-height: 120px; line-height: 1.7; }
+
+/* Number input arrows removal */
+input[type="number"].field-input::-webkit-inner-spin-button,
+input[type="number"].field-input::-webkit-outer-spin-button {
+  -webkit-appearance: none; margin: 0;
+}
+input[type="number"].field-input { -moz-appearance: textfield; }
+
+/* ═══════════════════════════════════════
+   RADIO CARDS
+═══════════════════════════════════════ */
+.radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.radio-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(198,160,91,0.1);
+  cursor: pointer; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.radio-card:hover { border-color: rgba(198,160,91,0.3); background: rgba(255,255,255,0.05); }
+.radio-card.selected {
+  border-color: var(--gold); background: rgba(198,160,91,0.08);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+.radio-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+.radio-dot {
+  width: 18px; height: 18px; min-width: 18px; border-radius: 50%;
+  border: 2px solid rgba(198,160,91,0.3); transition: border-color 0.3s, background 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.radio-card.selected .radio-dot {
+  border-color: var(--gold); background: var(--gold);
+}
+.radio-dot::after {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--navy); opacity: 0; transition: opacity 0.2s;
+}
+.radio-card.selected .radio-dot::after { opacity: 1; }
+.radio-text { font-size: 0.88rem; font-weight: 300; color: var(--cream); line-height: 1.4; }
+
+/* ═══════════════════════════════════════
+   CHECKBOX CARDS
+═══════════════════════════════════════ */
+.checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.checkbox-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(198,160,91,0.1);
+  cursor: pointer; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.checkbox-card:hover { border-color: rgba(198,160,91,0.3); background: rgba(255,255,255,0.05); }
+.checkbox-card.selected {
+  border-color: var(--gold); background: rgba(198,160,91,0.08);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+.checkbox-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+.checkbox-box {
+  width: 18px; height: 18px; min-width: 18px; border-radius: 5px;
+  border: 2px solid rgba(198,160,91,0.3); transition: border-color 0.3s, background 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.checkbox-card.selected .checkbox-box {
+  border-color: var(--gold); background: var(--gold);
+}
+.checkbox-box svg {
+  width: 10px; height: 10px; stroke: var(--navy); stroke-width: 3;
+  fill: none; opacity: 0; transition: opacity 0.2s;
+}
+.checkbox-card.selected .checkbox-box svg { opacity: 1; }
+.checkbox-text { font-size: 0.88rem; font-weight: 300; color: var(--cream); line-height: 1.4; }
+
+/* ═══════════════════════════════════════
+   SECTION DIVIDER (within step)
+═══════════════════════════════════════ */
+.field-section-title {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 400;
+  color: var(--gold-light); margin: 2rem 0 1rem;
+  padding-top: 1.5rem; border-top: 1px solid rgba(198,160,91,0.1);
+}
+.field-section-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+/* ═══════════════════════════════════════
+   ERROR STATES
+═══════════════════════════════════════ */
+.field-group.error .field-input {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(196,91,91,0.15);
+}
+.field-group.error .radio-group,
+.field-group.error .checkbox-group {
+  border-radius: 12px; outline: 2px solid var(--error);
+  outline-offset: 4px;
+}
+.field-error {
+  font-size: 0.72rem; color: var(--error); margin-top: 0.35rem;
+  font-weight: 400; display: none;
+}
+.field-group.error .field-error { display: block; }
+
+/* ═══════════════════════════════════════
+   NAVIGATION BUTTONS
+═══════════════════════════════════════ */
+.step-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 2rem; gap: 1rem;
+}
+.btn-back {
+  font-size: 0.85rem; font-weight: 400; color: var(--text-soft);
+  background: none; padding: 0.6rem 0; transition: color 0.3s;
+  letter-spacing: 0.03em;
+}
+.btn-back:hover { color: var(--cream); }
+
+.btn-next, .btn-submit-final {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 2rem; border-radius: 100px;
+  background: var(--gold); color: var(--navy);
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  position: relative; overflow: hidden; margin-left: auto;
+}
+.btn-next::before, .btn-submit-final::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+.btn-next:hover, .btn-submit-final:hover {
+  background: var(--gold-light); transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(198,160,91,0.25);
+}
+.btn-next:hover::before, .btn-submit-final:hover::before { left: 100%; }
+.btn-next:active, .btn-submit-final:active { transform: scale(0.97); }
+.btn-next .arrow, .btn-submit-final .arrow { transition: transform 0.3s; }
+.btn-next:hover .arrow { transform: translateX(3px); }
+
+.btn-next:disabled, .btn-submit-final:disabled {
+  opacity: 0.5; cursor: not-allowed; transform: none;
+}
+.btn-submit-final:disabled:hover { background: var(--gold); box-shadow: none; transform: none; }
+
+/* ═══════════════════════════════════════
+   LOADING SPINNER
+═══════════════════════════════════════ */
+.spinner {
+  display: none; width: 18px; height: 18px; border: 2px solid rgba(14,30,46,0.2);
+  border-top-color: var(--navy); border-radius: 50%; animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-submit-final.loading .spinner { display: inline-block; }
+.btn-submit-final.loading .btn-text { opacity: 0; }
+
+/* ═══════════════════════════════════════
+   ERROR SCREEN / SUCCESS
+═══════════════════════════════════════ */
+.error-screen, .success-screen {
+  max-width: 500px; margin: 0 auto;
+  padding: calc(var(--header-h) + 6rem) clamp(1.5rem, 4vw, 2rem) 4rem;
+  text-align: center; min-height: 100dvh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.error-screen h1, .success-screen h1 {
+  font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 300; color: var(--cream); margin-bottom: 1rem; line-height: 1.3;
+}
+.error-screen p, .success-screen p {
+  font-size: 0.95rem; color: var(--text-soft); line-height: 1.7;
+}
+
+/* Toast messages */
+.toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: rgba(196,91,91,0.95); color: var(--cream); padding: 0.8rem 1.5rem;
+  border-radius: 12px; font-size: 0.85rem; font-weight: 400;
+  backdrop-filter: blur(12px); z-index: 2000; opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+  max-width: 90vw; text-align: center;
+}
+.toast.toast-info { background: rgba(198,160,91,0.95); color: var(--navy); }
+.toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ═══════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+  .progress-bar::after { animation: none; }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --header-h: 60px; }
+  .site-header { height: 60px; }
+  .header-logo { width: 95px; }
+  .progress-wrap { top: 60px; }
+}
+@media (max-width: 480px) {
+  .step-card { padding: 1.25rem; }
+  .btn-next, .btn-submit-final { padding: 0.8rem 1.5rem; font-size: 0.82rem; }
+}
+.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
+.skip-link:focus { top: 0; }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+<!-- Grain -->
+<div class="grain"></div>
+
+<!-- Header (logo only, no nav) -->
+<header class="site-header">
+  <a href="/" aria-label="Elevia - Accueil">
+    <svg class="header-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg">
+      <g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g><g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g>
+    </svg>
+  </a>
+</header>
+
+<!-- Progress -->
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Error screen (hidden by default) -->
+<div class="error-screen" id="errorScreen" style="display:none;">
+  <h1>Lien invalide</h1>
+  <p>Verifie ton email de confirmation.<br>Le lien contient les parametres necessaires pour acceder a ton questionnaire.</p>
+</div>
+
+<!-- Main questionnaire (hidden until params validated) -->
+<div class="q-main" id="qMain" style="display:none;">
+  <div class="step-indicator" id="stepIndicator"></div>
+  <h2 class="step-title" id="stepTitle"></h2>
+  <div class="step-card" id="stepCard"></div>
+  <div class="step-nav">
+    <button class="btn-back" id="btnBack" style="visibility:hidden;">&#8592; Retour</button>
+    <button class="btn-next" id="btnNext">Suivant <span class="arrow">&#8594;</span></button>
+    <button class="btn-submit-final" id="btnSubmit" style="display:none;">
+      <span class="btn-text">Envoyer mes reponses</span>
+      <span class="spinner"></span>
+    </button>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── URL params ──
+  var params = new URLSearchParams(window.location.search);
+  var ORDER_ID = params.get('order_id');
+  var EMAIL = params.get('email');
+
+  if (!ORDER_ID || !EMAIL) {
+    document.getElementById('errorScreen').style.display = '';
+    return;
+  }
+
+  document.getElementById('qMain').style.display = '';
+
+  // ── State ──
+  var formData = {};
+  var currentStep = 0;
+  var STORAGE_KEY = 'elevia_questionnaire_' + ORDER_ID;
+
+  // Restore from sessionStorage
+  try {
+    var saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) formData = JSON.parse(saved);
+  } catch(e) {}
+
+  function saveToStorage() {
+    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData)); } catch(e) {}
+  }
+
+  // ── Helpers ──
+  function el(id) { return document.getElementById(id); }
+  function qs(sel, parent) { return (parent || document).querySelector(sel); }
+  function qsa(sel, parent) { return (parent || document).querySelectorAll(sel); }
+
+  function showToast(msg, type) {
+    var t = el('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (type === 'info' ? ' toast-info' : '') + ' visible';
+    setTimeout(function() { t.classList.remove('visible'); }, 4000);
+  }
+
+  // ── Conditional helpers ──
+  function v(key) { return formData[key] || ''; }
+  function hasVal(key) { return !!formData[key]; }
+  function arrIncludes(key, val) {
+    var a = formData[key];
+    return Array.isArray(a) && a.indexOf(val) !== -1;
+  }
+
+  // ── Step Definitions ──
+  // Each step: { id, title, condition?, fields[] }
+  // field: { name, type, label, required?, placeholder?, step?, help?, condition?, options[], optionsDynamic? }
+
+  function getSteps() {
+    var steps = [];
+
+    // STEP 1: Toi
+    steps.push({
+      id: 'toi', title: 'Toi',
+      fields: [
+        { name: 'lastname', type: 'text', label: 'Nom', required: true, placeholder: 'Dumont' },
+        { name: 'firstname', type: 'text', label: 'Prenom', required: true, placeholder: 'Lucas' },
+        { name: 'gender', type: 'radio', label: 'Genre', required: true, options: [
+          { label: 'Homme', value: 'Masculin' }, { label: 'Femme', value: 'Feminin' }
+        ]},
+        { name: 'age', type: 'number', label: 'Age', required: true, placeholder: '32' },
+        { name: 'weight_kg', type: 'number', label: 'Poids (kg)', required: true, placeholder: '82', help: 'Ton poids du matin, a jeun, c\'est parfait. Pas besoin d\'etre au gramme pres.' },
+        { name: 'height_m', type: 'number', label: 'Taille (m)', required: true, placeholder: '1.78', step: '0.01' },
+        { name: 'primary_goal', type: 'radio', label: 'Objectif principal', required: true, help: 'C\'est la base de tout. Ton plan sera calibre en fonction de cet objectif.', options: [
+          { label: 'Perdre du poids', value: 'weight_loss' },
+          { label: 'Maintien / reequilibrage alimentaire', value: 'maintenance' },
+          { label: 'Prise de muscle', value: 'muscle_gain' }
+        ]},
+        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', help: 'Si tu n\'as pas de chiffre precis, indique une fourchette realiste.', condition: function() { return v('primary_goal') !== 'maintenance' && v('primary_goal') !== ''; } }
+      ]
+    });
+
+    // STEP 2: Tes mesures
+    steps.push({
+      id: 'mesures', title: 'Tes <em>mesures</em>',
+      fields: [
+        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', help: 'Mesure a hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains parametres.' },
+        { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', help: 'Tour de hanches au plus large. Mesure optionnelle.' },
+        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', help: 'Via balance impedancemetre, DEXA, ou estimation. Optionnel.' }
+      ]
+    });
+
+    // STEP 3: Ton activite
+    steps.push({
+      id: 'activite', title: 'Ton <em>activite</em>',
+      fields: [
+        { name: 'job_activity', type: 'radio', label: 'Activite professionnelle', required: true, options: [
+          { label: 'Tres sedentaire (bureau, teletravail)', value: 'sedentary' },
+          { label: 'Legerement actif (debout regulierement)', value: 'light' },
+          { label: 'Actif (en deplacement, marche frequente)', value: 'moderate' },
+          { label: 'Tres actif (travail physique)', value: 'very_active' }
+        ]},
+        { name: 'has_physical_activity', type: 'radio', label: 'Pratiques-tu une activite physique reguliere ?', required: true, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'activity_frequency', type: 'radio', label: 'Frequence d\'entrainement', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+          { label: '1 a 2 seances/semaine', value: '1_2' },
+          { label: '3 a 4 seances/semaine', value: '3_4' },
+          { label: '5 a 6 seances/semaine', value: '5_6' }
+        ]},
+        { name: 'activity_intensity', type: 'radio', label: 'Intensite', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+          { label: 'Legere', value: 'light' },
+          { label: 'Moderee', value: 'moderate' },
+          { label: 'Elevee', value: 'high' }
+        ]}
+      ]
+    });
+
+    // STEP 4: Objectifs musculaires (conditional)
+    steps.push({
+      id: 'muscle_gain', title: 'Objectifs <em>musculaires</em>',
+      condition: function() { return v('primary_goal') === 'muscle_gain'; },
+      fields: [
+        { name: 'mg_training_type', type: 'radio', label: 'Type d\'entrainement', options: [
+          { label: 'Musculation / force', value: 'strength' },
+          { label: 'Fonctionnel (CrossFit, HIIT\u2026)', value: 'functional' },
+          { label: 'Mixte (muscu + fonctionnel)', value: 'mixed' },
+          { label: 'Sport specifique (a preciser dans le contexte)', value: 'sport' }
+        ]},
+        { name: 'mg_experience', type: 'radio', label: 'Experience en entrainement', options: [
+          { label: 'Debutant (< 1 an)', value: 'beginner' },
+          { label: 'Intermediaire (1-3 ans)', value: 'intermediate' },
+          { label: 'Avance (> 3 ans)', value: 'advanced' }
+        ]},
+        { name: 'mg_training_time', type: 'radio', label: 'Horaire d\'entrainement habituel', options: [
+          { label: 'Tot le matin (avant 9h)', value: 'early_morning' },
+          { label: 'Fin de matinee (9h\u201312h)', value: 'late_morning' },
+          { label: 'Midi / debut d\'apres-midi', value: 'midday' },
+          { label: 'Apres-midi (14h\u201317h)', value: 'afternoon' },
+          { label: 'Soir (apres 17h)', value: 'evening' },
+          { label: 'Variable', value: 'variable' }
+        ]},
+        { name: 'mg_approach', type: 'radio', label: 'Approche souhaitee', help: 'La prise seche limite le surplus de gras mais demande plus de rigueur.', options: [
+          { label: 'Lean bulk \u2014 prise seche et controlee', value: 'lean' },
+          { label: 'Bulk confort \u2014 priorite performance et energie', value: 'comfort' },
+          { label: 'Je ne sais pas \u2014 a adapter selon mon profil', value: 'guide_me' }
+        ]},
+        { name: 'mg_meal_frequency', type: 'radio', label: 'Frequence de repas ideale', options: [
+          { label: '3 repas + 1 collation (minimum)', value: '3_1' },
+          { label: '3 repas + 2 collations (recommande)', value: '3_2' },
+          { label: '4 repas + 1-2 collations (optimal)', value: '4_2' },
+          { label: 'Difficile d\'avoir un rythme fixe', value: 'flexible' }
+        ]},
+        { name: 'mg_volume_comfort', type: 'radio', label: 'Volume alimentaire', options: [
+          { label: 'Aucun souci, j\'ai bon appetit', value: 'easy' },
+          { label: 'Ca passe, mais faut que ce soit bon', value: 'moderate' },
+          { label: 'J\'ai souvent du mal a finir mes assiettes', value: 'difficult' }
+        ]},
+        { name: 'mg_shake_habit', type: 'radio', label: 'Proteines en poudre (shaker)', options: [
+          { label: 'Oui, quotidiennement', value: 'daily' },
+          { label: 'Oui, occasionnellement (jours de training)', value: 'training_days' },
+          { label: 'Non, mais je suis ouvert', value: 'open' },
+          { label: 'Non, et je prefere m\'en passer', value: 'no' }
+        ]},
+        { name: 'mg_creatine', type: 'radio', label: 'Creatine', options: [
+          { label: 'Oui, quotidiennement', value: 'yes' },
+          { label: 'Non, mais ca m\'interesse', value: 'interested' },
+          { label: 'Non, et je prefere m\'en passer', value: 'no' }
+        ]},
+        { name: 'mg_pre_workout', type: 'radio', label: 'Collation pre-workout', options: [
+          { label: 'Oui, j\'ai deja une habitude', value: 'yes' },
+          { label: 'Parfois, mais pas systematiquement', value: 'sometimes' },
+          { label: 'Non, je ne sais pas quoi manger', value: 'need_help' },
+          { label: 'Non, je prefere m\'entrainer a jeun', value: 'fasted' }
+        ]},
+        { name: 'mg_post_workout', type: 'radio', label: 'Apres l\'entrainement', options: [
+          { label: 'Un shaker rapide juste apres', value: 'shake' },
+          { label: 'Un vrai repas solide dans l\'heure', value: 'meal' },
+          { label: 'Les deux (shaker + repas ensuite)', value: 'both' },
+          { label: 'Rien de particulier pour l\'instant', value: 'nothing' }
+        ]}
+      ]
+    });
+
+    // STEP 5: Ton alimentation
+    steps.push({
+      id: 'alimentation', title: 'Ton <em>alimentation</em>',
+      fields: [
+        { name: 'diet_profile', type: 'radio', label: 'Profil alimentaire', required: true, options: [
+          { label: 'Omnivore \u2014 je mange de tout', value: 'omnivore' },
+          { label: 'Flexitarien \u2014 je reduis ma consommation de viande', value: 'flexitarian' },
+          { label: 'Pesco-vegetarien \u2014 pas de viande, mais poisson', value: 'pescetarian' },
+          { label: 'Vegetarien \u2014 ni viande, ni poisson', value: 'vegetarian' }
+        ]},
+        { name: 'eat_everything', type: 'radio', label: 'Manges-tu de tout ?', required: true, options: [
+          { label: 'Oui, je mange de tout', value: 'yes' },
+          { label: 'Pas tout, mais je suis pret(e) a faire un effort', value: 'effort' },
+          { label: 'Non, j\'ai des exclusions ou des aversions', value: 'exclusions' }
+        ]},
+        { name: 'food_exclusions', type: 'checkbox', label: 'Exclusions alimentaires', condition: function() { return v('eat_everything') === 'exclusions'; }, options: [
+          { label: 'Produits contenant du lactose', value: 'lactose' },
+          { label: 'Viandes', value: 'viandes' },
+          { label: 'Aliments en provenance de la mer', value: 'mer' },
+          { label: 'Oeufs', value: 'oeufs' },
+          { label: 'Fruits a coque', value: 'fruits_coque' },
+          { label: 'Fromage', value: 'fromage' },
+          { label: 'Legumineuses', value: 'legumineuses' }
+        ]},
+        { name: 'allergies', type: 'checkbox', label: 'Allergies', options: [
+          { label: 'Aucune allergie', value: 'none' },
+          { label: 'Arachides', value: 'peanuts' },
+          { label: 'Fruits a coque', value: 'tree_nuts' },
+          { label: 'Gluten', value: 'gluten' },
+          { label: 'Oeufs', value: 'eggs' },
+          { label: 'Soja', value: 'soy' },
+          { label: 'Crustaces / mollusques', value: 'shellfish' },
+          { label: 'Autre', value: 'other' }
+        ]},
+        { name: 'allergies_other', type: 'text', label: 'Preciser l\'allergie', placeholder: 'Ex: sesame, moutarde...', condition: function() { return arrIncludes('allergies', 'other'); } },
+        { name: 'lactose_intolerance', type: 'radio', label: 'Intolerance au lactose', options: [
+          { label: 'Non, aucun souci', value: 'no' },
+          { label: 'Oui, intolerance legere', value: 'mild' },
+          { label: 'Oui, intolerance forte', value: 'severe' },
+          { label: 'Je ne sais pas', value: 'unknown' }
+        ]},
+        { name: 'gluten_intolerance', type: 'radio', label: 'Intolerance au gluten', options: [
+          { label: 'Non, aucun souci', value: 'no' },
+          { label: 'Sensibilite legere', value: 'sensitive' },
+          { label: 'Intolerance confirmee / coeliaque', value: 'celiac' },
+          { label: 'Je ne sais pas', value: 'unknown' }
+        ]},
+        // Vegetarien block
+        { name: 'veg_type', type: 'radio', label: 'Type de vegetarisme', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Lacto-ovo', value: 'lacto_ovo' },
+          { label: 'Lacto', value: 'lacto' },
+          { label: 'Ovo', value: 'ovo' }
+        ]},
+        { name: 'veg_duration', type: 'radio', label: 'Depuis combien de temps ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Moins de 6 mois', value: 'lt_6m' },
+          { label: '6 mois a 2 ans', value: '6m_2y' },
+          { label: '2 a 5 ans', value: '2y_5y' },
+          { label: 'Plus de 5 ans', value: 'gt_5y' }
+        ]},
+        { name: 'veg_protein_sources', type: 'checkbox', label: 'Sources de proteines vegetales', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Legumineuses', value: 'legumes' },
+          { label: 'Tofu', value: 'tofu' },
+          { label: 'Tempeh', value: 'tempeh' },
+          { label: 'Seitan', value: 'seitan' },
+          { label: 'PST', value: 'pst' },
+          { label: 'Quinoa / amarante', value: 'quinoa' },
+          { label: 'Oleagineux', value: 'nuts' },
+          { label: 'Aucune en particulier', value: 'none' }
+        ]},
+        { name: 'veg_soy_comfort', type: 'radio', label: 'A l\'aise avec le soja ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Oui', value: 'yes' },
+          { label: 'Oui, mais je prefere varier', value: 'moderate' },
+          { label: 'Non, je prefere eviter', value: 'avoid' }
+        ]},
+        { name: 'veg_legume_digest', type: 'radio', label: 'Digestion des legumineuses', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Oui, aucun souci', value: 'ok' },
+          { label: 'Parfois un peu d\'inconfort', value: 'sometimes' },
+          { label: 'Souvent des ballonnements', value: 'difficult' }
+        ]},
+        { name: 'veg_supplements', type: 'checkbox', label: 'Supplements actuels', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Aucun', value: 'none' },
+          { label: 'B12', value: 'b12' },
+          { label: 'Fer', value: 'iron' },
+          { label: 'Omega-3', value: 'omega3' },
+          { label: 'Vitamine D', value: 'vitd' },
+          { label: 'Zinc', value: 'zinc' },
+          { label: 'Multivitamines', value: 'multi' },
+          { label: 'Autre', value: 'other' }
+        ]},
+        { name: 'veg_blood_test', type: 'radio', label: 'Bilan sanguin recent ?', condition: function() { return v('diet_profile') === 'vegetarian'; }, options: [
+          { label: 'Oui, tout normal', value: 'yes_ok' },
+          { label: 'Oui, carences detectees', value: 'yes_deficiency' },
+          { label: 'Non, pas encore', value: 'no' }
+        ]},
+        // Flexitarien block
+        { name: 'flexi_meat_freq', type: 'radio', label: 'Frequence de consommation de viande', condition: function() { return v('diet_profile') === 'flexitarian'; }, options: [
+          { label: '1 a 2 fois par semaine', value: '1_2' },
+          { label: '3 a 4 fois par semaine', value: '3_4' },
+          { label: 'Quasi tous les jours, mais je veux reduire', value: 'daily_reduce' }
+        ]},
+        { name: 'flexi_goal', type: 'radio', label: 'Objectif viande', condition: function() { return v('diet_profile') === 'flexitarian'; }, options: [
+          { label: 'Maintenir ma frequence actuelle', value: 'maintain' },
+          { label: 'Reduire un peu', value: 'reduce_light' },
+          { label: 'Reduire significativement (max 1-2x/sem)', value: 'reduce_strong' }
+        ]}
+      ]
+    });
+
+    // STEP 6: Tes boissons
+    steps.push({
+      id: 'boissons', title: 'Tes <em>boissons</em>',
+      fields: [
+        { name: 'alcohol_freq', type: 'radio', label: 'Frequence de consommation d\'alcool', required: true, options: [
+          { label: 'Jamais', value: 'never' },
+          { label: 'Tres rarement (quelques fois/an)', value: 'rarely' },
+          { label: 'Occasionnellement (1-2x/mois)', value: 'occasional' },
+          { label: 'Hebdomadairement (~1x/sem)', value: 'weekly' },
+          { label: 'Plusieurs fois par semaine', value: 'several' },
+          { label: 'Quasi tous les jours', value: 'daily' }
+        ]},
+        { name: 'alcohol_quantity', type: 'radio', label: 'Quantite par occasion', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
+          { label: '1 a 2 verres', value: '1_2' },
+          { label: '3 a 4 verres', value: '3_4' },
+          { label: '5 a 6 verres', value: '5_6' },
+          { label: '7 verres ou plus', value: '7_plus' }
+        ]},
+        { name: 'alcohol_planned', type: 'radio', label: 'Alcool dans le plan ?', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
+          { label: 'Oui, pas d\'alcool dans le plan', value: 'yes' },
+          { label: 'Non, inclure max 4 verres/semaine', value: 'no' }
+        ]},
+        { name: 'alcohol_type', type: 'radio', label: 'Type d\'alcool', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
+          { label: 'Alcool leger', value: 'light' },
+          { label: 'Alcool fort', value: 'strong' },
+          { label: 'Je varie', value: 'mixed' }
+        ]},
+        { name: 'water_intake', type: 'radio', label: 'Consommation d\'eau par jour', required: true, options: [
+          { label: '< 0,5 L', value: 'lt05' },
+          { label: '0,5 a 1 L', value: '05_1' },
+          { label: '1 a 1,5 L', value: '1_15' },
+          { label: '1,5 a 2 L', value: '15_2' },
+          { label: '2 a 3 L', value: '2_3' },
+          { label: '> 3 L', value: 'gt3' }
+        ]},
+        { name: 'coffee_quantity', type: 'radio', label: 'Cafes par jour', required: true, options: [
+          { label: '0', value: '0' },
+          { label: '1', value: '1' },
+          { label: '2', value: '2' },
+          { label: '3', value: '3' },
+          { label: 'Plus de 3', value: 'gt3' }
+        ]},
+        { name: 'coffee_early', type: 'radio', label: 'Cafe des le matin (< 1h apres le lever) ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'coffee_late', type: 'radio', label: 'Cafe apres 16h ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'coffee_sugar', type: 'radio', label: 'Sucre dans le cafe ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'coffee_sugar_quantity', type: 'radio', label: 'Quantite de sucre', condition: function() { return v('coffee_sugar') === 'Oui'; }, options: [
+          { label: '\u00BD sucre ou moins', value: 'half' },
+          { label: '1 sucre', value: '1' },
+          { label: '2 sucres', value: '2' }
+        ]},
+        { name: 'coffee_milk', type: 'radio', label: 'Lait dans le cafe ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+          { label: 'Non, je le bois noir', value: 'black' },
+          { label: 'Un petit nuage', value: 'splash' },
+          { label: 'Cafe au lait', value: 'latte' },
+          { label: 'Lait au cafe', value: 'milk_coffee' }
+        ]},
+        { name: 'type_milk', type: 'radio', label: 'Type de lait', condition: function() { return v('coffee_milk') && v('coffee_milk') !== 'black'; }, options: [
+          { label: 'Lait d\'origine animale', value: 'animal' },
+          { label: 'Lait d\'origine vegetale', value: 'plant' }
+        ]},
+        { name: 'sweet_beverages', type: 'checkbox', label: 'Boissons sucrees', required: true, options: [
+          { label: 'Aucune, tres rarement', value: 'NONE' },
+          { label: 'Jus de fruits', value: 'JUICE' },
+          { label: 'Boissons sucrees', value: 'SUGARY' },
+          { label: 'Boissons light ou zero', value: 'LIGHT' },
+          { label: 'Boissons energisantes', value: 'ENERGY' }
+        ]},
+        { name: 'sweet_beverages_freq', type: 'radio', label: 'Frequence boissons sucrees', condition: function() { return !arrIncludes('sweet_beverages', 'NONE') && Array.isArray(formData.sweet_beverages) && formData.sweet_beverages.length > 0; }, options: [
+          { label: '1 a 2 fois par semaine', value: '1_2' },
+          { label: '3 a 5 fois par semaine', value: '3_5' },
+          { label: 'Tous les jours ou presque', value: 'daily' },
+          { label: 'Plusieurs fois par jour', value: 'multi_daily' }
+        ]}
+      ]
+    });
+
+    // STEP 7: Tes habitudes
+    steps.push({
+      id: 'habitudes', title: 'Tes <em>habitudes</em>',
+      fields: [
+        { name: 'spread_habit_global', type: 'radio', label: 'Garnitures a tartiner (beurre, confiture\u2026)', required: true, options: [
+          { label: 'Oui, uniquement au petit-dejeuner', value: 'breakfast_only' },
+          { label: 'Oui, uniquement aux repas froids', value: 'cold_only' },
+          { label: 'Oui, aux deux moments', value: 'both' },
+          { label: 'Non, jamais', value: 'never' }
+        ]},
+        { name: 'fast_food_freq', type: 'radio', label: 'Fast-food / friterie', required: true, options: [
+          { label: 'Jamais ou presque', value: 'never' },
+          { label: '~1x/mois', value: 'monthly' },
+          { label: '~1x/semaine', value: 'weekly' },
+          { label: 'Plusieurs fois/semaine', value: 'several' },
+          { label: 'Tous les jours ou presque', value: 'daily' }
+        ]},
+        { name: 'industrial_products', type: 'radio', label: 'Produits industriels / transformes', required: true, options: [
+          { label: 'Rarement, voire jamais', value: 'rarely' },
+          { label: '1 a 2x/semaine', value: '1_2' },
+          { label: '3 a 5x/semaine', value: '3_5' },
+          { label: 'Quasi tous les jours', value: 'daily' },
+          { label: 'Plusieurs fois par jour', value: 'multi' }
+        ]},
+        { name: 'outdoor_meals', type: 'radio', label: 'Repas pris a l\'exterieur par semaine', required: true, options: [
+          { label: 'Jamais ou rarement', value: 'rarely' },
+          { label: '1 a 2 fois', value: '1_2' },
+          { label: '3 fois ou plus', value: '3_plus' }
+        ]}
+      ]
+    });
+
+    // STEP 8: Ton petit-dejeuner
+    steps.push({
+      id: 'petitdej', title: 'Ton <em>petit-dejeuner</em>',
+      fields: [
+        { name: 'has_breakfast', type: 'radio', label: 'Prends-tu un petit-dejeuner ?', required: true, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'include_breakfast', type: 'radio', label: 'Souhaites-tu en inclure un dans le plan ?', condition: function() { return v('has_breakfast') === 'Non'; }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'breakfast_variety', type: 'radio', label: 'Variete du petit-dejeuner', condition: function() { return v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui'; }, options: [
+          { label: 'La meme chose chaque jour', value: 'fixed' },
+          { label: 'Varier les options', value: 'varied' }
+        ]},
+        { name: 'breakfast_base_fixed', type: 'radio', label: 'Base du petit-dejeuner', condition: function() { return v('breakfast_variety') === 'fixed'; }, options: [
+          { label: 'Tartines', value: 'Tartines' },
+          { label: 'Cereales', value: 'Cereales' }
+        ]},
+        { name: 'breakfast_base_varied', type: 'radio', label: 'Base preferee', condition: function() { return v('breakfast_variety') === 'varied'; }, options: [
+          { label: 'Tartines', value: 'Tartines' },
+          { label: 'Cereales', value: 'Cereales' },
+          { label: 'Pas de preference', value: 'Pas de preference' }
+        ]},
+        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si je reduis les matieres grasses au petit-dej ?', condition: function() { return (v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && v('spread_habit_global') !== 'never'; }, options: [
+          { label: 'Oui, ca me va', value: 'yes' },
+          { label: 'Non, j\'y tiens', value: 'no' }
+        ]},
+        { name: 'breakfast_eggs', type: 'radio', label: 'Oeufs au petit-dejeuner ?', condition: function() { return (v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && !arrIncludes('food_exclusions', 'oeufs'); }, options: [
+          { label: 'Oui, 1x/semaine', value: '1x' },
+          { label: 'Oui, 2-3x/semaine', value: '2_3x' },
+          { label: 'Non, pas pour moi', value: 'no' }
+        ]},
+        { name: 'bread_sweet_yesno', type: 'radio', label: 'Viennoiseries / pain sucre au petit-dej ?', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'bread_sweet_freq', type: 'radio', label: 'Frequence pain sucre / viennoiserie', condition: function() { return v('bread_sweet_yesno') === 'Oui'; }, options: [
+          { label: 'Occasionnellement', value: 'occasional' },
+          { label: '1-2x/sem sucre', value: 'sweet' },
+          { label: '1-2x/sem sucre-gras', value: 'sweet_fat' },
+          { label: '1-2x/sem les deux', value: 'both' }
+        ]},
+        { name: 'bowl_sweet_yesno', type: 'radio', label: 'Sucre dans les cereales / bowl ?', condition: function() { return (v('breakfast_base_fixed') === 'Cereales' || v('breakfast_base_varied') === 'Cereales' || v('breakfast_base_varied') === 'Pas de preference'); }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'morning_light_snack', type: 'radio', label: 'Collation legere le matin ?', condition: function() { return v('has_breakfast') === 'Non'; }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'morning_snack_profile', type: 'radio', label: 'Type de collation matinale', condition: function() { return v('morning_light_snack') === 'Oui'; }, options: [
+          { label: 'Fruit + produit laitier', value: 'fruit_dairy' },
+          { label: 'Fruit + oleagineux', value: 'fruit_nuts' },
+          { label: 'Fruit + sale leger', value: 'fruit_savory' },
+          { label: 'Varier les options', value: 'varied' }
+        ]}
+      ]
+    });
+
+    // STEP 9: Ton repas froid
+    steps.push({
+      id: 'repasfroid', title: 'Ton <em>repas froid</em>',
+      fields: [
+        { name: 'lunch_mode', type: 'radio', label: 'Format habituel du repas froid', required: true, options: [
+          { label: 'Sandwich ou tartines', value: 'sandwich' },
+          { label: 'Salade composee ou bowl froid', value: 'salad' },
+          { label: 'Plat prepare rechauffe', value: 'prepared' },
+          { label: 'Restes de la veille', value: 'leftovers' },
+          { label: 'Repas achete a l\'exterieur', value: 'outside' }
+        ]},
+        { name: 'lunch_full_fillings', type: 'radio', label: 'Toutes les garnitures (recommande)', required: true, options: [
+          { label: 'Oui (recommande)', value: 'yes' },
+          { label: 'Non', value: 'no' }
+        ]},
+        { name: 'lunch_fillings_excl', type: 'checkbox', label: 'Garnitures a exclure', condition: function() { return v('lunch_full_fillings') === 'no'; }, options: (function() {
+          var base = [
+            { label: 'Fromages', value: 'Fromages' },
+            { label: 'Charcuteries', value: 'Charcuteries' },
+            { label: 'Poissons en conserve', value: 'poissons' },
+            { label: 'Garnitures vegetales', value: 'vegetales' },
+            { label: 'Oeufs', value: 'oeufs' }
+          ];
+          return base;
+        })()},
+        { name: 'lunch_rawveg_ok', type: 'radio', label: 'Crudites ?', required: true, options: [
+          { label: 'Oui (recommande)', value: 'yes' },
+          { label: 'Non, vraiment pas', value: 'no' }
+        ]},
+        { name: 'lunch_spread_mustkeep', type: 'radio', label: 'Si je reduis le beurre/tartines au repas froid ?', condition: function() { return ['cold_only','both'].indexOf(v('spread_habit_global')) !== -1; }, options: [
+          { label: 'Oui, ca me va', value: 'yes' },
+          { label: 'Non, j\'y tiens', value: 'no' }
+        ]},
+        { name: 'coldmeal_type_pref', type: 'radio', label: 'Preference repas froid', required: true, options: [
+          { label: 'Plutot tartines / sandwichs', value: 'sandwich' },
+          { label: 'Plutot salades / bowls', value: 'salad' },
+          { label: 'Varier les deux', value: 'both' }
+        ]},
+        { name: 'coldmeal_variation_bias', type: 'radio', label: 'Dans la variation, tu pencherais vers\u2026', condition: function() { return v('coldmeal_type_pref') === 'both'; }, options: [
+          { label: 'Plutot tartines', value: 'sandwich' },
+          { label: 'Plutot salades', value: 'salad' },
+          { label: 'Aucune preference (50/50)', value: 'equal' }
+        ]},
+        { name: 'avocado_ok', type: 'radio', label: 'Avocat ?', required: true, options: [
+          { label: 'Oui, j\'adore', value: 'yes' },
+          { label: 'Peu importe', value: 'indifferent' },
+          { label: 'Non, je n\'aime pas', value: 'no' }
+        ]}
+      ]
+    });
+
+    // STEP 10: Repas du soir + Toi et la nourriture
+    steps.push({
+      id: 'soir', title: 'Ton <em>repas du soir</em>',
+      fields: [
+        // Soupe & collation
+        { name: '_section_soupe', type: 'section', label: 'Soupe & collation' },
+        { name: 'soup_allowed', type: 'radio', label: 'Soupe en accompagnement ?', options: [
+          { label: 'Oui, regulierement', value: 'regular' },
+          { label: 'Oui, de temps en temps', value: 'occasional' },
+          { label: 'Non, vraiment pas mon truc', value: 'no' }
+        ]},
+        { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
+          { label: 'Pas de collation pour moi', value: 'none' },
+          { label: 'Milieu de matinee', value: 'morning' },
+          { label: 'Apres-midi (recommande)', value: 'afternoon' },
+          { label: 'Soiree (apres diner)', value: 'evening' },
+          { label: 'Flexible', value: 'flexible' }
+        ]},
+        { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') !== 'Oui'; }, options: [
+          { label: 'Aucune collation', value: 'none' },
+          { label: 'Apres-midi', value: 'afternoon' },
+          { label: 'Soiree', value: 'evening' },
+          { label: 'Les deux', value: 'both' },
+          { label: 'Flexible', value: 'flexible' }
+        ]},
+        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplementaire', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
+          { label: 'Aucune supplementaire', value: 'none' },
+          { label: 'Apres-midi (recommande)', value: 'afternoon' },
+          { label: 'Soiree', value: 'evening' },
+          { label: 'Flexible', value: 'flexible' }
+        ]},
+        { name: 'snack_style', type: 'radio', label: 'Style de collation', condition: function() {
+          var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
+          return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
+        }, options: [
+          { label: 'Simple et rapide', value: 'simple' },
+          { label: 'Simple + recettes gourmandes', value: 'mixed' }
+        ]},
+        { name: 'snack_darkchoc', type: 'radio', label: 'Chocolat noir en collation ?', condition: function() {
+          var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
+          return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
+        }, options: [
+          { label: 'Oui', value: 'Oui' },
+          { label: 'Non', value: 'Non' },
+          { label: 'Je ne sais pas encore', value: 'dunno' }
+        ]},
+
+        // Repas du soir
+        { name: '_section_diner', type: 'section', label: 'Repas du soir' },
+        { name: 'dinner_alt_veg_ok', type: 'radio', label: 'Repas vegetariens au diner ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
+          { label: 'Non', value: 'no' },
+          { label: '1x/semaine', value: '1x' },
+          { label: '1 a 2x/semaine', value: '1_2x' },
+          { label: '3x ou plus', value: '3_plus' }
+        ]},
+        { name: 'dinner_cheese_ok', type: 'radio', label: 'Fromage au diner ?', required: true, condition: function() { return !arrIncludes('food_exclusions', 'fromage'); }, options: [
+          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        ]},
+        { name: 'dinner_cheat_meal_allowed', type: 'radio', label: 'Repas plaisir (cheat meal) ?', required: true, options: [
+          { label: 'Oui (recommande)', value: 'Oui' },
+          { label: 'Non, rester strict', value: 'Non' }
+        ]},
+        { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
+          { label: 'J\'apprecie et c\'est dans mes moyens', value: 'yes' },
+          { label: 'Pas vraiment, le minimum possible', value: 'no' }
+        ]},
+
+        // Toi et la nourriture
+        { name: '_section_toi', type: 'section', label: 'Toi et la nourriture' },
+        { name: 'food_history_story', type: 'textarea', label: 'Ton parcours avec l\'alimentation jusqu\'a aujourd\'hui', placeholder: 'Raconte librement\u2026' },
+        { name: 'current_food_difficulties', type: 'textarea', label: 'Tes principales difficultes alimentaires aujourd\'hui ?', placeholder: 'Ce qui te bloque\u2026' },
+        { name: 'emotional_relationship_food', type: 'textarea', label: 'Ta relation a la nourriture ?', placeholder: 'Comment tu vis ca\u2026' },
+        { name: 'expectations_from_plan', type: 'textarea', label: 'Qu\'attends-tu de ton plan et de cet accompagnement ?', placeholder: 'Tes attentes\u2026' }
+      ]
+    });
+
+    return steps;
+  }
+
+  // ── Compute visible steps ──
+  function getVisibleSteps() {
+    var all = getSteps();
+    var visible = [];
+    for (var i = 0; i < all.length; i++) {
+      if (!all[i].condition || all[i].condition()) {
+        visible.push(all[i]);
+      }
+    }
+    return visible;
+  }
+
+  function getVisibleFields(step) {
+    var fields = [];
+    for (var i = 0; i < step.fields.length; i++) {
+      var f = step.fields[i];
+      if (!f.condition || f.condition()) {
+        fields.push(f);
+      }
+    }
+    return fields;
+  }
+
+  // ── Render ──
+  function renderStep() {
+    var steps = getVisibleSteps();
+    var totalSteps = steps.length;
+    var step = steps[currentStep];
+    if (!step) return;
+
+    // Progress
+    el('progressBar').style.width = ((currentStep + 1) / totalSteps * 100) + '%';
+    el('stepIndicator').textContent = 'Etape ' + (currentStep + 1) + ' sur ' + totalSteps;
+    el('stepTitle').innerHTML = step.title;
+
+    // Buttons
+    el('btnBack').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+    var isLast = currentStep === totalSteps - 1;
+    el('btnNext').style.display = isLast ? 'none' : '';
+    el('btnSubmit').style.display = isLast ? '' : 'none';
+
+    // Render fields
+    var fields = getVisibleFields(step);
+    var html = '';
+    for (var i = 0; i < fields.length; i++) {
+      html += renderField(fields[i]);
+    }
+    el('stepCard').innerHTML = html;
+
+    // Bind events
+    bindFieldEvents();
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderField(f) {
+    if (f.type === 'section') {
+      return '<div class="field-section-title">' + escHtml(f.label) + '</div>';
+    }
+
+    var isReq = f.required;
+    var reqHtml = isReq ? '<span class="req">*</span>' : '';
+    var helpHtml = f.help ? '<p class="field-help">' + escHtml(f.help) + '</p>' : '';
+    var errHtml = '<p class="field-error">Ce champ est requis.</p>';
+
+    var out = '<div class="field-group" data-field="' + f.name + '">';
+    out += '<label class="field-label">' + escHtml(f.label) + reqHtml + '</label>';
+    out += helpHtml;
+
+    if (f.type === 'text') {
+      var val = v(f.name);
+      out += '<input type="text" class="field-input" data-name="' + f.name + '" value="' + escAttr(val) + '" placeholder="' + escAttr(f.placeholder || '') + '">';
+    } else if (f.type === 'number') {
+      var val = v(f.name);
+      out += '<input type="number" class="field-input" data-name="' + f.name + '" value="' + escAttr(val) + '" placeholder="' + escAttr(f.placeholder || '') + '"' + (f.step ? ' step="' + f.step + '"' : '') + ' inputmode="decimal">';
+    } else if (f.type === 'textarea') {
+      var val = v(f.name);
+      out += '<textarea class="field-input" data-name="' + f.name + '" placeholder="' + escAttr(f.placeholder || '') + '" rows="4">' + escHtml(val) + '</textarea>';
+    } else if (f.type === 'radio') {
+      out += '<div class="radio-group" data-name="' + f.name + '">';
+      var current = v(f.name);
+      for (var j = 0; j < f.options.length; j++) {
+        var o = f.options[j];
+        var sel = current === o.value ? ' selected' : '';
+        out += '<label class="radio-card' + sel + '">';
+        out += '<input type="radio" name="' + f.name + '" value="' + escAttr(o.value) + '"' + (sel ? ' checked' : '') + '>';
+        out += '<span class="radio-dot"></span>';
+        out += '<span class="radio-text">' + escHtml(o.label) + '</span>';
+        out += '</label>';
+      }
+      out += '</div>';
+    } else if (f.type === 'checkbox') {
+      out += '<div class="checkbox-group" data-name="' + f.name + '">';
+      var current = formData[f.name] || [];
+      for (var j = 0; j < f.options.length; j++) {
+        var o = f.options[j];
+        var sel = current.indexOf(o.value) !== -1 ? ' selected' : '';
+        out += '<label class="checkbox-card' + sel + '">';
+        out += '<input type="checkbox" name="' + f.name + '" value="' + escAttr(o.value) + '"' + (sel ? ' checked' : '') + '>';
+        out += '<span class="checkbox-box"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>';
+        out += '<span class="checkbox-text">' + escHtml(o.label) + '</span>';
+        out += '</label>';
+      }
+      out += '</div>';
+    }
+
+    out += errHtml;
+    out += '</div>';
+    return out;
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+  function escAttr(s) {
+    if (!s && s !== 0) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── Bind events ──
+  function bindFieldEvents() {
+    // Text/number inputs
+    qsa('.field-input').forEach(function(inp) {
+      var name = inp.getAttribute('data-name');
+      if (!name) return;
+      inp.addEventListener('input', function() {
+        formData[name] = inp.value;
+        saveToStorage();
+        clearError(name);
+      });
+    });
+
+    // Radio cards
+    qsa('.radio-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var input = card.querySelector('input[type="radio"]');
+        if (!input) return;
+        var name = input.name;
+        var val = input.value;
+        formData[name] = val;
+        saveToStorage();
+        clearError(name);
+
+        // Update visual state
+        var group = card.closest('.radio-group');
+        group.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        input.checked = true;
+
+        // Re-render step if conditionals may have changed
+        var needsRerender = hasConditionalDependency(name);
+        if (needsRerender) {
+          setTimeout(function() { renderStep(); }, 50);
+        }
+      });
+    });
+
+    // Checkbox cards
+    qsa('.checkbox-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        var input = card.querySelector('input[type="checkbox"]');
+        if (!input) return;
+        var name = input.name;
+        var val = input.value;
+
+        if (!Array.isArray(formData[name])) formData[name] = [];
+
+        var idx = formData[name].indexOf(val);
+        if (idx !== -1) {
+          formData[name].splice(idx, 1);
+          card.classList.remove('selected');
+          input.checked = false;
+        } else {
+          // "none/NONE" logic: if selecting none, clear others; if selecting other, clear none
+          if (val === 'none' || val === 'NONE') {
+            formData[name] = [val];
+          } else {
+            formData[name] = formData[name].filter(function(v) { return v !== 'none' && v !== 'NONE'; });
+            formData[name].push(val);
+          }
+        }
+        saveToStorage();
+        clearError(name);
+
+        // Refresh checkboxes visual state
+        var group = card.closest('.checkbox-group');
+        group.querySelectorAll('.checkbox-card').forEach(function(c) {
+          var ci = c.querySelector('input[type="checkbox"]');
+          var isSelected = formData[name].indexOf(ci.value) !== -1;
+          c.classList.toggle('selected', isSelected);
+          ci.checked = isSelected;
+        });
+
+        // Re-render if conditionals depend on this
+        var needsRerender = hasConditionalDependency(name);
+        if (needsRerender) {
+          setTimeout(function() { renderStep(); }, 50);
+        }
+      });
+    });
+  }
+
+  // Fields whose changes might trigger conditional re-render
+  var conditionalTriggers = [
+    'primary_goal', 'has_physical_activity', 'eat_everything', 'diet_profile',
+    'alcohol_freq', 'coffee_quantity', 'coffee_sugar', 'coffee_milk',
+    'sweet_beverages', 'has_breakfast', 'include_breakfast', 'breakfast_variety',
+    'breakfast_base_fixed', 'breakfast_base_varied', 'bread_sweet_yesno',
+    'morning_light_snack', 'lunch_full_fillings', 'spread_habit_global',
+    'coldmeal_type_pref', 'snack_time_choice', 'snack_time_choice_b', 'snack_time_choice_c',
+    'allergies', 'food_exclusions', 'type_milk'
+  ];
+
+  function hasConditionalDependency(name) {
+    return conditionalTriggers.indexOf(name) !== -1;
+  }
+
+  function clearError(name) {
+    var fg = qs('[data-field="' + name + '"]');
+    if (fg) fg.classList.remove('error');
+  }
+
+  // ── Validation ──
+  function validateStep() {
+    var steps = getVisibleSteps();
+    var step = steps[currentStep];
+    var fields = getVisibleFields(step);
+    var valid = true;
+    var firstErrorField = null;
+
+    for (var i = 0; i < fields.length; i++) {
+      var f = fields[i];
+      if (f.type === 'section') continue;
+      if (!f.required) continue;
+
+      var fg = qs('[data-field="' + f.name + '"]');
+      if (!fg) continue;
+
+      var val = formData[f.name];
+      var empty = false;
+
+      if (f.type === 'checkbox') {
+        empty = !Array.isArray(val) || val.length === 0;
+      } else {
+        empty = !val || (typeof val === 'string' && val.trim() === '');
+      }
+
+      if (empty) {
+        fg.classList.add('error');
+        valid = false;
+        if (!firstErrorField) firstErrorField = fg;
+      } else {
+        fg.classList.remove('error');
+      }
+    }
+
+    if (!valid && firstErrorField) {
+      firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valid;
+  }
+
+  // ── Navigation ──
+  el('btnNext').addEventListener('click', function() {
+    if (!validateStep()) return;
+    var steps = getVisibleSteps();
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      renderStep();
+    }
+  });
+
+  el('btnBack').addEventListener('click', function() {
+    if (currentStep > 0) {
+      currentStep--;
+      renderStep();
+    }
+  });
+
+  // ── Submit ──
+  el('btnSubmit').addEventListener('click', function() {
+    if (!validateStep()) return;
+
+    var btn = el('btnSubmit');
+    if (btn.classList.contains('loading')) return;
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    var payload = {
+      order_id: ORDER_ID,
+      email: EMAIL,
+      responses: Object.assign({}, formData)
+    };
+
+    fetch('https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/submit-questionnaire', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res) {
+      if (res.ok) {
+        try { sessionStorage.removeItem(STORAGE_KEY); } catch(e) {}
+        window.location.href = '/merci.html?completed=true';
+        return;
+      }
+      if (res.status === 409) {
+        showToast('Questionnaire deja envoye. Tu ne peux le remplir qu\'une seule fois.', 'info');
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        return;
+      }
+      return res.text().then(function(t) { throw new Error(t || 'Erreur serveur (' + res.status + ')'); });
+    })
+    .catch(function(err) {
+      showToast('Une erreur est survenue. Reessaie dans quelques instants.', 'error');
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    });
+  });
+
+  // ── Keyboard nav ──
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      var steps = getVisibleSteps();
+      if (currentStep < steps.length - 1) {
+        el('btnNext').click();
+      } else {
+        el('btnSubmit').click();
+      }
+    }
+  });
+
+  // ── Init ──
+  renderStep();
+
+})();
+</script>
+
+</body>
+</html>
