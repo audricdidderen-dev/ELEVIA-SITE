@@ -949,27 +949,28 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Oui'; }, options: [
+        { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return v('primary_goal') !== 'muscle_gain' && v('has_breakfast') === 'Oui'; }, options: [
           { label: 'Pas de collation pour moi', value: 'none' },
           { label: 'Milieu de matinée', value: 'morning' },
-          { label: 'Après-midi (recommandé)', value: 'afternoon' },
+          { label: 'Après-midi', value: 'afternoon' },
           { label: 'Soirée (après le repas chaud)', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
-        { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') !== 'Oui'; }, options: [
+        { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return v('primary_goal') !== 'muscle_gain' && v('has_breakfast') === 'Non' && v('morning_light_snack') !== 'Oui'; }, options: [
           { label: 'Aucune collation', value: 'none' },
           { label: 'Après-midi', value: 'afternoon' },
           { label: 'Soirée', value: 'evening' },
           { label: 'Les deux', value: 'both' },
           { label: 'Flexible', value: 'flexible' }
         ]},
-        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplémentaire', condition: function() { return v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
+        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplémentaire', condition: function() { return v('primary_goal') !== 'muscle_gain' && v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
           { label: 'Aucune supplémentaire', value: 'none' },
-          { label: 'Après-midi (recommandé)', value: 'afternoon' },
+          { label: 'Après-midi', value: 'afternoon' },
           { label: 'Soirée', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
         { name: 'snack_style', type: 'radio', label: 'Style de collation', condition: function() {
+          if (v('primary_goal') === 'muscle_gain') return true;
           var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
           return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
         }, options: [
@@ -977,6 +978,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Simple + recettes gourmandes', value: 'mixed' }
         ]},
         { name: 'snack_darkchoc', type: 'radio', label: 'Chocolat noir en collation ?', condition: function() {
+          if (v('primary_goal') === 'muscle_gain') return true;
           var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
           return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
         }, options: [
