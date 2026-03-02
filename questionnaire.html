@@ -486,6 +486,9 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     var a = formData[key];
     return Array.isArray(a) && a.indexOf(val) !== -1;
   }
+  function isLF() {
+    return v('lactose_intolerance') === 'mild' || v('lactose_intolerance') === 'severe' || arrIncludes('food_exclusions', 'lactose');
+  }
 
   // ── Step Definitions ──
   // Each step: { id, title, condition?, fields[] }
@@ -781,14 +784,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: '1 sucre', value: '1' },
           { label: '2 sucres', value: '2' }
         ]},
-        { name: 'coffee_milk', type: 'radio', label: 'Lait dans le café ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
+        { name: 'coffee_milk', type: 'radio', label: isLF() ? 'Lait végétal ou sans lactose dans ton café ?' : 'Lait dans le café ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
           { label: 'Non, je le bois noir', value: 'black' },
           { label: 'Un petit nuage', value: 'splash' },
-          { label: 'Café au lait', value: 'latte' },
-          { label: 'Lait au café', value: 'milk_coffee' }
+          { label: isLF() ? 'Café au lait (végétal ou s/lactose)' : 'Café au lait', value: 'latte' },
+          { label: isLF() ? 'Lait au café (végétal ou s/lactose)' : 'Lait au café', value: 'milk_coffee' }
         ]},
         { name: 'type_milk', type: 'radio', label: 'Type de lait', condition: function() { return v('coffee_milk') && v('coffee_milk') !== 'black'; }, options: [
-          { label: 'Lait d\'origine animale', value: 'animal' },
+          { label: isLF() ? 'Lait sans lactose' : 'Lait d\'origine animale', value: 'animal' },
           { label: 'Lait d\'origine végétale', value: 'plant' }
         ]},
         { name: 'sweet_beverages', type: 'checkbox', label: 'Boissons sucrées', required: true, options: [
@@ -1314,7 +1317,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     'breakfast_base_fixed', 'breakfast_base_varied', 'bread_sweet_yesno',
     'morning_light_snack', 'spread_habit_global',
     'coldmeal_type_pref', 'coldmeal_type_pref_pdm', 'snack_time_choice', 'snack_time_choice_b', 'snack_time_choice_c',
-    'allergies', 'food_exclusions', 'type_milk'
+    'allergies', 'food_exclusions', 'lactose_intolerance', 'type_milk'
   ];
 
   function hasConditionalDependency(name) {
