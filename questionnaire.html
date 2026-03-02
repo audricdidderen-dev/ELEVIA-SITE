@@ -532,24 +532,25 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'activite', title: 'Ton <em>activité</em>', icon: '\uD83C\uDFC3',
       fields: [
-        { name: 'job_activity', type: 'radio', label: 'Activité professionnelle', required: true, options: [
-          { label: 'Très sédentaire (bureau, télétravail)', value: 'sedentary' },
-          { label: 'Légèrement actif (debout régulièrement)', value: 'light' },
-          { label: 'Actif (en déplacement, marche fréquente)', value: 'moderate' },
-          { label: 'Très actif (travail physique)', value: 'very_active' }
+        { name: 'job_activity', type: 'radio', label: 'En dehors du sport, quel est ton niveau d\'activité physique au quotidien ?', required: true, options: [
+          { label: 'Très sédentaire — Assis quasi toute la journée. Bureau, télétravail, étudiant, retraité peu mobile.', value: 'tres_sedentaire' },
+          { label: 'Sédentaire — Surtout assis mais avec des déplacements réguliers. Bureau avec réunions, promener le chien, ménage quotidien.', value: 'sedentaire' },
+          { label: 'Modérément actif — Debout et en mouvement une bonne partie de la journée. Serveur, vendeur, enseignant, aide-soignant. Pas de port de charges lourdes.', value: 'moderement_actif' },
+          { label: 'Très actif — Travail physique avec port de charges ou effort soutenu. Maçon, déménageur, agriculteur, ouvrier BTP.', value: 'tres_actif' }
         ]},
-        { name: 'has_physical_activity', type: 'radio', label: 'Pratiques-tu une activité physique régulière ?', required: true, options: [
+        { name: 'has_physical_activity', type: 'radio', label: 'Pratiques-tu une activité sportive ?', required: true, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'activity_frequency', type: 'radio', label: 'Fréquence d\'entraînement', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
-          { label: '1 à 2 séances/semaine', value: '1_2' },
-          { label: '3 à 4 séances/semaine', value: '3_4' },
-          { label: '5 à 6 séances/semaine', value: '5_6' }
+        { name: 'activity_frequency', type: 'radio', label: 'Combien de séances par semaine ?', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+          { label: '1 à 2 séances/semaine', value: '1_2_seances' },
+          { label: '3 à 4 séances/semaine', value: '3_4_seances' },
+          { label: '5 à 6 séances/semaine', value: '5_6_seances' },
+          { label: '7 séances ou plus/semaine', value: '7plus_seances' }
         ]},
-        { name: 'activity_intensity', type: 'radio', label: 'Intensité', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
-          { label: 'Légère', value: 'light' },
-          { label: 'Modérée', value: 'moderate' },
-          { label: 'Élevée', value: 'high' }
+        { name: 'activity_intensity', type: 'radio', label: 'À quel niveau pratiques-tu ton sport ?', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+          { label: 'Légère — Sport doux ou débutant. Marche, yoga, natation loisir. Ou : tu viens de commencer et tu apprends encore les mouvements.', value: 'legere' },
+          { label: 'Modérée — Pratiquant régulier avec un bon niveau. Tu connais les mouvements, tu tiens les séances en entier. C\'est le niveau de la majorité des sportifs.', value: 'moderee' },
+          { label: 'Élevée — Niveau avancé ou compétiteur. Tu maîtrises ton sport, entraînement structuré avec objectifs de performance.', value: 'elevee' }
         ]}
       ]
     });
