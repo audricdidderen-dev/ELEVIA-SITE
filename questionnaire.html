@@ -617,6 +617,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Un vrai repas solide dans l\'heure', value: 'meal' },
           { label: 'Les deux (shaker + repas ensuite)', value: 'both' },
           { label: 'Rien de particulier pour l\'instant', value: 'nothing' }
+        ]},
+        { name: 'mg_legumineuses_mix', type: 'radio', label: 'Accepterais-tu de mixer viande et légumineuses dans un même repas ?', help: 'Par exemple un chili con carne, un curry mixte, ou une bolognaise aux lentilles. Ça permet de varier les sources de protéines et d\'apporter plus de fibres.', condition: function() { return !arrIncludes('food_exclusions', 'legumineuses') && v('diet_profile') !== 'vegetarian'; }, options: [
+          { label: 'Oui, ça me va', value: 'yes' },
+          { label: 'Non, je préfère ne pas mélanger', value: 'no' }
         ]}
       ]
     });
@@ -994,7 +998,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui, de temps en temps', value: 'occasional' },
           { label: 'Non, vraiment pas mon truc', value: 'no' }
         ]},
-        { name: 'dinner_alt_veg_ok', type: 'radio', label: 'Repas végétariens au repas chaud ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
+        { name: 'dinner_alt_veg_ok', type: 'radio', label: 'Repas végétariens au repas chaud ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian' && v('primary_goal') !== 'muscle_gain'; }, options: [
           { label: 'Non', value: 'no' },
           { label: '1x/semaine', value: '1x' },
           { label: '1 à 2x/semaine', value: '1_2x' },
