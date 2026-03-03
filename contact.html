@@ -889,10 +889,30 @@
 
       if (!allValid) return;
 
-      // Submit simulation (replace with real endpoint)
+      // Send to Make webhook
       lastSubmit = now;
-      form.style.display = 'none';
-      formSuccess.classList.add('visible');
+      const btn = form.querySelector('.btn-submit');
+      btn.disabled = true;
+      btn.textContent = 'Envoi…';
+
+      fetch('https://hook.eu2.make.com/jfhk1gsim16nsdp13471tj53tb1ulamm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prenom: document.getElementById('prenom').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          sujet: document.getElementById('sujet').value,
+          message: document.getElementById('message').value.trim()
+        })
+      })
+      .then(() => {
+        form.style.display = 'none';
+        formSuccess.classList.add('visible');
+      })
+      .catch(() => {
+        form.style.display = 'none';
+        formSuccess.classList.add('visible');
+      });
     });
   </script>
 

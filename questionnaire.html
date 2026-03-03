@@ -572,12 +572,9 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Avancé (> 3 ans)', value: 'advanced' }
         ]},
         { name: 'mg_training_time', type: 'radio', label: 'Horaire d\'entraînement habituel', options: [
-          { label: 'Tôt le matin (avant 9h)', value: 'early_morning' },
-          { label: 'Fin de matinée (9h\u201312h)', value: 'late_morning' },
-          { label: 'Midi / début d\'après-midi', value: 'midday' },
-          { label: 'Après-midi (14h\u201317h)', value: 'afternoon' },
-          { label: 'Soir (après 17h)', value: 'evening' },
-          { label: 'Variable', value: 'variable' }
+          { label: 'Le matin (avant 12h)', value: 'morning' },
+          { label: 'L\'après-midi (12h\u201317h)', value: 'afternoon' },
+          { label: 'Le soir (après 17h)', value: 'evening' }
         ]},
         { name: 'mg_approach', type: 'radio', label: 'Approche souhaitée', help: 'La prise sèche limite le surplus de gras mais demande plus de rigueur.', options: [
           { label: 'Lean bulk \u2014 prise sèche et contrôlée', value: 'lean' },
@@ -585,10 +582,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Je ne sais pas \u2014 à adapter selon mon profil', value: 'guide_me' }
         ]},
         { name: 'mg_meal_frequency', type: 'radio', label: 'Fréquence de repas idéale', options: [
-          { label: '3 repas + 1 collation (minimum)', value: '3_1' },
-          { label: '3 repas + 2 collations (recommandé)', value: '3_2' },
-          { label: '4 repas + 1-2 collations (optimal)', value: '4_2' },
-          { label: 'Difficile d\'avoir un rythme fixe', value: 'flexible' }
+          { label: '3 repas + 1 collation', value: '3_1' },
+          { label: '3 repas + 2 collations (recommandé)', value: '3_2' }
         ]},
         { name: 'mg_volume_comfort', type: 'radio', label: 'Volume alimentaire', options: [
           { label: 'Aucun souci, j\'ai bon appétit', value: 'easy' },
@@ -606,17 +601,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Non, mais ça m\'intéresse', value: 'interested' },
           { label: 'Non, et je préfère m\'en passer', value: 'no' }
         ]},
-        { name: 'mg_pre_workout', type: 'radio', label: 'Collation pré-workout', options: [
-          { label: 'Oui, j\'ai déjà une habitude', value: 'yes' },
-          { label: 'Parfois, mais pas systématiquement', value: 'sometimes' },
-          { label: 'Non, je ne sais pas quoi manger', value: 'need_help' },
-          { label: 'Non, je préfère m\'entraîner à jeun', value: 'fasted' }
+        { name: 'mg_pre_workout', type: 'radio', label: 'Manges-tu avant l\'entraînement ?', options: [
+          { label: 'Oui, je mange quelque chose avant', value: 'yes' },
+          { label: 'Non, je m\'entraîne sans manger juste avant', value: 'no' }
         ]},
         { name: 'mg_post_workout', type: 'radio', label: 'Après l\'entraînement', options: [
-          { label: 'Un shaker rapide juste après', value: 'shake' },
-          { label: 'Un vrai repas solide dans l\'heure', value: 'meal' },
-          { label: 'Les deux (shaker + repas ensuite)', value: 'both' },
-          { label: 'Rien de particulier pour l\'instant', value: 'nothing' }
+          { label: 'Un shaker protéiné rapide', value: 'shake' },
+          { label: 'Mon prochain repas suffit', value: 'meal' },
+          { label: 'Rien de particulier', value: 'nothing' }
         ]},
         { name: 'mg_legumineuses_mix', type: 'radio', label: 'Accepterais-tu de mixer viande et légumineuses dans un même repas ?', help: 'Par exemple un chili con carne, un curry mixte, ou une bolognaise aux lentilles. Ça permet de varier les sources de protéines et d\'apporter plus de fibres.', condition: function() { return !arrIncludes('food_exclusions', 'legumineuses') && v('diet_profile') !== 'vegetarian'; }, options: [
           { label: 'Oui, ça me va', value: 'yes' },
@@ -819,7 +811,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'habitudes', title: 'Tes <em>habitudes</em>', icon: '\uD83D\uDDD3\uFE0F',
       fields: [
-        { name: 'spread_habit_global', type: 'radio', label: 'Garnitures à tartiner (beurre, confiture\u2026)', required: true, options: [
+        { name: 'spread_habit_global', type: 'radio', label: 'Matières grasses à tartiner (beurre, margarine\u2026)', required: true, options: [
           { label: 'Oui, uniquement au petit-déjeuner', value: 'breakfast_only' },
           { label: 'Oui, uniquement aux repas froids', value: 'cold_only' },
           { label: 'Oui, aux deux moments', value: 'both' },
@@ -880,14 +872,11 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui, 2-3x/semaine', value: '2_3x' },
           { label: 'Non, pas pour moi', value: 'no' }
         ]},
-        { name: 'bread_sweet_yesno', type: 'radio', label: 'Viennoiseries / pain sucré au petit-déj ?', condition: function() { return v('primary_goal') === 'muscle_gain' || v('has_breakfast') === 'Oui'; }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
-        ]},
-        { name: 'bread_sweet_freq', type: 'radio', label: 'Fréquence pain sucré / viennoiserie', condition: function() { return v('bread_sweet_yesno') === 'Oui'; }, options: [
-          { label: 'Occasionnellement', value: 'occasional' },
-          { label: '1-2x/sem sucré', value: 'sweet' },
-          { label: '1-2x/sem sucré-gras', value: 'sweet_fat' },
-          { label: '1-2x/sem les deux', value: 'both' }
+        { name: 'bread_sweet_type', type: 'radio', label: 'Garniture sucrée sur tes tartines du matin ?', help: 'Confiture, miel, pâte à tartiner\u2026 On en prévoira maximum 1 fois par semaine dans ton plan.', condition: function() { return v('breakfast_base_fixed') === 'Tartines' || v('breakfast_base_varied') === 'Tartines' || v('breakfast_base_varied') === 'Pas de preference' || v('morning_snack_profile') === 'bread' || v('morning_snack_profile') === 'varied'; }, options: [
+          { label: 'Non, pas pour moi', value: 'no' },
+          { label: 'Sucrée \u2014 confiture, miel, sirop d\u2019érable, gelée\u2026', value: 'sweet' },
+          { label: 'Sucrée & grasse \u2014 pâte à tartiner chocolatée, beurre de cacahuète, pâte de speculoos\u2026', value: 'sweet_fat' },
+          { label: 'Alterner les deux', value: 'both' }
         ]},
         { name: 'bowl_sweet_yesno', type: 'radio', label: 'Sucre dans les céréales / bowl ?', condition: function() { return (v('breakfast_base_fixed') === 'Cereales' || v('breakfast_base_varied') === 'Cereales' || v('breakfast_base_varied') === 'Pas de preference'); }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
@@ -895,10 +884,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         { name: 'morning_light_snack', type: 'radio', label: 'Collation légère le matin ?', condition: function() { return v('primary_goal') !== 'muscle_gain' && v('has_breakfast') === 'Non'; }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
         ]},
-        { name: 'morning_snack_profile', type: 'radio', label: 'Type de collation matinale', condition: function() { return v('morning_light_snack') === 'Oui'; }, options: [
-          { label: 'Fruit + produit laitier', value: 'fruit_dairy' },
-          { label: 'Fruit + oléagineux', value: 'fruit_nuts' },
-          { label: 'Fruit + salé léger', value: 'fruit_savory' },
+        { name: 'morning_snack_profile', type: 'radio', label: 'Quel style d\'en-cas le matin ?', help: 'Un fruit frais sera toujours inclus dans ton plan.', condition: function() { return v('morning_light_snack') === 'Oui'; }, options: [
+          { label: 'Laitage + oléagineux', value: 'dairy_nuts' },
+          { label: 'Petit bol de céréales + laitage', value: 'cereal' },
+          { label: 'Tartine garnie (fromage, protéine\u2026)', value: 'bread' },
           { label: 'Varier les options', value: 'varied' }
         ]}
       ]
@@ -1006,10 +995,6 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         ]},
         { name: 'dinner_cheese_ok', type: 'radio', label: 'Fromage au repas chaud ?', required: true, condition: function() { return !arrIncludes('food_exclusions', 'fromage'); }, options: [
           { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
-        ]},
-        { name: 'dinner_cheat_meal_allowed', type: 'radio', label: 'Repas plaisir (cheat meal) ?', required: true, options: [
-          { label: 'Oui (recommandé)', value: 'Oui' },
-          { label: 'Non, rester strict', value: 'Non' }
         ]},
         { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
           { label: 'J\'apprécie et c\'est dans mes moyens', value: 'yes' },
@@ -1319,7 +1304,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     'primary_goal', 'has_physical_activity', 'eat_everything', 'diet_profile',
     'alcohol_freq', 'coffee_quantity', 'coffee_sugar', 'coffee_milk',
     'sweet_beverages', 'has_breakfast', 'include_breakfast', 'breakfast_variety',
-    'breakfast_base_fixed', 'breakfast_base_varied', 'bread_sweet_yesno',
+    'breakfast_base_fixed', 'breakfast_base_varied', 'bread_sweet_type',
     'morning_light_snack', 'spread_habit_global',
     'coldmeal_type_pref', 'coldmeal_type_pref_pdm', 'snack_time_choice', 'snack_time_choice_b', 'snack_time_choice_c',
     'allergies', 'food_exclusions', 'lactose_intolerance', 'type_milk'
