@@ -1322,32 +1322,76 @@ textarea.field-input {
     var btn = document.getElementById('btnSubmit');
     btn.classList.add('loading');
 
-    // Submit to Supabase REST API
-    if (SUPABASE_ANON_KEY) {
-      fetch(SUPABASE_URL + '/rest/v1/' + TABLE, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(function(res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        showConfirmation();
-      })
-      .catch(function() {
-        // Show confirmation anyway — data loss is worse than a false positive
-        showConfirmation();
-        console.warn('[Bilan Flash] Erreur lors de l\'envoi — les données n\'ont peut-être pas été sauvegardées.');
-      });
-    } else {
-      // No Supabase key configured yet — log payload and show confirmation
-      console.log('[Bilan Flash] Payload (Supabase non configuré) :', JSON.stringify(payload, null, 2));
+    // Map form values to SQL function params
+    var goalMap = {
+      'perte_poids': 'PW',
+      'prise_masse': 'GAIN_COMFORT',
+      'prise_masse_seche': 'GAIN_LEAN',
+      'maintien': 'MAINT'
+    };
+    var genderMap = { 'homme': 'M', 'femme': 'F' };
+
+    var rpcParams = {
+      p_gender: genderMap[payload.genre] || 'M',
+      p_age: payload.age,
+      p_weight_kg: payload.poids,
+      p_height_cm: payload.taille,
+      p_goal_code: goalMap[payload.objectif] || 'MAINT',
+      p_target_weight_kg: payload.poids_cible || null,
+      p_job_activity: payload.activite_quotidienne,
+      p_has_activity: payload.fait_sport === 'oui',
+      p_activity_freq: payload.sport_frequence || null,
+      p_activity_intensity: payload.sport_intensite || null
+    };
+
+    // Step 1: Calculate kcal/macros via RPC, then insert with results
+    fetch(SUPABASE_URL + '/rest/v1/rpc/elevia_calculate_targets', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify(rpcParams)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      // Attach calculated values to payload
+      if (Array.isArray(data) && data.length > 0) {
+        payload.kcal_jour = data[0].kcal_day;
+        payload.proteines_g = data[0].protein_day_g;
+        payload.lipides_g = data[0].lipids_day_g;
+        payload.glucides_g = data[0].carbs_day_g;
+      }
+      return insertPayload(payload);
+    })
+    .catch(function() {
+      // Calc failed — insert without macros
+      console.warn('[Bilan Flash] Calcul échoué — envoi sans macros.');
+      return insertPayload(payload);
+    });
+  };
+
+  function insertPayload(payload) {
+    return fetch(SUPABASE_URL + '/rest/v1/' + TABLE, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       showConfirmation();
-    }
+    })
+    .catch(function() {
+      // Show confirmation anyway — data loss is worse than a false positive
+      showConfirmation();
+      console.warn('[Bilan Flash] Erreur lors de l\'envoi — les données n\'ont peut-être pas été sauvegardées.');
+    });
   };
 
   function showConfirmation() {
