@@ -82,6 +82,11 @@
       "source": "/bilan-flash",
       "destination": "/bilan-flash.html",
       "permanent": false
+    },
+    {
+      "source": "/founders",
+      "destination": "/founders.html",
+      "permanent": false
     }
   ]
 }
