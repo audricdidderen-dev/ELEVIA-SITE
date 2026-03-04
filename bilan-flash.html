@@ -1448,6 +1448,18 @@ textarea.field-input {
   setupInputEvents();
   renderStep();
 
+  // ═══════════════════════════════════════════
+  // MOBILE — fermer le clavier au tap hors champ
+  // ═══════════════════════════════════════════
+  document.addEventListener('touchstart', function(e) {
+    var active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+      if (!e.target.closest('input, textarea, select, label')) {
+        active.blur();
+      }
+    }
+  });
+
 })();
 </script>
 
