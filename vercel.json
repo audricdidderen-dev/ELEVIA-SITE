@@ -77,6 +77,11 @@
       "source": "/questionnaire",
       "destination": "/questionnaire.html",
       "permanent": false
+    },
+    {
+      "source": "/bilan-flash",
+      "destination": "/bilan-flash.html",
+      "permanent": false
     }
   ]
 }
