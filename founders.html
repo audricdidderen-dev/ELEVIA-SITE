@@ -434,7 +434,7 @@ body {
     <!-- Formulaire -->
     <div class="form-card" id="formCard">
       <h2 class="form-title">Ça m'intéresse</h2>
-      <p class="form-sub">Laisse tes coordonnées — je te recontacte avec les détails.</p>
+      <p class="form-sub">Laisse tes coordonnées — je te recontacte avec les détails.<br><span style="font-size:0.85em;opacity:0.6;">Aucun paiement, aucun engagement.</span></p>
 
       <form id="foundersForm" novalidate>
         <div class="ohnohoney">
@@ -464,7 +464,7 @@ body {
         </div>
 
         <button type="submit" class="btn-submit" id="btnSubmit">
-          <span class="btn-text">Je réserve ma place →</span>
+          <span class="btn-text">Je suis intéressé(e) →</span>
           <span class="spinner"></span>
         </button>
       </form>
@@ -561,6 +561,11 @@ body {
     })
     .then(function(res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      fetch('https://hook.eu2.make.com/fv7jcbakqm4o4aq2l7aselix74gglmhf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(function() {});
       showConfirm();
     })
     .catch(function() {

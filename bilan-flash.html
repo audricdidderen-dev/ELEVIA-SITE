@@ -53,16 +53,21 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
   font-family: var(--sans);
   background: var(--cream);
   color: var(--text-dark);
-  min-height: 100vh;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
 }
 
 /* ════════════════════════════════════════════
@@ -1385,14 +1390,22 @@ textarea.field-input {
     })
     .then(function(res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      notifyMake(payload);
       showConfirmation();
     })
     .catch(function() {
-      // Show confirmation anyway — data loss is worse than a false positive
       showConfirmation();
       console.warn('[Bilan Flash] Erreur lors de l\'envoi — les données n\'ont peut-être pas été sauvegardées.');
     });
   };
+
+  function notifyMake(payload) {
+    fetch('https://hook.eu2.make.com/vbaf8b3luihgrk7wa2jr7ujoe90ny2m1', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function() {});
+  }
 
   function showConfirmation() {
     currentStep = 8;
