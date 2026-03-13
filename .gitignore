@@ -1,0 +1,10 @@
+index-without-gold-lines.html
+.DS_Store
+.claude/worktrees/
+node_modules/
+package.json
+package-lock.json
+screenshot*.js
+.DS_Store
+.DS_Store
+.DS_Store
