@@ -237,7 +237,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   [data-reveal], .offer-hero .section-label, .offer-hero h1, .offer-hero .hero-sub, .trust-badges, .anchor-block,
   .pricing-card, .include-card, .process-step, .cta-headline, .cta-sub, .cta-btn, .cta-trust, .early-access,
-  .mockup-browser, .mockup-iphone, .mockup-tagline { opacity: 1 !important; transform: none !important; }
+  .mockup-browser, .mockup-mobile-card, .mockup-tagline { opacity: 1 !important; transform: none !important; }
   .section-headline em { background-position: 0% 0; }
   .faq-answer-inner { opacity: 1; transform: none; }
 }
@@ -267,19 +267,17 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 /* Placeholder quand pas encore d'image */
 .browser-screen-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy-light), var(--navy-deep)); }
 .browser-screen-placeholder span { font-family: var(--sans); font-size: 0.75rem; color: rgba(198,160,91,0.3); letter-spacing: 0.15em; text-transform: uppercase; }
-/* iPhone frame — toujours visible, centré */
-.mockup-iphone { display: flex; justify-content: center; opacity: 0; transform: translateY(40px); }
-.mockup-iphone.revealed { opacity: 1; transform: none; transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s; }
-.iphone-outer { position: relative; width: min(280px, 72vw); background: linear-gradient(160deg, #2b3c4e 0%, #1c2d3d 55%, #131f2b 100%); border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.16); box-shadow: 0 60px 120px rgba(0,0,0,0.7), 0 0 0 5px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -2px 0 rgba(0,0,0,0.25); padding: 14px 8px 16px; }
-.iphone-outer::before { content: ''; position: absolute; left: -4px; top: 90px; width: 3px; height: 26px; background: #1c2d3d; border-radius: 2px 0 0 2px; border: 1px solid rgba(255,255,255,0.08); border-right: none; box-shadow: 0 36px 0 3px #1c2d3d; }
-.iphone-outer::after { content: ''; position: absolute; right: -4px; top: 105px; width: 3px; height: 38px; background: #1c2d3d; border-radius: 0 2px 2px 0; border: 1px solid rgba(255,255,255,0.08); border-left: none; }
-.iphone-notch { width: 76px; height: 26px; background: #000; border-radius: 14px; margin: 0 auto 8px; position: relative; }
-.iphone-notch::after { content: ''; position: absolute; top: 50%; right: 9px; transform: translateY(-50%); width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.04); }
-.iphone-screen { border-radius: 40px; overflow: hidden; aspect-ratio: 9/19.5; background: var(--navy-deep); }
-.iphone-screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Mobile video card */
+.mockup-mobile-card { display: none; opacity: 0; transform: translateY(40px); }
+.mockup-mobile-card.revealed { opacity: 1; transform: none; transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s; }
+.mobile-card-wrap { position: relative; max-width: 320px; margin: 0 auto; border-radius: 22px; overflow: hidden; background: var(--navy-deep); border: 1px solid rgba(198,160,91,0.14); box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 80px rgba(198,160,91,0.04), inset 0 1px 0 rgba(255,255,255,0.04); }
+.mobile-card-wrap video { width: 100%; display: block; }
+.mobile-card-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 70px; background: linear-gradient(to bottom, var(--navy-deep) 0%, transparent 100%); z-index: 2; pointer-events: none; }
+.mobile-card-wrap::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to top, var(--navy-deep) 0%, transparent 100%); z-index: 2; pointer-events: none; }
+.mobile-card-label { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); z-index: 3; font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0.6; }
 /* Responsive show/hide */
-@media (min-width: 769px) { .mockup-iphone { display: none !important; } }
-@media (max-width: 768px) { .mockup-browser { display: none; } .mockup-iphone { display: flex; } }
+@media (min-width: 769px) { .mockup-mobile-card { display: none !important; } }
+@media (max-width: 768px) { .mockup-browser { display: none; } .mockup-mobile-card { display: block; } }
 </style>
 </head>
 <body>
@@ -480,15 +478,13 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
       </div>
     </div>
 
-    <!-- Mobile : iPhone frame + vidéo de scroll -->
-    <div class="mockup-iphone" data-reveal>
-      <div class="iphone-outer">
-        <div class="iphone-notch"></div>
-        <div class="iphone-screen">
-          <video autoplay muted loop playsinline>
-            <source src="/images/cockpit-mobile.mp4" type="video/mp4">
-          </video>
-        </div>
+    <!-- Mobile : video card élégante -->
+    <div class="mockup-mobile-card" data-reveal>
+      <div class="mobile-card-wrap">
+        <span class="mobile-card-label">Aperçu</span>
+        <video autoplay muted loop playsinline>
+          <source src="/images/cockpit-mobile.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>
