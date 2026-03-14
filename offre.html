@@ -236,7 +236,8 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   [data-reveal], .offer-hero .section-label, .offer-hero h1, .offer-hero .hero-sub, .trust-badges, .anchor-block,
-  .pricing-card, .include-card, .process-step, .cta-headline, .cta-sub, .cta-btn, .cta-trust, .early-access { opacity: 1 !important; transform: none !important; }
+  .pricing-card, .include-card, .process-step, .cta-headline, .cta-sub, .cta-btn, .cta-trust, .early-access,
+  .mockup-browser, .mockup-tagline { opacity: 1 !important; transform: none !important; }
   .section-headline em { background-position: 0% 0; }
   .faq-answer-inner { opacity: 1; transform: none; }
 }
@@ -246,6 +247,26 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 
 .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
 .skip-link:focus { top: 0; }
+
+/* ===== APP MOCKUP ===== */
+.section-mockup { background: var(--navy); padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 4rem); position: relative; overflow: hidden; border-top: 1px solid rgba(198,160,91,0.1); }
+.section-mockup::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 500px; height: 1px; background: linear-gradient(90deg, transparent, rgba(198,160,91,0.35), transparent); }
+.section-mockup .section-headline { color: var(--cream); }
+.mockup-tagline { font-family: var(--sans); font-size: clamp(0.88rem, 1.5vw, 0.95rem); font-weight: 300; color: var(--text-soft); max-width: 520px; line-height: 1.7; margin-bottom: 3.5rem; opacity: 0; transform: translateY(20px); }
+.mockup-tagline.revealed { opacity: 1; transform: none; transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.15s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.15s; }
+/* Browser frame — desktop */
+.mockup-browser { border-radius: 12px; overflow: hidden; border: 1px solid rgba(198,160,91,0.15); box-shadow: 0 40px 100px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.03); background: #1a2738; opacity: 0; transform: translateY(40px); }
+.mockup-browser.revealed { opacity: 1; transform: none; transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s; }
+.browser-bar { display: flex; align-items: center; gap: 0; padding: 0.65rem 1rem; background: #1e2d3d; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.browser-dots { display: flex; gap: 6px; }
+.browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+.bd-red { background: #FF5F57; } .bd-yellow { background: #FFBD2E; } .bd-green { background: #28C840; }
+.browser-url { margin-left: 1rem; font-family: var(--sans); font-size: 0.68rem; color: rgba(255,255,255,0.22); letter-spacing: 0.02em; }
+.browser-screen { aspect-ratio: 16/9; overflow: hidden; background: var(--navy-deep); }
+.browser-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+/* Placeholder quand pas encore d'image */
+.browser-screen-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy-light), var(--navy-deep)); }
+.browser-screen-placeholder span { font-family: var(--sans); font-size: 0.75rem; color: rgba(198,160,91,0.3); letter-spacing: 0.15em; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -422,6 +443,32 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
     </div>
   </div>
 </div></section>
+
+<!-- APP MOCKUP -->
+<section class="section-mockup">
+  <div class="section-inner">
+    <p class="section-label" data-reveal>À quoi ça ressemble</p>
+    <h2 class="section-headline" data-reveal>Ton espace personnel, <em>pensé pour toi.</em></h2>
+    <p class="mockup-tagline" data-reveal>Plan, recettes, suivi — tout centralisé dans un espace conçu pour être rapide à utiliser, même les jours où tu n'as pas envie de réfléchir.</p>
+
+    <!-- Desktop : browser frame -->
+    <div class="mockup-browser" data-reveal>
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <span class="browser-dot bd-red"></span>
+          <span class="browser-dot bd-yellow"></span>
+          <span class="browser-dot bd-green"></span>
+        </div>
+        <span class="browser-url">app.elevianutrition.com · Espace personnel</span>
+      </div>
+      <div class="browser-screen">
+        <!-- Remplacer espace-desktop.jpg par la capture full-width quand dispo -->
+        <img src="/images/espace-desktop.jpg" alt="Espace personnel Élevia — tableau de bord" loading="lazy">
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- PROCESSUS -->
 <section class="section-process"><div class="section-inner">
