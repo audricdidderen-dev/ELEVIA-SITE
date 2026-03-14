@@ -75,21 +75,10 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 
 /* ===== HERO ===== */
 .ck-hero { padding: clamp(7rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem); background: var(--navy); position: relative; overflow: hidden; text-align: center; }
-.ck-hero::before { content: ''; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 700px; background: radial-gradient(ellipse, rgba(198,160,91,0.10), rgba(198,160,91,0.03) 50%, transparent 70%); pointer-events: none; }
-.ck-hero::after { content: ''; position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
+.ck-hero::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(198,160,91,0.08), transparent 70%); pointer-events: none; }
 .ck-hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); }
 .ck-hero h1 em { font-style: italic; color: var(--gold); }
 .ck-hero .hero-sub { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1.05rem); font-weight: 300; color: var(--text-soft); max-width: 560px; margin: 0 auto; line-height: 1.8; opacity: 0; transform: translateY(20px); }
-.ck-hero-accent { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto 1.8rem; opacity: 0; }
-.ck-hero-accent.revealed { opacity: 0.5; transition: opacity 1s ease 0.5s; }
-.ck-hero-cta { display: inline-block; font-family: var(--sans); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; color: var(--gold); text-decoration: none; opacity: 0; transform: translateY(15px); transition: opacity 0.3s, color 0.3s; }
-.ck-hero-cta.revealed { opacity: 0.7; transform: none; transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s; }
-.ck-hero-cta:hover { opacity: 1; color: var(--gold-light); }
-.ck-scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; }
-.ck-scroll-hint.revealed { opacity: 0.35; transition: opacity 1.2s ease 1s; }
-.ck-scroll-hint svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
-@keyframes ckBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
-@media (prefers-reduced-motion: no-preference) { .ck-scroll-hint.revealed { animation: ckBounce 2.5s ease-in-out infinite; } }
 
 /* ===== PAIN POINTS ===== */
 .section-pain { background: var(--navy); padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(5rem, 10vw, 7rem); }
@@ -326,27 +315,36 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
   transform: scale(1.5);
 }
 
-/* Phone frame — clean floating card */
+/* Phone frame */
 .phone-frame {
   position: relative;
-  box-sizing: border-box;
+  box-sizing: content-box;
   width: 260px;
   aspect-ratio: 440/956;
-  background: transparent;
-  border-radius: 24px;
-  padding: 0;
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(255,255,255,0.04);
+  background: #0a0a0a;
+  border-radius: 30px;
+  padding: 8px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.04),
+    0 0 0 1px rgba(198,160,91,0.1),
+    0 0 30px rgba(198,160,91,0.04),
+    0 0 80px rgba(198,160,91,0.02),
+    0 40px 100px rgba(0,0,0,0.5);
   overflow: hidden;
   z-index: 2;
-  transition: box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .phone-frame:hover {
-  box-shadow: 0 40px 80px rgba(0,0,0,0.45), 0 0 20px rgba(198,160,91,0.06), 0 0 0 0.5px rgba(255,255,255,0.06);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 0 0 1px rgba(198,160,91,0.18),
+    0 0 50px rgba(198,160,91,0.07),
+    0 0 120px rgba(198,160,91,0.03),
+    0 40px 100px rgba(0,0,0,0.5);
 }
 .phone-notch { display: none; }
-.phone-screen { width: 100%; height: 100%; border-radius: 24px; overflow: hidden; position: relative; background: var(--navy-deep); }
-.phone-screen img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 0.6s ease; }
+.phone-screen { width: 100%; height: 100%; border-radius: 22px; overflow: hidden; position: relative; background: #0E1E2E; }
+.phone-screen img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; opacity: 0; transition: opacity 0.6s ease; }
 .phone-screen img.active { opacity: 1; }
 
 /* Label */
@@ -416,31 +414,88 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
     transform: translateY(0);
   }
 
-  /* Mobile preview inside each step — clean floating card */
+  /* Mobile phone preview inside each step */
   .showcase-step .mobile-preview {
     display: block;
     width: 200px;
     margin: 0 auto 1.8rem;
     position: relative;
+    animation: mobileFloat 4s ease-in-out infinite;
+  }
+  @keyframes mobileFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
   .showcase-step .mobile-preview .mp-frame {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    background: transparent;
-    padding: 0;
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 20px 48px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(255,255,255,0.04);
+    background: #0a0a0a;
+    padding: 6px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.04),
+      0 0 0 1px rgba(198,160,91,0.1),
+      0 0 30px rgba(198,160,91,0.05),
+      0 20px 60px rgba(0,0,0,0.4);
   }
   .showcase-step .mobile-preview .mp-screen {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 18px;
     display: block;
     aspect-ratio: 440/956;
     object-fit: cover;
-    object-position: top;
   }
-  .mp-corners { display: none; }
+
+  /* Glow behind each phone */
+  .showcase-step .mobile-preview::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px; height: 380px;
+    background: radial-gradient(ellipse, rgba(198,160,91,0.07), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    animation: mobileGlow 4s ease-in-out infinite;
+  }
+  @keyframes mobileGlow {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  }
+
+  /* Scan line on mobile previews */
+  .showcase-step .mobile-preview::after {
+    content: '';
+    position: absolute;
+    left: 12px; right: 12px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(198,160,91,0.25), transparent);
+    z-index: 6; pointer-events: none;
+    border-radius: 24px;
+    animation: scanMove 5s ease-in-out infinite;
+  }
+
+  /* Corner accents on mobile */
+  .mp-corners {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none; z-index: 3;
+  }
+  .mp-corners::before, .mp-corners::after {
+    content: ''; position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.2;
+  }
+  .mp-corners::before {
+    top: -8px; left: -8px;
+    border-width: 1px 0 0 1px;
+  }
+  .mp-corners::after {
+    bottom: -8px; right: -8px;
+    border-width: 0 1px 1px 0;
+  }
 
   .showcase-step .step-badge { margin-bottom: 0.8rem; }
   .showcase-step h3 { font-size: 1.5rem; margin-bottom: 0.8rem; }
@@ -537,13 +592,23 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   [data-reveal], .ck-hero h1, .ck-hero .hero-sub, .pain-card, .solution-card, .bonus-item,
-  .cta-headline, .cta-sub, .cta-btn, .cta-trust { opacity: 1 !important; transform: none !important; }
+  .cta-headline, .cta-sub, .cta-btn, .cta-trust, .ck-hero-device { opacity: 1 !important; transform: none !important; }
   .showcase-step { opacity: 1 !important; }
   .phone-screen img { opacity: 0 !important; }
   .phone-screen img:first-child { opacity: 1 !important; }
   .section-headline em { background-position: 0% 0; }
 }
 
+/* ===== HERO DEVICE MOCKUP ===== */
+.ck-hero-device { margin-top: 4rem; display: flex; justify-content: center; opacity: 0; transform: translateY(40px); }
+.ck-hero-device.revealed { opacity: 1; transform: none; transition: opacity 1s cubic-bezier(0.16,1,0.3,1) 0.4s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.4s; }
+.ck-hero-iphone { width: min(268px, 72vw); background: linear-gradient(160deg, #2b3c4e 0%, #1c2d3d 55%, #131f2b 100%); border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.16); box-shadow: 0 60px 120px rgba(0,0,0,0.7), 0 0 0 5px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -2px 0 rgba(0,0,0,0.25); padding: 14px 8px 16px; position: relative; }
+.ck-hero-iphone::before { content: ''; position: absolute; left: -4px; top: 90px; width: 3px; height: 26px; background: #1c2d3d; border-radius: 2px 0 0 2px; border: 1px solid rgba(255,255,255,0.08); border-right: none; box-shadow: 0 36px 0 3px #1c2d3d; }
+.ck-hero-iphone::after { content: ''; position: absolute; right: -4px; top: 105px; width: 3px; height: 38px; background: #1c2d3d; border-radius: 0 2px 2px 0; border: 1px solid rgba(255,255,255,0.08); border-left: none; }
+.ck-hero-iphone-notch { width: 76px; height: 26px; background: #000; border-radius: 14px; margin: 0 auto 8px; position: relative; }
+.ck-hero-iphone-notch::after { content: ''; position: absolute; top: 50%; right: 9px; transform: translateY(-50%); width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.04); }
+.ck-hero-iphone-screen { border-radius: 40px; overflow: hidden; aspect-ratio: 9/19.5; background: var(--navy-deep); }
+.ck-hero-iphone-screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ===== SKIP LINK ===== */
 .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
@@ -597,10 +662,16 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   <p class="section-label" data-reveal>L'app compagnon</p>
   <h1 data-reveal>Ton plan, <em>ex&eacute;cutable</em>.</h1>
   <p class="hero-sub" data-reveal>Un plan nutritionnel sans outil pour le suivre, c'est une bonne&nbsp;intention.<br>Cockpit transforme ton plan en routine simple&nbsp;— en quelques secondes&nbsp;par&nbsp;jour.</p>
-  <div class="ck-hero-accent" data-reveal></div>
-  <a href="#showcase" class="ck-hero-cta" data-reveal>D&eacute;couvrir l'app &rarr;</a>
-  <div class="ck-scroll-hint" data-reveal>
-    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+
+  <div class="ck-hero-device" data-reveal>
+    <div class="ck-hero-iphone">
+      <div class="ck-hero-iphone-notch"></div>
+      <div class="ck-hero-iphone-screen">
+        <video autoplay muted loop playsinline>
+          <source src="/images/cockpit-mobile.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
   </div>
 </section>
 
