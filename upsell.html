@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ton plan est en route — Élevia Nutrition</title>
+<meta name="description" content="Ton plan nutritionnel personnalisé est en cours de préparation. Découvre les options pour aller encore plus loin.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #0E1E2E; --navy-deep: #091520;
+  --gold: #C6A05B; --gold-light: #D4B878; --gold-glow: rgba(198,160,91,0.15);
+  --cream: #F6F3EE; --cream-dark: #EDE8E0;
+  --white: #FFFFFF;
+  --text-dark: #1A1A1A; --text-muted: #6B7280; --text-soft: #8B9AAC;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--navy);
+  color: var(--cream);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 3rem;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  bottom: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 600px;
+  background: radial-gradient(ellipse, rgba(198,160,91,0.1), transparent 70%);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  top: -150px; right: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(198,160,91,0.05), transparent 70%);
+  pointer-events: none;
+}
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 9999; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== SKIP LINK ===== */
+.skip-link {
+  position: absolute; top: -100%; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--navy);
+  padding: 0.8rem 1.6rem;
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none; z-index: 10001; transition: top 0.3s;
+}
+.skip-link:focus { top: 0; }
+
+/* ===== CANCELLED BANNER ===== */
+.cancelled-banner {
+  position: relative; z-index: 2;
+  max-width: 780px; width: 100%;
+  background: rgba(229,115,115,0.1);
+  border: 1px solid rgba(229,115,115,0.25);
+  border-radius: 12px;
+  padding: 0.9rem 1.4rem;
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 400;
+  color: #f5c6c6; text-align: center;
+  margin-bottom: 1.5rem;
+  display: none;
+  animation: fadeUp 0.6s ease forwards;
+}
+.cancelled-banner.visible { display: block; }
+
+/* ===== LAYOUT ===== */
+.logo-wrap {
+  position: relative; z-index: 1;
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards;
+}
+.hero-text {
+  position: relative; z-index: 1;
+  text-align: center;
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+}
+.hero-text h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  font-weight: 400; line-height: 1.2;
+  color: var(--cream);
+  margin-bottom: 0.8rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards;
+}
+.hero-text h1 em { font-style: italic; color: var(--gold); }
+.hero-text .subtitle {
+  font-family: var(--sans);
+  font-size: 0.92rem; font-weight: 300;
+  color: var(--text-soft); line-height: 1.7;
+  opacity: 0; animation: fadeUp 0.6s ease 0.3s forwards;
+}
+
+/* ===== CARDS GRID ===== */
+.cards-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 780px; width: 100%;
+  margin-bottom: 2rem;
+}
+@media (max-width: 700px) {
+  .cards-grid { grid-template-columns: 1fr; max-width: 420px; }
+}
+
+/* ===== UPSELL CARD ===== */
+.upsell-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(198,160,91,0.15);
+  border-radius: 24px;
+  padding: clamp(1.6rem, 4vw, 2.2rem);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex; flex-direction: column;
+  opacity: 0;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.upsell-card:hover {
+  border-color: rgba(198,160,91,0.3);
+  box-shadow: 0 0 40px rgba(198,160,91,0.06);
+}
+.upsell-card:nth-child(1) { animation: fadeUp 0.6s ease 0.35s forwards; }
+.upsell-card:nth-child(2) { animation: fadeUp 0.6s ease 0.45s forwards; }
+
+.card-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(198,160,91,0.1);
+  border: 1px solid rgba(198,160,91,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.card-icon svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.card-title {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  font-weight: 400; line-height: 1.3;
+  color: var(--cream);
+  margin-bottom: 0.8rem;
+}
+
+.card-price {
+  display: flex; align-items: baseline; gap: 0.5rem;
+  margin-bottom: 1.4rem;
+}
+.card-price .amount {
+  font-family: var(--serif);
+  font-size: 2rem; font-weight: 500;
+  color: var(--gold);
+}
+.card-price .badge {
+  font-family: var(--sans);
+  font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+.card-features {
+  list-style: none; padding: 0;
+  margin-bottom: 1.8rem;
+  flex-grow: 1;
+}
+.card-features li {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 300;
+  color: var(--text-soft); line-height: 1.5;
+  padding: 0.45rem 0;
+}
+.card-features li svg {
+  width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+  stroke: var(--gold); fill: none; stroke-width: 1.5;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+.btn-gold {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  background: var(--gold); color: var(--navy);
+  font-family: var(--sans); font-size: 0.78rem;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; border: none; border-radius: 60px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  margin-bottom: 0.7rem;
+  min-height: 48px;
+}
+.btn-gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(198,160,91,0.25);
+}
+.btn-gold:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.btn-outline {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid var(--gold);
+  font-family: var(--sans); font-size: 0.78rem;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; border-radius: 60px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+  margin-bottom: 0.7rem;
+  min-height: 48px;
+}
+.btn-outline:hover {
+  background: rgba(198,160,91,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(198,160,91,0.15);
+}
+.btn-outline:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.btn-gold.loading, .btn-outline.loading {
+  opacity: 0.6; pointer-events: none;
+}
+
+.card-small-text {
+  font-family: var(--sans);
+  font-size: 0.68rem; font-weight: 300;
+  color: var(--text-soft); opacity: 0.7;
+  text-align: center;
+}
+
+/* ===== PACK BANNER ===== */
+.pack-banner {
+  position: relative; z-index: 1;
+  max-width: 780px; width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(198,160,91,0.2);
+  border-radius: 24px;
+  padding: clamp(1.6rem, 5vw, 2.5rem);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: center;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.55s forwards;
+}
+.pack-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--navy);
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.pack-title {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 400; line-height: 1.3;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+.pack-subtitle {
+  font-family: var(--sans);
+  font-size: 0.85rem; font-weight: 300;
+  color: var(--text-soft); line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.pack-prices {
+  display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.pack-price-item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+}
+.pack-price-item .pack-label {
+  font-family: var(--sans);
+  font-size: 0.7rem; font-weight: 400;
+  color: var(--text-soft); letter-spacing: 0.05em;
+}
+.pack-price-item .pack-amount {
+  font-family: var(--serif);
+  font-size: 1.6rem; font-weight: 500;
+  color: var(--gold);
+}
+.pack-divider {
+  width: 1px; height: 36px;
+  background: rgba(198,160,91,0.2);
+}
+.pack-desc {
+  font-family: var(--sans);
+  font-size: 0.78rem; font-weight: 300;
+  color: var(--text-soft); opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+.pack-btns {
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-pack {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.7rem 1.4rem;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(198,160,91,0.35);
+  font-family: var(--sans); font-size: 0.72rem;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; border-radius: 60px;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  min-height: 44px;
+}
+.btn-pack:hover {
+  background: rgba(198,160,91,0.08);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(198,160,91,0.12);
+}
+.btn-pack:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.btn-pack.loading {
+  opacity: 0.6; pointer-events: none;
+}
+
+/* ===== SKIP BOTTOM LINK ===== */
+.skip-bottom {
+  position: relative; z-index: 1;
+  font-family: var(--sans);
+  font-size: 0.78rem; font-weight: 300;
+  color: var(--text-soft);
+  text-decoration: none;
+  opacity: 0; animation: fadeUp 0.6s ease 0.65s forwards;
+  transition: color 0.3s;
+  padding: 0.5rem 1rem;
+}
+.skip-bottom:hover { color: var(--cream); }
+.skip-bottom:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ===== ERROR MESSAGE ===== */
+.error-toast {
+  position: fixed;
+  bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: rgba(229,115,115,0.15);
+  border: 1px solid rgba(229,115,115,0.3);
+  border-radius: 12px;
+  padding: 0.8rem 1.4rem;
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 400;
+  color: #f5c6c6;
+  z-index: 10000;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.error-toast.visible {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== FOCUS VISIBLE ===== */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+<div class="grain"></div>
+
+<!-- Cancelled banner -->
+<div id="cancelled-banner" class="cancelled-banner" role="alert">
+  Le paiement a été annulé. Tu peux réessayer.
+</div>
+
+<main id="main-content" role="main">
+
+<!-- Logo -->
+<div class="logo-wrap">
+  <svg width="120" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg" aria-label="Élevia">
+    <g transform="matrix(1,0,0,1,78,142)"><g fill="#f6f3ee"><g transform="translate(1.291943,77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695,77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662,77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g>
+    <g transform="matrix(1,0,0,1,192,126)"><g fill="#f6f3ee"><g transform="translate(1.536492,83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857,83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005,83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g>
+  </svg>
+</div>
+
+<!-- Hero text -->
+<div class="hero-text">
+  <h1>Ton plan est en <em>préparation</em></h1>
+  <p class="subtitle">En attendant, découvre ce qui va encore plus loin.</p>
+</div>
+
+<!-- Upsell cards -->
+<div class="cards-grid">
+
+  <!-- Card 1: Recettes -->
+  <div class="upsell-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8"/><path d="M8 11h6"/></svg>
+    </div>
+    <h2 class="card-title">Tes recettes personnalisées</h2>
+    <div class="card-price">
+      <span class="amount">35&euro;</span>
+      <span class="badge">à vie</span>
+    </div>
+    <ul class="card-features">
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>30+ recettes avec TES quantités</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Filtrées selon ton profil et tes allergies</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>PDF téléchargeable pour chaque recette</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Nouvelles recettes ajoutées régulièrement</span>
+      </li>
+    </ul>
+    <button class="btn-gold" data-product="recipe_upsell" aria-label="Débloquer mes recettes pour 35 euros à vie">Débloquer mes recettes</button>
+    <p class="card-small-text">Paiement unique — accès à vie</p>
+  </div>
+
+  <!-- Card 2: App -->
+  <div class="upsell-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24"><path d="M5.499 4.5h13s1 0 1 1v11s0 1-1 1h-13s-1 0-1-1v-11s0-1 1-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M7.501 0.5h9s3 0 3 3v17s0 3-3 3h-9s-3 0-3-3v-17s0-3 3-3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="m9.501 2.5 5 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M11.501 19.5h0.999s1 0 1 1v0s0 1-1 1h-0.999s-1 0-1-1v0s0-1 1-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+    </div>
+    <h2 class="card-title">L'expérience complète Élevia</h2>
+    <div class="card-price">
+      <span class="amount">9,99&euro;</span>
+      <span class="badge">/mois</span>
+    </div>
+    <ul class="card-features">
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Suivi alimentaire quotidien</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Quick Logs &amp; cibles hebdomadaires</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Score d'adhérence personnalisé</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Messages avec ton diététicien</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        <span>Recettes personnalisées INCLUSES</span>
+      </li>
+    </ul>
+    <button class="btn-outline" data-product="app_monthly" aria-label="Commencer mon suivi pour 9 euros 99 par mois">Commencer mon suivi</button>
+    <p class="card-small-text">Sans engagement — annulable à tout moment</p>
+  </div>
+
+</div>
+
+<!-- Pack banner -->
+<div class="pack-banner">
+  <span class="pack-badge">Meilleure offre</span>
+  <h2 class="pack-title">Tout inclus, sans y penser.</h2>
+  <p class="pack-subtitle">Plan + App + Recettes, tout inclus.</p>
+  <div class="pack-prices">
+    <div class="pack-price-item">
+      <span class="pack-label">Pack 6 mois</span>
+      <span class="pack-amount">149&euro;</span>
+    </div>
+    <div class="pack-divider" aria-hidden="true"></div>
+    <div class="pack-price-item">
+      <span class="pack-label">Pack 12 mois</span>
+      <span class="pack-amount">199&euro;</span>
+    </div>
+  </div>
+  <div class="pack-btns">
+    <button class="btn-pack" data-product="plan_cockpit_6" aria-label="Choisir le pack 6 mois à 149 euros">Pack 6 mois — 149&euro;</button>
+    <button class="btn-pack" data-product="plan_cockpit_12" aria-label="Choisir le pack 12 mois à 199 euros">Pack 12 mois — 199&euro;</button>
+  </div>
+</div>
+
+<!-- Skip link -->
+<a href="/espace-client.html" class="skip-bottom">Non merci, continuer &rarr;</a>
+
+</main>
+
+<!-- Error toast -->
+<div id="error-toast" class="error-toast" role="alert" aria-live="polite"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ===== CONFIG ===== */
+  var CHECKOUT_URL = 'https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/create-checkout-session';
+  var PRICE_IDS = {
+    recipe_upsell:   'price_1TAlOeJMqjPBSKgKMgCitPVa',
+    app_monthly:     'price_1TAlPrJMqjPBSKgKABPn9VW3',
+    plan_cockpit_6:  'price_1TAlN1JMqjPBSKgK73nLSbfA',
+    plan_cockpit_12: 'price_1TAlO6JMqjPBSKgKJxtKUcCE'
+  };
+  var PRODUCT_TYPES = {
+    recipe_upsell:   'recipe_upsell',
+    app_monthly:     'app_monthly',
+    plan_cockpit_6:  'plan_cockpit_6',
+    plan_cockpit_12: 'plan_cockpit_12'
+  };
+
+  /* ===== URL PARAMS ===== */
+  var params = new URLSearchParams(window.location.search);
+  var customerEmail = params.get('email') || '';
+  var sessionId = params.get('session_id') || '';
+  var cancelled = params.get('cancelled');
+
+  /* ===== CANCELLED BANNER ===== */
+  if (cancelled === 'true') {
+    document.getElementById('cancelled-banner').classList.add('visible');
+  }
+
+  /* ===== ERROR TOAST ===== */
+  var errorToast = document.getElementById('error-toast');
+  var errorTimer = null;
+
+  function showError(msg) {
+    errorToast.textContent = msg;
+    errorToast.classList.add('visible');
+    clearTimeout(errorTimer);
+    errorTimer = setTimeout(function() {
+      errorToast.classList.remove('visible');
+    }, 5000);
+  }
+
+  /* ===== CHECKOUT HANDLER ===== */
+  function handleCheckout(btn) {
+    var product = btn.getAttribute('data-product');
+    var priceId = PRICE_IDS[product];
+    var productType = PRODUCT_TYPES[product];
+
+    if (!priceId || !productType) return;
+
+    /* Loading state */
+    var originalText = btn.textContent;
+    btn.classList.add('loading');
+    btn.textContent = 'Chargement\u2026';
+
+    fetch(CHECKOUT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        price_id: priceId,
+        product_type: productType,
+        customer_email: customerEmail
+      })
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Erreur serveur (' + res.status + ')');
+      return res.json();
+    })
+    .then(function(data) {
+      if (data && data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('URL de paiement manquante');
+      }
+    })
+    .catch(function(err) {
+      btn.classList.remove('loading');
+      btn.textContent = originalText;
+      showError('Une erreur est survenue. Réessaie dans quelques instants.');
+      console.error('Checkout error:', err);
+    });
+  }
+
+  /* ===== BIND BUTTONS ===== */
+  var buttons = document.querySelectorAll('[data-product]');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function(e) {
+      e.preventDefault();
+      handleCheckout(this);
+    });
+  }
+
+})();
+</script>
+</body>
+</html>

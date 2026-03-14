@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilan Flash Nutrition — Élevia</title>
+<meta name="description" content="3 minutes pour connaître tes besoins réels en calories et macronutriments. Bilan personnalisé gratuit par un diététicien diplômé.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bilan Flash Nutrition — Élevia">
+<meta property="og:description" content="3 minutes pour connaître tes besoins réels en calories et macronutriments.">
+<meta property="og:url" content="https://www.elevianutrition.com/bilan-flash.html">
+<meta property="og:image" content="https://www.elevianutrition.com/og-image.jpg">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Élevia Nutrition">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════
+   TOKENS
+   ════════════════════════════════════════════ */
+:root {
+  --navy: #0E1E2E;
+  --navy-deep: #091520;
+  --navy-light: #152A3D;
+  --gold: #C6A05B;
+  --gold-light: #D4B878;
+  --gold-pale: #E8D5A8;
+  --gold-glow: rgba(198,160,91,0.15);
+  --cream: #F6F3EE;
+  --cream-dark: #EDE8E0;
+  --white: #FFFFFF;
+  --text-dark: #1A1A1A;
+  --text-muted: #6B7280;
+  --text-soft: #8B9AAC;
+  --border-soft: #F5EEE1;
+  --error: #C45B5B;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', -apple-system, sans-serif;
+}
+
+/* ════════════════════════════════════════════
+   RESET & BASE
+   ════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--text-dark);
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ════════════════════════════════════════════
+   HEADER — logo seul
+   ════════════════════════════════════════════ */
+.header {
+  background: var(--navy);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  width: 110px;
+  height: auto;
+  transition: opacity 0.3s;
+}
+
+.header-logo:hover { opacity: 0.8; }
+
+/* ════════════════════════════════════════════
+   LAYOUT
+   ════════════════════════════════════════════ */
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1.25rem 3rem;
+}
+
+.wizard {
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ════════════════════════════════════════════
+   PROGRESS BAR
+   ════════════════════════════════════════════ */
+.progress-wrap {
+  margin-bottom: 2rem;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.progress-wrap.visible { opacity: 1; }
+
+.progress-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--cream-dark);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ════════════════════════════════════════════
+   STEP CARD
+   ════════════════════════════════════════════ */
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.step-card.hidden { display: none; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════════
+   INTRO (écran 0)
+   ════════════════════════════════════════════ */
+.intro-label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.intro-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-dark);
+  margin-bottom: 1.25rem;
+}
+
+.intro-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* ════════════════════════════════════════════
+   STEP TITLES
+   ════════════════════════════════════════════ */
+.step-title {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.step-micro {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}
+
+/* ════════════════════════════════════════════
+   FORM FIELDS
+   ════════════════════════════════════════════ */
+.field-group {
+  margin-bottom: 1.25rem;
+}
+
+.field-group.hidden { display: none; }
+
+.field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--cream-dark);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.field-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.field-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+textarea.field-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field-help {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+/* ════════════════════════════════════════════
+   RADIO CARDS
+   ════════════════════════════════════════════ */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.radio-group.hidden { display: none; }
+
+.radio-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cream-dark);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+
+.radio-card:hover {
+  border-color: var(--gold-pale);
+  background: rgba(198,160,91,0.03);
+}
+
+.radio-card.selected {
+  border-color: var(--gold);
+  background: rgba(198,160,91,0.06);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.radio-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-dot {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--cream-dark);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.radio-card.selected .radio-dot {
+  border-color: var(--gold);
+}
+
+.radio-card.selected .radio-dot::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.radio-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+.radio-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.radio-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+  line-height: 1.4;
+}
+
+/* ════════════════════════════════════════════
+   CHECKBOX (consent)
+   ════════════════════════════════════════════ */
+.consent-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.consent-wrap input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.consent-wrap label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.consent-wrap label a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.consent-wrap label a:hover {
+  text-decoration: underline;
+}
+
+/* ════════════════════════════════════════════
+   ERROR STATES
+   ════════════════════════════════════════════ */
+.error-text {
+  font-size: 0.72rem;
+  color: var(--error);
+  margin-top: 0.35rem;
+  font-weight: 400;
+  display: none;
+}
+
+.field-group.error .field-input {
+  border-color: var(--error);
+}
+
+.field-group.error .error-text { display: block; }
+.radio-group.error .error-text { display: block; }
+.consent-wrap.error .error-text { display: block; }
+
+.radio-group.error .radio-card {
+  border-color: rgba(196, 91, 91, 0.3);
+}
+
+/* ════════════════════════════════════════════
+   BUTTONS
+   ════════════════════════════════════════════ */
+.btn-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.btn-next, .btn-submit {
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-next:hover, .btn-submit:hover {
+  background: var(--gold-light);
+}
+
+.btn-next:active, .btn-submit:active {
+  transform: scale(0.98);
+}
+
+.btn-back {
+  padding: 0.85rem 1.25rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--cream-dark);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-back:hover {
+  border-color: var(--gold-pale);
+  color: var(--text-dark);
+}
+
+.btn-submit.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn-submit .spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.btn-submit.loading .spinner { display: inline-block; }
+.btn-submit.loading .btn-text { display: none; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ════════════════════════════════════════════
+   CONFIRMATION (écran 8)
+   ════════════════════════════════════════════ */
+.confirm-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(198,160,91,0.12);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.confirm-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes bounceIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.confirm-title {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+}
+
+.confirm-body {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.confirm-sig {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.confirm-link {
+  display: block;
+  text-align: center;
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.confirm-link:hover {
+  color: var(--gold-light);
+}
+
+/* ════════════════════════════════════════════
+   HONEYPOT
+   ════════════════════════════════════════════ */
+.ohnohoney {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* ════════════════════════════════════════════
+   TOAST
+   ════════════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy);
+  color: var(--cream);
+  padding: 0.85rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 100;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.toast.error {
+  background: var(--error);
+  color: var(--white);
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .header { padding: 0.85rem 1.25rem; }
+  .header-logo { width: 90px; }
+
+  .main { padding: 1.5rem 1rem 2.5rem; }
+
+  .step-card { padding: 2rem 1.35rem; border-radius: 14px; }
+
+  .intro-title { font-size: 1.65rem; }
+  .step-title { font-size: 1.3rem; }
+
+  .btn-row { flex-direction: column-reverse; }
+  .btn-back { text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<header class="header">
+  <a href="/" aria-label="Elevia - Accueil">
+    <svg class="header-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg">
+      <g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g><g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g>
+    </svg>
+  </a>
+</header>
+
+<!-- ════ MAIN ════ -->
+<main class="main" id="main-content">
+  <div class="wizard">
+
+    <!-- Progress bar -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-label" id="progressLabel">Étape 1/7</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <!-- Honeypot -->
+    <div class="ohnohoney">
+      <label for="website">Website</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <!-- ═══════ ÉCRAN 0 — Intro ═══════ -->
+    <div class="step-card" id="step-0">
+      <div class="intro-label">Bilan Flash Nutrition</div>
+      <h1 class="intro-title">3 minutes pour y voir plus clair.</h1>
+      <p class="intro-body">
+        Je te prépare un bilan personnalisé avec tes besoins réels
+        en calories et macronutriments, et une analyse de ta situation.<br>
+        Tu le reçois par mail sous 48h.
+      </p>
+      <div class="btn-row">
+        <button type="button" class="btn-next" onclick="goNext()">
+          <span class="btn-text">C'est parti</span>
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 1 — Prénom ═══════ -->
+    <div class="step-card hidden" id="step-1">
+      <h2 class="step-title">Comment tu t'appelles ?</h2>
+      <p class="step-micro">Juste ton prénom — pour que ce bilan soit le tien.</p>
+      <div class="field-group" data-field="prenom">
+        <input type="text" class="field-input" id="f-prenom" placeholder="Ton prénom" autocomplete="given-name" data-required="true">
+        <p class="error-text">Merci d'indiquer ton prénom.</p>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-next" onclick="goNext()"><span class="btn-text">Continuer</span> <span>→</span></button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 2 — Objectif ═══════ -->
+    <div class="step-card hidden" id="step-2">
+      <h2 class="step-title" id="title-objectif">Quel est ton objectif ?</h2>
+      <p class="step-micro">Pas de jugement. Juste un point de départ.</p>
+
+      <div class="radio-group" data-field="objectif" data-required="true">
+        <label class="radio-card" data-value="perte_poids">
+          <input type="radio" name="objectif" value="perte_poids">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Perte de poids</span>
+        </label>
+        <label class="radio-card" data-value="prise_masse">
+          <input type="radio" name="objectif" value="prise_masse">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Prise de masse</span>
+            <span class="radio-hint">Nécessite une activité sportive ou de prévoir d'en commencer une.</span>
+          </span>
+        </label>
+        <label class="radio-card" data-value="prise_masse_seche">
+          <input type="radio" name="objectif" value="prise_masse_seche">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Recomposition — muscler sans prendre de poids</span>
+            <span class="radio-hint">Nécessite une activité sportive ou de prévoir d'en commencer une.</span>
+          </span>
+        </label>
+        <label class="radio-card" data-value="maintien">
+          <input type="radio" name="objectif" value="maintien">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Maintien — mieux manger</span>
+          </span>
+        </label>
+        <p class="error-text">Merci de choisir un objectif.</p>
+      </div>
+
+      <div class="field-group hidden" id="wrap-poids-cible" data-field="poids_cible">
+        <label class="field-label" for="f-poids-cible">Poids cible (kg)</label>
+        <input type="number" class="field-input" id="f-poids-cible" placeholder="Ex : 72" min="30" max="250" step="0.1" data-required="conditional">
+        <p class="error-text">Merci d'indiquer un poids cible.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-next" onclick="goNext()"><span class="btn-text">Continuer</span> <span>→</span></button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 3 — Profil physique ═══════ -->
+    <div class="step-card hidden" id="step-3">
+      <h2 class="step-title">Ton profil</h2>
+      <p class="step-micro">Ces données me permettent de calculer tes besoins réels — pas une moyenne.</p>
+
+      <div class="radio-group" data-field="genre" data-required="true">
+        <label class="radio-card" data-value="homme">
+          <input type="radio" name="genre" value="homme">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Homme</span>
+        </label>
+        <label class="radio-card" data-value="femme">
+          <input type="radio" name="genre" value="femme">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Femme</span>
+        </label>
+        <p class="error-text">Merci d'indiquer ton genre.</p>
+      </div>
+
+      <div class="field-group" data-field="age">
+        <label class="field-label" for="f-age">Âge</label>
+        <input type="number" class="field-input" id="f-age" placeholder="Ex : 28" min="14" max="99" data-required="true">
+        <p class="error-text">Merci d'indiquer ton âge.</p>
+      </div>
+
+      <div class="field-group" data-field="poids">
+        <label class="field-label" for="f-poids">Poids actuel (kg)</label>
+        <input type="number" class="field-input" id="f-poids" placeholder="Ex : 75" min="30" max="300" step="0.1" data-required="true">
+        <p class="error-text">Merci d'indiquer ton poids.</p>
+      </div>
+
+      <div class="field-group" data-field="taille">
+        <label class="field-label" for="f-taille">Taille (cm)</label>
+        <input type="number" class="field-input" id="f-taille" placeholder="Ex : 175" min="100" max="250" data-required="true">
+        <p class="error-text">Merci d'indiquer ta taille.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-next" onclick="goNext()"><span class="btn-text">Continuer</span> <span>→</span></button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 4 — Activité ═══════ -->
+    <div class="step-card hidden" id="step-4">
+      <h2 class="step-title">Ton quotidien</h2>
+      <p class="step-micro">L'activité change tout dans le calcul. Sois honnête — c'est pour toi.</p>
+
+      <label class="field-label" style="margin-bottom: 0.5rem;">Activité hors sport</label>
+      <div class="radio-group" data-field="activite_quotidienne" data-required="true">
+        <label class="radio-card" data-value="tres_sedentaire">
+          <input type="radio" name="activite_quotidienne" value="tres_sedentaire">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Principalement assis(e)</span>
+            <span class="radio-desc">Bureau, télétravail, étudiant, retraité. Tu passes la majorité de ta journée assis(e).</span>
+          </span>
+        </label>
+        <label class="radio-card" data-value="sedentaire">
+          <input type="radio" name="activite_quotidienne" value="sedentaire">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Assis(e) avec déplacements</span>
+            <span class="radio-desc">Bureau avec réunions, courses, ménage, promener le chien. Tu bouges régulièrement mais sans effort physique.</span>
+          </span>
+        </label>
+        <label class="radio-card" data-value="moderement_actif">
+          <input type="radio" name="activite_quotidienne" value="moderement_actif">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Debout et en mouvement</span>
+            <span class="radio-desc">Serveur, vendeur, enseignant, aide-soignant. Tu es debout et actif(ve) une bonne partie de la journée.</span>
+          </span>
+        </label>
+        <label class="radio-card" data-value="tres_actif">
+          <input type="radio" name="activite_quotidienne" value="tres_actif">
+          <span class="radio-dot"></span>
+          <span>
+            <span class="radio-label">Travail physique</span>
+            <span class="radio-desc">Maçon, déménageur, agriculteur, ouvrier. Port de charges ou effort soutenu au quotidien.</span>
+          </span>
+        </label>
+        <p class="error-text">Merci de choisir ton niveau d'activité.</p>
+      </div>
+
+      <label class="field-label" style="margin-bottom: 0.5rem;">Tu fais du sport ?</label>
+      <div class="radio-group" data-field="fait_sport" data-required="true">
+        <label class="radio-card" data-value="oui">
+          <input type="radio" name="fait_sport" value="oui">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Oui</span>
+        </label>
+        <label class="radio-card" data-value="non">
+          <input type="radio" name="fait_sport" value="non">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Non</span>
+        </label>
+        <p class="error-text">Merci de répondre.</p>
+      </div>
+
+      <!-- Question conditionnelle : prise_masse_seche + pas de sport (mig 269) -->
+      <div id="wrap-sport-prevu" class="hidden">
+        <label class="field-label" style="margin-bottom: 0.5rem;">Tu prévois de démarrer une activité physique ?</label>
+        <div class="radio-group" data-field="sport_prevu" data-required="conditional">
+          <label class="radio-card" data-value="oui">
+            <input type="radio" name="sport_prevu" value="oui">
+            <span class="radio-dot"></span>
+            <span class="radio-label">Oui, c'est prévu</span>
+          </label>
+          <label class="radio-card" data-value="pas_encore">
+            <input type="radio" name="sport_prevu" value="pas_encore">
+            <span class="radio-dot"></span>
+            <span class="radio-label">Pas encore décidé</span>
+          </label>
+          <label class="radio-card" data-value="non">
+            <input type="radio" name="sport_prevu" value="non">
+            <span class="radio-dot"></span>
+            <span class="radio-label">Non, pas pour l'instant</span>
+          </label>
+          <p class="error-text">Merci de répondre.</p>
+        </div>
+      </div>
+
+      <div id="wrap-sport-details" class="hidden">
+        <label class="field-label" style="margin-bottom: 0.5rem;">Fréquence</label>
+        <div class="radio-group" data-field="sport_frequence" data-required="conditional">
+          <label class="radio-card" data-value="1_2_seances">
+            <input type="radio" name="sport_frequence" value="1_2_seances">
+            <span class="radio-dot"></span>
+            <span class="radio-label">1-2x par semaine</span>
+          </label>
+          <label class="radio-card" data-value="3_4_seances">
+            <input type="radio" name="sport_frequence" value="3_4_seances">
+            <span class="radio-dot"></span>
+            <span class="radio-label">3-4x par semaine</span>
+          </label>
+          <label class="radio-card" data-value="5_6_seances">
+            <input type="radio" name="sport_frequence" value="5_6_seances">
+            <span class="radio-dot"></span>
+            <span class="radio-label">5-6x par semaine</span>
+          </label>
+          <label class="radio-card" data-value="7_plus_seances">
+            <input type="radio" name="sport_frequence" value="7_plus_seances">
+            <span class="radio-dot"></span>
+            <span class="radio-label">7+ par semaine</span>
+          </label>
+          <p class="error-text">Merci de choisir ta fréquence.</p>
+        </div>
+
+        <label class="field-label" style="margin-bottom: 0.5rem;">Intensité</label>
+        <div class="radio-group" data-field="sport_intensite" data-required="conditional">
+          <label class="radio-card" data-value="legere">
+            <input type="radio" name="sport_intensite" value="legere">
+            <span class="radio-dot"></span>
+            <span>
+              <span class="radio-label">Légère</span>
+              <span class="radio-desc">Sport doux ou débutant. Marche, yoga, natation loisir. Ou : tu viens de commencer et tu apprends encore les mouvements.</span>
+            </span>
+          </label>
+          <label class="radio-card" data-value="moderee">
+            <input type="radio" name="sport_intensite" value="moderee">
+            <span class="radio-dot"></span>
+            <span>
+              <span class="radio-label">Modérée</span>
+              <span class="radio-desc">Pratiquant régulier avec un bon niveau. Tu connais les mouvements, tu tiens les séances en entier. C'est le niveau de la majorité des sportifs.</span>
+            </span>
+          </label>
+          <label class="radio-card" data-value="elevee">
+            <input type="radio" name="sport_intensite" value="elevee">
+            <span class="radio-dot"></span>
+            <span>
+              <span class="radio-label">Élevée</span>
+              <span class="radio-desc">Niveau avancé ou compétiteur. Tu maîtrises ton sport, entraînement structuré avec objectifs de performance.</span>
+            </span>
+          </label>
+          <p class="error-text">Merci de choisir l'intensité.</p>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-next" onclick="goNext()"><span class="btn-text">Continuer</span> <span>→</span></button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 5 — Spécificités alimentaires ═══════ -->
+    <div class="step-card hidden" id="step-5">
+      <h2 class="step-title">Tes spécificités</h2>
+      <p class="step-micro">Pour que les conseils soient adaptés à ce que tu peux vraiment manger.</p>
+
+      <label class="field-label" style="margin-bottom: 0.5rem;">Régime alimentaire</label>
+      <div class="radio-group" data-field="regime" data-required="true">
+        <label class="radio-card" data-value="omnivore">
+          <input type="radio" name="regime" value="omnivore">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Omnivore</span>
+        </label>
+        <label class="radio-card" data-value="vegetarien">
+          <input type="radio" name="regime" value="vegetarien">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Végétarien</span>
+        </label>
+        <label class="radio-card" data-value="vegetalien">
+          <input type="radio" name="regime" value="vegetalien">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Végétalien</span>
+        </label>
+        <label class="radio-card" data-value="autre">
+          <input type="radio" name="regime" value="autre">
+          <span class="radio-dot"></span>
+          <span class="radio-label">Autre</span>
+        </label>
+        <p class="error-text">Merci de choisir ton régime.</p>
+      </div>
+
+      <div class="field-group" data-field="intolerances">
+        <label class="field-label" for="f-intolerances">Intolérances ou allergies</label>
+        <input type="text" class="field-input" id="f-intolerances" placeholder="Lactose, gluten, fruits à coque… ou rien du tout">
+        <p class="field-help">Optionnel — laisse vide si rien de particulier.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-next" onclick="goNext()"><span class="btn-text">Continuer</span> <span>→</span></button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 6 — Questions ouvertes ═══════ -->
+    <div class="step-card hidden" id="step-6">
+      <h2 class="step-title">Ta situation</h2>
+      <p class="step-micro">Ces réponses m'aident à comprendre ta réalité — pas juste tes chiffres.</p>
+
+      <div class="field-group" data-field="blocage">
+        <label class="field-label" for="f-blocage">Qu'est-ce qui te bloque le plus aujourd'hui dans ton alimentation ?</label>
+        <textarea class="field-input" id="f-blocage" rows="3" placeholder="Grignotage, manque de temps, pas de structure…" data-required="true"></textarea>
+        <p class="error-text">Merci de répondre à cette question.</p>
+      </div>
+
+      <div class="field-group" data-field="historique">
+        <label class="field-label" for="f-historique">As-tu déjà suivi un plan ou un régime ? Si oui, qu'est-ce qui n'a pas tenu ?</label>
+        <textarea class="field-input" id="f-historique" rows="3" placeholder="Optionnel"></textarea>
+      </div>
+
+      <div class="field-group" data-field="journee_type">
+        <label class="field-label" for="f-journee-type">À quoi ressemble une journée type côté repas ?</label>
+        <textarea class="field-input" id="f-journee-type" rows="3" placeholder="Optionnel"></textarea>
+      </div>
+
+      <div class="field-group" data-field="attentes">
+        <label class="field-label" for="f-attentes">Qu'est-ce que tu attendrais d'un vrai accompagnement nutrition ?</label>
+        <textarea class="field-input" id="f-attentes" rows="3" placeholder="Optionnel"></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-next" onclick="goNext()"><span class="btn-text">Continuer</span> <span>→</span></button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 7 — Email + Consentement ═══════ -->
+    <div class="step-card hidden" id="step-7">
+      <h2 class="step-title" id="title-email">Pour recevoir ton bilan</h2>
+      <p class="step-micro">Je te réponds personnellement sous 48h. Pas d'autorépondeur, pas de spam.</p>
+
+      <div class="field-group" data-field="email">
+        <label class="field-label" for="f-email">Email</label>
+        <input type="email" class="field-input" id="f-email" placeholder="ton@email.com" autocomplete="email" data-required="true">
+        <p class="error-text">Merci d'indiquer un email valide.</p>
+      </div>
+
+      <div class="consent-wrap" id="consent-wrap">
+        <input type="checkbox" id="f-consent">
+        <label for="f-consent">
+          J'accepte que mes données soient utilisées pour me recontacter avec mon bilan.
+          <a href="/confidentialite.html" target="_blank">Voir la politique de confidentialité.</a>
+        </label>
+        <p class="error-text" style="margin-left: 0;">Merci d'accepter pour recevoir ton bilan.</p>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-back" onclick="goBack()">← Retour</button>
+        <button type="button" class="btn-submit" id="btnSubmit" onclick="submitBilan()">
+          <span class="btn-text">Recevoir mon bilan →</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════ ÉCRAN 8 — Confirmation ═══════ -->
+    <div class="step-card hidden" id="step-8">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h2 class="confirm-title" id="title-confirm">C'est noté.</h2>
+      <p class="confirm-body">
+        Ton bilan personnalisé est en préparation.<br>
+        Tu reçois ton analyse complète par mail sous 48h.
+      </p>
+      <p class="confirm-sig">— Audric, diététicien diplômé</p>
+      <a href="/" class="confirm-link">Découvrir Élevia →</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ═══════════════════════════════════════════
+  // CONFIG
+  // ═══════════════════════════════════════════
+  var SUPABASE_URL = 'https://rlemorqfkuloyxoydmdj.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZW1vcnFma3Vsb3l4b3lkbWRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MzgwMTAsImV4cCI6MjA4NzIxNDAxMH0.5l_-bwLdDR745IsJCOJGDnIlnGp0fMDXxGlW93n5Ivg';
+  var TABLE = 'lead_bilan_flash';
+  var TOTAL_STEPS = 8; // 0 à 7 (8 = confirmation, pas compté dans progress)
+  var RATE_LIMIT_MS = 60000;
+
+  // ═══════════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════════
+  var currentStep = 0;
+  var formData = {};
+  var lastSubmitTime = 0;
+
+  // ═══════════════════════════════════════════
+  // DOM REFS
+  // ═══════════════════════════════════════════
+  var progressWrap = document.getElementById('progressWrap');
+  var progressLabel = document.getElementById('progressLabel');
+  var progressFill = document.getElementById('progressFill');
+
+  // ═══════════════════════════════════════════
+  // NAVIGATION
+  // ═══════════════════════════════════════════
+  window.goNext = function() {
+    if (!validateStep(currentStep)) return;
+    collectStepData(currentStep);
+    currentStep++;
+    renderStep();
+  };
+
+  window.goBack = function() {
+    if (currentStep <= 0) return;
+    currentStep--;
+    renderStep();
+  };
+
+  function renderStep() {
+    // Hide all steps
+    for (var i = 0; i <= TOTAL_STEPS + 1; i++) {
+      var s = document.getElementById('step-' + i);
+      if (s) s.classList.add('hidden');
+    }
+
+    // Show current step
+    var card = document.getElementById('step-' + currentStep);
+    if (card) {
+      card.classList.remove('hidden');
+      // Re-trigger animation
+      card.style.animation = 'none';
+      card.offsetHeight; // force reflow
+      card.style.animation = '';
+    }
+
+    // Update progress
+    if (currentStep === 0 || currentStep > 7) {
+      progressWrap.classList.remove('visible');
+    } else {
+      progressWrap.classList.add('visible');
+      var pct = Math.round((currentStep / 7) * 100);
+      progressFill.style.width = pct + '%';
+      progressLabel.textContent = 'Étape ' + currentStep + '/7';
+    }
+
+    // Inject prénom where needed
+    var prenom = formData.prenom || '';
+    if (prenom) {
+      var titleObj = document.getElementById('title-objectif');
+      if (titleObj) titleObj.textContent = 'Quel est ton objectif, ' + prenom + ' ?';
+
+      var titleEmail = document.getElementById('title-email');
+      if (titleEmail) titleEmail.textContent = 'Pour recevoir ton bilan, ' + prenom;
+
+      var titleConfirm = document.getElementById('title-confirm');
+      if (titleConfirm) titleConfirm.textContent = 'C\u2019est noté, ' + prenom + '.';
+    }
+
+    // Scroll to top of card
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ═══════════════════════════════════════════
+  // DATA COLLECTION
+  // ═══════════════════════════════════════════
+  function collectStepData(step) {
+    var card = document.getElementById('step-' + step);
+    if (!card) return;
+
+    // Text/number inputs
+    card.querySelectorAll('.field-input').forEach(function(input) {
+      var fg = input.closest('.field-group');
+      if (!fg) return;
+      var key = fg.getAttribute('data-field');
+      if (key && input.value.trim()) {
+        formData[key] = input.value.trim();
+      }
+    });
+
+    // Radio groups
+    card.querySelectorAll('.radio-group[data-field]').forEach(function(group) {
+      var key = group.getAttribute('data-field');
+      var selected = group.querySelector('.radio-card.selected');
+      if (selected) {
+        formData[key] = selected.getAttribute('data-value');
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // VALIDATION
+  // ═══════════════════════════════════════════
+  function validateStep(step) {
+    var card = document.getElementById('step-' + step);
+    if (!card) return true;
+    var valid = true;
+
+    // Clear previous errors
+    card.querySelectorAll('.error').forEach(function(el) {
+      el.classList.remove('error');
+    });
+
+    // Text/number inputs
+    card.querySelectorAll('.field-group[data-field]').forEach(function(fg) {
+      if (fg.classList.contains('hidden')) return;
+      var input = fg.querySelector('.field-input');
+      if (!input) return;
+      var req = input.getAttribute('data-required');
+
+      if (req === 'true') {
+        if (!input.value.trim()) {
+          fg.classList.add('error');
+          valid = false;
+        }
+      }
+
+      if (req === 'conditional') {
+        // poids_cible: required if objectif = perte_poids or prise_masse
+        var field = fg.getAttribute('data-field');
+        if (field === 'poids_cible' && !fg.classList.contains('hidden')) {
+          if (!input.value.trim()) {
+            fg.classList.add('error');
+            valid = false;
+          }
+        }
+      }
+
+      // Email validation
+      if (input.type === 'email' && input.value.trim()) {
+        var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRe.test(input.value.trim())) {
+          fg.classList.add('error');
+          valid = false;
+        }
+      }
+
+      // Range validation for number fields
+      if (input.type === 'number' && input.value.trim()) {
+        var val = parseFloat(input.value);
+        var field = fg.getAttribute('data-field');
+        var errText = fg.querySelector('.error-text');
+        if (field === 'age' && (val < 14 || val > 99)) {
+          fg.classList.add('error');
+          if (errText) errText.textContent = 'L\u2019âge doit être entre 14 et 99 ans.';
+          valid = false;
+        } else if (field === 'poids' && (val < 30 || val > 300)) {
+          fg.classList.add('error');
+          if (errText) errText.textContent = 'Le poids doit être entre 30 et 300 kg.';
+          valid = false;
+        } else if (field === 'taille' && (val < 100 || val > 250)) {
+          fg.classList.add('error');
+          if (errText) errText.textContent = 'La taille doit être entre 100 et 250 cm.';
+          valid = false;
+        } else if (field === 'poids_cible' && (val < 30 || val > 250)) {
+          fg.classList.add('error');
+          if (errText) errText.textContent = 'Le poids cible doit être entre 30 et 250 kg.';
+          valid = false;
+        }
+      }
+    });
+
+    // Radio groups
+    card.querySelectorAll('.radio-group[data-field]').forEach(function(group) {
+      if (group.classList.contains('hidden')) return;
+      var req = group.getAttribute('data-required');
+      if (req === 'true' || (req === 'conditional' && !group.closest('.hidden'))) {
+        var selected = group.querySelector('.radio-card.selected');
+        if (!selected) {
+          group.classList.add('error');
+          valid = false;
+        }
+      }
+    });
+
+    // Consent (step 7 only)
+    if (step === 7) {
+      var consent = document.getElementById('f-consent');
+      var consentWrap = document.getElementById('consent-wrap');
+      if (!consent.checked) {
+        consentWrap.classList.add('error');
+        valid = false;
+      }
+    }
+
+    if (!valid) {
+      var firstErr = card.querySelector('.error');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valid;
+  }
+
+  // ═══════════════════════════════════════════
+  // CONDITIONAL FIELDS
+  // ═══════════════════════════════════════════
+  function setupConditionals() {
+    // Objectif → poids cible
+    document.querySelectorAll('[name="objectif"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        var wrap = document.getElementById('wrap-poids-cible');
+        var val = this.value;
+        if (val === 'perte_poids' || val === 'prise_masse' || val === 'prise_masse_seche') {
+          wrap.classList.remove('hidden');
+          wrap.querySelector('.field-input').setAttribute('data-required', 'true');
+        } else {
+          wrap.classList.add('hidden');
+          wrap.querySelector('.field-input').setAttribute('data-required', 'false');
+          wrap.querySelector('.field-input').value = '';
+        }
+      });
+    });
+
+    // Sport oui/non → détails + sport_prevu conditionnel
+    document.querySelectorAll('[name="fait_sport"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        var wrapDetails = document.getElementById('wrap-sport-details');
+        var wrapPrevu = document.getElementById('wrap-sport-prevu');
+        if (this.value === 'oui') {
+          wrapDetails.classList.remove('hidden');
+          wrapPrevu.classList.add('hidden');
+          wrapPrevu.querySelectorAll('.radio-card.selected').forEach(function(c) {
+            c.classList.remove('selected');
+            c.querySelector('input').checked = false;
+          });
+          delete formData.sport_prevu;
+        } else {
+          wrapDetails.classList.add('hidden');
+          wrapDetails.querySelectorAll('.radio-card.selected').forEach(function(c) {
+            c.classList.remove('selected');
+            c.querySelector('input').checked = false;
+          });
+          delete formData.sport_frequence;
+          delete formData.sport_intensite;
+          // Afficher sport_prevu si objectif = prise_masse ou prise_masse_seche (GAIN sans sport)
+          if (formData.objectif === 'prise_masse_seche' || formData.objectif === 'prise_masse') {
+            wrapPrevu.classList.remove('hidden');
+          } else {
+            wrapPrevu.classList.add('hidden');
+            delete formData.sport_prevu;
+          }
+        }
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // RADIO CARD INTERACTIONS
+  // ═══════════════════════════════════════════
+  function setupRadioCards() {
+    document.querySelectorAll('.radio-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var group = this.closest('.radio-group');
+        // Deselect siblings
+        group.querySelectorAll('.radio-card').forEach(function(c) {
+          c.classList.remove('selected');
+        });
+        // Select this one
+        this.classList.add('selected');
+        this.querySelector('input[type="radio"]').checked = true;
+        // Clear error
+        group.classList.remove('error');
+
+        // Trigger change event for conditionals
+        var input = this.querySelector('input[type="radio"]');
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // SUBMIT
+  // ═══════════════════════════════════════════
+  window.submitBilan = function() {
+    // Validate step 7
+    if (!validateStep(7)) return;
+
+    // Honeypot check
+    if (document.getElementById('website').value) return;
+
+    // Rate limit
+    var now = Date.now();
+    if (now - lastSubmitTime < RATE_LIMIT_MS && lastSubmitTime > 0) {
+      showToast('Un instant — tu as déjà envoyé une demande.', 'info');
+      return;
+    }
+    lastSubmitTime = now;
+
+    // Collect last step data
+    collectStepData(7);
+
+    // Build payload
+    var payload = {
+      prenom: formData.prenom || '',
+      email: formData.email || '',
+      objectif: formData.objectif || '',
+      poids_cible: formData.poids_cible ? parseFloat(formData.poids_cible) : null,
+      genre: formData.genre || '',
+      age: formData.age ? parseInt(formData.age) : null,
+      poids: formData.poids ? parseFloat(formData.poids) : null,
+      taille: formData.taille ? parseInt(formData.taille) : null,
+      activite_quotidienne: formData.activite_quotidienne || '',
+      fait_sport: formData.fait_sport || '',
+      sport_frequence: formData.sport_frequence || null,
+      sport_intensite: formData.sport_intensite || null,
+      sport_prevu: formData.sport_prevu || null,
+      regime: formData.regime || '',
+      intolerances: formData.intolerances || null,
+      blocage: formData.blocage || '',
+      historique: formData.historique || null,
+      journee_type: formData.journee_type || null,
+      attentes: formData.attentes || null,
+      status: 'new',
+      submitted_at: new Date().toISOString()
+    };
+
+    var btn = document.getElementById('btnSubmit');
+    btn.classList.add('loading');
+
+    // Map form values to SQL function params
+    var goalMap = {
+      'perte_poids': 'PW',
+      'prise_masse': 'GAIN_COMFORT',
+      'prise_masse_seche': 'GAIN_LEAN',
+      'maintien': 'MAINT'
+    };
+    var genderMap = { 'homme': 'M', 'femme': 'F' };
+
+    var goalCode = goalMap[payload.objectif] || 'MAINT';
+    // Règle 1 : prise_masse + poids_cible ≤ poids → recomposition
+    if (payload.objectif === 'prise_masse' && payload.poids_cible && payload.poids_cible <= payload.poids) {
+      goalCode = 'GAIN_LEAN';
+    }
+    // Règle 2 : GAIN + pas de sport + sport non prévu → maintien (muscle impossible sans entraînement)
+    if ((payload.objectif === 'prise_masse' || payload.objectif === 'prise_masse_seche')
+        && payload.fait_sport !== 'oui'
+        && payload.sport_prevu === 'non') {
+      goalCode = 'MAINT';
+    }
+
+    var rpcParams = {
+      p_gender: genderMap[payload.genre] || 'M',
+      p_age: payload.age,
+      p_weight_kg: payload.poids,
+      p_height_cm: payload.taille,
+      p_goal_code: goalCode,
+      p_target_weight_kg: payload.poids_cible || null,
+      p_job_activity: payload.activite_quotidienne,
+      p_has_activity: payload.fait_sport === 'oui',
+      p_activity_freq: payload.sport_frequence || null,
+      p_activity_intensity: payload.sport_intensite || null
+    };
+
+    // Step 1: Calculate kcal/macros via RPC, then insert with results
+    fetch(SUPABASE_URL + '/rest/v1/rpc/elevia_calculate_targets', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify(rpcParams)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      // Attach calculated values to payload
+      if (Array.isArray(data) && data.length > 0) {
+        payload.kcal_jour = data[0].kcal_day;
+        payload.proteines_g = data[0].protein_day_g;
+        payload.lipides_g = data[0].lipids_day_g;
+        payload.glucides_g = data[0].carbs_day_g;
+      }
+      return insertPayload(payload);
+    })
+    .catch(function() {
+      // Calc failed — insert without macros
+      console.warn('[Bilan Flash] Calcul échoué — envoi sans macros.');
+      return insertPayload(payload);
+    });
+  };
+
+  function insertPayload(payload) {
+    return fetch(SUPABASE_URL + '/rest/v1/' + TABLE, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      notifyMake(payload);
+      showConfirmation();
+    })
+    .catch(function() {
+      showConfirmation();
+      console.warn('[Bilan Flash] Erreur lors de l\'envoi — les données n\'ont peut-être pas été sauvegardées.');
+    });
+  };
+
+  function notifyMake(payload) {
+    fetch(SUPABASE_URL + '/functions/v1/send-bilan-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prenom: payload.prenom, email: payload.email })
+    }).catch(function() {});
+  }
+
+  function showConfirmation() {
+    currentStep = 8;
+    renderStep();
+  }
+
+  // ═══════════════════════════════════════════
+  // TOAST
+  // ═══════════════════════════════════════════
+  function showToast(msg, type) {
+    var toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast visible' + (type === 'error' ? ' error' : '');
+    setTimeout(function() {
+      toast.classList.remove('visible');
+    }, 4000);
+  }
+
+  // ═══════════════════════════════════════════
+  // INPUT EVENTS — clear errors on type
+  // ═══════════════════════════════════════════
+  function setupInputEvents() {
+    document.querySelectorAll('.field-input').forEach(function(input) {
+      input.addEventListener('input', function() {
+        var fg = this.closest('.field-group');
+        if (fg) fg.classList.remove('error');
+      });
+    });
+
+    document.getElementById('f-consent').addEventListener('change', function() {
+      document.getElementById('consent-wrap').classList.remove('error');
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════════
+  setupRadioCards();
+  setupConditionals();
+  setupInputEvents();
+  renderStep();
+
+  // ── Pré-sélection objectif depuis URL param (ex: depuis quiz.html) ──
+  var urlObjectif = new URLSearchParams(window.location.search).get('objectif');
+  if (urlObjectif) {
+    var targetCard = document.querySelector('.radio-group[data-field="objectif"] .radio-card[data-value="' + urlObjectif + '"]');
+    if (targetCard) {
+      var grp = targetCard.closest('.radio-group');
+      grp.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
+      targetCard.classList.add('selected');
+      targetCard.querySelector('input[type="radio"]').checked = true;
+      targetCard.querySelector('input[type="radio"]').dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  // ═══════════════════════════════════════════
+  // MOBILE — fermer le clavier au tap hors champ
+  // ═══════════════════════════════════════════
+  document.addEventListener('touchstart', function(e) {
+    var active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+      if (!e.target.closest('input, textarea, select, label')) {
+        active.blur();
+      }
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

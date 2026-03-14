@@ -1,0 +1,116 @@
+<!-- ═══════════════════════════════════════════════════════════
+     ÉLEVIA — Cookie Banner (RGPD)
+     
+     Ce composant est DÉJÀ intégré dans mentions-legales.html 
+     et confidentialite.html.
+     
+     Pour l'ajouter aux 4 pages existantes (index, systeme, 
+     offre, cockpit), copier-coller les 3 blocs ci-dessous :
+       1. Le CSS → dans le <style> existant
+       2. Le HTML → juste avant </body>
+       3. Le JS → dans le <script> existant
+     ═══════════════════════════════════════════════════════════ -->
+
+
+<!-- ─────────────────────────────────────────────────────────
+     1. CSS — coller dans le bloc <style> de chaque page
+     ───────────────────────────────────────────────────────── -->
+<!--
+
+.cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-soft);
+    padding: 16px 24px; z-index: 10000;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    transition: opacity 0.5s, transform 0.5s;
+}
+.cookie-banner.hidden { opacity: 0; transform: translateY(100%); pointer-events: none; }
+.cookie-text { font-size: 0.8rem; font-weight: 300; color: var(--text-muted); }
+.cookie-actions { display: flex; gap: 10px; }
+.cookie-btn {
+    font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border: none; border-radius: 50px; padding: 8px 20px; cursor: pointer;
+    transition: all 0.3s;
+}
+.cookie-accept { background: var(--gold); color: var(--navy); }
+.cookie-accept:hover { background: var(--gold-light); }
+.cookie-refuse { background: transparent; color: var(--text-muted); border: 1px solid var(--border-soft); }
+.cookie-refuse:hover { border-color: var(--gold-pale); }
+.cookie-link {
+    font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 300;
+    color: var(--text-muted); text-decoration: none; white-space: nowrap;
+    transition: color 0.3s;
+}
+.cookie-link:hover { color: var(--gold); }
+
+@media (max-width: 768px) {
+    .cookie-banner { flex-direction: column; gap: 12px; padding: 16px 20px; text-align: center; }
+}
+
+-->
+
+
+<!-- ─────────────────────────────────────────────────────────
+     2. HTML — coller juste avant </body> (avant le <script>)
+     ───────────────────────────────────────────────────────── -->
+
+<div class="cookie-banner hidden" id="cookieBanner">
+    <span class="cookie-text">Nous utilisons des cookies pour améliorer ton expérience.</span>
+    <div class="cookie-actions">
+        <button class="cookie-btn cookie-accept" id="cookieAccept">Accepter</button>
+        <button class="cookie-btn cookie-refuse" id="cookieRefuse">Refuser</button>
+    </div>
+    <a href="/confidentialite.html" class="cookie-link">En savoir plus →</a>
+</div>
+
+
+<!-- ─────────────────────────────────────────────────────────
+     3. JS — coller dans le bloc <script> existant
+     ───────────────────────────────────────────────────────── -->
+
+<script>
+// === Cookie Banner (RGPD) ===
+(function() {
+    var banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+
+    // Vérifier si un choix a déjà été fait
+    if (!localStorage.getItem('elevia_cookies')) {
+        setTimeout(function() { banner.classList.remove('hidden'); }, 1000);
+    } else if (localStorage.getItem('elevia_cookies') === 'accepted') {
+        loadAnalytics();
+    }
+
+    document.getElementById('cookieAccept').addEventListener('click', function() {
+        localStorage.setItem('elevia_cookies', 'accepted');
+        banner.classList.add('hidden');
+        loadAnalytics();
+    });
+
+    document.getElementById('cookieRefuse').addEventListener('click', function() {
+        localStorage.setItem('elevia_cookies', 'refused');
+        banner.classList.add('hidden');
+    });
+
+    function loadAnalytics() {
+        // Décommenter quand Google Analytics est configuré :
+        /*
+        if (document.getElementById('ga-script')) return;
+        var s = document.createElement('script');
+        s.id = 'ga-script';
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=TON_ID_GA';
+        document.head.appendChild(s);
+        s.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){ dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'TON_ID_GA');
+        };
+        */
+    }
+})();
+</script>
