@@ -331,6 +331,14 @@ textarea.field-input {
   color: var(--text-dark);
   line-height: 1.4;
 }
+.radio-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 2px;
+  line-height: 1.35;
+}
 
 .radio-desc {
   font-size: 0.75rem;
@@ -684,12 +692,18 @@ textarea.field-input {
         <label class="radio-card" data-value="prise_masse">
           <input type="radio" name="objectif" value="prise_masse">
           <span class="radio-dot"></span>
-          <span class="radio-label">Prise de masse</span>
+          <span>
+            <span class="radio-label">Prise de masse</span>
+            <span class="radio-hint">Nécessite une activité sportive ou de prévoir d'en commencer une.</span>
+          </span>
         </label>
         <label class="radio-card" data-value="prise_masse_seche">
           <input type="radio" name="objectif" value="prise_masse_seche">
           <span class="radio-dot"></span>
-          <span class="radio-label">Prise de masse sèche / recomposition</span>
+          <span>
+            <span class="radio-label">Recomposition — muscler sans prendre de poids</span>
+            <span class="radio-hint">Nécessite une activité sportive ou de prévoir d'en commencer une.</span>
+          </span>
         </label>
         <label class="radio-card" data-value="maintien">
           <input type="radio" name="objectif" value="maintien">
@@ -811,6 +825,29 @@ textarea.field-input {
           <span class="radio-label">Non</span>
         </label>
         <p class="error-text">Merci de répondre.</p>
+      </div>
+
+      <!-- Question conditionnelle : prise_masse_seche + pas de sport (mig 269) -->
+      <div id="wrap-sport-prevu" class="hidden">
+        <label class="field-label" style="margin-bottom: 0.5rem;">Tu prévois de démarrer une activité physique ?</label>
+        <div class="radio-group" data-field="sport_prevu" data-required="conditional">
+          <label class="radio-card" data-value="oui">
+            <input type="radio" name="sport_prevu" value="oui">
+            <span class="radio-dot"></span>
+            <span class="radio-label">Oui, c'est prévu</span>
+          </label>
+          <label class="radio-card" data-value="pas_encore">
+            <input type="radio" name="sport_prevu" value="pas_encore">
+            <span class="radio-dot"></span>
+            <span class="radio-label">Pas encore décidé</span>
+          </label>
+          <label class="radio-card" data-value="non">
+            <input type="radio" name="sport_prevu" value="non">
+            <span class="radio-dot"></span>
+            <span class="radio-label">Non, pas pour l'instant</span>
+          </label>
+          <p class="error-text">Merci de répondre.</p>
+        </div>
       </div>
 
       <div id="wrap-sport-details" class="hidden">
@@ -1235,21 +1272,34 @@ textarea.field-input {
       });
     });
 
-    // Sport oui/non → détails
+    // Sport oui/non → détails + sport_prevu conditionnel
     document.querySelectorAll('[name="fait_sport"]').forEach(function(radio) {
       radio.addEventListener('change', function() {
-        var wrap = document.getElementById('wrap-sport-details');
+        var wrapDetails = document.getElementById('wrap-sport-details');
+        var wrapPrevu = document.getElementById('wrap-sport-prevu');
         if (this.value === 'oui') {
-          wrap.classList.remove('hidden');
+          wrapDetails.classList.remove('hidden');
+          wrapPrevu.classList.add('hidden');
+          wrapPrevu.querySelectorAll('.radio-card.selected').forEach(function(c) {
+            c.classList.remove('selected');
+            c.querySelector('input').checked = false;
+          });
+          delete formData.sport_prevu;
         } else {
-          wrap.classList.add('hidden');
-          // Clear sport selections
-          wrap.querySelectorAll('.radio-card.selected').forEach(function(c) {
+          wrapDetails.classList.add('hidden');
+          wrapDetails.querySelectorAll('.radio-card.selected').forEach(function(c) {
             c.classList.remove('selected');
             c.querySelector('input').checked = false;
           });
           delete formData.sport_frequence;
           delete formData.sport_intensite;
+          // Afficher sport_prevu si objectif = prise_masse ou prise_masse_seche (GAIN sans sport)
+          if (formData.objectif === 'prise_masse_seche' || formData.objectif === 'prise_masse') {
+            wrapPrevu.classList.remove('hidden');
+          } else {
+            wrapPrevu.classList.add('hidden');
+            delete formData.sport_prevu;
+          }
         }
       });
     });
@@ -1314,6 +1364,7 @@ textarea.field-input {
       fait_sport: formData.fait_sport || '',
       sport_frequence: formData.sport_frequence || null,
       sport_intensite: formData.sport_intensite || null,
+      sport_prevu: formData.sport_prevu || null,
       regime: formData.regime || '',
       intolerances: formData.intolerances || null,
       blocage: formData.blocage || '',
@@ -1336,12 +1387,24 @@ textarea.field-input {
     };
     var genderMap = { 'homme': 'M', 'femme': 'F' };
 
+    var goalCode = goalMap[payload.objectif] || 'MAINT';
+    // Règle 1 : prise_masse + poids_cible ≤ poids → recomposition
+    if (payload.objectif === 'prise_masse' && payload.poids_cible && payload.poids_cible <= payload.poids) {
+      goalCode = 'GAIN_LEAN';
+    }
+    // Règle 2 : GAIN + pas de sport + sport non prévu → maintien (muscle impossible sans entraînement)
+    if ((payload.objectif === 'prise_masse' || payload.objectif === 'prise_masse_seche')
+        && payload.fait_sport !== 'oui'
+        && payload.sport_prevu === 'non') {
+      goalCode = 'MAINT';
+    }
+
     var rpcParams = {
       p_gender: genderMap[payload.genre] || 'M',
       p_age: payload.age,
       p_weight_kg: payload.poids,
       p_height_cm: payload.taille,
-      p_goal_code: goalMap[payload.objectif] || 'MAINT',
+      p_goal_code: goalCode,
       p_target_weight_kg: payload.poids_cible || null,
       p_job_activity: payload.activite_quotidienne,
       p_has_activity: payload.fait_sport === 'oui',
@@ -1400,10 +1463,10 @@ textarea.field-input {
   };
 
   function notifyMake(payload) {
-    fetch('https://hook.eu2.make.com/tgg0rxrteov2ps245nz7lmc84mwdmavi', {
+    fetch(SUPABASE_URL + '/functions/v1/send-bilan-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ prenom: payload.prenom, email: payload.email })
     }).catch(function() {});
   }
 
@@ -1447,6 +1510,19 @@ textarea.field-input {
   setupConditionals();
   setupInputEvents();
   renderStep();
+
+  // ── Pré-sélection objectif depuis URL param (ex: depuis quiz.html) ──
+  var urlObjectif = new URLSearchParams(window.location.search).get('objectif');
+  if (urlObjectif) {
+    var targetCard = document.querySelector('.radio-group[data-field="objectif"] .radio-card[data-value="' + urlObjectif + '"]');
+    if (targetCard) {
+      var grp = targetCard.closest('.radio-group');
+      grp.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
+      targetCard.classList.add('selected');
+      targetCard.querySelector('input[type="radio"]').checked = true;
+      targetCard.querySelector('input[type="radio"]').dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
 
   // ═══════════════════════════════════════════
   // MOBILE — fermer le clavier au tap hors champ

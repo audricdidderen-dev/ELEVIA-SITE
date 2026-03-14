@@ -394,6 +394,43 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 .separator-line.revealed { transform: scaleX(1); }
 .section-cta-inner { position: relative; z-index: 1; }
 
+/* ===== QUIZ PROFIL TEASER ===== */
+.section-quiz { background: var(--navy); padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 4rem); position: relative; overflow: hidden; }
+.section-quiz::before { content: ''; position: absolute; top: -120px; right: -120px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(198,160,91,0.07), transparent 70%); pointer-events: none; animation: ambientDrift 22s ease-in-out infinite; }
+.section-quiz .section-headline { color: var(--cream); }
+.section-quiz .section-body { color: var(--text-soft); }
+.quiz-profiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 3rem 0 2.5rem; max-width: 960px; }
+.quiz-profile-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.03); border: 1px solid rgba(198,160,91,0.12); border-radius: 16px; padding: 1.75rem 1.5rem; text-decoration: none; transition: border-color .3s, background .3s, transform .25s; opacity: 0; transform: translateY(30px); position: relative; overflow: hidden; }
+.quiz-profile-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.quiz-profile-card.c-pw::before { background: linear-gradient(90deg, transparent, #8B6544, transparent); }
+.quiz-profile-card.c-sc::before { background: linear-gradient(90deg, transparent, #3D7A8A, transparent); }
+.quiz-profile-card.c-bu::before { background: linear-gradient(90deg, transparent, #4A7A4A, transparent); }
+.quiz-profile-card.c-ma::before { background: linear-gradient(90deg, transparent, #6B5A8A, transparent); }
+.quiz-profile-card.revealed { opacity: 1; transform: none; transition: all .7s cubic-bezier(.16,1,.3,1); }
+.quiz-profile-card:nth-child(2).revealed { transition-delay: .1s; }
+.quiz-profile-card:nth-child(3).revealed { transition-delay: .2s; }
+.quiz-profile-card:nth-child(4).revealed { transition-delay: .3s; }
+.quiz-profile-card:hover { border-color: rgba(198,160,91,.28); background: rgba(255,255,255,.05); transform: translateY(-3px); }
+.qp-fig { width: 40px; margin-bottom: 1.1rem; opacity: .75; transition: opacity .3s; }
+.qp-fig svg { width: 100%; height: auto; display: block; }
+.quiz-profile-card:hover .qp-fig { opacity: 1; }
+.qp-name { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--cream); margin-bottom: .25rem; line-height: 1.2; }
+.qp-sub { font-size: .72rem; font-weight: 300; color: var(--text-soft); letter-spacing: .04em; }
+.qp-arr { font-size: .72rem; color: var(--gold); opacity: 0; margin-top: auto; padding-top: .9rem; transition: opacity .2s, transform .2s; }
+.quiz-profile-card:hover .qp-arr { opacity: 1; transform: translateX(3px); }
+.quiz-cta-row { display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap; opacity: 0; transform: translateY(20px); }
+.quiz-cta-row.revealed { opacity: 1; transform: none; transition: all .7s cubic-bezier(.16,1,.3,1) .4s; }
+.quiz-main-btn { display: inline-flex; align-items: center; gap: .5rem; background: var(--gold); color: var(--navy); font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: .85rem 2rem; border-radius: 60px; text-decoration: none; transition: background .2s, transform .15s, box-shadow .2s; white-space: nowrap; }
+.quiz-main-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198,160,91,.25); }
+.quiz-main-btn .arr { transition: transform .2s; }
+.quiz-main-btn:hover .arr { transform: translateX(3px); }
+.quiz-sec-link { font-family: var(--serif); font-style: italic; font-size: .95rem; color: var(--text-soft); text-decoration: none; transition: color .2s; }
+.quiz-sec-link:hover { color: var(--gold-pale); }
+@media (max-width: 768px) {
+  .quiz-profiles { grid-template-columns: 1fr 1fr; }
+  .quiz-cta-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+
 /* ===== SKIP LINK ===== */
 .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
 .skip-link:focus { top: 0; }
@@ -474,7 +511,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   .hero-tagline, .hero-sub, .hero-scroll { opacity: 1; transform: none; }
   .scroll-word { opacity: 1; transform: none; clip-path: none; }
   .section-label, .section-headline, .section-body { opacity: 1; transform: none; }
-  .method-card, .app-feature, .plan-visual, .pricing-teaser-card, .community-card, .community-cta, .community-badge, .access-item, .access-note, .bilan-teaser-card { opacity: 1; transform: none; }
+  .method-card, .app-feature, .plan-visual, .pricing-teaser-card, .community-card, .community-cta, .community-badge, .access-item, .access-note, .bilan-teaser-card, .quiz-profile-card, .quiz-cta-row { opacity: 1; transform: none; }
   .cta-headline, .cta-sub, .cta-btn, .cta-trust { opacity: 1; transform: none; }
   .proof-item, .proof-line, .proof-badge { opacity: 1; transform: none; }
   .proof-line { width: 200px; }
@@ -552,6 +589,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
     <a href="/systeme.html">Le Système</a>
     <a href="/offre.html">Offre</a>
     <a href="/cockpit.html">Cockpit</a>
+    <a href="/quiz.html">Quiz profil</a>
     <a href="/apropos.html">À propos</a>
     <a href="/contact.html">Contact</a>
     <a href="/espace-client.html">Espace Client</a>
@@ -563,6 +601,7 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   <a href="/systeme.html" data-nav>Le Système</a>
   <a href="/offre.html" data-nav>Offre</a>
   <a href="/cockpit.html" data-nav>Cockpit</a>
+  <a href="/quiz.html" data-nav>Quiz profil</a>
   <a href="/apropos.html" data-nav>À propos</a>
   <a href="/contact.html" data-nav>Contact</a>
   <a href="/espace-client.html" data-nav>Espace Client</a>
@@ -803,13 +842,84 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
   </div>
 </div></section>
 
-<!-- BILAN COMING SOON -->
-<section class="section-bilan-teaser">
-  <div class="bilan-teaser-card" data-reveal>
-    <div class="bilan-teaser-badge"><svg viewBox="0 0 24 24"><path d="M2.5 13a9.5 9.5 0 1 0 19 0 9.5 9.5 0 1 0-19 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M6.653 20.849 4 23.501" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M17.345 20.847 20 23.501" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="m8.5 13.502 4 0 0-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M7.832 2.292a3.993 3.993 0 1 0-5.939 5.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M16.168 2.292a3.993 3.993 0 1 1 5.939 5.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>Tr&egrave;s bient&ocirc;t</div>
-    <h2 class="bilan-teaser-title">Les offres arrivent <em>dans quelques jours</em>.</h2>
-    <p class="bilan-teaser-desc">Plan personnalis&eacute;, app Cockpit, recettes adapt&eacute;es&nbsp;&mdash; tout est pr&ecirc;t.<br>En attendant, commence d&eacute;j&agrave; ton bilan pour gagner du&nbsp;temps.</p>
-    <a href="/bilan-flash.html" class="bilan-teaser-cta">Faire mon bilan flash <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="m5.651 23.5 12.576-11.126a0.5 0.5 0 0 0 0-0.748L5.651 0.5"/></svg></a>
+<!-- QUIZ — DÉCOUVERTE DE PROFIL -->
+<section class="section-quiz" id="profil">
+  <div class="section-inner">
+    <p class="section-label" data-reveal>Ton profil</p>
+    <h2 class="section-headline" data-reveal>Quel objectif est <em>vraiment</em> le tien ?</h2>
+    <p class="section-body" data-reveal>4 questions, pas de jargon. Un profil parmi 4 — et un bilan personnalisé avec tes besoins réels si tu veux aller plus loin.</p>
+
+    <div class="quiz-profiles">
+      <a href="/quiz.html?profil=pw" class="quiz-profile-card c-pw" data-reveal>
+        <div class="qp-fig">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 40 5 A 11 11 0 0 1 51 16 A 11 11 0 0 1 40 27 A 11 11 0 0 1 29 16 A 11 11 0 0 1 40 5" stroke="#8B6544" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 33 27 C 28 33 20 40 17 52 L 14 74 C 13 86 16 94 20 104" stroke="#8B6544" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 47 27 C 52 33 60 40 63 52 L 66 74 C 67 86 64 94 60 104" stroke="#8B6544" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 32 27 C 30 42 29 58 30 72 C 31 84 33 96 35 106 L 34 146 32 172" stroke="#8B6544" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 48 27 C 50 42 51 58 50 72 C 49 84 47 96 45 106 L 46 146 48 172" stroke="#8B6544" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 18 60 C 24 66 33 69 40 69 C 47 69 56 66 62 60" stroke="#8B6544" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M 21 100 C 28 106 35 108 40 108 C 45 108 52 106 59 100" stroke="#8B6544" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="qp-name">Le Libéré</div>
+        <div class="qp-sub">Perte de poids</div>
+        <div class="qp-arr">Voir ce profil →</div>
+      </a>
+      <a href="/quiz.html?profil=sc" class="quiz-profile-card c-sc" data-reveal>
+        <div class="qp-fig">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 40 5 A 11 11 0 0 1 51 16 A 11 11 0 0 1 40 27 A 11 11 0 0 1 29 16 A 11 11 0 0 1 40 5" stroke="#3D7A8A" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 33 27 C 24 31 13 38 10 50 L 8 68" stroke="#3D7A8A" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 47 27 C 56 31 67 38 70 50 L 72 68" stroke="#3D7A8A" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 31 27 C 28 42 27 58 28 72 C 29 86 32 98 34 110 L 32 148 30 172" stroke="#3D7A8A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 49 27 C 52 42 53 58 52 72 C 51 86 48 98 46 110 L 48 148 50 172" stroke="#3D7A8A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 14 56 C 22 64 34 68 40 68 C 46 68 58 64 66 56" stroke="#3D7A8A" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M 34 107 C 37 113 40 114 40 114 C 40 114 43 113 46 107" stroke="#3D7A8A" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="qp-name">Le Sculpteur</div>
+        <div class="qp-sub">Recomposition corporelle</div>
+        <div class="qp-arr">Voir ce profil →</div>
+      </a>
+      <a href="/quiz.html?profil=bu" class="quiz-profile-card c-bu" data-reveal>
+        <div class="qp-fig">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 40 4 A 12 12 0 0 1 52 16 A 12 12 0 0 1 40 28 A 12 12 0 0 1 28 16 A 12 12 0 0 1 40 4" stroke="#4A7A4A" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M 34 28 C 22 32 10 38 7 51 L 5 70" stroke="#4A7A4A" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M 46 28 C 58 32 70 38 73 51 L 75 70" stroke="#4A7A4A" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M 29 28 C 25 43 23 60 24 75 C 25 91 29 104 33 116 L 31 150 29 174" stroke="#4A7A4A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 51 28 C 55 43 57 60 56 75 C 55 91 51 104 47 116 L 49 150 51 174" stroke="#4A7A4A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 10 62 C 20 72 34 78 40 78 C 46 78 60 72 70 62" stroke="#4A7A4A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M 33 112 C 36 118 40 120 40 120 C 40 120 44 118 47 112" stroke="#4A7A4A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="qp-name">Le Bâtisseur</div>
+        <div class="qp-sub">Prise de masse</div>
+        <div class="qp-arr">Voir ce profil →</div>
+      </a>
+      <a href="/quiz.html?profil=ma" class="quiz-profile-card c-ma" data-reveal>
+        <div class="qp-fig">
+          <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 40 5 A 11 11 0 0 1 51 16 A 11 11 0 0 1 40 27 A 11 11 0 0 1 29 16 A 11 11 0 0 1 40 5" stroke="#6B5A8A" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 33 27 C 25 32 17 40 15 52 L 13 70" stroke="#6B5A8A" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 47 27 C 55 32 63 40 65 52 L 67 70" stroke="#6B5A8A" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M 32 27 C 30 42 29 58 30 72 C 31 85 34 97 36 108 L 35 148 33 172" stroke="#6B5A8A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 48 27 C 50 42 51 58 50 72 C 49 85 46 97 44 108 L 45 148 47 172" stroke="#6B5A8A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 17 62 C 24 69 34 72 40 72 C 46 72 56 69 63 62" stroke="#6B5A8A" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M 30 104 C 34 111 38 113 40 113 C 42 113 46 111 50 104" stroke="#6B5A8A" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="qp-name">L'Équilibré</div>
+        <div class="qp-sub">Maintien et rééquilibrage</div>
+        <div class="qp-arr">Voir ce profil →</div>
+      </a>
+    </div>
+
+    <div class="quiz-cta-row" data-reveal>
+      <a href="/quiz.html" class="quiz-main-btn">Découvrir mon profil <span class="arr">→</span></a>
+      <a href="/bilan-flash.html" class="quiz-sec-link">Ou faire directement mon bilan flash</a>
+    </div>
   </div>
 </section>
 
