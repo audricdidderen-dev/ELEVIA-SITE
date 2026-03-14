@@ -788,6 +788,27 @@ body.state-portal::before {
     <p style="margin-top:0.6rem">Pas encore de compte ? <a href="/offre.html">Découvrir l'offre</a></p>
   </div>
 </div>
+<!-- ===== SET PASSWORD VIEW (invite flow) ===== -->
+<div id="set-password-view" style="display:none">
+  <div class="login-logo">
+    <svg viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(1,0,0,1,78,142)"><g fill="#f6f3ee"><g transform="translate(1.291943,77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g></g></g></svg>
+  </div>
+  <h1>Crée ton <em>mot de passe</em></h1>
+  <p class="login-sub">Pour accéder à ton espace Élevia, choisis un mot de passe.</p>
+  <form id="set-password-form" autocomplete="off">
+    <div class="form-group">
+      <label for="new-password">Mot de passe</label>
+      <input type="password" id="new-password" placeholder="8 caractères minimum" required autocomplete="new-password" minlength="8">
+    </div>
+    <div class="form-group">
+      <label for="confirm-password">Confirmer</label>
+      <input type="password" id="confirm-password" placeholder="Répète ton mot de passe" required autocomplete="new-password">
+    </div>
+    <button type="submit" class="login-btn" id="set-password-btn">Accéder à mon espace</button>
+    <p class="login-error" id="set-password-error" role="alert"></p>
+  </form>
+</div>
+
 <footer class="login-footer" id="login-footer">
   <p>© 2026 Élevia Nutrition</p>
 </footer>
@@ -1035,14 +1056,55 @@ body.state-portal::before {
   // ── AUTH ──
   let currentView = null;
 
+  // Detect invite / password-recovery link
+  const _urlHash = new URLSearchParams(window.location.hash.slice(1));
+  let _isInviteFlow = _urlHash.get('type') === 'invite' || _urlHash.get('type') === 'recovery';
+
+  const setPasswordView = document.getElementById('set-password-view');
+  const setPasswordForm = document.getElementById('set-password-form');
+  const setPasswordError = document.getElementById('set-password-error');
+  const setPasswordBtn = document.getElementById('set-password-btn');
+
+  function showSetPassword() {
+    document.body.className = 'state-login';
+    loginView.style.display = 'none';
+    setPasswordView.style.display = '';
+    loginFooter.style.display = '';
+    portalView.style.display = 'none';
+  }
+
+  setPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setPasswordError.textContent = '';
+    const pwd = document.getElementById('new-password').value;
+    const confirm = document.getElementById('confirm-password').value;
+    if (pwd.length < 8) { setPasswordError.textContent = 'Mot de passe trop court (8 caractères min).'; return; }
+    if (pwd !== confirm) { setPasswordError.textContent = 'Les mots de passe ne correspondent pas.'; return; }
+    setPasswordBtn.disabled = true;
+    setPasswordBtn.textContent = 'Enregistrement...';
+    const { error } = await sb.auth.updateUser({ password: pwd });
+    if (error) {
+      setPasswordError.textContent = error.message;
+      setPasswordBtn.disabled = false;
+      setPasswordBtn.textContent = 'Accéder à mon espace';
+    }
+    // onAuthStateChange will take over after password update (USER_UPDATED → SIGNED_IN)
+  });
+
   async function init() {
     // Use onAuthStateChange as single source of truth
-    sb.auth.onAuthStateChange((_event, session) => {
-      if (session && currentView !== 'portal') {
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && _isInviteFlow)) {
+        _isInviteFlow = false;
+        currentView = 'set-password';
+        showSetPassword();
+      } else if (session && currentView !== 'portal') {
         currentView = 'portal';
+        setPasswordView.style.display = 'none';
         showPortal(session);
       } else if (!session && currentView !== 'login') {
         currentView = 'login';
+        setPasswordView.style.display = 'none';
         showLogin();
       }
     });
