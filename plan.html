@@ -36,10 +36,11 @@
   --header-h: 72px;
 }
 html { scroll-behavior: smooth; overflow-x: clip; }
-body { font-family: var(--sans); color: var(--text-dark); background: var(--cream); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--sans); color: var(--text-dark); background: var(--navy); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 
 /* ===== HEADER ===== */
-.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
+.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: transparent; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); transition: background 0.5s, backdrop-filter 0.5s, box-shadow 0.5s; }
+.site-header.scrolled { background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
 .header-logo { width: 130px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
 .header-logo:hover { opacity: 1; }
 .header-nav { display: flex; align-items: center; gap: 2.4rem; }
@@ -64,78 +65,75 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .mobile-nav .header-cta { font-family: var(--sans); font-size: 0.8rem; padding: 0.8rem 2rem; margin-top: 1rem; }
 
 /* ===== UTILITIES ===== */
-.section-inner { max-width: 960px; margin: 0 auto; }
-.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
-.section-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 1.5rem; }
-.section-headline em { font-style: italic; color: var(--gold); background: linear-gradient(90deg, rgba(198,160,91,0.18) 50%, transparent 50%); background-size: 200% 100%; background-position: 100% 0; transition: background-position 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s; padding: 0 0.08em; }
-.section-headline.revealed em { background-position: 0% 0; }
-.revealed { opacity: 1 !important; transform: none !important; }
 .grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 10000; }
+.revealed { opacity: 1 !important; transform: none !important; }
+[data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
 
-/* ===== HERO ===== */
-.plan-hero { padding: clamp(7rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem); background: var(--navy); position: relative; overflow: hidden; text-align: center; }
-.plan-hero::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(198,160,91,0.08), transparent 70%); pointer-events: none; }
-.plan-hero h1 { font-family: var(--serif); font-size: clamp(2rem, 5.5vw, 4.2rem); font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); }
-.plan-hero h1 em { font-style: italic; color: var(--gold); }
-.plan-hero .hero-sub { font-family: var(--sans); font-size: clamp(0.95rem, 1.8vw, 1.1rem); font-weight: 300; color: var(--text-soft); line-height: 1.7; max-width: 580px; margin: 0 auto; opacity: 0; transform: translateY(20px); }
+/* ===== HERO — Full-bleed immersive ===== */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: calc(var(--header-h) + 2rem) clamp(1.5rem, 5vw, 4rem) 6rem; }
+.hero::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1000px; height: 800px; background: radial-gradient(ellipse, rgba(198,160,91,0.06), transparent 70%); pointer-events: none; }
+.hero-statement { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; color: var(--cream); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; }
+.hero-statement em { font-style: italic; color: var(--gold); }
+.hero-sub { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1.05rem); font-weight: 300; color: var(--text-soft); line-height: 1.7; max-width: 480px; margin: 0 auto 4rem; }
+.hero-page-float { position: relative; width: clamp(240px, 30vw, 340px); perspective: 1200px; }
+.hero-page-float img { width: 100%; border-radius: 8px; box-shadow: 0 40px 80px rgba(0,0,0,0.35), 0 0 60px rgba(198,160,91,0.06); transform: rotateY(-4deg) rotateX(2deg); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.hero-page-float:hover img { transform: rotateY(0deg) rotateX(0deg); }
+.hero-scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.hero-scroll-hint span { font-family: var(--sans); font-size: 0.68rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); opacity: 0.5; }
+.hero-scroll-hint .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 0.8; transform: scaleY(1.2); } }
 
-/* ===== SHOWCASE ===== */
-.section-showcase { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem); text-align: center; }
-.showcase-intro { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1rem); font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto 4rem; opacity: 0; transform: translateY(20px); }
-.showcase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; max-width: 1140px; margin: 0 auto; align-items: start; }
-.showcase-item { opacity: 0; transform: translateY(30px); }
-.showcase-item:nth-child(2) { margin-top: 1.5rem; }
-.showcase-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; position: relative; cursor: zoom-in; }
-.showcase-frame:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(198,160,91,0.12), 0 8px 20px rgba(0,0,0,0.08); }
-.showcase-frame img { display: block; width: 100%; height: auto; }
-.showcase-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,30,46,0.45) 0%, transparent 40%); opacity: 0; transition: opacity 0.35s; pointer-events: none; }
-.showcase-frame:hover::after { opacity: 1; }
-.showcase-zoom { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; font-family: var(--sans); font-size: 0.68rem; font-weight: 400; color: var(--cream); opacity: 0; transition: opacity 0.35s; z-index: 1; pointer-events: none; letter-spacing: 0.04em; }
-.showcase-zoom svg { width: 14px; height: 14px; stroke: var(--cream); fill: none; stroke-width: 1.5; }
-.showcase-frame:hover .showcase-zoom { opacity: 0.9; }
+/* ===== FAN — Pages spread ===== */
+.section-fan { padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); background: var(--cream); text-align: center; overflow: hidden; }
+.fan-inner { max-width: 1100px; margin: 0 auto; }
+.fan-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; color: var(--text-dark); }
+.fan-headline em { font-style: italic; color: var(--gold); }
+.fan-sub { font-family: var(--sans); font-size: 0.92rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 500px; margin: 0 auto 4rem; }
+.fan-spread { display: flex; justify-content: center; gap: clamp(1rem, 3vw, 2.5rem); align-items: flex-end; perspective: 1400px; padding: 2rem 0; }
+.fan-card { flex: 0 0 auto; width: clamp(160px, 20vw, 220px); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-in; }
+.fan-card:nth-child(1) { transform: rotate(-6deg) translateY(20px); }
+.fan-card:nth-child(2) { transform: rotate(-3deg) translateY(8px); }
+.fan-card:nth-child(3) { transform: rotate(0deg) translateY(0px); }
+.fan-card:nth-child(4) { transform: rotate(3deg) translateY(8px); }
+.fan-card:nth-child(5) { transform: rotate(6deg) translateY(20px); }
+.fan-card:hover { transform: rotate(0deg) translateY(-12px) scale(1.05); z-index: 10; }
+.fan-card img { width: 100%; border-radius: 8px; box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); display: block; }
+.fan-card-label { font-family: var(--sans); font-size: 0.72rem; font-weight: 400; color: var(--text-muted); margin-top: 0.8rem; letter-spacing: 0.02em; opacity: 0; transition: opacity 0.3s; }
+.fan-card:hover .fan-card-label { opacity: 1; }
 
-/* ===== LIGHTBOX ===== */
-.lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-out; }
-.lightbox.active { opacity: 1; pointer-events: all; }
-.lightbox img { max-width: 88vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.lightbox.active img { transform: scale(1); }
-.lightbox-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--cream); opacity: 0.5; letter-spacing: 0.08em; pointer-events: none; }
-.showcase-caption { margin-top: 1rem; text-align: center; }
-.showcase-caption h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.2rem; }
-.showcase-caption p { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-muted); }
+/* ===== SPOTLIGHTS — 3 zoom sections ===== */
+.spotlight { display: flex; align-items: center; gap: clamp(3rem, 6vw, 6rem); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); max-width: 1100px; margin: 0 auto; }
+.spotlight--reverse { flex-direction: row-reverse; }
+.spotlight-img { flex: 1; min-width: 0; }
+.spotlight-img img { width: 100%; border-radius: 10px; box-shadow: 0 24px 64px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.05); cursor: zoom-in; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; }
+.spotlight-img img:hover { transform: translateY(-4px); box-shadow: 0 32px 80px rgba(198,160,91,0.1), 0 8px 24px rgba(0,0,0,0.08); }
+.spotlight-text { flex: 1; min-width: 0; }
+.spotlight-text .section-label { margin-bottom: 1rem; }
+.spotlight-text h3 { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 400; line-height: 1.25; margin-bottom: 1rem; color: var(--text-dark); }
+.spotlight-text h3 em { font-style: italic; color: var(--gold); }
+.spotlight-text p { font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+.section-spotlights { background: var(--cream); }
+.spotlight-divider { width: 40px; height: 1px; background: var(--gold); opacity: 0.3; margin: 0 auto; }
 
-/* ===== SHOWCASE HINT ===== */
-.showcase-hint { margin-top: 3.5rem; opacity: 0; transform: translateY(15px); display: flex; align-items: center; justify-content: center; gap: 0.7rem; }
-.showcase-hint span { font-family: var(--sans); font-size: 0.78rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0.02em; }
-.showcase-hint .hint-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: 0.45; flex-shrink: 0; }
-
-@media (max-width: 768px) {
-  .showcase-grid { grid-template-columns: 1fr; max-width: 320px; }
-  .showcase-item:nth-child(2) { margin-top: 0; }
-  .showcase-hint { flex-wrap: wrap; gap: 0.5rem; }
-  .showcase-hint span { font-size: 0.72rem; }
-}
-
-/* ===== FEATURES ===== */
-.section-features { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); background: var(--white); }
-.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
-.feature-card { padding: 2rem 1.5rem; border: 1px solid var(--border-soft); border-radius: 12px; opacity: 0; transform: translateY(20px); transition: border-color 0.3s, box-shadow 0.3s; }
-.feature-card:hover { border-color: var(--gold-pale); box-shadow: 0 4px 24px rgba(198,160,91,0.08); }
-.feature-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--navy), var(--navy-light)); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; }
-.feature-icon-wrap svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.feature-card h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.5rem; }
-.feature-card p { font-family: var(--sans); font-size: 0.82rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
+/* ===== NUMBERS — Animated counters ===== */
+.section-numbers { background: var(--navy); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
+.section-numbers::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
+.numbers-grid { display: flex; justify-content: center; gap: clamp(2rem, 5vw, 5rem); flex-wrap: wrap; max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+.number-item { text-align: center; min-width: 120px; }
+.number-value { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.number-label { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-soft); letter-spacing: 0.04em; }
+.numbers-sep { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(198,160,91,0.3), transparent); align-self: center; flex-shrink: 0; }
 
 /* ===== CTA ===== */
-.section-cta { background: var(--navy); padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
-.section-cta::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(198,160,91,0.06), transparent 70%); pointer-events: none; }
-.cta-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 400; color: var(--cream); line-height: 1.2; margin-bottom: 1rem; opacity: 0; transform: translateY(20px); }
+.section-cta { background: var(--cream); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; }
+.cta-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 300; color: var(--text-dark); line-height: 1.2; margin-bottom: 1rem; }
 .cta-headline em { font-style: italic; color: var(--gold); }
-.cta-sub { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-soft); line-height: 1.6; margin-bottom: 2rem; opacity: 0; transform: translateY(15px); }
-.cta-btn { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.9rem 2.4rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; opacity: 0; transform: translateY(15px); }
+.cta-sub { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
+.cta-btn { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 1rem 2.8rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; }
 .cta-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198, 160, 91, 0.3); }
-.cta-trust { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-soft); margin-top: 1.5rem; opacity: 0.6; opacity: 0; transform: translateY(10px); }
+.cta-trust { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-muted); margin-top: 1.5rem; opacity: 0.7; }
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; }
@@ -145,30 +143,40 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 .footer-links a:hover { opacity: 1; }
 .footer-copy { font-family: var(--sans); font-size: 0.7rem; color: var(--text-soft); opacity: 0.4; }
 
+/* ===== LIGHTBOX ===== */
+.lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-out; }
+.lightbox.active { opacity: 1; pointer-events: all; }
+.lightbox img { max-width: 88vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.lightbox.active img { transform: scale(1); }
+.lightbox-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--cream); opacity: 0.5; letter-spacing: 0.08em; pointer-events: none; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .header-nav { display: none; }
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   .site-header { height: 60px; }
-  .features-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
-  .showcase-item { flex: 0 1 100%; max-width: 360px; }
+  .fan-spread { flex-wrap: wrap; gap: 1rem; }
+  .fan-card { width: 42%; }
+  .fan-card:nth-child(1), .fan-card:nth-child(2), .fan-card:nth-child(3),
+  .fan-card:nth-child(4), .fan-card:nth-child(5) { transform: none; }
+  .spotlight { flex-direction: column !important; gap: 2.5rem; }
+  .numbers-sep { display: none; }
+  .numbers-grid { gap: 2rem; }
+  .hero-page-float { width: 200px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  [data-reveal], .plan-hero h1, .plan-hero .hero-sub, .showcase-item, .showcase-intro, .showcase-hint, .feature-card,
-  .cta-headline, .cta-sub, .cta-btn, .cta-trust { opacity: 1 !important; transform: none !important; }
-  .section-headline em { background-position: 0% 0; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
   .lightbox, .lightbox img { transition-duration: 0.01ms !important; }
+  .hero-scroll-hint .scroll-line { animation: none; }
 }
 
 /* ===== SKIP LINK & FOCUS ===== */
 .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
 .skip-link:focus { top: 0; }
 *:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
-.header-cta:focus-visible, .cta-btn:focus-visible { outline-offset: 4px; }
-.hamburger:focus-visible { outline-offset: 2px; border-radius: 8px; }
 </style>
 </head>
 <body>
@@ -176,8 +184,8 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="grain"></div>
 
-<!-- HEADER -->
-<header class="site-header">
+<!-- HEADER — transparent, solidifies on scroll -->
+<header class="site-header" id="siteHeader">
   <a href="/" aria-label="Élevia — Accueil">
     <svg class="header-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg">
       <g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g>
@@ -207,117 +215,151 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
 
-<!-- HERO -->
 <main id="main-content">
-<section class="plan-hero">
+
+<!-- ===== ACTE 1 — HERO ===== -->
+<section class="hero">
   <p class="section-label" data-reveal>Le plan nutritionnel</p>
-  <h1 data-reveal>Un document qui fait honneur<br>&agrave; <em>tes objectifs</em>.</h1>
-  <p class="hero-sub" data-reveal>Chaque plan Élevia est un outil premium : structure claire, design soigné, pensé pour être ouvert chaque jour&nbsp;&mdash; pas rangé dans un&nbsp;tiroir.</p>
+  <h1 class="hero-statement" data-reveal>42<em>+</em> pages.<br>Un seul objectif&nbsp;:<br><em>le tien</em>.</h1>
+  <p class="hero-sub" data-reveal>Un document premium, conçu pour être ouvert chaque jour&nbsp;&mdash;<br><em style="font-family:var(--serif); font-size:1.15em; color:var(--gold); font-style:italic;">pas rangé dans un tiroir.</em></p>
+  <div class="hero-page-float" data-reveal>
+    <img src="images/plan-cover-muscle.png" alt="Couverture du plan nutritionnel Élevia — Prise de masse avec trajectoire" loading="eager">
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Découvrir</span>
+  </div>
 </section>
 
-<!-- SHOWCASE -->
-<section class="section-showcase"><div class="section-inner">
-  <p class="section-label" data-reveal>Aper&ccedil;u</p>
-  <h2 class="section-headline" data-reveal>Deux objectifs, <em>un m&ecirc;me standard</em>.</h2>
-  <p class="showcase-intro" data-reveal>Perte de poids ou prise de masse&nbsp;&mdash; chaque plan est conçu avec le même niveau de rigueur et de soin. Voici à quoi ressemble le&nbsp;tien.</p>
-
-  <div class="showcase-grid">
-    <div class="showcase-item" data-reveal>
-      <div class="showcase-frame">
-        <img src="/images/plan-summary-pw.png" alt="Résumé du plan Perte de poids">
-        <span class="showcase-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 3.566V1.5a1 1 0 0 1 1-1h2.067"/><path d="M3.567 23.5H1.5a1 1 0 0 1-1-1v-2.067"/><path d="m0.5 7.399 0 3.067"/><path d="m0.5 13.533 0 3.066"/><path d="m23.5 7.399 0 3.067"/><path d="m7.4 0.499 3.067 0"/><path d="m13.533 0.499 3.067 0"/><path d="M20.433 0.5H22.5a1 1 0 0 1 1 1v2.066"/><path d="m10.467 23.499-3.067 0"/><path d="M8.167 14.299a6.133 6.133 0 1 0 12.266 0 6.133 6.133 0 1 0-12.266 0Z"/><path d="m12.3 14.299 4 0"/><path d="m14.3 12.299 0 4"/><path d="m18.637 18.636 4.863 4.863"/></svg>Agrandir</span>
+<!-- ===== ACTE 2 — FAN ===== -->
+<section class="section-fan">
+  <div class="fan-inner">
+    <p class="section-label" data-reveal>Ce qui t'attend</p>
+    <h2 class="fan-headline" data-reveal>Un plan complet,<br>pas <em>un simple PDF</em>.</h2>
+    <p class="fan-sub" data-reveal>Repas structurés, alternatives pour chaque aliment, recettes calibrées, conseils ciblés, progression sur 6 mois.</p>
+    <div class="fan-spread" data-reveal>
+      <div class="fan-card" data-zoomable>
+        <img src="images/plan-summary-muscle.png" alt="Résumé du plan avec macros" loading="lazy">
+        <div class="fan-card-label">Tes repères</div>
       </div>
-      <div class="showcase-caption">
-        <h3>Perte de poids</h3>
-        <p>Repas, fréquences, philosophie.</p>
+      <div class="fan-card" data-zoomable>
+        <img src="images/plan-eq-feculents.png" alt="Équivalences alimentaires" loading="lazy">
+        <div class="fan-card-label">Équivalences</div>
       </div>
-    </div>
-    <div class="showcase-item" data-reveal>
-      <div class="showcase-frame">
-        <img src="/images/plan-sommaire.png" alt="Sommaire interactif du plan">
-        <span class="showcase-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 3.566V1.5a1 1 0 0 1 1-1h2.067"/><path d="M3.567 23.5H1.5a1 1 0 0 1-1-1v-2.067"/><path d="m0.5 7.399 0 3.067"/><path d="m0.5 13.533 0 3.066"/><path d="m23.5 7.399 0 3.067"/><path d="m7.4 0.499 3.067 0"/><path d="m13.533 0.499 3.067 0"/><path d="M20.433 0.5H22.5a1 1 0 0 1 1 1v2.066"/><path d="m10.467 23.499-3.067 0"/><path d="M8.167 14.299a6.133 6.133 0 1 0 12.266 0 6.133 6.133 0 1 0-12.266 0Z"/><path d="m12.3 14.299 4 0"/><path d="m14.3 12.299 0 4"/><path d="m18.637 18.636 4.863 4.863"/></svg>Agrandir</span>
+      <div class="fan-card" data-zoomable>
+        <img src="images/plan-meal-rc.png" alt="Plan repas chaud" loading="lazy">
+        <div class="fan-card-label">Tes repas</div>
       </div>
-      <div class="showcase-caption">
-        <h3>Navigation</h3>
-        <p>Tout est cliquable et navigable.</p>
+      <div class="fan-card" data-zoomable>
+        <img src="images/plan-recettes-hub.png" alt="Recettes et sauces" loading="lazy">
+        <div class="fan-card-label">Recettes</div>
       </div>
-    </div>
-    <div class="showcase-item" data-reveal>
-      <div class="showcase-frame">
-        <img src="/images/plan-summary-gain.png" alt="Résumé du plan Prise de masse sèche">
-        <span class="showcase-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 3.566V1.5a1 1 0 0 1 1-1h2.067"/><path d="M3.567 23.5H1.5a1 1 0 0 1-1-1v-2.067"/><path d="m0.5 7.399 0 3.067"/><path d="m0.5 13.533 0 3.066"/><path d="m23.5 7.399 0 3.067"/><path d="m7.4 0.499 3.067 0"/><path d="m13.533 0.499 3.067 0"/><path d="M20.433 0.5H22.5a1 1 0 0 1 1 1v2.066"/><path d="m10.467 23.499-3.067 0"/><path d="M8.167 14.299a6.133 6.133 0 1 0 12.266 0 6.133 6.133 0 1 0-12.266 0Z"/><path d="m12.3 14.299 4 0"/><path d="m14.3 12.299 0 4"/><path d="m18.637 18.636 4.863 4.863"/></svg>Agrandir</span>
-      </div>
-      <div class="showcase-caption">
-        <h3>Prise de masse</h3>
-        <p>Surplus calibré, paliers d'évolution.</p>
+      <div class="fan-card" data-zoomable>
+        <img src="images/plan-guides.png" alt="Guides de situations" loading="lazy">
+        <div class="fan-card-label">Guides</div>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="showcase-hint" data-reveal>
-    <span>3 pages sur 42+</span><span class="hint-dot"></span>
-    <span>Aperçu du document complet</span>
-  </div>
-</div></section>
+<!-- ===== ACTE 3 — SPOTLIGHTS ===== -->
+<section class="section-spotlights">
 
-<!-- FEATURES -->
-<section class="section-features"><div class="section-inner">
-  <p class="section-label" data-reveal>Ce qui est inclus</p>
-  <h2 class="section-headline" data-reveal>Bien plus qu'un <em>PDF</em>.</h2>
-
-  <div class="features-grid">
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M4.779 9.141H14.388"/><path d="M4.779 13.641h4.804"/><path d="M4.779 18.141h3.432"/><path d="M12.633 23.116H2.743a1.71 1.71 0 0 1-1.71-1.71V4.305a1.71 1.71 0 0 1 1.71-1.71h2.565"/><path d="M12.149 0.885H7.018a1.71 1.71 0 0 0-1.71 1.71v0.855a1.71 1.71 0 0 0 1.71 1.71h5.13a1.71 1.71 0 0 0 1.71-1.71v-0.855a1.71 1.71 0 0 0-1.71-1.71Z"/><path d="M23.15 16.584a6.95 6.95 0 0 1-1.462 4.18 6.95 6.95 0 0 1-3.757 2.343 6.95 6.95 0 0 1-3.757-2.343 6.95 6.95 0 0 1-1.462-4.18v-2.61a1.305 1.305 0 0 1 1.305-1.304h7.828a1.305 1.305 0 0 1 1.305 1.305v2.609Z"/><path d="m20.535 15.579-2.884 3.84-1.92-1.438"/><path d="M13.859 2.595h2.565a1.71 1.71 0 0 1 1.71 1.71v5.321"/></svg>
-      </div>
-      <h4>Cibles personnalisées</h4>
-      <p>Kcal, protéines, lipides, glucides&nbsp;&mdash; calculés sur ton profil, pas sur une moyenne.</p>
+  <div class="spotlight" data-reveal>
+    <div class="spotlight-img">
+      <img src="images/plan-eq-feculents.png" alt="Page équivalences avec valeurs usuelles et grammages" data-zoomable loading="lazy">
     </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.75 3h22.5"/><path d="M0.75 7.4h22.5"/><path d="M0.75 12h22.5"/><path d="M0.75 16.4h22.5"/><path d="M0.75 21h22.5"/></svg>
-      </div>
-      <h4>Système d'équivalences</h4>
-      <p>Pas de grammage strict&nbsp;&mdash; des portions usuelles et des alternatives pour chaque aliment.</p>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="m17.5 7-6.035 8.732-4.578-4.58"/><path d="M2 3.775v7.637A12.285 12.285 0 0 0 9.828 22.88l1.067 0.414a3.063 3.063 0 0 0 2.21 0l1.067-0.414A12.285 12.285 0 0 0 22 11.412V3.775a1.536 1.536 0 0 0-0.89-1.406A22.143 22.143 0 0 0 12 0.5a22.143 22.143 0 0 0-9.11 1.869A1.536 1.536 0 0 0 2 3.775Z"/></svg>
-      </div>
-      <h4>Adapt&eacute; &agrave; toi</h4>
-      <p>Allergies, intolérances, préférences&nbsp;&mdash; chaque aliment et chaque recette sont soigneusement choisis selon ton profil.</p>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M12.21 12.44a0.51 0.51 0 0 1-0.42 0L0.82 7.67a0.53 0.53 0 0 1-0.32-0.49 0.55 0.55 0 0 1 0.32-0.49l11-4.76a0.51 0.51 0 0 1 0.42 0l11 4.76a0.55 0.55 0 0 1 0.32 0.49 0.53 0.53 0 0 1-0.32 0.49Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="m23.18 10.88-11 4.77a0.51 0.51 0 0 1-0.42 0l-11-4.77" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="m23.18 14.1-11 4.76a0.51 0.51 0 0 1-0.42 0L0.82 14.1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="m23.18 17.31-11 4.76a0.51 0.51 0 0 1-0.42 0l-11-4.76" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
-      </div>
-      <h4>Conseils ciblés</h4>
-      <p>7 conseils sélectionnés pour toi&nbsp;&mdash; pas une liste générique, mais ce qui compte pour ton profil.</p>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M14.5 9.392a2.359 2.359 0 0 0 4 0"/><path d="M9.5 9.392a2.359 2.359 0 0 1-4 0"/><path d="M6 15.5a6.5 6.5 0 0 0 12 0"/><path d="M0.5 12a11.5 11.5 0 1 0 23 0 11.5 11.5 0 1 0-23 0Z"/></svg>
-      </div>
-      <h4>Sauces maison</h4>
-      <p>Des recettes simples, calibrées pour s'intégrer dans ton plan&nbsp;&mdash; sans calcul, sans compromis.</p>
-    </div>
-    <div class="feature-card" data-reveal>
-      <div class="feature-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 12a11.5 11.5 0 1 0 23 0 11.5 11.5 0 1 0-23 0"/><path d="M10 12a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/><path d="m12 2.5 0 1"/><path d="m21.5 12-1 0"/><path d="m18.72 18.72-0.71-0.71"/><path d="m12 21.5 0-1"/><path d="m2.5 12 1 0"/><path d="m5.28 5.28 0.71 0.71"/><path d="M18.58 6.67a1 1 0 0 0-1.25-1.25L9 8.28a1.19 1.19 0 0 0-0.72 0.72l-2.86 8.33a1 1 0 0 0 1.25 1.25L15 15.72a1.19 1.19 0 0 0 0.71-0.71Z"/></svg>
-      </div>
-      <h4>Guides de situations</h4>
-      <p>Restaurant, voyages, fêtes&nbsp;&mdash; des stratégies concrètes pour les moments délicats.</p>
+    <div class="spotlight-text">
+      <p class="section-label">Équivalences & valeurs usuelles</p>
+      <h3>350+ aliments.<br>Jamais besoin <em>de peser</em>.</h3>
+      <p>Chaque aliment est exprimé en portions du quotidien&nbsp;&mdash; une poignée, une cuillère, un bol. Tu veux être précis&nbsp;? Les grammages sont là aussi, pour calibrer visuellement au début. Ensuite, tu sais. Zéro monotonie&nbsp;: chaque catégorie te donne des alternatives équivalentes. Tu choisis ce que tu veux, quand tu veux.</p>
     </div>
   </div>
-</div></section>
 
-<!-- CTA -->
-<section class="section-cta"><div class="section-inner">
-  <h2 class="cta-headline" data-reveal>Prêt &agrave; recevoir<br><em>ton plan</em> ?</h2>
-  <p class="cta-sub" data-reveal>Analyse de profil &middot; Plan sur mesure &middot; Livré en 72h</p>
-  <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan en 72h <span>→</span></a>
-  <p class="cta-trust" data-reveal>Créé par un diététicien diplômé &middot; Données 100% privées &middot; Sans engagement</p>
-</div></section>
+  <div class="spotlight-divider"></div>
+
+  <div class="spotlight spotlight--reverse" data-reveal>
+    <div class="spotlight-img">
+      <img src="images/plan-meal-rc.png" alt="Page plan repas chaud personnalisé" data-zoomable loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <p class="section-label">Ton plan repas</p>
+      <h3>Structuré pour toi.<br>Par <em>un diététicien</em>.</h3>
+      <p>C'est toi qui choisis la structure qui te convient depuis le questionnaire&nbsp;&mdash; bowls, tartines, plats chauds, collations. Mon expertise nutritionnelle assemble le tout en respectant tes choix et tes besoins individuels. Chaque ligne est cliquable et t'amène dans le détail de chaque équivalence sélectionnée pour toi&nbsp;: variantes, portions, fréquences. Simple en surface, complet en profondeur.</p>
+    </div>
+  </div>
+
+  <div class="spotlight-divider"></div>
+
+  <div class="spotlight" data-reveal>
+    <div class="spotlight-img">
+      <img src="images/plan-recettes-hub.png" alt="Page recettes et sauces maison" data-zoomable loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <p class="section-label">Recettes & sauces</p>
+      <h3>Des recettes qui <em>s'intègrent</em>.<br>Pas qui compliquent.</h3>
+      <p>14 sauces maison et 7 protéines végé sont incluses dans ton plan. Et dans ton <a href="recettes.html" style="color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(198,160,91,0.3);">espace recettes</a>, 30+ recettes complètes t'attendent&nbsp;&mdash; bowls, tartines, plats chauds&nbsp;&mdash; toutes calibrées sur tes portions. De nouvelles recettes sont ajoutées chaque mois.</p>
+    </div>
+  </div>
+
+  <div class="spotlight-divider"></div>
+
+  <div class="spotlight spotlight--reverse" data-reveal>
+    <div class="spotlight-img">
+      <img src="images/plan-guides.png" alt="Guides de situations pratiques" data-zoomable loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <p class="section-label">Guides & conseils</p>
+      <h3>Restaurant, fêtes, voyage.<br><em>Tu sais quoi faire</em>.</h3>
+      <p>Des stratégies concrètes pour chaque situation délicate&nbsp;&mdash; adaptées à ton objectif, parce qu'un restaurant en perte de poids, ce n'est pas un restaurant en prise de masse. Et 7 conseils prioritaires choisis pour ton profil. Tu en veux plus&nbsp;? Ton <a href="cockpit.html" style="color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(198,160,91,0.3);">Cockpit</a> prolonge l'accompagnement au quotidien.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== ACTE 4 — NUMBERS ===== -->
+<section class="section-numbers">
+  <div class="numbers-grid" data-reveal>
+    <div class="number-item">
+      <div class="number-value" data-count="42">0</div>
+      <div class="number-label">pages<em style="color:var(--gold);">+</em></div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value" data-count="350">0</div>
+      <div class="number-label">aliments</div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value" data-count="14">0</div>
+      <div class="number-label">sauces maison</div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value" data-count="7">0</div>
+      <div class="number-label">conseils prioritaires</div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value" data-count="5">0</div>
+      <div class="number-label">guides de situations</div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value" data-count="6">0</div>
+      <div class="number-label">mois pour devenir autonome</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTE 5 — CTA ===== -->
+<section class="section-cta">
+  <p class="section-label" data-reveal>Prêt ?</p>
+  <h2 class="cta-headline" data-reveal>Ton plan, livré <em>en 72h</em>.</h2>
+  <p class="cta-sub" data-reveal>Analyse de profil &middot; Plan sur mesure &middot; Conçu par un diététicien diplômé</p>
+  <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan <span>&rarr;</span></a>
+  <p class="cta-trust" data-reveal>Données 100% privées &middot; Sans engagement &middot; Satisfait ou remboursé</p>
+</section>
 
 </main>
 
@@ -329,31 +371,77 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <p class="footer-copy">&copy; 2026 Élevia Nutrition. Tous droits réservés.</p>
 </footer>
 
-<script>
-/* Reveal observer */
-const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');ro.unobserve(x.target)}})},{threshold:0.15});
-document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
-
-/* Scroll progress */
-window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
-
-/* Hamburger */
-const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');mobileNav.classList.toggle('open');const isOpen=mobileNav.classList.contains('open');document.body.style.overflow=isOpen?'hidden':'';hamburger.setAttribute('aria-expanded',isOpen)});
-document.querySelectorAll('[data-nav]').forEach(a=>{a.addEventListener('click',()=>{hamburger.classList.remove('active');mobileNav.classList.remove('open');document.body.style.overflow=''})});
-
-</script>
-
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Image agrandie">
   <img src="" alt="">
   <span class="lightbox-hint">Cliquer pour fermer</span>
 </div>
+
 <script>
-const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img');
-document.querySelectorAll('.showcase-frame').forEach(frame=>{const img=frame.querySelector('img');frame.addEventListener('click',()=>{lbImg.src=img.src;lbImg.alt=img.alt;lb.classList.add('active');document.body.style.overflow='hidden'})});
-lb.addEventListener('click',()=>{lb.classList.remove('active');document.body.style.overflow=''});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('active')){lb.classList.remove('active');document.body.style.overflow=''}});
+/* Reveal observer */
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('revealed'); ro.unobserve(x.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => ro.observe(el));
+
+/* Header scroll */
+const header = document.getElementById('siteHeader');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      header.classList.toggle('scrolled', window.scrollY > 80);
+      document.getElementById('scrollProgress').style.width =
+        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%';
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
+
+/* Hamburger */
+const hamburger = document.getElementById('hamburger'), mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileNav.classList.toggle('open');
+  const isOpen = mobileNav.classList.contains('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+document.querySelectorAll('[data-nav]').forEach(a => {
+  a.addEventListener('click', () => { hamburger.classList.remove('active'); mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
+});
+
+/* Lightbox */
+const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
+document.querySelectorAll('[data-zoomable]').forEach(el => {
+  const img = el.tagName === 'IMG' ? el : el.querySelector('img');
+  if (!img) return;
+  (el.tagName === 'IMG' ? el : el).style.cursor = 'zoom-in';
+  el.addEventListener('click', () => { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('active'); document.body.style.overflow = 'hidden'; });
+});
+lb.addEventListener('click', () => { lb.classList.remove('active'); document.body.style.overflow = ''; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('active')) { lb.classList.remove('active'); document.body.style.overflow = ''; } });
+
+/* Counter animation */
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      const suffix = target >= 42 ? '+' : '';
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target / 40));
+      const interval = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current + suffix;
+        if (current >= target) clearInterval(interval);
+      }, 30);
+    });
+    counterObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.numbers-grid').forEach(el => counterObserver.observe(el));
 </script>
 </body>
 </html>

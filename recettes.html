@@ -19,6 +19,7 @@
 <meta name="twitter:title" content="Les Recettes — Élevia Nutrition">
 <meta name="twitter:description" content="Recettes personnalisées selon ton plan — quantités, régime et intolérances pris en compte. 35 € à vie.">
 <meta name="twitter:image" content="https://www.elevianutrition.com/og-image.jpg">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -83,17 +84,55 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 
 /* ===== SHOWCASE ===== */
 .section-showcase { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem); text-align: center; }
-.showcase-intro { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1rem); font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto 4rem; opacity: 0; transform: translateY(20px); }
-.showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; max-width: 960px; margin: 0 auto; align-items: start; }
-.showcase-item { opacity: 0; transform: translateY(30px); }
-.showcase-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; position: relative; cursor: zoom-in; }
-.showcase-frame:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(198,160,91,0.12), 0 8px 20px rgba(0,0,0,0.08); }
+.showcase-intro { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1rem); font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto 3rem; opacity: 0; transform: translateY(20px); }
+
+/* Browser mockup — premium product frame */
+.browser-mockup { max-width: 960px; margin: 0 auto 3rem; border-radius: 12px; overflow: hidden; box-shadow: 0 32px 100px rgba(14,30,46,0.22), 0 12px 32px rgba(0,0,0,0.1); opacity: 0; transform: translateY(30px); }
+.browser-bar { height: 40px; background: #1E1E1E; display: flex; align-items: center; padding: 0 16px; gap: 8px; }
+.browser-dot { width: 11px; height: 11px; border-radius: 50%; }
+.browser-dot:nth-child(1) { background: #FF5F57; }
+.browser-dot:nth-child(2) { background: #FFBD2E; }
+.browser-dot:nth-child(3) { background: #28CA42; }
+.browser-url { flex: 1; margin-left: 12px; height: 24px; background: #2A2A2A; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; }
+.browser-url span { font-family: var(--sans); font-size: 0.65rem; color: #888; letter-spacing: 0.01em; }
+.browser-url .url-lock { margin-right: 6px; color: #28CA42; font-size: 0.6rem; }
+.browser-body { position: relative; }
+.browser-body video { display: block; width: 100%; height: auto; }
+.browser-badge { position: absolute; bottom: 16px; right: 16px; z-index: 2; display: flex; align-items: center; gap: 6px; background: rgba(14,30,46,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 100px; padding: 7px 16px; font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.browser-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Preview section */
+.section-preview { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); text-align: center; background: var(--cream); }
+.preview-sub { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1rem); font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin: 0 auto 3rem; opacity: 0; transform: translateY(20px); }
+
+/* Light browser mockup variant */
+.browser-mockup--light { box-shadow: 0 24px 80px rgba(14,30,46,0.12), 0 8px 24px rgba(0,0,0,0.06); }
+.browser-bar--light { background: #F0F0F0; }
+.browser-bar--light .browser-dot:nth-child(1) { background: #FF5F57; }
+.browser-bar--light .browser-dot:nth-child(2) { background: #FFBD2E; }
+.browser-bar--light .browser-dot:nth-child(3) { background: #28CA42; }
+.browser-url--light { background: #FFFFFF; border: 1px solid #E0E0E0; }
+.browser-url--light span { color: #666; }
+.browser-url--light .url-lock { color: #28CA42; }
+
+/* Two highlights below */
+.showcase-highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 700px; margin: 0 auto; }
+.showcase-hl { display: flex; align-items: flex-start; gap: 14px; text-align: left; padding: 1.2rem 1.4rem; border-radius: 12px; background: rgba(198,160,91,0.04); border: 1px solid rgba(198,160,91,0.1); opacity: 0; transform: translateY(20px); }
+.showcase-hl-icon { flex-shrink: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--navy); }
+.showcase-hl-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.showcase-hl h3 { font-family: var(--serif); font-size: 0.95rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.15rem; }
+.showcase-hl p { font-family: var(--sans); font-size: 0.75rem; font-weight: 300; color: var(--text-muted); line-height: 1.5; }
+
+.showcase-punchline { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem); font-style: italic; font-weight: 400; color: var(--gold); margin-top: 2.5rem; opacity: 0; transform: translateY(15px); }
+
+/* Legacy — keep for lightbox compat */
+.showcase-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.1); position: relative; cursor: zoom-in; }
 .showcase-frame img { display: block; width: 100%; height: auto; }
-.showcase-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,30,46,0.45) 0%, transparent 40%); opacity: 0; transition: opacity 0.35s; pointer-events: none; }
-.showcase-frame:hover::after { opacity: 1; }
-.showcase-zoom { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; font-family: var(--sans); font-size: 0.68rem; font-weight: 400; color: var(--cream); opacity: 0; transition: opacity 0.35s; z-index: 1; pointer-events: none; letter-spacing: 0.04em; }
-.showcase-zoom svg { width: 14px; height: 14px; stroke: var(--cream); fill: none; stroke-width: 1.5; }
-.showcase-frame:hover .showcase-zoom { opacity: 0.9; }
+
+@media (max-width: 600px) {
+  .showcase-highlights { grid-template-columns: 1fr; max-width: 360px; }
+}
 
 /* ===== LIGHTBOX ===== */
 .lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-out; }
@@ -101,14 +140,6 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .lightbox img { max-width: 88vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .lightbox.active img { transform: scale(1); }
 .lightbox-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--cream); opacity: 0.5; letter-spacing: 0.08em; pointer-events: none; }
-.showcase-caption { margin-top: 1rem; text-align: center; }
-.showcase-punchline { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem); font-style: italic; font-weight: 400; color: var(--gold); margin-top: 1rem; opacity: 0; transform: translateY(15px); }
-.showcase-caption h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.2rem; }
-.showcase-caption p { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-muted); }
-
-@media (max-width: 768px) {
-  .showcase-grid { grid-template-columns: 1fr; max-width: 420px; }
-}
 
 /* ===== CATEGORIES — ESPACE RECETTES ===== */
 .section-categories { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); background: var(--navy); position: relative; overflow: hidden; }
@@ -273,27 +304,32 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <section class="section-showcase"><div class="section-inner">
   <p class="section-label" data-reveal>Deux exp&eacute;riences</p>
   <h2 class="section-headline" data-reveal>Dans ton plan. Dans <em>ton espace</em>.</h2>
-  <p class="showcase-intro" data-reveal>Chaque recette est int&eacute;gr&eacute;e &agrave; ton plan PDF. Et si tu as l'app, elles sont aussi dans ton Espace Client&nbsp;&mdash; avec tes filtres, tes quantit&eacute;s en temps r&eacute;el, et z&eacute;ro allerg&egrave;ne.</p>
+  <p class="showcase-intro" data-reveal>Les sauces maison et prot&eacute;ines v&eacute;g&eacute; sont dans ton plan PDF. Toutes les recettes compl&egrave;tes sont accessibles dans ton Espace Client&nbsp;&mdash; avec tes filtres, tes quantit&eacute;s ajust&eacute;es, et z&eacute;ro allerg&egrave;ne.</p>
 
-  <div class="showcase-grid">
-    <div class="showcase-item" data-reveal>
-      <div class="showcase-frame">
-        <img src="/images/recette-pdf.png" alt="Recette dans le plan PDF — quantités personnalisées">
-        <span class="showcase-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 3.566V1.5a1 1 0 0 1 1-1h2.067"/><path d="M3.567 23.5H1.5a1 1 0 0 1-1-1v-2.067"/><path d="m0.5 7.399 0 3.067"/><path d="m0.5 13.533 0 3.066"/><path d="m23.5 7.399 0 3.067"/><path d="m7.4 0.499 3.067 0"/><path d="m13.533 0.499 3.067 0"/><path d="M20.433 0.5H22.5a1 1 0 0 1 1 1v2.066"/><path d="m10.467 23.499-3.067 0"/><path d="M8.167 14.299a6.133 6.133 0 1 0 12.266 0 6.133 6.133 0 1 0-12.266 0Z"/><path d="m12.3 14.299 4 0"/><path d="m14.3 12.299 0 4"/><path d="m18.637 18.636 4.863 4.863"/></svg>Agrandir</span>
-      </div>
-      <div class="showcase-caption">
-        <h3>Dans ton plan PDF</h3>
-        <p>Int&eacute;gr&eacute;es &agrave; ton document &mdash; chaque nom de recette est cliquable pour y acc&eacute;der directement.</p>
+  <div class="browser-mockup" data-reveal>
+    <div class="browser-bar">
+      <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+      <div class="browser-url"><span class="url-lock">&#x1F512;</span><span>elevianutrition.com/mes-recettes</span></div>
+    </div>
+    <div class="browser-body">
+      <video src="/videos/recettes-demo.mp4" autoplay muted loop playsinline poster="/images/espace-recettes-preview.png"></video>
+      <span class="browser-badge">En direct</span>
+    </div>
+  </div>
+
+  <div class="showcase-highlights">
+    <div class="showcase-hl" data-reveal>
+      <div class="showcase-hl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <div>
+        <h3>Plan PDF interactif</h3>
+        <p>Chaque nom de recette est cliquable dans ton document &mdash; acc&egrave;s direct &agrave; ta fiche personnalis&eacute;e.</p>
       </div>
     </div>
-    <div class="showcase-item" data-reveal>
-      <div class="showcase-frame">
-        <img src="/images/recette-espace-client.png" alt="Page recettes dans l'Espace Client Élevia">
-        <span class="showcase-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 3.566V1.5a1 1 0 0 1 1-1h2.067"/><path d="M3.567 23.5H1.5a1 1 0 0 1-1-1v-2.067"/><path d="m0.5 7.399 0 3.067"/><path d="m0.5 13.533 0 3.066"/><path d="m23.5 7.399 0 3.067"/><path d="m7.4 0.499 3.067 0"/><path d="m13.533 0.499 3.067 0"/><path d="M20.433 0.5H22.5a1 1 0 0 1 1 1v2.066"/><path d="m10.467 23.499-3.067 0"/><path d="M8.167 14.299a6.133 6.133 0 1 0 12.266 0 6.133 6.133 0 1 0-12.266 0Z"/><path d="m12.3 14.299 4 0"/><path d="m14.3 12.299 0 4"/><path d="m18.637 18.636 4.863 4.863"/></svg>Agrandir</span>
-      </div>
-      <div class="showcase-caption">
-        <h3>Dans ton Espace Client</h3>
-        <p>Filtre par cat&eacute;gorie, recherche, quantit&eacute;s en temps r&eacute;el.</p>
+    <div class="showcase-hl" data-reveal>
+      <div class="showcase-hl-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div>
+        <h3>Z&eacute;ro allerg&egrave;ne</h3>
+        <p>Tes intol&eacute;rances et pr&eacute;f&eacute;rences alimentaires sont prises en compte&nbsp;&mdash; tu ne vois que ce qui te convient.</p>
       </div>
     </div>
   </div>
@@ -335,7 +371,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <!-- Recette de la semaine -->
   <div class="featured-recipe" data-reveal>
     <div class="featured-visual">
-      <img src="/images/recette-featured.jpg" alt="Bowl quinoa, poulet r&ocirc;ti et l&eacute;gumes de saison" loading="lazy">
+      <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/object/public/recipe-images/fc108a78-b50b-463c-aba7-dd810701b6cd.png" alt="Bowl quinoa, poulet r&ocirc;ti et l&eacute;gumes de saison" loading="lazy">
     </div>
     <div class="featured-body">
       <p class="featured-badge">Recette de la semaine</p>
@@ -345,7 +381,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
         <span class="featured-tag">25 min</span>
         <span class="featured-tag">De saison</span>
       </div>
-      <p class="featured-desc">Les quantit&eacute;s s'adaptent automatiquement &agrave; ton plan. Une mise en avant diff&eacute;rente chaque semaine.</p>
+      <p class="featured-desc">Les quantit&eacute;s sont ajust&eacute;es &agrave; ton plan. Une mise en avant diff&eacute;rente chaque semaine.</p>
     </div>
   </div>
 
@@ -402,6 +438,22 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   </div>
 </div></section>
 
+<!-- PREVIEW ESPACE -->
+<section class="section-preview"><div class="section-inner">
+  <p class="section-label" data-reveal>Aper&ccedil;u</p>
+  <h2 class="section-headline" data-reveal>Ton espace. <em>Tes recettes</em>.</h2>
+  <p class="preview-sub" data-reveal>Recette de la semaine, filtres intelligents, quantit&eacute;s adapt&eacute;es &agrave; ton plan &mdash; tout est d&eacute;j&agrave; pr&ecirc;t.</p>
+  <div class="browser-mockup browser-mockup--light" data-reveal>
+    <div class="browser-bar browser-bar--light">
+      <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+      <div class="browser-url browser-url--light"><span class="url-lock">&#x1F512;</span><span>elevianutrition.com/mes-recettes</span></div>
+    </div>
+    <div class="browser-body">
+      <img src="/images/espace-recettes-preview.png" alt="Espace recettes &Eacute;levia &mdash; recette de la semaine et catalogue avec photos" loading="lazy" style="display:block;width:100%;height:auto;">
+    </div>
+  </div>
+</div></section>
+
 <!-- CTA -->
 <section class="section-cta"><div class="section-inner">
   <h2 class="cta-headline" data-reveal>35&nbsp;&euro;. <em>Une seule fois</em>.</h2>
@@ -421,6 +473,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 </footer>
 
 <script>
+
 /* Reveal observer */
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');ro.unobserve(x.target)}})},{threshold:0.15});
 document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
