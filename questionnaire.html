@@ -482,7 +482,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
   // ── Conditional helpers ──
   function v(key) { return formData[key] || ''; }
   // Objectifs GAIN : muscle_gain (prise de masse) + recomposition — même protocole nutritionnel
-  function isGainGoal() { return isGainGoal() || v('primary_goal') === 'recomposition'; }
+  function isGainGoal() { return v('primary_goal') === 'muscle_gain' || v('primary_goal') === 'recomposition'; }
   function hasVal(key) { return !!formData[key]; }
   function arrIncludes(key, val) {
     var a = formData[key];
@@ -506,7 +506,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         { name: 'lastname', type: 'text', label: 'Nom', required: true, placeholder: 'Dumont' },
         { name: 'firstname', type: 'text', label: 'Prénom', required: true, placeholder: 'Lucas' },
         { name: 'gender', type: 'radio', label: 'Genre', required: true, options: [
-          { label: 'Homme', value: 'Masculin' }, { label: 'Femme', value: 'Feminin' }
+          { label: 'Homme', value: 'M' }, { label: 'Femme', value: 'F' }
         ]},
         { name: 'age', type: 'number', label: 'Âge', required: true, placeholder: '32' },
         { name: 'weight_kg', type: 'number', label: 'Poids (kg)', required: true, placeholder: '82', help: 'Ton poids du matin, à jeun, c\'est parfait. Pas besoin d\'être au gramme près.' },
@@ -517,7 +517,19 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Recomposition — muscler et affiner sans prendre de poids. Nécessite une activité sportive (ou de prévoir d\'en commencer une).', value: 'recomposition' },
           { label: 'Prise de masse — prendre du volume et du poids. Nécessite une activité sportive (ou de prévoir d\'en commencer une).', value: 'muscle_gain' }
         ]},
-        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', help: 'Si tu n\'as pas de chiffre précis, indique une fourchette réaliste.', condition: function() { return v('primary_goal') === 'weight_loss' || v('primary_goal') === 'muscle_gain'; } }
+        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', help: 'Si tu n\'as pas de chiffre précis, indique une fourchette réaliste.', condition: function() { return v('primary_goal') === 'weight_loss' || v('primary_goal') === 'muscle_gain'; } },
+        { name: '_warn_muscle_target', type: 'section', label: 'Ton poids cible est inférieur ou égal à ton poids actuel. Pour la prise de masse, il doit être supérieur. Si tu veux te muscler sans prendre de poids, choisis « Recomposition » ci-dessus.', condition: function() {
+          if (v('primary_goal') !== 'muscle_gain') return false;
+          var w = parseFloat(formData['weight_kg'] || '');
+          var t = parseFloat(formData['target_weight_kg'] || '');
+          return !isNaN(w) && !isNaN(t) && t <= w;
+        } },
+        { name: '_warn_loss_target', type: 'section', label: 'Ton poids cible est supérieur ou égal à ton poids actuel. Pour perdre du poids, il doit être inférieur. Si tu veux maintenir ton poids, choisis « Maintien » ci-dessus.', condition: function() {
+          if (v('primary_goal') !== 'weight_loss') return false;
+          var w = parseFloat(formData['weight_kg'] || '');
+          var t = parseFloat(formData['target_weight_kg'] || '');
+          return !isNaN(w) && !isNaN(t) && t >= w;
+        } }
       ]
     });
 
@@ -542,20 +554,20 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Travail physique — Maçon, déménageur, agriculteur, ouvrier. Port de charges ou effort soutenu au quotidien.', value: 'tres_actif' }
         ]},
         { name: 'has_physical_activity', type: 'radio', label: 'Pratiques-tu une activité sportive ?', required: true, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'activity_frequency', type: 'radio', label: 'Combien de séances par semaine ?', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+        { name: 'activity_frequency', type: 'radio', label: 'Combien de séances par semaine ?', condition: function() { return v('has_physical_activity') === 'yes'; }, options: [
           { label: '1 à 2 séances/semaine', value: '1_2_seances' },
           { label: '3 à 4 séances/semaine', value: '3_4_seances' },
           { label: '5 à 6 séances/semaine', value: '5_6_seances' },
           { label: '7 séances ou plus/semaine', value: '7plus_seances' }
         ]},
-        { name: 'activity_intensity', type: 'radio', label: 'À quel niveau pratiques-tu ton sport ?', condition: function() { return v('has_physical_activity') === 'Oui'; }, options: [
+        { name: 'activity_intensity', type: 'radio', label: 'À quel niveau pratiques-tu ton sport ?', condition: function() { return v('has_physical_activity') === 'yes'; }, options: [
           { label: 'Légère — Sport doux ou débutant. Marche, yoga, natation loisir. Ou : tu viens de commencer et tu apprends encore les mouvements.', value: 'legere' },
           { label: 'Modérée — Pratiquant régulier avec un bon niveau. Tu connais les mouvements, tu tiens les séances en entier. C\'est le niveau de la majorité des sportifs.', value: 'moderee' },
           { label: 'Élevée — Niveau avancé ou compétiteur. Tu maîtrises ton sport, entraînement structuré avec objectifs de performance.', value: 'elevee' }
         ]},
-        { name: 'sport_prevu', type: 'radio', label: 'Prévois-tu de démarrer une activité sportive ?', help: 'Sans entraînement musculaire, la recomposition ou la prise de masse n\'est pas possible. Cette réponse adapte ton protocole.', condition: function() { return isGainGoal() && v('has_physical_activity') === 'Non'; }, options: [
+        { name: 'sport_prevu', type: 'radio', label: 'Prévois-tu de démarrer une activité sportive ?', help: 'Sans entraînement musculaire, la recomposition ou la prise de masse n\'est pas possible. Cette réponse adapte ton protocole.', condition: function() { return isGainGoal() && v('has_physical_activity') === 'no'; }, options: [
           { label: 'Oui, c\'est prévu', value: 'oui' },
           { label: 'Pas encore décidé', value: 'pas_encore' },
           { label: 'Non, pas pour l\'instant', value: 'non' }
@@ -563,64 +575,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       ]
     });
 
-    // STEP 4: Objectifs musculaires (conditional)
-    steps.push({
-      id: 'muscle_gain', title: function() { return v('primary_goal') === 'recomposition' ? 'Ta <em>recomposition</em>' : 'Ta <em>prise de masse</em>'; }, icon: '\uD83D\uDCAA',
-      condition: function() { return isGainGoal(); },
-      fields: [
-        { name: 'mg_training_type', type: 'radio', label: 'Type d\'entraînement', options: [
-          { label: 'Musculation / force', value: 'strength' },
-          { label: 'Fonctionnel (CrossFit, HIIT\u2026)', value: 'functional' },
-          { label: 'Mixte (muscu + fonctionnel)', value: 'mixed' },
-          { label: 'Sport spécifique (à préciser dans le contexte)', value: 'sport' }
-        ]},
-        { name: 'mg_experience', type: 'radio', label: 'Expérience en entraînement', options: [
-          { label: 'Débutant (< 1 an)', value: 'beginner' },
-          { label: 'Intermédiaire (1-3 ans)', value: 'intermediate' },
-          { label: 'Avancé (> 3 ans)', value: 'advanced' }
-        ]},
-        { name: 'mg_training_time', type: 'radio', label: 'Horaire d\'entraînement habituel', options: [
-          { label: 'Le matin (avant 12h)', value: 'morning' },
-          { label: 'L\'après-midi (12h\u201317h)', value: 'afternoon' },
-          { label: 'Le soir (après 17h)', value: 'evening' }
-        ]},
-        { name: 'mg_meal_frequency', type: 'radio', label: 'Fréquence de repas idéale', options: [
-          { label: '3 repas + 1 collation', value: '3_1' },
-          { label: '3 repas + 2 collations (recommandé)', value: '3_2' }
-        ]},
-        { name: 'mg_volume_comfort', type: 'radio', label: 'Volume alimentaire', options: [
-          { label: 'Aucun souci, j\'ai bon appétit', value: 'easy' },
-          { label: 'Ça passe, mais faut que ce soit bon', value: 'moderate' },
-          { label: 'J\'ai souvent du mal à finir mes assiettes', value: 'difficult' }
-        ]},
-        { name: 'mg_shake_habit', type: 'radio', label: 'Protéines en poudre (shaker)', options: [
-          { label: 'Oui, quotidiennement', value: 'daily' },
-          { label: 'Oui, occasionnellement (jours de training)', value: 'training_days' },
-          { label: 'Non, mais je suis ouvert', value: 'open' },
-          { label: 'Non, et je préfère m\'en passer', value: 'no' }
-        ]},
-        { name: 'mg_creatine', type: 'radio', label: 'Créatine', options: [
-          { label: 'Oui, quotidiennement', value: 'yes' },
-          { label: 'Non, mais ça m\'intéresse', value: 'interested' },
-          { label: 'Non, et je préfère m\'en passer', value: 'no' }
-        ]},
-        { name: 'mg_pre_workout', type: 'radio', label: 'Manges-tu avant l\'entraînement ?', options: [
-          { label: 'Oui, je mange quelque chose avant', value: 'yes' },
-          { label: 'Non, je m\'entraîne sans manger juste avant', value: 'no' }
-        ]},
-        { name: 'mg_post_workout', type: 'radio', label: 'Après l\'entraînement', options: [
-          { label: 'Un shaker protéiné rapide', value: 'shake' },
-          { label: 'Mon prochain repas suffit', value: 'meal' },
-          { label: 'Rien de particulier', value: 'nothing' }
-        ]},
-        { name: 'mg_legumineuses_mix', type: 'radio', label: 'Accepterais-tu de mixer viande et légumineuses dans un même repas ?', help: 'Par exemple un chili con carne, un curry mixte, ou une bolognaise aux lentilles. Ça permet de varier les sources de protéines et d\'apporter plus de fibres.', condition: function() { return !arrIncludes('food_exclusions', 'legumineuses') && v('diet_profile') !== 'vegetarian'; }, options: [
-          { label: 'Oui, ça me va', value: 'yes' },
-          { label: 'Non, je préfère ne pas mélanger', value: 'no' }
-        ]}
-      ]
-    });
-
-    // STEP 5: Ton alimentation
+    // STEP 4: Ton alimentation
+    // ⚠️ AVANT muscle_gain pour que diet_profile soit disponible dans mg_legumineuses_mix
     steps.push({
       id: 'alimentation', title: 'Ton <em>alimentation</em>', icon: '\uD83E\uDD57',
       fields: [
@@ -728,6 +684,63 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       ]
     });
 
+    // STEP 5: Objectifs musculaires (conditional — après alimentation pour avoir diet_profile)
+    steps.push({
+      id: 'muscle_gain', title: function() { return v('primary_goal') === 'recomposition' ? 'Ta <em>recomposition</em>' : 'Ta <em>prise de masse</em>'; }, icon: '\uD83D\uDCAA',
+      condition: function() { return isGainGoal(); },
+      fields: [
+        { name: 'mg_training_type', type: 'radio', label: 'Type d\'entraînement', options: [
+          { label: 'Musculation / force', value: 'strength' },
+          { label: 'Fonctionnel (CrossFit, HIIT\u2026)', value: 'functional' },
+          { label: 'Mixte (muscu + fonctionnel)', value: 'mixed' },
+          { label: 'Sport spécifique (à préciser dans le contexte)', value: 'sport' }
+        ]},
+        { name: 'mg_experience', type: 'radio', label: 'Expérience en entraînement', options: [
+          { label: 'Débutant (< 1 an)', value: 'beginner' },
+          { label: 'Intermédiaire (1-3 ans)', value: 'intermediate' },
+          { label: 'Avancé (> 3 ans)', value: 'advanced' }
+        ]},
+        { name: 'mg_training_time', type: 'radio', label: 'Horaire d\'entraînement habituel', options: [
+          { label: 'Le matin (avant 12h)', value: 'morning' },
+          { label: 'L\'après-midi (12h\u201317h)', value: 'afternoon' },
+          { label: 'Le soir (après 17h)', value: 'evening' }
+        ]},
+        { name: 'mg_meal_frequency', type: 'radio', label: 'Fréquence de repas idéale', options: [
+          { label: '3 repas + 1 collation', value: '3_1' },
+          { label: '3 repas + 2 collations (recommandé)', value: '3_2' }
+        ]},
+        { name: 'mg_volume_comfort', type: 'radio', label: 'Volume alimentaire', options: [
+          { label: 'Aucun souci, j\'ai bon appétit', value: 'easy' },
+          { label: 'Ça passe, mais faut que ce soit bon', value: 'moderate' },
+          { label: 'J\'ai souvent du mal à finir mes assiettes', value: 'difficult' }
+        ]},
+        { name: 'mg_shake_habit', type: 'radio', label: 'Protéines en poudre (shaker)', options: [
+          { label: 'Oui, quotidiennement', value: 'daily' },
+          { label: 'Oui, occasionnellement (jours de training)', value: 'training_days' },
+          { label: 'Non, mais je suis ouvert', value: 'open' },
+          { label: 'Non, et je préfère m\'en passer', value: 'no' }
+        ]},
+        { name: 'mg_creatine', type: 'radio', label: 'Créatine', options: [
+          { label: 'Oui, quotidiennement', value: 'yes' },
+          { label: 'Non, mais ça m\'intéresse', value: 'interested' },
+          { label: 'Non, et je préfère m\'en passer', value: 'no' }
+        ]},
+        { name: 'mg_pre_workout', type: 'radio', label: 'Manges-tu avant l\'entraînement ?', options: [
+          { label: 'Oui, je mange quelque chose avant', value: 'yes' },
+          { label: 'Non, je m\'entraîne sans manger juste avant', value: 'no' }
+        ]},
+        { name: 'mg_post_workout', type: 'radio', label: 'Après l\'entraînement', options: [
+          { label: 'Un shaker protéiné rapide', value: 'shake' },
+          { label: 'Mon prochain repas suffit', value: 'meal' },
+          { label: 'Rien de particulier', value: 'nothing' }
+        ]},
+        { name: 'mg_legumineuses_mix', type: 'radio', label: 'Accepterais-tu de mixer viande et légumineuses dans un même repas ?', help: 'Par exemple un chili con carne, un curry mixte, ou une bolognaise aux lentilles. Ça permet de varier les sources de protéines et d\'apporter plus de fibres.', condition: function() { return !arrIncludes('food_exclusions', 'legumineuses') && v('diet_profile') !== 'vegetarian' && v('diet_profile') !== 'pescetarian'; }, options: [
+          { label: 'Oui, ça me va', value: 'yes' },
+          { label: 'Non, je préfère ne pas mélanger', value: 'no' }
+        ]}
+      ]
+    });
+
     // STEP 6: Tes boissons
     steps.push({
       id: 'boissons', title: 'Tes <em>boissons</em>', icon: '\u2615',
@@ -750,7 +763,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui, pas d\'alcool dans le plan', value: 'yes' },
           { label: 'Non, inclure max 4 verres/semaine', value: 'no' }
         ]},
-        { name: 'alcohol_type', type: 'radio', label: 'Type d\'alcool', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1; }, options: [
+        { name: 'alcohol_type', type: 'radio', label: 'Type d\'alcool', condition: function() { return ['weekly','several','daily'].indexOf(v('alcohol_freq')) !== -1 && v('alcohol_planned') !== 'yes'; }, options: [
           { label: 'Alcool léger', value: 'light' },
           { label: 'Alcool fort', value: 'strong' },
           { label: 'Je varie', value: 'mixed' }
@@ -771,15 +784,15 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Plus de 3', value: 'gt3' }
         ]},
         { name: 'coffee_early', type: 'radio', label: 'Café dès le matin (< 1h après le lever) ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
         { name: 'coffee_late', type: 'radio', label: 'Café après 16h ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
         { name: 'coffee_sugar', type: 'radio', label: 'Sucre dans le café ?', condition: function() { return v('coffee_quantity') !== '0' && v('coffee_quantity') !== ''; }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'coffee_sugar_quantity', type: 'radio', label: 'Quantité de sucre', condition: function() { return v('coffee_sugar') === 'Oui'; }, options: [
+        { name: 'coffee_sugar_quantity', type: 'radio', label: 'Quantité de sucre', condition: function() { return v('coffee_sugar') === 'yes'; }, options: [
           { label: '\u00BD sucre ou moins', value: 'half' },
           { label: '1 sucre', value: '1' },
           { label: '2 sucres', value: '2' }
@@ -854,46 +867,46 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       fields: [
         { name: 'pdm_breakfast_info', type: 'section', label: 'Le petit-déjeuner est indispensable pour répartir tes apports en protéines sur la journée. On va construire le tien ensemble.', condition: function() { return isGainGoal(); } },
         { name: 'has_breakfast', type: 'radio', label: 'Prends-tu un petit-déjeuner ?', required: true, condition: function() { return !isGainGoal(); }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'include_breakfast', type: 'radio', label: 'Souhaites-tu en inclure un dans le plan ?', condition: function() { return !isGainGoal() && v('has_breakfast') === 'Non'; }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        { name: 'include_breakfast', type: 'radio', label: 'Souhaites-tu en inclure un dans le plan ?', condition: function() { return !isGainGoal() && v('has_breakfast') === 'no'; }, options: [
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'breakfast_variety', type: 'radio', label: 'Variété du petit-déjeuner', condition: function() { return isGainGoal() || v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui'; }, options: [
+        { name: 'breakfast_variety', type: 'radio', label: 'Variété du petit-déjeuner', condition: function() { return isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes'; }, options: [
           { label: 'La même chose chaque jour', value: 'fixed' },
           { label: 'Varier les options', value: 'varied' }
         ]},
         { name: 'breakfast_base_fixed', type: 'radio', label: 'Base du petit-déjeuner', condition: function() { return v('breakfast_variety') === 'fixed'; }, options: [
-          { label: 'Tartines', value: 'Tartines' },
-          { label: 'Céréales', value: 'Cereales' }
+          { label: 'Tartines', value: 'tartines' },
+          { label: 'Céréales', value: 'cereales' }
         ]},
         { name: 'breakfast_base_varied', type: 'radio', label: 'Base préférée', condition: function() { return v('breakfast_variety') === 'varied'; }, options: [
-          { label: 'Tartines', value: 'Tartines' },
-          { label: 'Céréales', value: 'Cereales' },
-          { label: 'Pas de préférence', value: 'Pas de preference' }
+          { label: 'Tartines', value: 'tartines' },
+          { label: 'Céréales', value: 'cereales' },
+          { label: 'Pas de préférence', value: 'pas_de_preference' }
         ]},
-        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si je réduis les matières grasses au petit-déj ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && v('spread_habit_global') !== 'never'; }, options: [
+        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si je réduis les matières grasses au petit-déj ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes') && v('spread_habit_global') !== 'never'; }, options: [
           { label: 'Oui, ça me va', value: 'yes' },
           { label: 'Non, j\'y tiens', value: 'no' }
         ]},
-        { name: 'breakfast_eggs', type: 'radio', label: 'Oeufs au petit-déjeuner ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'Oui' || v('include_breakfast') === 'Oui') && !arrIncludes('food_exclusions', 'oeufs'); }, options: [
+        { name: 'breakfast_eggs', type: 'radio', label: 'Oeufs au petit-déjeuner ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes') && !arrIncludes('food_exclusions', 'oeufs') && !(v('diet_profile') === 'vegetarian' && v('veg_type') === 'lacto'); }, options: [
           { label: 'Oui, 1x/semaine', value: '1x' },
           { label: 'Oui, 2-3x/semaine', value: '2_3x' },
           { label: 'Non, pas pour moi', value: 'no' }
         ]},
-        { name: 'bread_sweet_type', type: 'radio', label: 'Garniture sucrée sur tes tartines du matin ?', help: 'Confiture, miel, pâte à tartiner\u2026 On en prévoira maximum 1 fois par semaine dans ton plan.', condition: function() { return v('breakfast_base_fixed') === 'Tartines' || v('breakfast_base_varied') === 'Tartines' || v('breakfast_base_varied') === 'Pas de preference' || v('morning_snack_profile') === 'bread' || v('morning_snack_profile') === 'varied'; }, options: [
+        { name: 'bread_sweet_type', type: 'radio', label: 'Garniture sucrée sur tes tartines du matin ?', help: 'Confiture, miel, pâte à tartiner\u2026 On en prévoira maximum 1 fois par semaine dans ton plan.', condition: function() { return v('breakfast_base_fixed') === 'tartines' || v('breakfast_base_varied') === 'tartines' || v('breakfast_base_varied') === 'pas_de_preference' || v('morning_snack_profile') === 'bread' || v('morning_snack_profile') === 'varied'; }, options: [
           { label: 'Non, pas pour moi', value: 'no' },
           { label: 'Sucrée \u2014 confiture, miel, sirop d\u2019érable, gelée\u2026', value: 'sweet' },
           { label: 'Sucrée & grasse \u2014 pâte à tartiner chocolatée, beurre de cacahuète, pâte de speculoos\u2026', value: 'sweet_fat' },
           { label: 'Alterner les deux', value: 'both' }
         ]},
-        { name: 'bowl_sweet_yesno', type: 'radio', label: 'Sucre dans les céréales / bowl ?', condition: function() { return (v('breakfast_base_fixed') === 'Cereales' || v('breakfast_base_varied') === 'Cereales' || v('breakfast_base_varied') === 'Pas de preference'); }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        { name: 'bowl_sweet_yesno', type: 'radio', label: 'Sucre dans les céréales / bowl ?', condition: function() { return (v('breakfast_base_fixed') === 'cereales' || v('breakfast_base_varied') === 'cereales' || v('breakfast_base_varied') === 'pas_de_preference'); }, options: [
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'morning_light_snack', type: 'radio', label: 'Collation légère le matin ?', condition: function() { return !isGainGoal() && v('has_breakfast') === 'Non'; }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+        { name: 'morning_light_snack', type: 'radio', label: 'Collation légère le matin ?', condition: function() { return !isGainGoal() && v('has_breakfast') === 'no'; }, options: [
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'morning_snack_profile', type: 'radio', label: 'Quel style d\'en-cas le matin ?', help: 'Un fruit frais sera toujours inclus dans ton plan.', condition: function() { return v('morning_light_snack') === 'Oui'; }, options: [
+        { name: 'morning_snack_profile', type: 'radio', label: 'Quel style d\'en-cas le matin ?', help: 'Un fruit frais sera toujours inclus dans ton plan.', condition: function() { return v('morning_light_snack') === 'yes'; }, options: [
           { label: 'Laitage + oléagineux', value: 'dairy_nuts' },
           { label: 'Petit bol de céréales + laitage', value: 'cereal' },
           { label: 'Tartine garnie (fromage, protéine\u2026)', value: 'bread' },
@@ -947,21 +960,21 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return !isGainGoal() && v('has_breakfast') === 'Oui'; }, options: [
+        { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return !isGainGoal() && v('has_breakfast') === 'yes'; }, options: [
           { label: 'Pas de collation pour moi', value: 'none' },
           { label: 'Milieu de matinée', value: 'morning' },
           { label: 'Après-midi', value: 'afternoon' },
           { label: 'Soirée (après le repas chaud)', value: 'evening' },
           { label: 'Flexible', value: 'flexible' }
         ]},
-        { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return !isGainGoal() && v('has_breakfast') === 'Non' && v('morning_light_snack') !== 'Oui'; }, options: [
+        { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return !isGainGoal() && v('has_breakfast') === 'no' && v('morning_light_snack') !== 'yes'; }, options: [
           { label: 'Aucune collation', value: 'none' },
           { label: 'Après-midi', value: 'afternoon' },
           { label: 'Soirée', value: 'evening' },
           { label: 'Les deux', value: 'both' },
           { label: 'Flexible', value: 'flexible' }
         ]},
-        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplémentaire', condition: function() { return !isGainGoal() && v('has_breakfast') === 'Non' && v('morning_light_snack') === 'Oui'; }, options: [
+        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplémentaire', condition: function() { return !isGainGoal() && v('has_breakfast') === 'no' && v('morning_light_snack') === 'yes'; }, options: [
           { label: 'Aucune supplémentaire', value: 'none' },
           { label: 'Après-midi', value: 'afternoon' },
           { label: 'Soirée', value: 'evening' },
@@ -980,8 +993,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
           return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
         }, options: [
-          { label: 'Oui', value: 'Oui' },
-          { label: 'Non', value: 'Non' },
+          { label: 'Oui', value: 'yes' },
+          { label: 'Non', value: 'no' },
           { label: 'Je ne sais pas encore', value: 'dunno' }
         ]}
       ]
@@ -1003,9 +1016,9 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: '3x ou plus', value: '3_plus' }
         ]},
         { name: 'dinner_cheese_ok', type: 'radio', label: 'Fromage au repas chaud ?', required: true, condition: function() { return !arrIncludes('food_exclusions', 'fromage'); }, options: [
-          { label: 'Oui', value: 'Oui' }, { label: 'Non', value: 'Non' }
+          { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian'; }, options: [
+        { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian' && !arrIncludes('food_exclusions', 'mer'); }, options: [
           { label: 'J\'apprécie et c\'est dans mes moyens', value: 'yes' },
           { label: 'Pas vraiment, le minimum possible', value: 'no' }
         ]},
@@ -1054,8 +1067,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
     // Auto-set PDM defaults
     if (isGainGoal()) {
-      if (!formData.has_breakfast || formData.has_breakfast === 'Non') {
-        formData.has_breakfast = 'Oui';
+      if (!formData.has_breakfast || formData.has_breakfast === 'no') {
+        formData.has_breakfast = 'yes';
         saveToStorage();
       }
       // Sync coldmeal_type_pref from PDM-specific field
@@ -1230,10 +1243,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     qsa('.field-input').forEach(function(inp) {
       var name = inp.getAttribute('data-name');
       if (!name) return;
+      var weightFields = ['weight_kg', 'target_weight_kg'];
       inp.addEventListener('input', function() {
         formData[name] = inp.value;
         saveToStorage();
         clearError(name);
+        if (weightFields.indexOf(name) !== -1) {
+          setTimeout(function() { renderStep(); }, 100);
+        }
       });
     });
 
@@ -1257,7 +1274,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         // Re-render step if conditionals may have changed
         var needsRerender = hasConditionalDependency(name);
         if (needsRerender) {
-          setTimeout(function() { renderStep(); }, 50);
+          setTimeout(function() { renderStep(); clearHiddenFieldValues(); }, 50);
         }
       });
     });
@@ -1302,7 +1319,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         // Re-render if conditionals depend on this
         var needsRerender = hasConditionalDependency(name);
         if (needsRerender) {
-          setTimeout(function() { renderStep(); }, 50);
+          setTimeout(function() { renderStep(); clearHiddenFieldValues(); }, 50);
         }
       });
     });
@@ -1321,6 +1338,25 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
   function hasConditionalDependency(name) {
     return conditionalTriggers.indexOf(name) !== -1;
+  }
+
+  // Clear stale formData values for hidden conditional fields
+  function clearHiddenFieldValues() {
+    var allSteps = getSteps();
+    var changed = false;
+    for (var s = 0; s < allSteps.length; s++) {
+      var step = allSteps[s];
+      var fields = step.fields;
+      for (var f = 0; f < fields.length; f++) {
+        var field = fields[f];
+        if (field.type === 'section') continue;
+        if (field.condition && !field.condition() && formData[field.name] !== undefined && formData[field.name] !== '') {
+          delete formData[field.name];
+          changed = true;
+        }
+      }
+    }
+    if (changed) saveToStorage();
   }
 
   function clearError(name) {
@@ -1362,6 +1398,50 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       }
     }
 
+    // Cross-field: muscle_gain + target ≤ weight
+    if (step.id === 'toi' && formData['primary_goal'] === 'muscle_gain') {
+      var w = parseFloat(formData['weight_kg'] || '');
+      var t = parseFloat(formData['target_weight_kg'] || '');
+      if (!isNaN(w) && !isNaN(t) && t <= w) {
+        var tgtFg = qs('[data-field="target_weight_kg"]');
+        if (tgtFg) {
+          tgtFg.classList.add('error');
+          if (!firstErrorField) firstErrorField = tgtFg;
+        }
+        valid = false;
+        showToast('Prise de masse : ton poids cible doit être supérieur à ton poids actuel (' + w + ' kg). Sinon, choisis « Recomposition ».', 'info');
+      }
+    }
+
+    // Cross-field: weight_loss + target ≥ weight
+    if (step.id === 'toi' && formData['primary_goal'] === 'weight_loss') {
+      var w2 = parseFloat(formData['weight_kg'] || '');
+      var t2 = parseFloat(formData['target_weight_kg'] || '');
+      if (!isNaN(w2) && !isNaN(t2) && t2 >= w2) {
+        var tgtFg2 = qs('[data-field="target_weight_kg"]');
+        if (tgtFg2) {
+          tgtFg2.classList.add('error');
+          if (!firstErrorField) firstErrorField = tgtFg2;
+        }
+        valid = false;
+        showToast('Perte de poids : ton poids cible doit être inférieur à ton poids actuel (' + w2 + ' kg). Si tu veux maintenir ton poids, choisis « Maintien ».', 'info');
+      }
+    }
+
+    // Cross-field: recomposition/muscle_gain + no sport + no plan
+    if (step.id === 'activite' && (formData['primary_goal'] === 'recomposition' || formData['primary_goal'] === 'muscle_gain')) {
+      if (formData['has_physical_activity'] === 'no' && formData['sport_prevu'] === 'non') {
+        var spFg = qs('[data-field="sport_prevu"]');
+        if (spFg) {
+          spFg.classList.add('error');
+          if (!firstErrorField) firstErrorField = spFg;
+        }
+        valid = false;
+        var goalName = formData['primary_goal'] === 'recomposition' ? 'recomposition' : 'prise de masse';
+        showToast('La ' + goalName + ' nécessite une activité sportive. Si tu ne comptes pas en commencer, choisis « Maintien » comme objectif.', 'info');
+      }
+    }
+
     if (!valid && firstErrorField) {
       firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -1389,6 +1469,9 @@ input[type="number"].field-input { -moz-appearance: textfield; }
   // ── Submit ──
   el('btnSubmit').addEventListener('click', function() {
     if (!validateStep()) return;
+
+    // Purge stale values from hidden conditional fields before sending
+    clearHiddenFieldValues();
 
     var btn = el('btnSubmit');
     if (btn.classList.contains('loading')) return;
