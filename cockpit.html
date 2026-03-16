@@ -74,7 +74,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 10000; }
 
 /* ===== HERO ===== */
-.ck-hero { padding: clamp(7rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem); background: var(--navy); position: relative; overflow: hidden; text-align: center; }
+.ck-hero { padding: clamp(7rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem); background: var(--navy); position: relative; overflow-x: clip; text-align: center; }
 .ck-hero::before { content: ''; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 700px; background: radial-gradient(ellipse, rgba(198,160,91,0.10), rgba(198,160,91,0.03) 50%, transparent 70%); pointer-events: none; }
 .ck-hero::after { content: ''; position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
 .ck-hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); }
