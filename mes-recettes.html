@@ -1542,6 +1542,13 @@ body::after {
     });
   }
 
+  // ── IMAGE OPTIMIZATION — Supabase render API ──
+  function optimizeImg(url, width) {
+    if (!url) return url;
+    // Supabase Storage render endpoint for on-the-fly transforms
+    return url.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') + '?width=' + (width || 600) + '&quality=80';
+  }
+
   // ── HERO — RECIPE OF THE WEEK ──
   function renderHero() {
     var eligible = allRecipes.filter(function(r) { return r.free || accessLevel === 'full'; });
@@ -1558,7 +1565,7 @@ body::after {
 
     var imgHtml;
     if (pick.image_url) {
-      imgHtml = '<img class="hero-week-img" src="' + esc(pick.image_url) + '" alt="' + esc(pick.title) + '" loading="eager">';
+      imgHtml = '<img class="hero-week-img" src="' + esc(optimizeImg(pick.image_url, 800)) + '" alt="' + esc(pick.title) + '" loading="eager" decoding="async">';
     } else {
       var colors = catColors[pick.category] || catColors.chaud;
       var heroIcon = catIcons[pick.category] || catIcons.chaud;
@@ -1630,7 +1637,7 @@ body::after {
 
       var imgHtml;
       if (r.image_url) {
-        imgHtml = '<img class="recipe-card-img" src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '" loading="lazy">';
+        imgHtml = '<img class="recipe-card-img" src="' + esc(optimizeImg(r.image_url, 500)) + '" alt="' + esc(r.title) + '" loading="lazy" decoding="async">';
       } else {
         var icon = catIcons[r.category] || catIcons.chaud;
         imgHtml = '<div class="recipe-card-img-placeholder" style="background:linear-gradient(135deg,' + colors[0] + ',' + colors[1] + ')">' + icon + '</div>';
@@ -1689,7 +1696,7 @@ body::after {
     // Hero image
     var colors = catColors[r.category] || catColors.chaud;
     if (r.image_url) {
-      modalHero.innerHTML = '<img class="modal-hero-img" src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '">';
+      modalHero.innerHTML = '<img class="modal-hero-img" src="' + esc(optimizeImg(r.image_url, 900)) + '" alt="' + esc(r.title) + '" decoding="async">';
     } else {
       var mIcon = catIcons[r.category] || catIcons.chaud;
       modalHero.innerHTML = '<div class="modal-hero-placeholder" style="background:linear-gradient(135deg,' + colors[0] + ',' + colors[1] + ')">' + mIcon + '</div>';
@@ -1809,7 +1816,7 @@ body::after {
     var colors = catColors[r.category] || catColors.chaud;
     var imgHtml;
     if (r.image_url) {
-      imgHtml = '<img class="fullpage-hero-img" src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '">';
+      imgHtml = '<img class="fullpage-hero-img" src="' + esc(optimizeImg(r.image_url, 1200)) + '" alt="' + esc(r.title) + '" decoding="async">';
     } else {
       var fpIcon = catIcons[r.category] || catIcons.chaud;
       imgHtml = '<div class="fullpage-hero-placeholder" style="background:linear-gradient(135deg,' + colors[0] + ',' + colors[1] + ')">' + fpIcon + '</div>';
