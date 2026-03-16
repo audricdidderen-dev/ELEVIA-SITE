@@ -1362,16 +1362,20 @@ body::after {
         });
       });
 
-      (vegeSubRecipes || []).forEach(function(s) {
-        allRecipes.push({
-          id: s.id, type: 'vege_sub', category: 'vege',
-          title: s.title, prep_time: s.prep_time_min,
-          price_tier: 'low', ingredients: s.ingredients || [],
-          steps: s.steps || [], tips: s.tips,
-          conservation: s.conservation, image_url: s.image_url || null,
-          free: true, total_weight_g: s.total_weight_g,
+      // Only show veggie protein sub-recipes for vegetarian/flexitarian/pesco clients
+      var showVegeSubs = isClientVege || /flexitarien|pescovegetarien|pescetarian/.test(clientDiet);
+      if (showVegeSubs) {
+        (vegeSubRecipes || []).forEach(function(s) {
+          allRecipes.push({
+            id: s.id, type: 'vege_sub', category: 'vege',
+            title: s.title, prep_time: s.prep_time_min,
+            price_tier: 'low', ingredients: s.ingredients || [],
+            steps: s.steps || [], tips: s.tips,
+            conservation: s.conservation, image_url: s.image_url || null,
+            free: true, total_weight_g: s.total_weight_g,
+          });
         });
-      });
+      }
 
       (recipes || []).forEach(function(r) {
         // Filter by objective: skip recipes that don't match client's goal
@@ -1469,7 +1473,7 @@ body::after {
 
         allRecipes.push({
           id: r.recipe_id, type: 'recipe',
-          category: isFree ? 'vege' : category,
+          category: category,
           template_code: tplCode,
           title: r.title, prep_time: r.prep_time_min,
           cook_time: r.cook_time_min,
