@@ -267,13 +267,17 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
 /* Placeholder quand pas encore d'image */
 .browser-screen-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy-light), var(--navy-deep)); }
 .browser-screen-placeholder span { font-family: var(--sans); font-size: 0.75rem; color: rgba(198,160,91,0.3); letter-spacing: 0.15em; text-transform: uppercase; }
-/* Mobile floating video card */
-.mockup-mobile-card { display: none; justify-content: center; margin-top: 2.5rem; opacity: 0; transform: translateY(30px); }
+/* Mobile video card */
+.mockup-mobile-card { display: none; opacity: 0; transform: translateY(40px); }
 .mockup-mobile-card.revealed { opacity: 1; transform: none; transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s; }
-.mobile-card-inner { width: min(280px, 72vw); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 24px 48px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(255,255,255,0.04); }
-.mobile-card-inner video { width: 100%; aspect-ratio: 9/19.5; object-fit: cover; object-position: top; display: block; }
+.mobile-card-wrap { position: relative; max-width: 320px; margin: 0 auto; border-radius: 22px; overflow: hidden; background: var(--navy-deep); border: 1px solid rgba(198,160,91,0.14); box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 80px rgba(198,160,91,0.04), inset 0 1px 0 rgba(255,255,255,0.04); }
+.mobile-card-wrap video { width: 100%; display: block; }
+.mobile-card-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 70px; background: linear-gradient(to bottom, var(--navy-deep) 0%, transparent 100%); z-index: 2; pointer-events: none; }
+.mobile-card-wrap::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to top, var(--navy-deep) 0%, transparent 100%); z-index: 2; pointer-events: none; }
+.mobile-card-label { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); z-index: 3; font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0.6; }
+/* Responsive show/hide */
 @media (min-width: 769px) { .mockup-mobile-card { display: none !important; } }
-@media (max-width: 768px) { .mockup-browser { display: none; } .mockup-mobile-card { display: flex; } }
+@media (max-width: 768px) { .mockup-browser { display: none; } .mockup-mobile-card { display: block; } }
 </style>
 </head>
 <body>
@@ -470,19 +474,19 @@ footer { background: var(--navy); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-a
       </div>
       <div class="browser-screen">
         <!-- Remplacer espace-desktop.jpg par la capture full-width quand dispo -->
-        <picture><source srcset="/images/espace-desktop.webp" type="image/webp"><img src="/images/espace-desktop.jpg" alt="Espace personnel Élevia — tableau de bord" width="3020" height="1728" loading="lazy" decoding="async"></picture>
+        <img src="/images/espace-desktop.webp" alt="Espace personnel Élevia — tableau de bord" loading="lazy">
       </div>
     </div>
 
-    <!-- Mobile : floating video card -->
+    <!-- Mobile : video card élégante -->
     <div class="mockup-mobile-card" data-reveal>
-      <div class="mobile-card-inner">
+      <div class="mobile-card-wrap">
+        <span class="mobile-card-label">Aperçu</span>
         <video autoplay muted loop playsinline>
           <source src="/images/cockpit-mobile.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-
   </div>
 </section>
 

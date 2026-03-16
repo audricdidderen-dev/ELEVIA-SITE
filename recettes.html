@@ -4,22 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Les Recettes — Élevia Nutrition</title>
-<meta name="description" content="Des recettes personnalisées selon ton plan, ton régime et tes intolérances. Quantités calibrées, adaptées à ton profil — 35 € une seule fois, accès à vie.">
+<meta name="description" content="Des recettes personnalisées selon ton plan, ton régime et tes intolérances. Quantités calibrées, adaptées à ton profil — conçues par un diététicien diplômé.">
 <link rel="canonical" href="https://www.elevianutrition.com/recettes.html">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Les Recettes — Élevia Nutrition">
-<meta property="og:description" content="Des recettes personnalisées selon ton plan, ton régime et tes intolérances — 35 € une seule fois, accès à vie.">
+<meta property="og:description" content="Des recettes personnalisées selon ton plan, ton régime et tes intolérances — conçues par un diététicien diplômé.">
 <meta property="og:url" content="https://www.elevianutrition.com/recettes.html">
 <meta property="og:image" content="https://www.elevianutrition.com/og-image.jpg">
 <meta property="og:locale" content="fr_BE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Les Recettes — Élevia Nutrition">
-<meta name="twitter:description" content="Recettes personnalisées selon ton plan — quantités, régime et intolérances pris en compte. 35 € à vie.">
+<meta name="twitter:description" content="Recettes personnalisées selon ton plan — quantités, régime et intolérances pris en compte.">
 <meta name="twitter:image" content="https://www.elevianutrition.com/og-image.jpg">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -37,10 +36,11 @@
   --header-h: 72px;
 }
 html { scroll-behavior: smooth; overflow-x: clip; }
-body { font-family: var(--sans); color: var(--text-dark); background: var(--cream); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--sans); color: var(--text-dark); background: var(--navy); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 
 /* ===== HEADER ===== */
-.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
+.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); z-index: 1002; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 4vw, 4rem); background: transparent; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); transition: background 0.5s, backdrop-filter 0.5s, box-shadow 0.5s; }
+.site-header.scrolled { background: rgba(14, 30, 46, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(198, 160, 91, 0.08); }
 .header-logo { width: 130px; height: auto; opacity: 0.9; transition: opacity 0.3s; flex-shrink: 0; }
 .header-logo:hover { opacity: 1; }
 .header-nav { display: flex; align-items: center; gap: 2.4rem; }
@@ -48,8 +48,6 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .header-nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
 .header-nav a:hover { opacity: 1; }
 .header-nav a:hover::after { width: 100%; }
-.header-nav a.active { opacity: 1; }
-.header-nav a.active::after { width: 100%; }
 .header-cta { font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.6rem 1.6rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; white-space: nowrap; }
 .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(198, 160, 91, 0.25); }
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 12px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; z-index: 1002; background: none; border: none; }
@@ -61,166 +59,102 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--crea
 .mobile-nav.open { opacity: 1; pointer-events: all; }
 .mobile-nav a { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--cream); text-decoration: none; opacity: 0.7; transition: opacity 0.3s, color 0.3s; }
 .mobile-nav a:hover { opacity: 1; color: var(--gold); }
-.mobile-nav a.active { display: none; }
 .mobile-nav .header-cta { font-family: var(--sans); font-size: 0.8rem; padding: 0.8rem 2rem; margin-top: 1rem; }
 
 /* ===== UTILITIES ===== */
-.section-inner { max-width: 960px; margin: 0 auto; }
-.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
-.section-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 1.5rem; }
-.section-headline em { font-style: italic; color: var(--gold); background: linear-gradient(90deg, rgba(198,160,91,0.18) 50%, transparent 50%); background-size: 200% 100%; background-position: 100% 0; transition: background-position 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s; padding: 0 0.08em; }
-.section-headline.revealed em { background-position: 0% 0; }
-.revealed { opacity: 1 !important; transform: none !important; }
 .grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 10000; }
+.revealed { opacity: 1 !important; transform: none !important; }
+[data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
 
-/* ===== HERO ===== */
-.rec-hero { padding: clamp(7rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem); background: var(--navy); position: relative; overflow: hidden; text-align: center; }
-.rec-hero::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(198,160,91,0.08), transparent 70%); pointer-events: none; }
-.rec-hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); }
-.rec-hero h1 em { font-style: italic; color: var(--gold); }
-.rec-hero .hero-sub { font-family: var(--sans); font-size: clamp(0.95rem, 1.8vw, 1.1rem); font-weight: 300; color: var(--text-soft); line-height: 1.7; max-width: 580px; margin: 0 auto; opacity: 0; transform: translateY(20px); }
-.hero-punchline { font-family: var(--serif); font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-style: italic; font-weight: 400; color: var(--gold); margin-top: 1.5rem; opacity: 0; transform: translateY(15px); letter-spacing: 0.02em; }
+/* ===== HERO — Food immersive ===== */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: calc(var(--header-h) + 2rem) clamp(1.5rem, 5vw, 4rem) 6rem; }
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.25; filter: blur(4px) saturate(0.7); }
+.hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--navy) 0%, rgba(14,30,46,0.7) 50%, var(--navy) 100%); }
+.hero-content { position: relative; z-index: 1; }
+.hero-statement { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; color: var(--cream); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+.hero-statement em { font-style: italic; color: var(--gold); }
+.hero-punchline { font-family: var(--serif); font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 300; font-style: italic; color: var(--gold); opacity: 0.9; }
+.hero-scroll { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.hero-scroll span { font-family: var(--sans); font-size: 0.68rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); opacity: 0.5; }
+.hero-scroll .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
 
-/* ===== SHOWCASE ===== */
-.section-showcase { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem); text-align: center; }
-.showcase-intro { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1rem); font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto 3rem; opacity: 0; transform: translateY(20px); }
+/* ===== GALLERY — Real recipes ===== */
+.section-gallery { padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); background: var(--cream); text-align: center; }
+.gallery-inner { max-width: 1100px; margin: 0 auto; }
+.gallery-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; }
+.gallery-headline em { font-style: italic; color: var(--gold); }
+.gallery-sub { font-family: var(--sans); font-size: 0.92rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin: 0 auto 3.5rem; }
+.recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+.recipe-card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; }
+.recipe-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(198,160,91,0.1), 0 4px 16px rgba(0,0,0,0.06); }
+.recipe-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.recipe-card-body { padding: 1.2rem 1.4rem 1.4rem; }
+.recipe-card-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; color: var(--text-dark); line-height: 1.3; margin-bottom: 0.6rem; }
+.recipe-card-meta { display: flex; align-items: center; gap: 0.8rem; font-family: var(--sans); font-size: 0.72rem; color: var(--text-muted); }
+.recipe-card-badge { background: rgba(198,160,91,0.12); color: var(--gold); padding: 3px 10px; border-radius: 20px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.62rem; }
+.gallery-note { font-family: var(--sans); font-size: 0.82rem; font-weight: 300; color: var(--text-muted); margin-top: 3rem; font-style: italic; }
 
-/* Browser mockup — premium product frame */
-.browser-mockup { max-width: 960px; margin: 0 auto 3rem; border-radius: 12px; overflow: hidden; box-shadow: 0 32px 100px rgba(14,30,46,0.22), 0 12px 32px rgba(0,0,0,0.1); opacity: 0; transform: translateY(30px); }
-.browser-bar { height: 40px; background: #1E1E1E; display: flex; align-items: center; padding: 0 16px; gap: 8px; }
+/* ===== SPOTLIGHTS ===== */
+.section-spotlights { background: var(--cream); }
+.spotlight { display: flex; align-items: center; gap: clamp(3rem, 6vw, 6rem); padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); max-width: 1100px; margin: 0 auto; }
+.spotlight--reverse { flex-direction: row-reverse; }
+.spotlight-img { flex: 1; min-width: 0; }
+.spotlight-img img, .spotlight-img video { width: 100%; border-radius: 10px; box-shadow: 0 24px 64px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.05); display: block; }
+.spotlight-text { flex: 1; min-width: 0; }
+.spotlight-text .section-label { margin-bottom: 1rem; }
+.spotlight-text h3 { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 400; line-height: 1.25; margin-bottom: 1rem; }
+.spotlight-text h3 em { font-style: italic; color: var(--gold); }
+.spotlight-text p { font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+.spotlight-text a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(198,160,91,0.3); }
+.spotlight-divider { width: 40px; height: 1px; background: var(--gold); opacity: 0.3; margin: 0 auto; }
+
+/* ===== BROWSER MOCKUP ===== */
+.browser-mockup { border-radius: 12px; overflow: hidden; box-shadow: 0 32px 100px rgba(14,30,46,0.22), 0 12px 32px rgba(0,0,0,0.1); }
+.browser-bar { height: 40px; background: #F0F0F0; display: flex; align-items: center; padding: 0 16px; gap: 8px; }
 .browser-dot { width: 11px; height: 11px; border-radius: 50%; }
 .browser-dot:nth-child(1) { background: #FF5F57; }
 .browser-dot:nth-child(2) { background: #FFBD2E; }
 .browser-dot:nth-child(3) { background: #28CA42; }
-.browser-url { flex: 1; margin-left: 12px; height: 24px; background: #2A2A2A; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; }
+.browser-url { flex: 1; background: #E8E8E8; border-radius: 6px; padding: 5px 12px; margin-left: 8px; display: flex; align-items: center; }
 .browser-url span { font-family: var(--sans); font-size: 0.65rem; color: #888; letter-spacing: 0.01em; }
 .browser-url .url-lock { margin-right: 6px; color: #28CA42; font-size: 0.6rem; }
-.browser-body { position: relative; }
-.browser-body video { display: block; width: 100%; height: auto; }
-.browser-badge { position: absolute; bottom: 16px; right: 16px; z-index: 2; display: flex; align-items: center; gap: 6px; background: rgba(14,30,46,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 100px; padding: 7px 16px; font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
-.browser-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-dot 2s infinite; }
-@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+.browser-body { position: relative; overflow: hidden; }
+.browser-body video, .browser-body img { display: block; width: 100%; height: auto; clip-path: inset(0 1.2% 0 0); }
 
-/* Preview section */
-.section-preview { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); text-align: center; background: var(--cream); }
-.preview-sub { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1rem); font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin: 0 auto 3rem; opacity: 0; transform: translateY(20px); }
-
-/* Light browser mockup variant */
-.browser-mockup--light { box-shadow: 0 24px 80px rgba(14,30,46,0.12), 0 8px 24px rgba(0,0,0,0.06); }
-.browser-bar--light { background: #F0F0F0; }
-.browser-bar--light .browser-dot:nth-child(1) { background: #FF5F57; }
-.browser-bar--light .browser-dot:nth-child(2) { background: #FFBD2E; }
-.browser-bar--light .browser-dot:nth-child(3) { background: #28CA42; }
-.browser-url--light { background: #FFFFFF; border: 1px solid #E0E0E0; }
-.browser-url--light span { color: #666; }
-.browser-url--light .url-lock { color: #28CA42; }
-
-/* Two highlights below */
-.showcase-highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 700px; margin: 0 auto; }
-.showcase-hl { display: flex; align-items: flex-start; gap: 14px; text-align: left; padding: 1.2rem 1.4rem; border-radius: 12px; background: rgba(198,160,91,0.04); border: 1px solid rgba(198,160,91,0.1); opacity: 0; transform: translateY(20px); }
-.showcase-hl-icon { flex-shrink: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--navy); }
-.showcase-hl-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.showcase-hl h3 { font-family: var(--serif); font-size: 0.95rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.15rem; }
-.showcase-hl p { font-family: var(--sans); font-size: 0.75rem; font-weight: 300; color: var(--text-muted); line-height: 1.5; }
-
-.showcase-punchline { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem); font-style: italic; font-weight: 400; color: var(--gold); margin-top: 2.5rem; opacity: 0; transform: translateY(15px); }
-
-/* Legacy — keep for lightbox compat */
-.showcase-frame { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.1); position: relative; cursor: zoom-in; }
-.showcase-frame img { display: block; width: 100%; height: auto; }
-
-@media (max-width: 600px) {
-  .showcase-highlights { grid-template-columns: 1fr; max-width: 360px; }
-}
-
-/* ===== LIGHTBOX ===== */
-.lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-out; }
-.lightbox.active { opacity: 1; pointer-events: all; }
-.lightbox img { max-width: 88vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.lightbox.active img { transform: scale(1); }
-.lightbox-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--cream); opacity: 0.5; letter-spacing: 0.08em; pointer-events: none; }
-
-/* ===== CATEGORIES — ESPACE RECETTES ===== */
-.section-categories { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); background: var(--navy); position: relative; overflow: hidden; }
-.section-categories::before { content: ''; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 600px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
-.section-categories .section-inner { text-align: center; position: relative; }
-.section-categories .section-headline { color: var(--cream); }
-
-/* Moments de la journée — icon cards */
-.moment-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin: 3rem auto 0; max-width: 680px; }
-.moment-card { display: flex; flex-direction: column; align-items: center; gap: 0.65rem; padding: 1.4rem 0.4rem 1.15rem; border-radius: 14px; background: var(--navy-light); border: 1px solid rgba(198,160,91,0.08); position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s, border-color 0.35s; }
-.moment-card::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 60px; background: radial-gradient(ellipse, rgba(198,160,91,0.14), transparent 70%); pointer-events: none; }
-.moment-card:nth-child(2) { transition-delay: 0.06s; }
-.moment-card:nth-child(3) { transition-delay: 0.12s; }
-.moment-card:nth-child(4) { transition-delay: 0.18s; }
-.moment-card:nth-child(5) { transition-delay: 0.24s; }
-.moment-card:nth-child(6) { transition-delay: 0.3s; }
-.moment-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.3); border-color: rgba(198,160,91,0.2); }
-.moment-icon { width: 28px; height: 28px; color: var(--gold); flex-shrink: 0; }
-.moment-icon svg { width: 100%; height: 100%; }
-.moment-label { font-family: var(--sans); font-size: 0.65rem; font-weight: 400; color: rgba(246,243,238,0.7); letter-spacing: 0.03em; line-height: 1.3; }
-
-/* Recette de la semaine */
-.featured-recipe { display: grid; grid-template-columns: 220px 1fr; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 48px rgba(0,0,0,0.25); margin: 3rem auto 0; max-width: 780px; opacity: 0; transform: translateY(20px); text-align: left; }
-.featured-visual { position: relative; overflow: hidden; min-height: 200px; }
-.featured-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.featured-body { padding: 1.6rem 1.8rem; background: var(--white); display: flex; flex-direction: column; justify-content: center; }
-.featured-badge { font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
-.featured-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.7rem; line-height: 1.3; }
-.featured-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
-.featured-tag { font-family: var(--sans); font-size: 0.66rem; font-weight: 400; color: var(--text-muted); background: var(--cream); border-radius: 20px; padding: 0.22rem 0.65rem; }
-.featured-desc { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
-
-/* Inspire-moi */
-.recipe-actions { margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; transform: translateY(15px); }
-.inspire-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--navy); background: var(--gold); padding: 0.75rem 2rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; }
-.inspire-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(198,160,91,0.3); }
-.inspire-sub { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-soft); }
-
-/* Filtres */
-.filter-row { margin-top: 1.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; opacity: 0; transform: translateY(15px); }
-.filter-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 500; color: var(--text-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-right: 0.2rem; }
-.filter-pill { font-family: var(--sans); font-size: 0.72rem; font-weight: 400; color: var(--cream); background: rgba(255,255,255,0.05); border: 1px solid rgba(198,160,91,0.12); border-radius: 20px; padding: 0.28rem 0.8rem; transition: border-color 0.2s, background 0.2s; }
-.filter-pill:hover { border-color: rgba(198,160,91,0.3); background: rgba(255,255,255,0.08); }
-
-/* Note mensuelle */
-.growth-note { margin: 2.5rem auto 0; display: flex; align-items: center; justify-content: center; gap: 1.2rem; opacity: 0; transform: translateY(10px); }
-.growth-line { flex: 1; max-width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-pale), transparent); opacity: 0.4; }
-.growth-note p { font-family: var(--sans); font-size: 0.75rem; font-weight: 300; color: var(--text-soft); line-height: 1; white-space: nowrap; letter-spacing: 0.02em; }
-
-@media (max-width: 768px) {
-  .moment-grid { grid-template-columns: repeat(3, 1fr); max-width: 300px; gap: 0.75rem; }
-  .featured-recipe { grid-template-columns: 1fr; }
-  .featured-visual { min-height: 160px; }
-  .filter-row { gap: 0.4rem; }
-}
-
-
-/* ===== HOW IT WORKS ===== */
-.section-how { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); background: var(--cream); }
-.how-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; max-width: 820px; margin-left: auto; margin-right: auto; }
-.how-card { padding: 2rem 1.5rem; background: var(--white); border: 1px solid var(--border-soft); border-radius: 12px; opacity: 0; transform: translateY(20px); transition: border-color 0.3s, box-shadow 0.3s; }
-.how-card:hover { border-color: var(--gold-pale); box-shadow: 0 4px 24px rgba(198,160,91,0.08); }
-.how-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--navy), var(--navy-light)); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; }
-.how-icon-wrap svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.how-card h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.5rem; }
-.how-card p { font-family: var(--sans); font-size: 0.82rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
-.how-num { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--gold-pale); margin-bottom: 0.5rem; line-height: 1; }
-
-@media (max-width: 768px) {
-  .how-grid { grid-template-columns: 1fr; max-width: 400px; }
-}
+/* ===== NUMBERS ===== */
+.section-numbers { background: var(--navy); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
+.section-numbers::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
+.numbers-grid { display: flex; justify-content: center; gap: clamp(2rem, 5vw, 5rem); flex-wrap: wrap; max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+.number-item { text-align: center; min-width: 120px; }
+.number-value { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
+.number-label { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-soft); letter-spacing: 0.04em; }
+.numbers-sep { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(198,160,91,0.3), transparent); align-self: center; flex-shrink: 0; }
 
 /* ===== CTA ===== */
-.section-cta { background: var(--navy); padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
-.section-cta::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(198,160,91,0.06), transparent 70%); pointer-events: none; }
-.cta-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 400; color: var(--cream); line-height: 1.2; margin-bottom: 1rem; opacity: 0; transform: translateY(20px); }
+.section-cta { background: var(--cream); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); text-align: center; }
+.cta-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 300; color: var(--text-dark); line-height: 1.2; margin-bottom: 1rem; }
 .cta-headline em { font-style: italic; color: var(--gold); }
-.cta-sub { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-soft); line-height: 1.6; margin-bottom: 2rem; opacity: 0; transform: translateY(15px); }
-.cta-btn { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.9rem 2.4rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; opacity: 0; transform: translateY(15px); }
+.cta-sub { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; max-width: 540px; margin-left: auto; margin-right: auto; }
+.cta-options { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.cta-card { background: var(--white); border: 1px solid var(--border-soft); border-radius: 16px; padding: 2.5rem 2rem; max-width: 320px; flex: 1; min-width: 260px; text-align: center; transition: border-color 0.3s, box-shadow 0.3s; }
+.cta-card:hover { border-color: var(--gold-pale); box-shadow: 0 8px 32px rgba(198,160,91,0.1); }
+.cta-card--featured { border-color: var(--gold); position: relative; }
+.cta-card--featured::before { content: 'Recommandé'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 16px; border-radius: 20px; }
+.cta-card h4 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.5rem; }
+.cta-card .cta-price { font-family: var(--serif); font-size: 2rem; font-weight: 400; color: var(--gold); margin-bottom: 0.3rem; }
+.cta-card .cta-price-sub { font-family: var(--sans); font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.cta-card ul { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+.cta-card li { font-family: var(--sans); font-size: 0.82rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; padding: 0.3rem 0; padding-left: 1.2rem; position: relative; }
+.cta-card li::before { content: ''; position: absolute; left: 0; top: 0.65rem; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.5; }
+.cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.8rem 2rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; }
 .cta-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198, 160, 91, 0.3); }
-.cta-trust { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-soft); margin-top: 1.5rem; opacity: 0.6; opacity: 0; transform: translateY(10px); }
+.cta-btn--outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+.cta-btn--outline:hover { background: rgba(198,160,91,0.08); box-shadow: none; transform: translateY(-1px); }
+.cta-trust { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-muted); margin-top: 1.5rem; opacity: 0.7; }
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; }
@@ -236,23 +170,24 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   .site-header { height: 60px; }
-  .showcase-item { flex: 0 1 100%; max-width: 360px; }
+  .recipe-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .spotlight { flex-direction: column !important; gap: 2.5rem; }
+  .numbers-sep { display: none; }
+  .cta-options { flex-direction: column; align-items: center; }
+}
+@media (max-width: 480px) {
+  .recipe-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  [data-reveal], .rec-hero h1, .rec-hero .hero-sub, .hero-punchline, .showcase-item, .showcase-intro, .how-card,
-  .cta-headline, .cta-sub, .cta-btn, .cta-trust, .moment-card, .featured-recipe, .recipe-actions, .filter-row, .growth-note { opacity: 1 !important; transform: none !important; }
-  .section-headline em { background-position: 0% 0; }
-  .lightbox, .lightbox img { transition-duration: 0.01ms !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
 
 /* ===== SKIP LINK & FOCUS ===== */
 .skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); padding: 0.8rem 1.6rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; border-radius: 0 0 8px 8px; text-decoration: none; z-index: 10001; transition: top 0.3s; }
 .skip-link:focus { top: 0; }
 *:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
-.header-cta:focus-visible, .cta-btn:focus-visible { outline-offset: 4px; }
-.hamburger:focus-visible { outline-offset: 2px; border-radius: 8px; }
 </style>
 </head>
 <body>
@@ -261,7 +196,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <div class="grain"></div>
 
 <!-- HEADER -->
-<header class="site-header">
+<header class="site-header" id="siteHeader">
   <a href="/" aria-label="Élevia — Accueil">
     <svg class="header-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg">
       <g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g>
@@ -291,176 +226,186 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
 
-<!-- HERO -->
 <main id="main-content">
-<section class="rec-hero">
-  <p class="section-label" data-reveal>Les Recettes &Eacute;levia</p>
-  <h1 data-reveal>Des recettes <em>vraiment &agrave; toi</em>.</h1>
-  <p class="hero-sub" data-reveal>Chaque recette respecte ton r&eacute;gime, tes allergies et tes aversions&nbsp;&mdash; avec des quantit&eacute;s calibr&eacute;es sur ton plan.<br>Pas de tri &agrave; faire, pas d'adaptation &agrave; calculer.</p>
-  <p class="hero-punchline" data-reveal>Juste cuisiner.</p>
+
+<!-- ===== ACTE 1 — HERO IMMERSIF ===== -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/edaa512e-067f-40df-b297-372f2e9dcb26.png?width=600&quality=80" alt="" loading="eager" decoding="async">
+  </div>
+  <div class="hero-content">
+    <p class="section-label" data-reveal>Les Recettes &Eacute;levia</p>
+    <h1 class="hero-statement" data-reveal>Des recettes<br><em>vraiment &agrave; toi</em>.</h1>
+    <p class="hero-punchline" data-reveal>Juste cuisiner.</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>D&eacute;couvrir</span>
+  </div>
 </section>
 
-<!-- SHOWCASE — Deux expériences -->
-<section class="section-showcase"><div class="section-inner">
-  <p class="section-label" data-reveal>Deux exp&eacute;riences</p>
-  <h2 class="section-headline" data-reveal>Dans ton plan. Dans <em>ton espace</em>.</h2>
-  <p class="showcase-intro" data-reveal>Les sauces maison et recettes prot&eacute;in&eacute;es sont dans ton plan PDF. Toutes les recettes compl&egrave;tes sont accessibles dans ton Espace Client&nbsp;&mdash; avec tes filtres, tes quantit&eacute;s ajust&eacute;es, et z&eacute;ro allerg&egrave;ne.</p>
+<!-- ===== ACTE 2 — GALERIE RECETTES ===== -->
+<section class="section-gallery">
+  <div class="gallery-inner">
+    <p class="section-label" data-reveal>Un aper&ccedil;u</p>
+    <h2 class="gallery-headline" data-reveal>Plats chauds, bowls, tartines.<br><em>Toujours calibr&eacute;es</em>.</h2>
+    <p class="gallery-sub" data-reveal>Chaque recette respecte ton r&eacute;gime, tes allergies et tes pr&eacute;f&eacute;rences&nbsp;&mdash; avec des quantit&eacute;s pens&eacute;es pour toi. De nouvelles recettes s'ajoutent chaque mois.</p>
 
-  <div class="browser-mockup" data-reveal>
-    <div class="browser-bar">
-      <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
-      <div class="browser-url"><span class="url-lock">&#x1F512;</span><span>elevianutrition.com/mes-recettes</span></div>
-    </div>
-    <div class="browser-body">
-      <video src="/videos/recettes-demo.mp4" autoplay muted loop playsinline poster="/images/espace-recettes-preview.png"></video>
-      <span class="browser-badge">En direct</span>
-    </div>
-  </div>
-
-  <div class="showcase-highlights">
-    <div class="showcase-hl" data-reveal>
-      <div class="showcase-hl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-      <div>
-        <h3>Plan PDF interactif</h3>
-        <p>Chaque nom de recette est cliquable dans ton document &mdash; acc&egrave;s direct &agrave; ta fiche personnalis&eacute;e.</p>
+    <div class="recipe-grid" data-reveal>
+      <div class="recipe-card">
+        <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/edaa512e-067f-40df-b297-372f2e9dcb26.png?width=600&quality=80" alt="Saumon laqu&eacute; au miso" loading="lazy" decoding="async">
+        <div class="recipe-card-body">
+          <div class="recipe-card-title">Saumon laqu&eacute; au miso, riz basmati et brocoli croquant</div>
+          <div class="recipe-card-meta"><span class="recipe-card-badge">Repas chaud</span><span>10 min</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/a27cc7ee-8f11-447b-8ee2-80cf2962b9f2.png?width=600&quality=80" alt="Bowl entrec&ocirc;te grill&eacute;e" loading="lazy" decoding="async">
+        <div class="recipe-card-body">
+          <div class="recipe-card-title">Bowl entrec&ocirc;te grill&eacute;e, boulgour-lentilles et vinaigrette tahini</div>
+          <div class="recipe-card-meta"><span class="recipe-card-badge">Bowl</span><span>10 min</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/a5363942-e698-464c-bdf7-73c809c62853.png?width=600&quality=80" alt="Tartine italienne" loading="lazy" decoding="async">
+        <div class="recipe-card-body">
+          <div class="recipe-card-title">Tartine italienne&nbsp;: jambon cru, mozzarella et roquette</div>
+          <div class="recipe-card-meta"><span class="recipe-card-badge">Tartine</span><span>5 min</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/54bc8539-4914-4d1e-be9e-4986f18bb916.png?width=600&quality=80" alt="Poulet dor&eacute; au thym" loading="lazy" decoding="async">
+        <div class="recipe-card-body">
+          <div class="recipe-card-title">Poulet dor&eacute; au thym, quinoa tricolore et courgettes r&ocirc;ties</div>
+          <div class="recipe-card-meta"><span class="recipe-card-badge">Repas chaud</span><span>10 min</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/ca816e7a-938d-44ed-8458-6b8d45d30e60.png?width=600&quality=80" alt="Curry de lentilles corail" loading="lazy" decoding="async">
+        <div class="recipe-card-body">
+          <div class="recipe-card-title">Curry de lentilles corail, riz jasmin et chou-fleur r&ocirc;ti</div>
+          <div class="recipe-card-meta"><span class="recipe-card-badge">Repas chaud</span><span>10 min</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/90d17969-7448-4d17-90b1-1d43f765fd9c.png?width=600&quality=80" alt="Agneau &eacute;pic&eacute; &agrave; la chermoula" loading="lazy" decoding="async">
+        <div class="recipe-card-body">
+          <div class="recipe-card-title">Agneau &eacute;pic&eacute; &agrave; la chermoula, patate douce et fenouil</div>
+          <div class="recipe-card-meta"><span class="recipe-card-badge">Repas chaud</span><span>15 min</span></div>
+        </div>
       </div>
     </div>
-    <div class="showcase-hl" data-reveal>
-      <div class="showcase-hl-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <div>
-        <h3>Z&eacute;ro allerg&egrave;ne</h3>
-        <p>Tes intol&eacute;rances et pr&eacute;f&eacute;rences alimentaires sont prises en compte&nbsp;&mdash; tu ne vois que ce qui te convient.</p>
+  </div>
+</section>
+
+<!-- ===== ACTE 3 — SPOTLIGHTS ===== -->
+<section class="section-spotlights">
+
+  <div class="spotlight" data-reveal>
+    <div class="spotlight-img">
+      <div class="browser-mockup browser-mockup--light" style="border-radius:10px; overflow:hidden; box-shadow:0 16px 48px rgba(0,0,0,0.1);">
+        <div class="browser-bar browser-bar--light">
+          <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+          <div class="browser-url browser-url--light"><span class="url-lock">&#x1F512;</span><span>elevianutrition.com/mes-recettes</span></div>
+        </div>
+        <div class="browser-body">
+          <video src="videos/recettes-demo.mp4" autoplay muted loop playsinline poster="images/espace-recettes-preview.webp" style="display:block;width:100%;height:auto;"></video>
+        </div>
       </div>
     </div>
-  </div>
-</div></section>
-
-<!-- ESPACE RECETTES -->
-<section class="section-categories"><div class="section-inner">
-  <p class="section-label" data-reveal>Dans ton espace recettes</p>
-  <h2 class="section-headline" data-reveal>De la vari&eacute;t&eacute;, <em>chaque moment</em>.</h2>
-
-  <!-- Moments de la journée -->
-  <div class="moment-grid">
-    <div class="moment-card" data-reveal>
-      <span class="moment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M8 6.157a2 2 0 0 1 0-2.829A2 2 0 0 0 8 .5"/><path d="M12 6.157a2 2 0 0 1 0-2.829A2 2 0 0 0 12 .5"/><path d="M16 6.157a2 2 0 0 1 0-2.829A2 2 0 0 0 16 .5"/><path d="M5.5 11.542a6.5 3 0 1 0 13 0 6.5 3 0 1 0-13 0Z"/><path d="M18.5 11.542a17.9 17.9 0 0 1-1.165 6.558 2 2 0 0 1-.53.763A7.12 7.12 0 0 1 12 20.542a7.12 7.12 0 0 1-4.8-1.679 1.98 1.98 0 0 1-.53-.763 17.9 17.9 0 0 1-1.17-6.558"/><path d="M18.219 14.886C19.933 15.8 21 17.079 21 18.5c0 2.761-4.029 5-9 5s-9-2.239-9-5c0-1.421 1.067-2.7 2.78-3.614"/><path d="M7.526 13.718C7.24 12.516 9.353 11.5 12 11.5s4.76 1.016 4.474 2.218"/></svg></span>
-      <span class="moment-label">Petit-d&eacute;jeuner</span>
-    </div>
-    <div class="moment-card" data-reveal>
-      <span class="moment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M.5 14.5c0 5 5 9 11.5 9s11.5-4 11.5-9Z"/><path d="M10 11a2.2 2.2 0 0 0-1.44-1.19 2.26 2.26 0 0 0-2.13-2.43 2.65 2.65 0 0 0-3.19-2 2.63 2.63 0 0 0-1.6 3.43 2.18 2.18 0 0 0-.85 2.48c.08.26.19.5.34.72a1.91 1.91 0 0 0-.39.54"/><path d="M15.92 6.23A2.74 2.74 0 0 0 13.7 3.6 3.26 3.26 0 0 0 10.17.53a3.26 3.26 0 0 0-2.57 3.9 2.61 2.61 0 0 0-1.5 2.15"/><path d="M21.56 12.5A2.43 2.43 0 0 0 22.72 9a2.25 2.25 0 0 0 .18-3.2 2.64 2.64 0 0 0-.85-3.69 2.64 2.64 0 0 0-3.54 1.34 2.28 2.28 0 0 0-2.63 2.36"/><path d="M10.23 12.5a3 3 0 1 1 5.54 0"/><path d="M15.16 9.24a2.48 2.48 0 0 1 .26-.4A2.58 2.58 0 0 1 19.5 12a2.84 2.84 0 0 1-.49.49"/><path d="M4.5 9.34a5.94 5.94 0 0 1 1 3.16"/><path d="M10.5 3.84a13 13 0 0 1 1 4.9"/><path d="M20.5 5.34A14.77 14.77 0 0 0 18.39 8"/></svg></span>
-      <span class="moment-label">Repas froid</span>
-    </div>
-    <div class="moment-card" data-reveal>
-      <span class="moment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M6.376 19.535S7.1 15.322 5.04 13a.324.324 0 0 1 .007-.438c.711-.778 2.513.021 4.326 3.345.473.867 1.461.822 2.32.332 1.632-.931 3.8-3.359 5.3-3.739 1.969-.5 2.648.7 2.269 1.079l-8.592 8.588Z"/><path d="m9.338 23.5 1.332-1.333-4.294-2.632L2.773 23.5"/><path d="m23.459 11.5-22.918 0"/><path d="M21.433 11.5c.009-.167.026-.331.026-.5a9.5 9.5 0 0 0-19 0c0 .169.016.333.025.5"/><path d="m11.459 1.5 0-1"/></svg></span>
-      <span class="moment-label">Repas chaud</span>
-    </div>
-    <div class="moment-card" data-reveal>
-      <span class="moment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M12 22.5c1.5 0 .5 1 3.5 1s6-6 6-10-2.5-7-5.5-7-3 1-4 1-1-1-4-1-5.5 3-5.5 7 3 10 6 10 2-1 3.5-1Z"/><path d="M12 7.5v-2a2.006 2.006 0 0 0-2-2H8"/><path d="M14.628 4.918a4.5 4.5 0 0 0 3.829-3.828.517.517 0 0 0-.585-.585 4.5 4.5 0 0 0-3.828 3.829.515.515 0 0 0 .584.584Z"/></svg></span>
-      <span class="moment-label">Collation</span>
-    </div>
-    <div class="moment-card" data-reveal>
-      <span class="moment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M11 20v-4.5H8.5L12 10v3.5h2.5L11 20Z"/><path d="M17 23.5H7L5.5 22V8.5l3-3h7l3 3V22L17 23.5Z"/><path d="M7 5.5h10"/><path d="m10 5.5-2-2"/></svg></span>
-      <span class="moment-label">Pr&eacute;-entra&icirc;nement</span>
-    </div>
-    <div class="moment-card" data-reveal>
-      <span class="moment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M20.887 13.753A4 4 0 0 0 23.5 10V7.5a1 1 0 0 0-1-1h-2.048"/><path d="M3.113 13.753A4 4 0 0 1 .5 10V7.5a1 1 0 0 1 1-1h2.051"/><path d="M20.994 1.525a1 1 0 0 0-1-1.025H4.018a1 1 0 0 0-1 1.025C3.365 15.739 10.971 11.678 10.971 17c-.055 3.1-1.349 4.239-3.564 4.459a1 1 0 0 0-.9 1v.041a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-.046a1 1 0 0 0-.9-1C14.364 21.24 12.971 20.1 12.971 17c0-5.328 7.672-1.323 8.023-15.475Z"/><path d="M11.764 2.689a.251.251 0 0 1 .486 0l.757 2.811h3.174a.25.25 0 0 1 .138.458L14.006 7.64l1.212 3.232a.25.25 0 0 1-.38.291L12.005 9.14l-2.833 2.023a.25.25 0 0 1-.38-.291L10 7.64 7.691 5.958a.25.25 0 0 1 .138-.458H11Z"/></svg></span>
-      <span class="moment-label">Post-entra&icirc;nement</span>
+    <div class="spotlight-text">
+      <p class="section-label">Ton espace recettes</p>
+      <h3>Filtr&eacute;es <em>pour toi</em>.</h3>
+      <p>V&eacute;g&eacute;tarien, intol&eacute;rant au lactose, tu n'aimes pas certains aliments&nbsp;? Tu ne vois que ce qui te convient. Tes quantit&eacute;s sont ajust&eacute;es &agrave; ton plan&nbsp;&mdash; tu cuisines, c'est d&eacute;j&agrave; calibr&eacute;.</p>
     </div>
   </div>
 
-  <!-- Recette de la semaine -->
-  <div class="featured-recipe" data-reveal>
-    <div class="featured-visual">
-      <img src="https://rlemorqfkuloyxoydmdj.supabase.co/storage/v1/render/image/public/recipe-images/fc108a78-b50b-463c-aba7-dd810701b6cd.png?width=800&quality=80" alt="Bowl quinoa, poulet r&ocirc;ti et l&eacute;gumes de saison" width="800" height="600" loading="lazy" decoding="async">
+  <div class="spotlight-divider"></div>
+
+  <div class="spotlight spotlight--reverse" data-reveal>
+    <div class="spotlight-img">
+      <img src="images/plan-recettes-hub.webp" alt="Page recettes dans le plan PDF" loading="lazy" decoding="async">
     </div>
-    <div class="featured-body">
-      <p class="featured-badge">Recette de la semaine</p>
-      <h3 class="featured-title">Bowl quinoa, poulet r&ocirc;ti &amp; l&eacute;gumes de saison</h3>
-      <div class="featured-tags">
-        <span class="featured-tag">Repas midi</span>
-        <span class="featured-tag">25 min</span>
-        <span class="featured-tag">De saison</span>
-      </div>
-      <p class="featured-desc">Les quantit&eacute;s sont ajust&eacute;es &agrave; ton plan. Une mise en avant diff&eacute;rente chaque semaine.</p>
+    <div class="spotlight-text">
+      <p class="section-label">Dans ton plan aussi</p>
+      <h3>Sauces maison et <em>recettes prot&eacute;in&eacute;es</em>.</h3>
+      <p>14 sauces et 7 recettes prot&eacute;in&eacute;es sont int&eacute;gr&eacute;es directement dans ton plan PDF&nbsp;&mdash; avec ingr&eacute;dients, &eacute;tapes et astuces. Cliquables depuis le sommaire.</p>
     </div>
   </div>
 
-  <!-- Inspire-moi -->
-  <!-- TODO app: le bouton inspire-moi doit filtrer uniquement sur les recettes disponibles au budget du patient -->
-  <div class="recipe-actions" data-reveal>
-    <a href="/espace-client.html" class="inspire-btn">Inspire-moi</a>
-    <p class="inspire-sub">Une recette dans ton budget, choisie pour toi au hasard.</p>
-  </div>
+  <div class="spotlight-divider"></div>
 
-  <!-- Filtres -->
-  <div class="filter-row" data-reveal>
-    <span class="filter-label">Aussi filtrer par</span>
-    <span class="filter-pill">Saison</span>
-    <span class="filter-pill">Budget</span>
-    <span class="filter-pill">Temps de pr&eacute;paration</span>
-  </div>
-
-  <!-- Note mensuelle -->
-  <div class="growth-note" data-reveal>
-    <span class="growth-line"></span>
-    <p>De nouvelles recettes s'ajoutent chaque mois, progressivement et avec soin.</p>
-    <span class="growth-line"></span>
-  </div>
-</div></section>
-
-
-<!-- HOW IT WORKS -->
-<section class="section-how"><div class="section-inner">
-  <p class="section-label" data-reveal>Pourquoi c'est diff&eacute;rent</p>
-  <h2 class="section-headline" data-reveal>Des recettes qui <em>te connaissent</em>.</h2>
-
-  <div class="how-grid">
-    <div class="how-card" data-reveal>
-      <div class="how-num">01</div>
-      <h4>Disponible ou pas&nbsp;&mdash; l'app d&eacute;cide pour toi</h4>
-      <p>Chaque recette est &eacute;valu&eacute;e en temps r&eacute;el selon ton plan de la semaine&nbsp;: disponible maintenant, ou hors budget. Les ingr&eacute;dients sont automatiquement d&eacute;duits de tes objectifs&nbsp;&mdash; tu cuisines, l'app calcule.</p>
+  <div class="spotlight" data-reveal>
+    <div class="spotlight-img">
+      <img src="images/plan-recette-detail.webp" alt="Recette avec valeurs usuelles et grammages" style="border-radius:10px; box-shadow:0 16px 48px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
     </div>
-    <div class="how-card" data-reveal>
-      <div class="how-num">02</div>
-      <h4>Con&ccedil;ue pour toi, vraiment</h4>
-      <p>V&eacute;g&eacute;tarien, allergique, tu n'aimes pas certains aliments&nbsp;? Avant m&ecirc;me d'ouvrir une recette, elle a d&eacute;j&agrave; &eacute;t&eacute; filtr&eacute;e. Tu ne vois que ce qui correspond &agrave; ton r&eacute;gime, tes intol&eacute;rances et tes go&ucirc;ts.</p>
-    </div>
-    <div class="how-card" data-reveal>
-      <div class="how-num">03</div>
-      <h4>Les bonnes quantit&eacute;s, la bonne structure</h4>
-      <p>Ce n'est pas qu'une question de portions&nbsp;&mdash; les recettes s'adaptent aussi &agrave; la structure de ton plan. Bowl le midi, repas chaud le soir, petit-d&eacute;j le matin&nbsp;: chaque recette est &agrave; sa place, avec les bonnes quantit&eacute;s pour toi.</p>
-    </div>
-    <div class="how-card" data-reveal>
-      <div class="how-num">04</div>
-      <h4>Un acc&egrave;s simple, sans surprise</h4>
-      <p>Tu as l'app&nbsp;? Les recettes sont d&eacute;j&agrave; incluses&nbsp;&mdash; rien &agrave; faire, tout est activ&eacute;. Tu as le plan seul&nbsp;? Les recettes s'ajoutent en une fois pour 35&nbsp;&euro;, &agrave; vie. Nouvelles recettes incluses dans les deux cas.</p>
+    <div class="spotlight-text">
+      <p class="section-label">Tes portions</p>
+      <h3>Tes quantit&eacute;s.<br>Pas celles <em>des autres</em>.</h3>
+      <p>Chaque ingr&eacute;dient est exprim&eacute; en valeurs usuelles&nbsp;&mdash; une cuill&egrave;re, une gousse, une pinc&eacute;e. Les grammages sont l&agrave; aussi, pour calibrer visuellement au d&eacute;but. Pens&eacute; par un di&eacute;t&eacute;ticien, pas g&eacute;n&eacute;r&eacute; par un algorithme.</p>
     </div>
   </div>
-</div></section>
 
-<!-- PREVIEW ESPACE -->
-<section class="section-preview"><div class="section-inner">
-  <p class="section-label" data-reveal>Aper&ccedil;u</p>
-  <h2 class="section-headline" data-reveal>Ton espace. <em>Tes recettes</em>.</h2>
-  <p class="preview-sub" data-reveal>Recette de la semaine, filtres intelligents, quantit&eacute;s adapt&eacute;es &agrave; ton plan &mdash; tout est d&eacute;j&agrave; pr&ecirc;t.</p>
-  <div class="browser-mockup browser-mockup--light" data-reveal>
-    <div class="browser-bar browser-bar--light">
-      <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
-      <div class="browser-url browser-url--light"><span class="url-lock">&#x1F512;</span><span>elevianutrition.com/mes-recettes</span></div>
+</section>
+
+<!-- ===== ACTE 4 — CHIFFRES ===== -->
+<section class="section-numbers">
+  <div class="numbers-grid" data-reveal>
+    <div class="number-item">
+      <div class="number-value">14</div>
+      <div class="number-label">sauces maison</div>
     </div>
-    <div class="browser-body">
-      <img src="/images/espace-recettes-preview.png" alt="Espace recettes &Eacute;levia &mdash; recette de la semaine et catalogue avec photos" loading="lazy" style="display:block;width:100%;height:auto;">
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value">6</div>
+      <div class="number-label">cat&eacute;gories de repas</div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value">0</div>
+      <div class="number-label">allerg&egrave;ne oubli&eacute;</div>
+    </div>
+    <div class="numbers-sep"></div>
+    <div class="number-item">
+      <div class="number-value">&infin;</div>
+      <div class="number-label">nouvelles recettes &agrave; venir</div>
     </div>
   </div>
-</div></section>
+</section>
 
-<!-- CTA -->
-<section class="section-cta"><div class="section-inner">
-  <h2 class="cta-headline" data-reveal>35&nbsp;&euro;. <em>Une seule fois</em>.</h2>
-  <p class="cta-sub" data-reveal>Toutes les recettes &Eacute;levia, s&eacute;lectionn&eacute;es pour ton profil, avec tes quantit&eacute;s. Acc&egrave;s &agrave; vie, nouvelles recettes incluses.</p>
-  <a href="/espace-client.html" class="cta-btn" data-reveal>Acc&eacute;der aux recettes <span>&rarr;</span></a>
-  <p class="cta-trust" data-reveal>Cr&eacute;&eacute; par un di&eacute;t&eacute;ticien dipl&ocirc;m&eacute; &middot; Paiement unique &middot; Acc&egrave;s depuis ton Espace Client</p>
-</div></section>
+<!-- ===== ACTE 5 — CTA ===== -->
+<section class="section-cta">
+  <p class="section-label" data-reveal>Acc&egrave;s</p>
+  <h2 class="cta-headline" data-reveal>Deux fa&ccedil;ons d'y <em>acc&eacute;der</em>.</h2>
+  <p class="cta-sub" data-reveal>Toutes les recettes sont s&eacute;lectionn&eacute;es pour ton profil, avec tes quantit&eacute;s. Nouvelles recettes incluses dans les deux cas.</p>
+
+  <div class="cta-options" data-reveal>
+    <div class="cta-card">
+      <h4>Recettes seules</h4>
+      <div class="cta-price">35&nbsp;&euro;</div>
+      <div class="cta-price-sub">une seule fois &middot; acc&egrave;s &agrave; vie</div>
+      <ul>
+        <li>Toutes les recettes dans ton Espace Client</li>
+        <li>Quantit&eacute;s ajust&eacute;es &agrave; ton plan</li>
+        <li>Nouvelles recettes chaque mois</li>
+      </ul>
+      <a href="/espace-client.html" class="cta-btn cta-btn--outline">Acc&eacute;der <span>&rarr;</span></a>
+    </div>
+    <div class="cta-card cta-card--featured">
+      <h4>Cockpit</h4>
+      <div class="cta-price">Inclus</div>
+      <div class="cta-price-sub">avec ton plan Cockpit</div>
+      <ul>
+        <li>Recettes + plan + espace client complet</li>
+        <li>Suivi, conseils, micro-tips quotidiens</li>
+        <li>Tout d&eacute;bloqu&eacute;, rien &agrave; ajouter</li>
+      </ul>
+      <a href="/cockpit.html" class="cta-btn">D&eacute;couvrir le Cockpit <span>&rarr;</span></a>
+    </div>
+  </div>
+
+  <p class="cta-trust" data-reveal>Cr&eacute;&eacute; par un di&eacute;t&eacute;ticien dipl&ocirc;m&eacute; &middot; Donn&eacute;es 100% priv&eacute;es &middot; Paiement s&eacute;curis&eacute;</p>
+</section>
 
 </main>
 
@@ -469,35 +414,43 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <svg class="footer-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="matrix(1, 0, 0, 1, 78, 142)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.291943, 77.923656)"><path d="M 20.5625 -33.453125 C 23.40625 -33.453125 25.789062 -33.625 27.71875 -33.96875 C 29.644531 -34.3125 31.175781 -34.851562 32.3125 -35.59375 C 33.445312 -36.332031 34.265625 -37.28125 34.765625 -38.4375 C 35.265625 -39.59375 35.515625 -40.960938 35.515625 -42.546875 L 38.28125 -42.546875 L 38.28125 -20.953125 L 35.515625 -20.953125 C 35.515625 -22.535156 35.289062 -23.90625 34.84375 -25.0625 C 34.394531 -26.226562 33.601562 -27.191406 32.46875 -27.953125 C 31.332031 -28.722656 29.800781 -29.304688 27.875 -29.703125 C 25.957031 -30.097656 23.519531 -30.296875 20.5625 -30.296875 L 20.5625 -12.421875 C 20.5625 -10.679688 20.769531 -9.242188 21.1875 -8.109375 C 21.613281 -6.972656 22.34375 -6.046875 23.375 -5.328125 C 24.40625 -4.617188 25.757812 -4.117188 27.4375 -3.828125 C 29.125 -3.546875 31.207031 -3.40625 33.6875 -3.40625 C 36.488281 -3.40625 38.863281 -3.601562 40.8125 -4 C 42.757812 -4.394531 44.390625 -5.066406 45.703125 -6.015625 C 47.023438 -6.960938 48.082031 -8.210938 48.875 -9.765625 C 49.664062 -11.316406 50.328125 -13.253906 50.859375 -15.578125 L 53.859375 -15.578125 L 52.671875 0 L 3.5625 0 L 3.5625 -3 C 5.40625 -3.050781 6.894531 -3.207031 8.03125 -3.46875 C 9.164062 -3.738281 10.046875 -4.191406 10.671875 -4.828125 C 11.304688 -5.460938 11.726562 -6.359375 11.9375 -7.515625 C 12.15625 -8.671875 12.265625 -10.171875 12.265625 -12.015625 L 12.265625 -48.875 C 12.265625 -50.71875 12.171875 -52.207031 11.984375 -53.34375 C 11.796875 -54.476562 11.425781 -55.375 10.875 -56.03125 C 10.320312 -56.695312 9.515625 -57.144531 8.453125 -57.375 C 7.398438 -57.613281 6.03125 -57.785156 4.34375 -57.890625 L 4.34375 -60.90625 L 50.0625 -60.90625 L 50.78125 -46.984375 L 48.015625 -46.984375 C 47.691406 -49.085938 47.175781 -50.8125 46.46875 -52.15625 C 45.757812 -53.5 44.785156 -54.566406 43.546875 -55.359375 C 42.304688 -56.148438 40.734375 -56.703125 38.828125 -57.015625 C 36.929688 -57.335938 34.640625 -57.5 31.953125 -57.5 L 21.90625 -57.5 C 21.007812 -57.5 20.5625 -57.050781 20.5625 -56.15625 Z"/></g><g transform="translate(53.170695, 77.923656)"><path d="M 16.53125 -12.34375 C 16.53125 -10.332031 16.609375 -8.71875 16.765625 -7.5 C 16.921875 -6.289062 17.25 -5.34375 17.75 -4.65625 C 18.257812 -3.976562 18.972656 -3.503906 19.890625 -3.234375 C 20.816406 -2.972656 22.039062 -2.816406 23.5625 -2.765625 L 23.5625 0 L 1.734375 0 L 1.734375 -2.765625 C 3.316406 -2.816406 4.582031 -2.988281 5.53125 -3.28125 C 6.476562 -3.570312 7.226562 -4.03125 7.78125 -4.65625 C 8.34375 -5.289062 8.710938 -6.175781 8.890625 -7.3125 C 9.078125 -8.445312 9.171875 -9.9375 9.171875 -11.78125 L 9.171875 -45.875 C 9.171875 -48.71875 9.128906 -51.101562 9.046875 -53.03125 C 8.972656 -54.957031 8.859375 -56.265625 8.703125 -56.953125 C 8.441406 -58.160156 7.820312 -58.972656 6.84375 -59.390625 C 5.863281 -59.816406 4.109375 -60.03125 1.578125 -60.03125 L 1.578125 -62.71875 L 16.53125 -65.640625 Z"/></g><g transform="translate(73.336662, 77.923656)"><path d="M 41.28125 -7.359375 C 36.800781 -1.921875 31.238281 0.796875 24.59375 0.796875 C 21.488281 0.796875 18.671875 0.28125 16.140625 -0.75 C 13.609375 -1.78125 11.429688 -3.226562 9.609375 -5.09375 C 7.785156 -6.96875 6.375 -9.207031 5.375 -11.8125 C 4.375 -14.425781 3.875 -17.316406 3.875 -20.484375 C 3.875 -23.703125 4.398438 -26.679688 5.453125 -29.421875 C 6.515625 -32.160156 8.003906 -34.503906 9.921875 -36.453125 C 11.847656 -38.410156 14.140625 -39.941406 16.796875 -41.046875 C 19.460938 -42.148438 22.378906 -42.703125 25.546875 -42.703125 C 30.660156 -42.703125 34.613281 -41.316406 37.40625 -38.546875 C 40.207031 -35.785156 41.609375 -31.820312 41.609375 -26.65625 C 41.609375 -25.914062 41.460938 -25.46875 41.171875 -25.3125 C 40.878906 -25.15625 40.207031 -25.078125 39.15625 -25.078125 L 13.125 -25.078125 C 13.019531 -24.648438 12.941406 -24.132812 12.890625 -23.53125 C 12.835938 -22.925781 12.8125 -22.253906 12.8125 -21.515625 C 12.8125 -18.773438 13.140625 -16.28125 13.796875 -14.03125 C 14.460938 -11.789062 15.414062 -9.878906 16.65625 -8.296875 C 17.894531 -6.722656 19.367188 -5.5 21.078125 -4.625 C 22.796875 -3.757812 24.707031 -3.328125 26.8125 -3.328125 C 29.03125 -3.328125 31.085938 -3.8125 32.984375 -4.78125 C 34.878906 -5.757812 36.828125 -7.359375 38.828125 -9.578125 Z M 28.234375 -28.71875 C 29.285156 -28.71875 30.128906 -28.742188 30.765625 -28.796875 C 31.398438 -28.847656 31.875 -28.953125 32.1875 -29.109375 C 32.507812 -29.265625 32.722656 -29.488281 32.828125 -29.78125 C 32.929688 -30.070312 32.984375 -30.453125 32.984375 -30.921875 C 32.984375 -33.347656 32.203125 -35.285156 30.640625 -36.734375 C 29.085938 -38.191406 26.96875 -38.921875 24.28125 -38.921875 C 18.582031 -38.921875 15.050781 -35.519531 13.6875 -28.71875 Z"/></g></g></g>
       <g transform="matrix(1, 0, 0, 1, 192, 126)"><g fill="#f6f3ee" opacity="0.5"><g transform="translate(1.536492, 83.040763)"><path d="M 0.625 -48.84375 L 11.515625 -48.84375 L 23.03125 -11.65625 L 23.453125 -11.65625 L 34.890625 -48.84375 L 45.78125 -48.84375 L 30.140625 0.0625 L 16.265625 0.0625 Z"/></g><g transform="translate(43.896857, 83.040763)"><path d="M 4.109375 -48.84375 L 15.078125 -48.84375 L 15.078125 0 L 4.109375 0 Z"/></g><g transform="translate(57.575005, 83.040763)"><path d="M 31.40625 -11.296875 L 15.765625 -11.296875 L 12.28125 0 L 1.25 0 L 18.625 -48.84375 L 28.75 -48.84375 L 45.984375 0 L 34.953125 0 Z M 28.75 -19.609375 L 23.71875 -35.375 L 23.3125 -35.375 L 18.421875 -19.609375 Z"/></g></g></g></svg>
   <div class="footer-links"><a href="/systeme.html">Le Syst&egrave;me</a><a href="/offre.html">Offre</a><a href="/articles.html">Articles</a><a href="/contact.html">Contact</a><a href="/mentions-legales.html">Mentions l&eacute;gales</a><a href="/confidentialite.html">Politique de confidentialit&eacute;</a></div>
-  <p class="footer-copy">&copy; 2026 Élevia Nutrition. Tous droits réservés.</p>
+  <p class="footer-copy">&copy; 2026 &Eacute;levia Nutrition. Tous droits r&eacute;serv&eacute;s.</p>
 </footer>
 
 <script>
+/* Reveal */
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('revealed'); ro.unobserve(x.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => ro.observe(el));
 
-/* Reveal observer */
-const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('revealed');ro.unobserve(x.target)}})},{threshold:0.15});
-document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
-
-/* Scroll progress */
-window.addEventListener('scroll',()=>{document.getElementById('scrollProgress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
+/* Header scroll */
+const header = document.getElementById('siteHeader');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      header.classList.toggle('scrolled', window.scrollY > 80);
+      document.getElementById('scrollProgress').style.width =
+        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%';
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
 
 /* Hamburger */
-const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');mobileNav.classList.toggle('open');const isOpen=mobileNav.classList.contains('open');document.body.style.overflow=isOpen?'hidden':'';hamburger.setAttribute('aria-expanded',isOpen)});
-document.querySelectorAll('[data-nav]').forEach(a=>{a.addEventListener('click',()=>{hamburger.classList.remove('active');mobileNav.classList.remove('open');document.body.style.overflow=''})});
-
-</script>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-label="Image agrandie">
-  <img src="" alt="">
-  <span class="lightbox-hint">Cliquer pour fermer</span>
-</div>
-<script>
-const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img');
-document.querySelectorAll('.showcase-frame').forEach(frame=>{const img=frame.querySelector('img');frame.addEventListener('click',()=>{lbImg.src=img.src;lbImg.alt=img.alt;lb.classList.add('active');document.body.style.overflow='hidden'})});
-lb.addEventListener('click',()=>{lb.classList.remove('active');document.body.style.overflow=''});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('active')){lb.classList.remove('active');document.body.style.overflow=''}});
+const hamburger = document.getElementById('hamburger'), mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileNav.classList.toggle('open');
+  const isOpen = mobileNav.classList.contains('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+document.querySelectorAll('[data-nav]').forEach(a => {
+  a.addEventListener('click', () => { hamburger.classList.remove('active'); mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
+});
 </script>
 </body>
 </html>
