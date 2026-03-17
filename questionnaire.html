@@ -991,6 +991,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui', value: 'yes' },
           { label: 'Non', value: 'no' },
           { label: 'Je ne sais pas encore', value: 'dunno' }
+        ]},
+        { name: 'extras_plaisir_wanted', type: 'radio', label: 'Souhaites-tu qu\'on prévoie un extra plaisir dans ton plan ?', help: 'Un petit plaisir hebdomadaire (biscuit, glace, dessert\u2026) encadré dans ton budget calorique. Maximum 1 fois par semaine.', options: [
+          { label: 'Oui, j\'aime que ce soit prévu', value: 'yes' },
+          { label: 'Non, pas nécessaire pour moi', value: 'no' }
         ]}
       ]
     });
@@ -1079,7 +1083,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     el('progressPct').textContent = pct + '%';
     el('stepIndicator').textContent = 'Étape ' + (currentStep + 1) + ' sur ' + totalSteps;
     el('stepIcon').textContent = step.icon || '';
-    el('stepTitle').innerHTML = step.title;
+    el('stepTitle').innerHTML = typeof step.title === 'function' ? step.title() : step.title;
 
     // Encouragement messages — personalized by goal
     var goal = v('primary_goal');
@@ -1460,6 +1464,29 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       renderStep();
     }
   });
+
+  // ── Clear hidden conditional fields before submit ──
+  function clearHiddenFieldValues() {
+    var allSteps = getSteps();
+    for (var i = 0; i < allSteps.length; i++) {
+      var step = allSteps[i];
+      if (step.condition && !step.condition()) {
+        for (var j = 0; j < step.fields.length; j++) {
+          if (step.fields[j].name && step.fields[j].name.charAt(0) !== '_') {
+            delete formData[step.fields[j].name];
+          }
+        }
+        continue;
+      }
+      for (var j = 0; j < step.fields.length; j++) {
+        var f = step.fields[j];
+        if (f.condition && !f.condition() && f.name && f.name.charAt(0) !== '_') {
+          delete formData[f.name];
+        }
+      }
+    }
+    saveToStorage();
+  }
 
   // ── Submit ──
   el('btnSubmit').addEventListener('click', function() {
