@@ -1165,8 +1165,11 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     // Bind events
     bindFieldEvents();
 
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top only on step change (not on conditional re-render)
+    if (!renderStep._skipScroll) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    renderStep._skipScroll = false;
   }
 
   function renderField(f) {
@@ -1248,7 +1251,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         saveToStorage();
         clearError(name);
         if (weightFields.indexOf(name) !== -1) {
-          setTimeout(function() { renderStep(); }, 100);
+          setTimeout(function() { renderStep._skipScroll = true; renderStep(); }, 100);
         }
       });
     });
@@ -1273,7 +1276,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         // Re-render step if conditionals may have changed
         var needsRerender = hasConditionalDependency(name);
         if (needsRerender) {
-          setTimeout(function() { renderStep(); clearHiddenFieldValues(); }, 50);
+          setTimeout(function() { renderStep._skipScroll = true; renderStep(); clearHiddenFieldValues(); }, 50);
         }
       });
     });
@@ -1318,7 +1321,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         // Re-render if conditionals depend on this
         var needsRerender = hasConditionalDependency(name);
         if (needsRerender) {
-          setTimeout(function() { renderStep(); clearHiddenFieldValues(); }, 50);
+          setTimeout(function() { renderStep._skipScroll = true; renderStep(); clearHiddenFieldValues(); }, 50);
         }
       });
     });
