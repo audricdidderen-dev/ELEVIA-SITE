@@ -508,16 +508,16 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         { name: 'gender', type: 'radio', label: 'Genre', required: true, options: [
           { label: 'Homme', value: 'M' }, { label: 'Femme', value: 'F' }
         ]},
-        { name: 'age', type: 'number', label: 'Âge', required: true, placeholder: '32' },
-        { name: 'weight_kg', type: 'number', label: 'Poids (kg)', required: true, placeholder: '82', help: 'Ton poids du matin, à jeun, c\'est parfait. Pas besoin d\'être au gramme près.' },
-        { name: 'height_m', type: 'number', label: 'Taille (m)', required: true, placeholder: '1.78', step: '0.01' },
+        { name: 'age', type: 'number', label: 'Âge', required: true, placeholder: '32', min: 10, max: 99 },
+        { name: 'weight_kg', type: 'number', label: 'Poids (kg)', required: true, placeholder: '82', min: 30, max: 250, help: 'Ton poids du matin, à jeun, c\'est parfait. Pas besoin d\'être au gramme près.' },
+        { name: 'height_m', type: 'number', label: 'Taille (m)', required: true, placeholder: '1.78', step: '0.01', min: 1.20, max: 2.30 },
         { name: 'primary_goal', type: 'radio', label: 'Objectif principal', required: true, help: 'C\'est la base de tout. Ton plan sera calibré en fonction de cet objectif.', options: [
           { label: 'Perdre du poids', value: 'weight_loss' },
           { label: 'Maintien / rééquilibrage alimentaire', value: 'maintenance' },
           { label: 'Recomposition — muscler et affiner sans prendre de poids. Nécessite une activité sportive (ou de prévoir d\'en commencer une).', value: 'recomposition' },
           { label: 'Prise de masse — prendre du volume et du poids. Nécessite une activité sportive (ou de prévoir d\'en commencer une).', value: 'muscle_gain' }
         ]},
-        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', help: 'Si tu n\'as pas de chiffre précis, indique une fourchette réaliste.', condition: function() { return v('primary_goal') === 'weight_loss' || v('primary_goal') === 'muscle_gain'; } },
+        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', min: 30, max: 250, help: 'Si tu n\'as pas de chiffre précis, indique une fourchette réaliste.', condition: function() { return v('primary_goal') === 'weight_loss' || v('primary_goal') === 'muscle_gain'; } },
         { name: '_warn_muscle_target', type: 'section', label: 'Ton poids cible est inférieur ou égal à ton poids actuel. Pour la prise de masse, il doit être supérieur. Si tu veux te muscler sans prendre de poids, choisis « Recomposition » ci-dessus.', condition: function() {
           if (v('primary_goal') !== 'muscle_gain') return false;
           var w = parseFloat(formData['weight_kg'] || '');
@@ -537,9 +537,9 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'mesures', title: 'Tes <em>mesures</em>', icon: '\uD83D\uDCCF',
       fields: [
-        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', help: 'Mesure à hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains paramètres.' },
-        { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', help: 'Tour de hanches au plus large. Mesure optionnelle.' },
-        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', help: 'Via balance impédancemètre, DEXA, ou estimation. Optionnel.' }
+        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', min: 40, max: 200, help: 'Mesure à hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains paramètres.' },
+        { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', min: 40, max: 200, help: 'Tour de hanches au plus large. Mesure optionnelle.' },
+        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', min: 3, max: 60, help: 'Via balance impédancemètre, DEXA, ou estimation. Optionnel.' }
       ]
     });
 
