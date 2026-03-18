@@ -1190,7 +1190,7 @@ body.state-portal::before {
       // Welcome — time-based greeting
       const hour = new Date().getHours();
       const greeting = hour < 18 ? 'Bonjour' : 'Bonsoir';
-      welcomeName.innerHTML = greeting + ', <em>' + (client.first_name || 'toi') + '</em>.';
+      welcomeName.innerHTML = greeting + ', <em>' + escHtml(client.first_name || 'toi') + '</em>.';
 
       // 2. Get plan (with pdf_url) for dynamic quantities + download
       const { data: plan } = await sb.from('client_plans')
