@@ -261,6 +261,21 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 }
 .field-section-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
+.field-note {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 300;
+  color: var(--text-muted); line-height: 1.7;
+  background: rgba(198,160,91,0.06); border-left: 3px solid var(--gold-pale);
+  padding: 0.8rem 1rem; border-radius: 0 8px 8px 0;
+  margin-bottom: 1.2rem;
+}
+.field-warning {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 400;
+  color: var(--error); line-height: 1.6;
+  background: rgba(196,91,91,0.06); border-left: 3px solid var(--error);
+  padding: 0.8rem 1rem; border-radius: 0 8px 8px 0;
+  margin: 1rem 0;
+}
+
 /* ═══════════════════════════════════════
    ERROR STATES
 ═══════════════════════════════════════ */
@@ -457,14 +472,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
   var currentStep = 0;
   var STORAGE_KEY = 'elevia_questionnaire_' + (ORDER_ID || SESSION_ID);
 
-  // Restore from sessionStorage
+  // Restore from localStorage
   try {
-    var saved = sessionStorage.getItem(STORAGE_KEY);
+    var saved = localStorage.getItem(STORAGE_KEY);
     if (saved) formData = JSON.parse(saved);
   } catch(e) {}
 
   function saveToStorage() {
-    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData)); } catch(e) {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(formData)); } catch(e) {}
   }
 
   // ── Helpers ──
@@ -517,14 +532,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Recomposition — muscler et affiner sans prendre de poids. Nécessite une activité sportive (ou de prévoir d\'en commencer une).', value: 'recomposition' },
           { label: 'Prise de masse — prendre du volume et du poids. Nécessite une activité sportive (ou de prévoir d\'en commencer une).', value: 'muscle_gain' }
         ]},
-        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', min: 30, max: 250, help: 'Si tu n\'as pas de chiffre précis, indique une fourchette réaliste.', condition: function() { return v('primary_goal') === 'weight_loss' || v('primary_goal') === 'muscle_gain'; } },
-        { name: '_warn_muscle_target', type: 'section', label: 'Ton poids cible est inférieur ou égal à ton poids actuel. Pour la prise de masse, il doit être supérieur. Si tu veux te muscler sans prendre de poids, choisis « Recomposition » ci-dessus.', condition: function() {
+        { name: 'target_weight_kg', type: 'number', label: 'Poids cible (kg)', placeholder: '75', min: 30, max: 250, help: 'M\u00EAme approximatif, \u00E7a suffit. Si tu ne sais pas, laisse vide.', condition: function() { return v('primary_goal') === 'weight_loss' || v('primary_goal') === 'muscle_gain'; } },
+        { name: '_warn_muscle_target', type: 'section', className: 'field-warning', label: 'Ton poids cible est inférieur ou égal à ton poids actuel. Pour la prise de masse, il doit être supérieur. Si tu veux te muscler sans prendre de poids, choisis « Recomposition » ci-dessus.', condition: function() {
           if (v('primary_goal') !== 'muscle_gain') return false;
           var w = parseFloat(formData['weight_kg'] || '');
           var t = parseFloat(formData['target_weight_kg'] || '');
           return !isNaN(w) && !isNaN(t) && t <= w;
         } },
-        { name: '_warn_loss_target', type: 'section', label: 'Ton poids cible est supérieur ou égal à ton poids actuel. Pour perdre du poids, il doit être inférieur. Si tu veux maintenir ton poids, choisis « Maintien » ci-dessus.', condition: function() {
+        { name: '_warn_loss_target', type: 'section', className: 'field-warning', label: 'Ton poids cible est supérieur ou égal à ton poids actuel. Pour perdre du poids, il doit être inférieur. Si tu veux maintenir ton poids, choisis « Maintien » ci-dessus.', condition: function() {
           if (v('primary_goal') !== 'weight_loss') return false;
           var w = parseFloat(formData['weight_kg'] || '');
           var t = parseFloat(formData['target_weight_kg'] || '');
@@ -537,9 +552,10 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'mesures', title: 'Tes <em>mesures</em>', icon: '\uD83D\uDCCF',
       fields: [
-        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', min: 40, max: 200, help: 'Mesure à hauteur du nombril. Facultatif \u2014 mais utile pour adapter certains paramètres.' },
-        { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', min: 40, max: 200, help: 'Tour de hanches au plus large. Mesure optionnelle.' },
-        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', min: 3, max: 60, help: 'Via balance impédancemètre, DEXA, ou estimation. Optionnel.' }
+        { name: '_mesures_intro', type: 'section', className: 'field-note', label: 'Ces mesures sont 100 % facultatives. Si tu ne les as pas sous la main ou que tu ne sais pas comment les prendre, passe directement \u00E0 la suite \u2014 ton plan sera tout aussi pr\u00E9cis. Tu pourras toujours les compl\u00E9ter plus tard.' },
+        { name: 'waist_cm', type: 'number', label: 'Tour de taille (cm)', placeholder: '85', min: 40, max: 200, help: 'Mesure au niveau du nombril, debout, sans serrer. Pas de m\u00E8tre ruban\u00A0? Passe \u00E0 la suite.' },
+        { name: 'hip_cm', type: 'number', label: 'Tour de hanches (cm)', placeholder: '98', min: 40, max: 200, help: 'Au point le plus large des hanches. Facultatif.' },
+        { name: 'body_fat_pct', type: 'number', label: 'Taux de masse grasse (%)', placeholder: '22', step: '0.1', min: 3, max: 60, help: 'Si tu as une balance connect\u00E9e ou un r\u00E9sultat r\u00E9cent, indique-le ici. Sinon, laisse vide.' }
       ]
     });
 
@@ -595,7 +611,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Produits contenant du lactose', value: 'lactose' },
           { label: 'Viandes', value: 'viandes' },
           { label: 'Aliments en provenance de la mer', value: 'mer' },
-          { label: 'Oeufs', value: 'oeufs' },
+          { label: '\u0152ufs', value: 'oeufs' },
           { label: 'Fruits à coque', value: 'fruits_coque' },
           { label: 'Fromage', value: 'fromage' },
           { label: 'Légumineuses', value: 'legumineuses' }
@@ -605,7 +621,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Arachides', value: 'peanuts' },
           { label: 'Fruits à coque', value: 'tree_nuts' },
           { label: 'Gluten', value: 'gluten' },
-          { label: 'Oeufs', value: 'eggs' },
+          { label: '\u0152ufs', value: 'eggs' },
           { label: 'Soja', value: 'soy' },
           { label: 'Crustacés / mollusques', value: 'shellfish' },
           { label: 'Autre', value: 'other' }
@@ -620,7 +636,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         { name: 'gluten_intolerance', type: 'radio', label: 'Intolérance au gluten', options: [
           { label: 'Non, aucun souci', value: 'no' },
           { label: 'Sensibilité légère', value: 'sensitive' },
-          { label: 'Intolérance confirmée / coeliaque', value: 'celiac' },
+          { label: 'Intolérance confirmée / c\u0153liaque', value: 'celiac' },
           { label: 'Je ne sais pas', value: 'unknown' }
         ]},
         // Végétarien block
@@ -640,7 +656,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Tofu', value: 'tofu' },
           { label: 'Tempeh', value: 'tempeh' },
           { label: 'Seitan', value: 'seitan' },
-          { label: 'PST', value: 'pst' },
+          { label: 'PST (prot\u00E9ines de soja textur\u00E9es)', value: 'pst' },
           { label: 'Quinoa / amarante', value: 'quinoa' },
           { label: 'Oléagineux', value: 'nuts' },
           { label: 'Aucune en particulier', value: 'none' }
@@ -805,7 +821,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         { name: 'sweet_beverages', type: 'checkbox', label: 'Boissons sucrées', required: true, options: [
           { label: 'Aucune, très rarement', value: 'NONE' },
           { label: 'Jus de fruits', value: 'JUICE' },
-          { label: 'Boissons sucrées', value: 'SUGARY' },
+          { label: 'Sodas / limonades', value: 'SUGARY' },
           { label: 'Boissons light ou zéro', value: 'LIGHT' },
           { label: 'Boissons énergisantes', value: 'ENERGY' }
         ]},
@@ -860,7 +876,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'petitdej', title: 'Ton <em>petit-déjeuner</em>', icon: '\uD83E\uDD50',
       fields: [
-        { name: 'pdm_breakfast_info', type: 'section', label: 'Le petit-déjeuner est indispensable pour répartir tes apports en protéines sur la journée. On va construire le tien ensemble.', condition: function() { return isGainGoal(); } },
+        { name: 'pdm_breakfast_info', type: 'section', className: 'field-note', label: 'Le petit-déjeuner est indispensable pour répartir tes apports en protéines sur la journée. On va construire le tien ensemble.', condition: function() { return isGainGoal(); } },
         { name: 'has_breakfast', type: 'radio', label: 'Prends-tu un petit-déjeuner ?', required: true, condition: function() { return !isGainGoal(); }, options: [
           { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
@@ -880,11 +896,11 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Céréales', value: 'cereales' },
           { label: 'Pas de préférence', value: 'pas_de_preference' }
         ]},
-        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si je réduis les matières grasses au petit-déj ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes') && v('spread_habit_global') !== 'never'; }, options: [
+        { name: 'breakfast_fat_mustkeep', type: 'radio', label: 'Si ton plan r\u00E9duit les mati\u00E8res grasses au petit-d\u00E9jeuner, \u00E7a te convient ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes') && v('spread_habit_global') !== 'never'; }, options: [
           { label: 'Oui, ça me va', value: 'yes' },
           { label: 'Non, j\'y tiens', value: 'no' }
         ]},
-        { name: 'breakfast_eggs', type: 'radio', label: 'Oeufs au petit-déjeuner ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes') && !arrIncludes('food_exclusions', 'oeufs') && !(v('diet_profile') === 'vegetarian' && v('veg_type') === 'lacto'); }, options: [
+        { name: 'breakfast_eggs', type: 'radio', label: '\u0152ufs au petit-d\u00E9jeuner ?', condition: function() { return (isGainGoal() || v('has_breakfast') === 'yes' || v('include_breakfast') === 'yes') && !arrIncludes('food_exclusions', 'oeufs') && !(v('diet_profile') === 'vegetarian' && v('veg_type') === 'lacto'); }, options: [
           { label: 'Oui, 1x/semaine', value: '1x' },
           { label: 'Oui, 2-3x/semaine', value: '2_3x' },
           { label: 'Non, pas pour moi', value: 'no' }
@@ -925,7 +941,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui (recommandé)', value: 'yes' },
           { label: 'Non, vraiment pas', value: 'no' }
         ]},
-        { name: 'lunch_spread_mustkeep', type: 'radio', label: 'Si je réduis le beurre/tartines au repas froid ?', condition: function() { return ['cold_only','both'].indexOf(v('spread_habit_global')) !== -1; }, options: [
+        { name: 'lunch_spread_mustkeep', type: 'radio', label: 'Si ton plan r\u00E9duit le beurre sur les tartines au repas froid, \u00E7a te convient ?', condition: function() { return ['cold_only','both'].indexOf(v('spread_habit_global')) !== -1; }, options: [
           { label: 'Oui, ça me va', value: 'yes' },
           { label: 'Non, j\'y tiens', value: 'no' }
         ]},
@@ -955,38 +971,20 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        { name: 'snack_time_choice', type: 'radio', label: 'Moment de la collation', condition: function() { return !isGainGoal() && v('has_breakfast') === 'yes'; }, options: [
-          { label: 'Pas de collation pour moi', value: 'none' },
-          { label: 'Milieu de matinée', value: 'morning' },
-          { label: 'Après-midi', value: 'afternoon' },
-          { label: 'Soirée (après le repas chaud)', value: 'evening' },
-          { label: 'Flexible', value: 'flexible' }
-        ]},
-        { name: 'snack_time_choice_b', type: 'radio', label: 'Moment de la collation', condition: function() { return !isGainGoal() && v('has_breakfast') === 'no' && v('morning_light_snack') !== 'yes'; }, options: [
-          { label: 'Aucune collation', value: 'none' },
-          { label: 'Après-midi', value: 'afternoon' },
-          { label: 'Soirée', value: 'evening' },
-          { label: 'Les deux', value: 'both' },
-          { label: 'Flexible', value: 'flexible' }
-        ]},
-        { name: 'snack_time_choice_c', type: 'radio', label: 'Collation supplémentaire', condition: function() { return !isGainGoal() && v('has_breakfast') === 'no' && v('morning_light_snack') === 'yes'; }, options: [
-          { label: 'Aucune supplémentaire', value: 'none' },
-          { label: 'Après-midi', value: 'afternoon' },
-          { label: 'Soirée', value: 'evening' },
-          { label: 'Flexible', value: 'flexible' }
+        { name: 'wants_snack', type: 'radio', label: 'Souhaites-tu une collation dans ton plan ?', condition: function() { return !isGainGoal(); }, options: [
+          { label: 'Oui', value: 'yes' },
+          { label: 'Non', value: 'no' }
         ]},
         { name: 'snack_style', type: 'radio', label: 'Style de collation', condition: function() {
           if (isGainGoal()) return true;
-          var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
-          return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
+          return v('wants_snack') === 'yes';
         }, options: [
           { label: 'Simple et rapide', value: 'simple' },
           { label: 'Simple + recettes gourmandes', value: 'mixed' }
         ]},
         { name: 'snack_darkchoc', type: 'radio', label: 'Chocolat noir en collation ?', condition: function() {
           if (isGainGoal()) return true;
-          var a = v('snack_time_choice'), b = v('snack_time_choice_b'), c = v('snack_time_choice_c');
-          return (a && a !== 'none') || (b && b !== 'none') || (c && c !== 'none');
+          return v('wants_snack') === 'yes';
         }, options: [
           { label: 'Oui', value: 'yes' },
           { label: 'Non', value: 'no' },
@@ -1017,13 +1015,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         { name: 'dinner_cheese_ok', type: 'radio', label: 'Fromage au repas chaud ?', required: true, condition: function() { return !arrIncludes('food_exclusions', 'fromage'); }, options: [
           { label: 'Oui', value: 'yes' }, { label: 'Non', value: 'no' }
         ]},
-        { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson', required: true, condition: function() { return v('diet_profile') !== 'vegetarian' && !arrIncludes('food_exclusions', 'mer'); }, options: [
+        { name: 'dinner_fish_pref', type: 'radio', label: 'Poisson ?', required: true, condition: function() { return v('diet_profile') !== 'vegetarian' && !arrIncludes('food_exclusions', 'mer'); }, options: [
           { label: 'J\'apprécie et c\'est dans mes moyens', value: 'yes' },
           { label: 'Pas vraiment, le minimum possible', value: 'no' }
         ]},
 
         // Toi et la nourriture
         { name: '_section_toi', type: 'section', label: 'Toi et la nourriture' },
+        { name: '_section_toi_note', type: 'section', className: 'field-note', label: 'Ces questions sont libres et facultatives. Elles m\'aident \u00E0 mieux comprendre ton parcours et \u00E0 personnaliser ton accompagnement.' },
         { name: 'food_history_story', type: 'textarea', label: 'Ton parcours avec l\'alimentation jusqu\'à aujourd\'hui', placeholder: 'Raconte librement\u2026' },
         { name: 'current_food_difficulties', type: 'textarea', label: 'Tes principales difficultés alimentaires aujourd\'hui ?', placeholder: 'Ce qui te bloque\u2026' },
         { name: 'emotional_relationship_food', type: 'textarea', label: 'Ta relation à la nourriture ?', placeholder: 'Comment tu vis ça\u2026' },
@@ -1075,6 +1074,12 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         formData.coldmeal_type_pref = formData.coldmeal_type_pref_pdm;
         saveToStorage();
       }
+    }
+
+    // Sync wants_snack → snack_time_choice for downstream compatibility (solver, SQL, admin)
+    if (formData.wants_snack) {
+      formData.snack_time_choice = formData.wants_snack === 'yes' ? 'flexible' : 'none';
+      saveToStorage();
     }
 
     // Progress
@@ -1174,7 +1179,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
 
   function renderField(f) {
     if (f.type === 'section') {
-      return '<div class="field-section-title">' + escHtml(f.label) + '</div>';
+      var cls = f.className || 'field-section-title';
+      return '<div class="' + cls + '">' + escHtml(f.label) + '</div>';
     }
 
     var isReq = f.required;
@@ -1191,7 +1197,8 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       out += '<input type="text" class="field-input" data-name="' + f.name + '" value="' + escAttr(val) + '" placeholder="' + escAttr(f.placeholder || '') + '">';
     } else if (f.type === 'number') {
       var val = v(f.name);
-      out += '<input type="number" class="field-input" data-name="' + f.name + '" value="' + escAttr(val) + '" placeholder="' + escAttr(f.placeholder || '') + '"' + (f.step ? ' step="' + f.step + '"' : '') + ' inputmode="decimal">';
+      var im = f.step ? 'decimal' : 'numeric';
+      out += '<input type="number" class="field-input" data-name="' + f.name + '" value="' + escAttr(val) + '" placeholder="' + escAttr(f.placeholder || '') + '"' + (f.step ? ' step="' + f.step + '"' : '') + ' inputmode="' + im + '">';
     } else if (f.type === 'textarea') {
       var val = v(f.name);
       out += '<textarea class="field-input" data-name="' + f.name + '" placeholder="' + escAttr(f.placeholder || '') + '" rows="4">' + escHtml(val) + '</textarea>';
@@ -1250,10 +1257,14 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         formData[name] = inp.value;
         saveToStorage();
         clearError(name);
-        if (weightFields.indexOf(name) !== -1) {
-          setTimeout(function() { renderStep._skipScroll = true; renderStep(); }, 100);
-        }
       });
+      // Weight fields: re-render on blur (not input) to avoid dismissing mobile keyboard
+      if (weightFields.indexOf(name) !== -1) {
+        inp.addEventListener('blur', function() {
+          renderStep._skipScroll = true;
+          renderStep();
+        });
+      }
     });
 
     // Radio cards
@@ -1333,32 +1344,13 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     'alcohol_freq', 'coffee_quantity', 'coffee_sugar', 'coffee_milk',
     'sweet_beverages', 'light_beverages_freq', 'has_breakfast', 'include_breakfast', 'breakfast_variety',
     'breakfast_base_fixed', 'breakfast_base_varied', 'bread_sweet_type',
-    'morning_light_snack', 'spread_habit_global',
-    'coldmeal_type_pref', 'coldmeal_type_pref_pdm', 'snack_time_choice', 'snack_time_choice_b', 'snack_time_choice_c',
-    'allergies', 'food_exclusions', 'lactose_intolerance', 'type_milk'
+    'morning_light_snack', 'morning_snack_profile', 'spread_habit_global',
+    'coldmeal_type_pref', 'coldmeal_type_pref_pdm', 'wants_snack',
+    'allergies', 'food_exclusions', 'alcohol_planned', 'lactose_intolerance', 'type_milk'
   ];
 
   function hasConditionalDependency(name) {
     return conditionalTriggers.indexOf(name) !== -1;
-  }
-
-  // Clear stale formData values for hidden conditional fields
-  function clearHiddenFieldValues() {
-    var allSteps = getSteps();
-    var changed = false;
-    for (var s = 0; s < allSteps.length; s++) {
-      var step = allSteps[s];
-      var fields = step.fields;
-      for (var f = 0; f < fields.length; f++) {
-        var field = fields[f];
-        if (field.type === 'section') continue;
-        if (field.condition && !field.condition() && formData[field.name] !== undefined && formData[field.name] !== '') {
-          delete formData[field.name];
-          changed = true;
-        }
-      }
-    }
-    if (changed) saveToStorage();
   }
 
   function clearError(name) {
@@ -1366,8 +1358,21 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     if (fg) fg.classList.remove('error');
   }
 
+  function setFieldError(fg, msg) {
+    fg.classList.add('error');
+    var errP = fg.querySelector('.field-error');
+    if (errP) errP.textContent = msg;
+  }
+
   // ── Validation ──
   function validateStep() {
+    // Sync DOM values → formData (handles autofill / autocomplete that skip input events)
+    qsa('.field-input').forEach(function(inp) {
+      var name = inp.getAttribute('data-name');
+      if (name) formData[name] = inp.value;
+    });
+    saveToStorage();
+
     var steps = getVisibleSteps();
     var step = steps[currentStep];
     var fields = getVisibleFields(step);
@@ -1377,7 +1382,6 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     for (var i = 0; i < fields.length; i++) {
       var f = fields[i];
       if (f.type === 'section') continue;
-      if (!f.required) continue;
 
       var fg = qs('[data-field="' + f.name + '"]');
       if (!fg) continue;
@@ -1391,10 +1395,19 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         empty = !val || (typeof val === 'string' && val.trim() === '');
       }
 
-      if (empty) {
-        fg.classList.add('error');
+      if (f.required && empty) {
+        setFieldError(fg, 'Ce champ est requis.');
         valid = false;
         if (!firstErrorField) firstErrorField = fg;
+      } else if (f.type === 'number' && !empty) {
+        var numVal = parseFloat(val);
+        if (isNaN(numVal) || (f.min !== undefined && numVal < f.min) || (f.max !== undefined && numVal > f.max)) {
+          setFieldError(fg, 'Valeur attendue entre ' + f.min + ' et ' + f.max + '.');
+          valid = false;
+          if (!firstErrorField) firstErrorField = fg;
+        } else {
+          fg.classList.remove('error');
+        }
       } else {
         fg.classList.remove('error');
       }
@@ -1521,7 +1534,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     })
     .then(function(res) {
       if (res.ok) {
-        try { sessionStorage.removeItem(STORAGE_KEY); } catch(e) {}
+        try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
         var rp = '/merci.html?completed=true';
         if (EMAIL) rp += '&email=' + encodeURIComponent(EMAIL);
         if (SESSION_ID) rp += '&session_id=' + encodeURIComponent(SESSION_ID);
