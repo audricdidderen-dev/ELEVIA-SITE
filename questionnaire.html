@@ -1126,7 +1126,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         'On y est presque.'
       ];
       encourageMsg = maintEnc[Math.min(currentStep - 1, maintEnc.length - 1)];
-    } else if (goal === 'muscle_gain' || goal === 'recomposition') {
+    } else if (goal === 'muscle_gain') {
       var pdmEnc = [
         'Chaque détail a son importance.',
         'On pose les bases de ta progression.',
@@ -1140,6 +1140,20 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         'On y est presque.'
       ];
       encourageMsg = pdmEnc[Math.min(currentStep - 1, pdmEnc.length - 1)];
+    } else if (goal === 'recomposition') {
+      var recompEnc = [
+        'Chaque détail a son importance.',
+        'On pose les bases de ta transformation.',
+        'Ton plan de recomposition se dessine.',
+        'On calibre tes apports.',
+        'La structure est là, on optimise.',
+        'On ajuste chaque levier.',
+        'Tes repas prennent forme.',
+        'On verrouille les détails.',
+        'Plus qu\'un effort, on boucle.',
+        'On y est presque.'
+      ];
+      encourageMsg = recompEnc[Math.min(currentStep - 1, recompEnc.length - 1)];
     }
 
     // Végétarien bonus — after alimentation step
