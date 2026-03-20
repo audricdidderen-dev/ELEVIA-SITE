@@ -1664,7 +1664,8 @@ body::after {
   // ── IMAGE OPTIMIZER — Supabase render/image transform ──
   function optimizeImg(url, width) {
     if (!url) return url;
-    return url.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') + '?width=' + (width || 600) + '&quality=80';
+    var w = width || 600;
+    return url.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') + '?width=' + w + '&height=' + w + '&resize=cover&quality=80';
   }
 
   // ── HERO — RECIPE OF THE WEEK ──
