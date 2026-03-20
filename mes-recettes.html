@@ -336,6 +336,8 @@ body::after {
   text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: var(--radius-pill);
 }
 .badge-sauce { background: rgba(198,160,91,0.12); color: var(--gold); }
+.badge-soupe { background: rgba(107,142,107,0.12); color: #5A7A5A; }
+.badge-extras_maison { background: rgba(155,107,142,0.12); color: #7A5A6B; }
 .badge-vege { background: rgba(76,175,80,0.1); color: #4CAF50; }
 .badge-chaud { background: rgba(14,30,46,0.07); color: var(--navy); }
 .badge-bowl { background: rgba(63,81,181,0.08); color: #3F51B5; }
@@ -909,6 +911,8 @@ body::after {
     <div class="filter-bar" id="filter-bar">
       <button class="filter-pill active" data-filter="all" id="pill-all">Tout</button>
       <button class="filter-pill" data-filter="sauce" id="pill-sauce">Sauces</button>
+      <button class="filter-pill" data-filter="soupe" id="pill-soupe">Soupes</button>
+      <button class="filter-pill" data-filter="extras_maison" id="pill-extras_maison">Extras maison</button>
       <button class="filter-pill" data-filter="vege" id="pill-vege">Prot&eacute;ines v&eacute;g&eacute;</button>
       <button class="filter-pill" data-filter="chaud" id="pill-chaud">Repas chaud</button>
       <button class="filter-pill" data-filter="bowl" id="pill-bowl">Bowl</button>
@@ -1036,6 +1040,7 @@ body::after {
   var dietFlagsMap = {}; // eq_id:item_id → { contains_gluten, contains_lactose, lactose_level, ... }
   var clientLactoseLevel = 0; // 0=none, 1=mild→exclude ≥2, 2=severe→exclude ≥1
   var clientGlutenIntol = false; // true if celiac or sensitive
+  var clientSoupAllowed = false; // true if soup_allowed ≠ 'no' in questionnaire
 
   // Questionnaire → ref_allergens normalization
   var ALLERGEN_NORMALIZE = {
@@ -1068,17 +1073,21 @@ body::after {
 
   var catColors = {
     sauce: ['#8B6914','#3D2E0A'],
+    soupe: ['#6B8E6B','#2D4A2D'],
+    extras_maison: ['#9B6B8E','#4A2D42'],
     vege: ['#4A7C4F','#1E3B21'],
     chaud: ['#2C1810','#1A0E08'],
     bowl: ['#2E5A4A','#132A22'],
     pain: ['#7A4A1A','#3B200A'],
   };
 
-  var catLabels = { sauce: 'Sauce', vege: 'Prot\u00e9ine v\u00e9g\u00e9', chaud: 'Repas chaud', bowl: 'Bowl', pain: 'Tartine' };
+  var catLabels = { sauce: 'Sauce', soupe: 'Soupe', extras_maison: 'Extra maison', vege: 'Prot\u00e9ine v\u00e9g\u00e9', chaud: 'Repas chaud', bowl: 'Bowl', pain: 'Tartine' };
 
   // Food SVG icons per category (shown in placeholders)
   var catIcons = {
     sauce: '<svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"><ellipse cx="40" cy="50" rx="22" ry="10"/><path d="M18 50V42c0-12 10-22 22-22s22 10 22 22v8"/><path d="M40 20V12"/><circle cx="40" cy="10" r="3"/></svg>',
+    soupe: '<svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"><ellipse cx="40" cy="44" rx="26" ry="10"/><path d="M14 44c0 10 12 18 26 18s26-8 26-18"/><path d="M14 44v4c0 10 12 18 26 18s26-8 26-18v-4"/><path d="M26 30c0-5 3-7 0-12"/><path d="M40 28c0-5 3-7 0-12"/><path d="M54 30c0-5 3-7 0-12"/></svg>',
+    extras_maison: '<svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"><path d="M24 50h32v14a4 4 0 0 1-4 4H28a4 4 0 0 1-4-4V50z"/><path d="M20 44h40a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z"/><path d="M40 44c0-6-8-10-8-18 0-6 4-10 8-10s8 4 8 10c0 8-8 12-8 18z"/></svg>',
     vege: '<svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"><path d="M40 68V40"/><path d="M40 40c-14-4-20-18-16-30 12 2 22 12 16 30z"/><path d="M40 48c10-6 22-4 26 8-10 2-22-2-26-8z"/></svg>',
     chaud: '<svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"><ellipse cx="40" cy="52" rx="26" ry="12"/><path d="M14 52c0 8 12 14 26 14s26-6 26-14"/><path d="M28 30c0-6 4-8 0-14"/><path d="M40 28c0-6 4-8 0-14"/><path d="M52 30c0-6 4-8 0-14"/></svg>',
     bowl: '<svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"><path d="M10 36h60"/><path d="M14 36c0 16 12 28 26 28s26-12 26-28"/><circle cx="30" cy="28" r="3"/><circle cx="44" cy="26" r="4"/><circle cx="54" cy="30" r="2.5"/></svg>',
@@ -1317,16 +1326,36 @@ body::after {
               }
             });
           }
+
+          // Soup preference from questionnaire
+          var soupField = qr.responses.soup_allowed || 'no';
+          clientSoupAllowed = (soupField !== 'no');
         }
       }
 
       // 4. Sauces
-      const { data: sauces, error: sauceErr } = await sb.from('ref_sub_recipes').select('*').in('eq_id', ['assaisonnement_repas_chaud', 'assaisonnement_repas_froid']);
+      const { data: sauces, error: sauceErr } = await sb.from('ref_sub_recipes').select('*').eq('recipe_category', 'sauce');
       if (sauceErr) console.error('Sauce fetch error:', sauceErr);
 
       // 4b. Protéines végé (sub-recipes)
-      const { data: vegeSubRecipes, error: vegeSubErr } = await sb.from('ref_sub_recipes').select('*').eq('eq_id', 'recettes_plaisirs_proteinees');
+      const { data: vegeSubRecipes, error: vegeSubErr } = await sb.from('ref_sub_recipes').select('*').eq('recipe_category', 'vege');
       if (vegeSubErr) console.error('Vege sub-recipe fetch error:', vegeSubErr);
+
+      // 4c. Soupes (sub-recipes) — only if client accepts soups
+      var soupRecipes = [];
+      if (clientSoupAllowed) {
+        const { data: soups, error: soupErr } = await sb.from('ref_sub_recipes').select('*').eq('recipe_category', 'soupe');
+        if (soupErr) console.error('Soup fetch error:', soupErr);
+        soupRecipes = soups || [];
+      }
+
+      // 4d. Extras maison (sub-recipes) — only if extras_plaisir is active in plan
+      var extrasMaisonRecipes = [];
+      if (activeEqIds['extras_plaisir']) {
+        const { data: extras, error: extrasErr } = await sb.from('ref_sub_recipes').select('*').eq('recipe_category', 'collation_plaisir');
+        if (extrasErr) console.error('Extras maison fetch error:', extrasErr);
+        extrasMaisonRecipes = extras || [];
+      }
 
       // 5. Full recipes with template + objectives + slot definitions
       const { data: recipes, error: recipeErr } = await sb.from('recipes')
@@ -1376,6 +1405,91 @@ body::after {
           });
         });
       }
+
+      // 4c push: Soups with allergen/aversion/diet/intolerance filtering
+      soupRecipes.forEach(function(s) {
+        var tags = s.allergen_tags || [];
+        var avTags = s.aversion_tags || [];
+        var dTags = s.diet_tags || [];
+
+        // Allergen filter: if any soup allergen_tag matches client's normalizedAllergens → skip
+        if (normalizedAllergens && normalizedAllergens.length > 0) {
+          var hasAllergen = tags.some(function(t) { return normalizedAllergens.indexOf(t) !== -1; });
+          if (hasAllergen) return;
+        }
+
+        // Aversion filter: if any soup aversion_tag matches client's aversionCodes → skip
+        if (aversionCodes && aversionCodes.length > 0) {
+          var hasAversion = avTags.some(function(t) { return aversionCodes.indexOf(t) !== -1; });
+          if (hasAversion) return;
+        }
+
+        // Gluten intolerance: skip if soup doesn't have sans_gluten in diet_tags
+        if (clientGlutenIntol && dTags.indexOf('sans_gluten') === -1) return;
+
+        // Lactose intolerance: skip if soup doesn't have sans_lactose in diet_tags
+        if (clientLactoseLevel >= 2 && dTags.indexOf('sans_lactose') === -1) return;
+
+        // Diet filter: vegetarian/pesco/vegan clients → soup must have matching diet_tag
+        if (clientDiet && clientDiet !== 'omnivore' && dTags.length > 0) {
+          if (/vegetari/.test(clientDiet) && dTags.indexOf('vegetarien') === -1 && dTags.indexOf('vegan') === -1) return;
+          if (/vegan/.test(clientDiet) && dTags.indexOf('vegan') === -1) return;
+        }
+
+        allRecipes.push({
+          id: s.id, type: 'soup', category: 'soupe',
+          title: s.title, prep_time: s.prep_time_min,
+          speed: s.speed, price_tier: 'low',
+          ingredients: s.ingredients || [],
+          steps: s.steps || [], tips: s.tips,
+          conservation: s.conservation, image_url: s.image_url || null,
+          free: true, total_weight_g: s.total_weight_g,
+          kcal_approx: s.kcal_approx,
+        });
+      });
+
+      // 4d push: Extras maison with allergen/aversion/diet/intolerance filtering
+      extrasMaisonRecipes.forEach(function(s) {
+        var tags = s.allergen_tags || [];
+        var avTags = s.aversion_tags || [];
+        var dTags = s.diet_tags || [];
+
+        // Allergen filter
+        if (normalizedAllergens && normalizedAllergens.length > 0) {
+          var hasAllergen = tags.some(function(t) { return normalizedAllergens.indexOf(t) !== -1; });
+          if (hasAllergen) return;
+        }
+
+        // Aversion filter
+        if (aversionCodes && aversionCodes.length > 0) {
+          var hasAversion = avTags.some(function(t) { return aversionCodes.indexOf(t) !== -1; });
+          if (hasAversion) return;
+        }
+
+        // Gluten intolerance
+        if (clientGlutenIntol && dTags.indexOf('sans_gluten') === -1) return;
+
+        // Lactose intolerance (severe)
+        if (clientLactoseLevel >= 2 && dTags.indexOf('sans_lactose') === -1) return;
+
+        // Diet filter
+        if (clientDiet && clientDiet !== 'omnivore' && dTags.length > 0) {
+          if (/vegetari/.test(clientDiet) && dTags.indexOf('vegetarien') === -1 && dTags.indexOf('vegan') === -1) return;
+          if (/vegan/.test(clientDiet) && dTags.indexOf('vegan') === -1) return;
+        }
+
+        allRecipes.push({
+          id: s.id, type: 'extras_maison', category: 'extras_maison',
+          title: s.title, prep_time: s.prep_time_min,
+          speed: s.speed, price_tier: 'low',
+          ingredients: s.ingredients || [],
+          steps: s.steps || [], tips: s.tips,
+          conservation: s.conservation, image_url: s.image_url || null,
+          free: true, total_weight_g: s.total_weight_g,
+          kcal_approx: s.kcal_approx,
+          portion_value: s.portion_value,
+        });
+      });
 
       (recipes || []).forEach(function(r) {
         // Filter by objective: skip recipes that don't match client's goal
@@ -1529,8 +1643,13 @@ body::after {
 
   // ── PILL COUNTS ──
   function updatePillCounts() {
-    var counts = { all: allRecipes.length, sauce: 0, vege: 0, chaud: 0, bowl: 0, pain: 0 };
+    var counts = { all: allRecipes.length, sauce: 0, soupe: 0, extras_maison: 0, vege: 0, chaud: 0, bowl: 0, pain: 0 };
     allRecipes.forEach(function(r) { if (counts[r.category] !== undefined) counts[r.category]++; });
+    // Hide soupe/extras pills if empty (conditional on questionnaire/plan)
+    var soupePill = document.getElementById('pill-soupe');
+    if (soupePill && counts.soupe === 0) soupePill.style.display = 'none';
+    var extrasPill = document.getElementById('pill-extras_maison');
+    if (extrasPill && counts.extras_maison === 0) extrasPill.style.display = 'none';
     Object.keys(counts).forEach(function(cat) {
       var pill = document.getElementById('pill-' + cat);
       if (pill && counts[cat] > 0) {
@@ -1557,8 +1676,8 @@ body::after {
     var now = new Date();
     var jan1 = new Date(now.getFullYear(), 0, 1);
     var weekNum = Math.floor(((now - jan1) / 86400000 + jan1.getDay() + 1) / 7);
-    var weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.image_url; });
-    if (!weeklyPool.length) weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce'; });
+    var weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.category !== 'soupe' && r.category !== 'extras_maison' && r.image_url; });
+    if (!weeklyPool.length) weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.category !== 'soupe' && r.category !== 'extras_maison'; });
     if (!weeklyPool.length) weeklyPool = eligible;
     var pick = weeklyPool[weekNum % weeklyPool.length];
 
@@ -1645,7 +1764,7 @@ body::after {
       var card = document.createElement('div');
       card.className = 'recipe-card' + (isLocked ? ' locked' : '');
       var budgetBadge = '';
-      if (!isLocked && r.type !== 'sauce' && weeklyBudget.length > 0) {
+      if (!isLocked && r.type !== 'sauce' && r.type !== 'soup' && r.type !== 'extras_maison' && weeklyBudget.length > 0) {
         var bs = getRecipeBudgetStatus(r);
         if (bs === 'ok') {
           budgetBadge = '<span class="recipe-budget-badge budget-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dispo</span>';
@@ -1720,10 +1839,23 @@ body::after {
       if (r.sauceUsual) html += ' (' + r.sauceUsual + ')';
       html += '</div>';
     }
+    if (r.type === 'soup') {
+      html += '<div class="sauce-portion-info" style="margin:0.8rem 0;padding:0.6rem 1rem;background:rgba(107,142,107,0.10);border-radius:8px;font-size:0.88rem;color:#5A7A5A">';
+      html += '<strong>1 bol \u2248 250 ml</strong>';
+      if (r.kcal_approx) html += ' \u00b7 ~' + r.kcal_approx + ' kcal';
+      html += '</div>';
+    }
+    if (r.type === 'extras_maison') {
+      html += '<div class="sauce-portion-info" style="margin:0.8rem 0;padding:0.6rem 1rem;background:rgba(155,107,142,0.10);border-radius:8px;font-size:0.88rem;color:#7A5A6B">';
+      html += '<strong>\u00bd extra plaisir</strong>';
+      if (r.kcal_approx) html += ' \u00b7 ~' + r.kcal_approx + ' kcal';
+      html += ' \u00b7 <em>2\u00d7 plus de plaisir pour le m\u00eame budget</em>';
+      html += '</div>';
+    }
 
     // Ingredients
     html += '<h3 class="modal-section-title">Ingr\u00e9dients</h3><ul class="modal-ingredients">';
-    if (r.type === 'sauce') {
+    if (r.type === 'sauce' || r.type === 'soup' || r.type === 'extras_maison') {
       (r.ingredients || []).forEach(function(ing) {
         html += '<li><span class="ingredient-qty">' + esc(beautifyFractions(ing.qty_text || (ing.qty_g ? ing.qty_g + 'g' : ''))) + '</span> ' + esc(ing.label) + '</li>';
       });
@@ -1739,7 +1871,7 @@ body::after {
     html += '</ul>';
 
     // Steps
-    var steps = r.type === 'sauce' ? r.steps : r.instructions;
+    var steps = (r.type === 'sauce' || r.type === 'soup' || r.type === 'extras_maison') ? r.steps : r.instructions;
     if (steps && steps.length > 0) {
       html += '<h3 class="modal-section-title">Pr\u00e9paration</h3><ol class="modal-steps">';
       steps.forEach(function(s) { html += '<li>' + esc(s.text || s) + '</li>'; });
@@ -1755,7 +1887,7 @@ body::after {
     }
 
     html += '<div class="modal-actions">';
-    if (r.type !== 'sauce' && clientData && clientPlanId) {
+    if (r.type !== 'sauce' && r.type !== 'soup' && r.type !== 'extras_maison' && clientData && clientPlanId) {
       html += '<button class="modal-action-btn modal-btn-use" id="modal-use-btn"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>J\'utilise cette recette</button>';
     }
     html += '<button class="modal-action-btn modal-btn-fullpage" id="modal-fullpage-btn"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>Page compl\u00e8te</button>';
@@ -1830,7 +1962,7 @@ body::after {
     html += '<h1 class="fullpage-title">' + esc(r.title) + '</h1>';
     html += '<div class="fullpage-accent"></div>';
     if (r.description_short) html += '<p class="fullpage-desc">' + esc(r.description_short) + '</p>';
-    if (r.type !== 'sauce') html += '<div class="fullpage-perso-badge"><svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>Quantit\u00e9s adapt\u00e9es \u00e0 ton plan</div>';
+    if (r.type !== 'sauce' && r.type !== 'soup' && r.type !== 'extras_maison') html += '<div class="fullpage-perso-badge"><svg viewBox="0 0 24 24"><path d="M0.85 15.65a1.21 1.21 0 0 0 0 1.7l5.8 5.8a1.2 1.2 0 0 0 1.7 0l14.8-14.8a1.2 1.2 0 0 0 0-1.7l-2.3-2.3a1.2 1.2 0 0 0-1.7 0L7.5 16l-2.65-2.65a1.21 1.21 0 0 0-1.7 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>Quantit\u00e9s adapt\u00e9es \u00e0 ton plan</div>';
 
     // Meta
     html += '<div class="fullpage-meta">';
@@ -1849,12 +1981,25 @@ body::after {
       if (r.sauceUsual) html += ' (' + r.sauceUsual + ')';
       html += '</div>';
     }
+    if (r.type === 'soup') {
+      html += '<div class="sauce-portion-info" style="margin:0 1.5rem 1rem;padding:0.6rem 1rem;background:rgba(107,142,107,0.10);border-radius:8px;font-size:0.88rem;color:#5A7A5A">';
+      html += '<strong>1 bol \u2248 250 ml</strong>';
+      if (r.kcal_approx) html += ' \u00b7 ~' + r.kcal_approx + ' kcal';
+      html += '</div>';
+    }
+    if (r.type === 'extras_maison') {
+      html += '<div class="sauce-portion-info" style="margin:0 1.5rem 1rem;padding:0.6rem 1rem;background:rgba(155,107,142,0.10);border-radius:8px;font-size:0.88rem;color:#7A5A6B">';
+      html += '<strong>\u00bd extra plaisir</strong>';
+      if (r.kcal_approx) html += ' \u00b7 ~' + r.kcal_approx + ' kcal';
+      html += ' \u00b7 <em>2\u00d7 plus de plaisir pour le m\u00eame budget</em>';
+      html += '</div>';
+    }
 
     // Ingredients card
     html += '<div class="fullpage-ingredients-card">';
     html += '<h2 class="fullpage-section-title"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>Ingr\u00e9dients</h2>';
     html += '<ul class="fullpage-ingredients">';
-    if (r.type === 'sauce') {
+    if (r.type === 'sauce' || r.type === 'soup' || r.type === 'extras_maison') {
       (r.ingredients || []).forEach(function(ing) {
         html += '<li><span class="ingredient-qty">' + esc(beautifyFractions(ing.qty_text || (ing.qty_g ? ing.qty_g + 'g' : ''))) + '</span> ' + esc(ing.label) + '</li>';
       });
@@ -1877,7 +2022,7 @@ body::after {
     html += '<div class="fullpage-divider"><svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg></div>';
 
     // Steps
-    var steps = r.type === 'sauce' ? r.steps : r.instructions;
+    var steps = (r.type === 'sauce' || r.type === 'soup' || r.type === 'extras_maison') ? r.steps : r.instructions;
     if (steps && steps.length > 0) {
       html += '<div class="fullpage-steps-section">';
       html += '<h2 class="fullpage-section-title"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Pr\u00e9paration</h2>';
@@ -1892,7 +2037,7 @@ body::after {
 
     // Footer actions
     html += '<div class="fullpage-footer">';
-    if (r.type !== 'sauce' && clientData && clientPlanId) {
+    if (r.type !== 'sauce' && r.type !== 'soup' && r.type !== 'extras_maison' && clientData && clientPlanId) {
       html += '<button class="fullpage-use-btn" id="fullpage-use-btn"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>J\'utilise cette recette</button>';
     }
     html += '<button class="fullpage-print-btn" id="fullpage-print-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>T\u00e9l\u00e9charger en PDF</button>';
