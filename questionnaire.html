@@ -616,17 +616,24 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Fromage', value: 'fromage' },
           { label: 'Légumineuses', value: 'legumineuses' }
         ]},
-        { name: 'allergies', type: 'checkbox', label: 'Allergies', options: [
+        { name: 'allergies', type: 'checkbox', label: 'Allergies alimentaires', options: [
           { label: 'Aucune allergie', value: 'none' },
-          { label: 'Arachides', value: 'peanuts' },
-          { label: 'Fruits à coque', value: 'tree_nuts' },
-          { label: 'Gluten', value: 'gluten' },
-          { label: '\u0152ufs', value: 'eggs' },
-          { label: 'Soja', value: 'soy' },
-          { label: 'Crustacés / mollusques', value: 'shellfish' },
+          { label: 'Lait (protéines de lait)', value: 'lait' },
+          { label: '\u0152ufs', value: 'oeuf' },
+          { label: 'Arachides', value: 'arachide' },
+          { label: 'Fruits à coque (noix, noisettes, amandes…)', value: 'fruits_a_coque' },
+          { label: 'Poisson', value: 'poisson' },
+          { label: 'Crustacés (crevettes, homard…)', value: 'crustaces' },
+          { label: 'Mollusques (moules, huîtres…)', value: 'mollusques' },
+          { label: 'Soja', value: 'soja' },
+          { label: 'Céleri', value: 'celeri' },
+          { label: 'Moutarde', value: 'moutarde' },
+          { label: 'Sésame', value: 'sesame' },
+          { label: 'Lupin', value: 'lupin' },
+          { label: 'Sulfites', value: 'sulfites' },
           { label: 'Autre', value: 'other' }
         ]},
-        { name: 'allergies_other', type: 'text', label: 'Préciser l\'allergie', placeholder: 'Ex: sésame, moutarde...', condition: function() { return arrIncludes('allergies', 'other'); } },
+        { name: 'allergies_other', type: 'text', label: 'Préciser l\'allergie', placeholder: 'Ex: maïs, kiwi...', condition: function() { return arrIncludes('allergies', 'other'); } },
         { name: 'lactose_intolerance', type: 'radio', label: 'Intolérance au lactose', options: [
           { label: 'Non, aucun souci', value: 'no' },
           { label: 'Oui, intolérance légère', value: 'mild' },
@@ -692,11 +699,6 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: '3 à 4 fois par semaine', value: '3_4' },
           { label: 'Quasi tous les jours, mais je veux réduire', value: 'daily_reduce' }
         ]},
-        { name: 'flexi_goal', type: 'radio', label: 'Objectif viande', condition: function() { return v('diet_profile') === 'flexitarian'; }, options: [
-          { label: 'Maintenir ma fréquence actuelle', value: 'maintain' },
-          { label: 'Réduire un peu', value: 'reduce_light' },
-          { label: 'Réduire significativement (max 1-2x/sem)', value: 'reduce_strong' }
-        ]}
       ]
     });
 
@@ -729,11 +731,6 @@ input[type="number"].field-input { -moz-appearance: textfield; }
           { label: 'Oui, quotidiennement', value: 'daily' },
           { label: 'Oui, occasionnellement (jours de training)', value: 'training_days' },
           { label: 'Non, mais je suis ouvert', value: 'open' },
-          { label: 'Non, et je préfère m\'en passer', value: 'no' }
-        ]},
-        { name: 'mg_creatine', type: 'radio', label: 'Créatine', options: [
-          { label: 'Oui, quotidiennement', value: 'yes' },
-          { label: 'Non, mais ça m\'intéresse', value: 'interested' },
           { label: 'Non, et je préfère m\'en passer', value: 'no' }
         ]},
         { name: 'mg_pre_workout', type: 'radio', label: 'Manges-tu avant l\'entraînement ?', options: [
@@ -971,20 +968,20 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        { name: 'wants_snack', type: 'radio', label: 'Souhaites-tu une collation dans ton plan ?', condition: function() { return !isGainGoal(); }, options: [
-          { label: 'Oui', value: 'yes' },
-          { label: 'Non', value: 'no' }
+        { name: 'snack_time_choice', type: 'radio', label: 'Souhaites-tu une collation dans ton plan ?', condition: function() { return !isGainGoal(); }, options: [
+          { label: 'Oui', value: 'flexible' },
+          { label: 'Non', value: 'none' }
         ]},
         { name: 'snack_style', type: 'radio', label: 'Style de collation', condition: function() {
           if (isGainGoal()) return true;
-          return v('wants_snack') === 'yes';
+          return v('snack_time_choice') === 'flexible';
         }, options: [
           { label: 'Simple et rapide', value: 'simple' },
           { label: 'Simple + recettes gourmandes', value: 'mixed' }
         ]},
         { name: 'snack_darkchoc', type: 'radio', label: 'Chocolat noir en collation ?', condition: function() {
           if (isGainGoal()) return true;
-          return v('wants_snack') === 'yes';
+          return v('snack_time_choice') === 'flexible';
         }, options: [
           { label: 'Oui', value: 'yes' },
           { label: 'Non', value: 'no' },
@@ -1074,12 +1071,6 @@ input[type="number"].field-input { -moz-appearance: textfield; }
         formData.coldmeal_type_pref = formData.coldmeal_type_pref_pdm;
         saveToStorage();
       }
-    }
-
-    // Sync wants_snack → snack_time_choice for downstream compatibility (solver, SQL, admin)
-    if (formData.wants_snack) {
-      formData.snack_time_choice = formData.wants_snack === 'yes' ? 'flexible' : 'none';
-      saveToStorage();
     }
 
     // Progress
@@ -1359,7 +1350,7 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     'sweet_beverages', 'light_beverages_freq', 'has_breakfast', 'include_breakfast', 'breakfast_variety',
     'breakfast_base_fixed', 'breakfast_base_varied', 'bread_sweet_type',
     'morning_light_snack', 'morning_snack_profile', 'spread_habit_global',
-    'coldmeal_type_pref', 'coldmeal_type_pref_pdm', 'wants_snack',
+    'coldmeal_type_pref', 'coldmeal_type_pref_pdm', 'snack_time_choice',
     'allergies', 'food_exclusions', 'alcohol_planned', 'lactose_intolerance', 'type_milk'
   ];
 
