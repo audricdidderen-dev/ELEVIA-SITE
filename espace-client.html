@@ -878,6 +878,9 @@ body.state-portal::before {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M23 18.218v1.913A2.87 2.87 0 0 1 20.131 23H3.869A2.869 2.869 0 0 1 1 20.131v-1.913"/><path d="M12 18.108 12 1"/><path d="m19 11.108-7 7-7-7"/></svg>
           Télécharger le PDF
         </button>
+        <a href="/reperes-sante.html" style="display:block; margin-top:0.6rem; font-size:0.72rem; color:var(--gold); text-decoration:none; font-weight:400; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+          ☀ Consulte aussi tes repères santé →
+        </a>
       </div>
 
       <!-- RECETTES CARD -->
@@ -900,8 +903,18 @@ body.state-portal::before {
         <a href="https://app.elevianutrition.com" class="hub-card-btn primary" id="hub-app-btn">Ouvrir l'app</a>
       </div>
 
-      <!-- COMMUNITY CARD -->
-      <div class="hub-card" id="hub-community">
+      <!-- REPERES SANTE CARD -->
+      <div class="hub-card" id="hub-reperes">
+        <div class="hub-card-icon recipes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M0.5 12h4.586a1 1 0 0 0 .707-.293L8.5 9l3 6 3-3 1.293 1.293a1 1 0 0 0 .707.293h7"/><path d="M12 21.844A10.241 10.241 0 0 1 2.5 12c0-5.247 4.253-9.5 9.5-9.5s9.5 4.253 9.5 9.5a10.241 10.241 0 0 1-9.5 9.844Z"/></svg>
+        </div>
+        <h3>Mes repères santé</h3>
+        <p>Les 12 conseils essentiels pour tirer le meilleur de ton plan au quotidien.</p>
+        <a href="/reperes-sante.html" class="hub-card-btn gold">Découvrir</a>
+      </div>
+
+      <!-- COMMUNITY CARD — full width -->
+      <div class="hub-card" id="hub-community" style="grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 1.5rem;">
         <div class="hub-card-icon community">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M1.25 8.25a2.75 2.75 0 1 0 5.5 0 2.75 2.75 0 1 0-5.5 0Z"/><path d="M7.5 15.5a3.5 3.5 0 0 0-7 0v3h1.583l0.417 5h3l0.417-5H7.5Z"/><path d="M17.25 8.25a2.75 2.75 0 1 0 5.5 0 2.75 2.75 0 1 0-5.5 0Z"/><path d="M23.5 15.5a3.5 3.5 0 0 0-7 0v3h1.583l0.417 5h3l0.417-5H23.5Z"/><path d="M9.75 2.75a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 1 0-4.5 0Z"/><path d="M12 6a3 3 0 0 0-3 3v2.5h1.5L11 16h2l0.5-4.5H15V9a3 3 0 0 0-3-3Z"/></svg>
         </div>

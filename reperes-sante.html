@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes repères santé — Élevia Nutrition</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #0E1E2E; --navy-deep: #091520;
+  --gold: #C6A05B; --gold-light: #D4B878; --gold-pale: #E8D5A8;
+  --gold-glow: rgba(198,160,91,0.15);
+  --cream: #F6F3EE; --cream-dark: #EDE8E0; --white: #FFFFFF;
+  --text-dark: #1A1A1A; --text-muted: #6B7280;
+  --border-soft: #F5EEE1;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); -webkit-font-smoothing: antialiased;
+  background: var(--cream); color: var(--text-dark); min-height: 100dvh;
+}
+body::before {
+  content: ''; position: fixed; top: -120px; left: 50%;
+  transform: translateX(-50%); width: 900px; height: 550px;
+  background: radial-gradient(ellipse, rgba(198,160,91,0.06), transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* Grain overlay */
+.grain {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events: none; z-index: 9999; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* Header */
+.page-header {
+  text-align: center; padding: 3rem 1.5rem 1rem;
+  position: relative; z-index: 2;
+}
+.back-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.8rem; color: var(--text-muted); text-decoration: none;
+  margin-bottom: 1.5rem; transition: color 0.2s;
+}
+.back-link:hover { color: var(--gold); }
+.back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.page-header h1 {
+  font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 400; color: var(--text-dark); margin-bottom: 0.3rem;
+}
+.page-header .subtitle {
+  font-size: 0.75rem; font-weight: 500; color: var(--gold);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.page-header .intro {
+  font-size: 0.85rem; color: var(--text-muted); font-weight: 300;
+  max-width: 520px; margin: 0 auto; line-height: 1.6;
+}
+
+/* Grid */
+.reperes-grid {
+  max-width: 780px; margin: 1.5rem auto 2rem;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem;
+  position: relative; z-index: 2;
+}
+@media (max-width: 600px) { .reperes-grid { grid-template-columns: 1fr; } }
+
+/* Card */
+.r-card {
+  background: var(--white); border: 1px solid rgba(198,160,91,0.08);
+  border-radius: 16px; padding: 1.4rem 1.5rem;
+  transition: all 0.3s ease;
+  opacity: 0; animation: fadeUp 0.5s ease forwards;
+}
+.r-card:nth-child(2) { animation-delay: 0.05s; }
+.r-card:nth-child(3) { animation-delay: 0.1s; }
+.r-card:nth-child(4) { animation-delay: 0.15s; }
+.r-card:nth-child(5) { animation-delay: 0.2s; }
+.r-card:nth-child(6) { animation-delay: 0.25s; }
+.r-card:nth-child(7) { animation-delay: 0.3s; }
+.r-card:nth-child(8) { animation-delay: 0.35s; }
+.r-card:nth-child(9) { animation-delay: 0.4s; }
+.r-card:nth-child(10) { animation-delay: 0.45s; }
+.r-card:nth-child(11) { animation-delay: 0.5s; }
+.r-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(198,160,91,0.08);
+  border-color: rgba(198,160,91,0.15);
+}
+.r-card.full { grid-column: 1 / -1; background: var(--cream); border-color: rgba(198,160,91,0.2); }
+.r-card.conditional { display: none; } /* hidden by default, shown by JS */
+
+/* Card header */
+.r-card-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
+.r-card-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--navy); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.r-card-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+.r-card-head h3 {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
+  color: var(--text-dark);
+}
+
+/* Card body */
+.r-card p { font-size: 0.82rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
+.r-card .hl { font-weight: 600; color: var(--text-dark); }
+
+/* Source */
+.r-card .src { display: block; margin-top: 0.4rem; font-size: 0.65rem; color: var(--gold); font-style: italic; }
+
+/* Expand */
+.r-card details { margin-top: 0.5rem; }
+.r-card details summary {
+  font-size: 0.72rem; color: var(--gold); cursor: pointer;
+  font-weight: 500; list-style: none; transition: color 0.2s;
+}
+.r-card details summary:hover { color: var(--gold-light); }
+.r-card details summary::before { content: '▸ '; }
+.r-card details[open] summary::before { content: '▾ '; }
+.r-card .more {
+  margin-top: 0.5rem; padding: 0.8rem 1rem;
+  background: var(--cream); border-radius: 10px;
+  font-size: 0.78rem; line-height: 1.55; color: var(--text-dark); font-weight: 300;
+}
+.r-card .more strong { font-weight: 600; color: var(--text-dark); }
+.r-card .tips { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--cream-dark); }
+.r-card .tips-title {
+  font-weight: 600; color: var(--gold); font-size: 0.68rem;
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem;
+}
+.r-card .more ul { margin: 0.2rem 0 0 1rem; padding: 0; }
+.r-card .more ul li { margin-bottom: 0.15rem; }
+
+/* Footer */
+.page-footer {
+  text-align: center; padding: 1.5rem; position: relative; z-index: 2;
+  font-size: 0.65rem; color: var(--text-muted); line-height: 1.8;
+}
+.page-footer a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="page-header">
+  <a href="/espace-client.html" class="back-link">
+    <svg viewBox="0 0 24 24"><path d="m23.5 12-23 0"/><path d="M7.25 18.5 0.5 12l6.75-6.5"/></svg>
+    Retour à mon espace
+  </a>
+  <h1>Mes repères santé</h1>
+  <div class="subtitle">Élevia Nutrition</div>
+  <p class="intro">Votre plan optimise les quantités et fréquences. Mais certains choix du quotidien vous appartiennent. Voici les repères essentiels pour tirer le meilleur de votre plan.</p>
+</div>
+
+<div class="reperes-grid" id="reperes-grid">
+
+  <!-- Contenu injecté par JS pour gérer les conditionnels -->
+
+</div>
+
+<div class="page-footer">
+  Sources : CSS Belgique 2025 · EFSA · OMS 2020/2023 · WCRF 2018 · EU Reg 1169/2011<br>
+  Ce document accompagne votre plan personnalisé. Il ne remplace pas un avis médical.<br>
+  <a href="/espace-client.html">Retour à mon espace</a>
+</div>
+
+<script>
+// ── Supabase client (same as espace-client.html) ──
+const SUPABASE_URL = 'https://rlemorqfkuloyxoydmdj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZW1vcnFma3Vsb3l4b3lkbWRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgxNjY0NDEsImV4cCI6MjA1Mzc0MjQ0MX0.VhlShYYjmhFuanFuU3oWOsiKN9MM4tPGlTmqxpbIzUs';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── Card definitions ──
+const CARDS = [
+  {
+    id: 'proteines', icon: 'drumstick', title: 'Variez vos protéines',
+    text: 'Votre plan propose des jours «\u00a0viande\u00a0». <span class="hl">Alternez entre volaille</span> (poulet, dinde), viande blanche et viande rouge. Limitez la viande rouge à <span class="hl">2 à 3 fois par semaine</span>.',
+    expand: 'La viande rouge (bœuf, agneau) est riche en <strong>fer bien absorbé</strong> et en vitamine B12. Mais en excès (> 300 g/sem), elle est associée à un risque cardiovasculaire et de cancer colorectal.',
+    tips: 'Astuces', tipsList: ['Comptez vos jours «\u00a0viande rouge\u00a0» sur la semaine', 'Complétez avec volaille, poisson ou légumineuses', 'Privilégiez les morceaux maigres (filet, rumsteck)'],
+    src: 'CSS Belgique 2025 · WCRF 2018', condition: null
+  },
+  {
+    id: 'cuisson', icon: 'flame', title: 'Choisissez les bonnes cuissons',
+    text: 'Privilégiez les cuissons douces : <span class="hl">vapeur, four, poêle antiadhésive, papillote</span>. Limitez les fritures et les grillades intenses. Remplacez vos poêles dès qu\'elles sont rayées.',
+    expand: 'Les cuissons à très haute température produisent des <strong>composés nocifs</strong> : acrylamide, hydrocarbures aromatiques polycycliques.',
+    tips: 'Astuces', tipsList: ['Cuisez au four, vapeur ou poêle à feu moyen', 'Évitez le contact direct viande-flamme au barbecue', 'Remplacez les poêles rayées (risque PTFE)', 'Les marinades (citron, herbes) réduisent les composés nocifs'],
+    src: 'EFSA · IARC', condition: null
+  },
+  {
+    id: 'sel', icon: 'salt', title: 'Modérez le sel',
+    text: 'Maximum <span class="hl">5 g de sel par jour</span> (environ 1 cuillère à café). Votre palais s\'adaptera en quelques semaines.',
+    expand: 'L\'excès de sel = premier facteur de risque d\'<strong>hypertension artérielle</strong>. Le Belge moyen consomme ~10 g/jour — le double de la recommandation.',
+    tips: 'Astuces', tipsList: ['Goûtez toujours avant de saler', 'Assaisonnez avec herbes, épices, citron, ail ou vinaigre', 'Sources cachées : pain, fromage, charcuterie, sauces industrielles'],
+    src: 'CSS Belgique 2025 · OMS', condition: null
+  },
+  {
+    id: 'ultra', icon: 'ban', title: 'Évitez l\'ultra-transformé',
+    text: 'Privilégiez les aliments <span class="hl">bruts ou peu transformés</span>. Les plats préparés, biscuits industriels et margarines dures contiennent souvent trop de sel, sucre et <span class="hl">mauvaises graisses</span>.',
+    expand: 'Les «\u00a0mauvaises graisses\u00a0» sont les <strong>acides gras trans</strong> — des graisses artificielles qui augmentent le mauvais cholestérol. L\'UE les limite à 2 g / 100 g de matière grasse depuis 2021.',
+    tips: 'Comment les repérer', tipsList: ['Sur l\'étiquette, cherchez «\u00a0huiles partiellement hydrogénées\u00a0» → à éviter', 'Sources : margarines dures, biscuits fourrés, pâtes feuilletées industrielles', 'Préférez le beurre (petite quantité) ou l\'huile d\'olive'],
+    src: 'OMS · UE Reg 2019/649 · NOVA', condition: null
+  },
+  {
+    id: 'cereales', icon: 'bread', title: 'Préférez le complet',
+    text: 'Quand votre plan indique du pain, riz ou pâtes, <span class="hl">choisissez la version complète</span> : pain complet, riz complet, pâtes complètes, flocons d\'avoine.',
+    expand: 'Les céréales complètes conservent <strong>enveloppe</strong> et <strong>germe</strong>, riches en fibres, vitamines B, magnésium et fer. Les versions raffinées ont perdu 60-80 % de ces nutriments. Objectif : <strong>≥ 25 g de fibres/jour</strong>.',
+    tips: 'Pourquoi les fibres comptent', tipsList: ['Ralentissent l\'absorption du sucre → moins de pics de glycémie', 'Nourrissent votre microbiote intestinal', 'Favorisent la satiété → vous mangez moins sans effort'],
+    src: 'CSS Belgique 2025 · EFSA fibres', condition: null
+  },
+  {
+    id: 'vitd', icon: 'sun', title: 'Vitamine D : supplément recommandé',
+    text: 'L\'alimentation seule ne couvre <strong>pas</strong> vos besoins en vitamine D. Prenez un <span class="hl">supplément de 800 à 1000 UI par jour</span>, surtout d\'octobre à mars.',
+    expand: 'La vitamine D est fabriquée par votre peau sous l\'effet du soleil. En Belgique (latitude 50°N), <strong>d\'octobre à mars</strong>, le soleil est trop bas. Les aliments les plus riches (poisson gras) n\'apportent que 15-20 % de vos besoins.',
+    tips: 'En pratique', tipsList: ['Supplément recommandé toute l\'année, <strong>indispensable</strong> en hiver', 'Forme recommandée : vitamine D3 (cholécalciférol)', 'Demandez conseil à votre pharmacien', 'En été, 15-20 min de soleil sur les avant-bras suffisent'],
+    src: 'EFSA AI 15 µg/j · CSS Belgique', condition: null
+  },
+  {
+    id: 'alcool', icon: 'cocktail', title: 'Alcool : avec modération',
+    text: 'L\'alcool apporte des <strong>calories vides</strong> (7 kcal/g). Si vous en consommez, <span class="hl">maximum 10 unités par semaine</span>, sans dépasser 2 verres par occasion.',
+    expand: 'L\'OMS considère qu\'<strong>aucun niveau d\'alcool n\'est sans risque</strong>. Même 1 verre/jour augmente le risque de certains cancers (sein, côlon, œsophage).',
+    tips: 'Repères caloriques', tipsList: ['1 verre de vin (15 cl) = ~100 kcal', '1 bière (33 cl) = ~150 kcal', '1 cocktail = ~200-300 kcal'],
+    tips2: 'Astuces', tipsList2: ['Alternez chaque verre avec de l\'eau gazeuse', 'Prévoyez au moins 3 jours sans alcool par semaine', 'Ne compensez jamais un repas par de l\'alcool'],
+    src: 'CSS Belgique 2025 · OMS 2023', condition: null
+  },
+  {
+    id: 'sport', icon: 'zap', title: 'Bougez !',
+    text: 'Ce plan accompagne votre objectif, mais ne remplace pas l\'activité physique. Visez minimum <span class="hl">150 min d\'activité modérée</span> ou 75 min intense par semaine.',
+    expand: '<strong>Chaque minute compte</strong> — même les petits efforts s\'additionnent. La réduction de mortalité est maximale entre 150 et 300 min/sem.',
+    tips: 'Intégrez le mouvement au quotidien', tipsList: ['Prenez les escaliers plutôt que l\'ascenseur', 'Marchez ou pédalez pour les trajets courts', '2 séances de renforcement musculaire par semaine', 'Pas besoin de 30 min d\'affilée — 3 × 10 min comptent'],
+    src: 'OMS 2020 · CSS Belgique 2025', condition: null
+  },
+  {
+    id: 'sommeil', icon: 'moon', title: 'Dormez suffisamment',
+    text: 'Un sommeil de <span class="hl">7 à 9 heures par nuit</span> est essentiel. Le manque de sommeil augmente la faim et favorise les envies de sucre.',
+    expand: 'Dormir < 7h dérègle deux hormones : la <strong>ghréline</strong> (faim) augmente de 24 %, la <strong>leptine</strong> (satiété) diminue.',
+    tips: 'Améliorer votre sommeil', tipsList: ['Heure de coucher régulière, même le week-end', 'Pas d\'écrans 30 min avant de dormir', 'Chambre fraîche (18-19°C), sombre et silencieuse', 'Évitez caféine après 14h et repas lourds le soir'],
+    src: 'Spiegel 2004 · Taheri 2004', condition: null
+  },
+  {
+    id: 'mastication', icon: 'clock', title: 'Mangez lentement',
+    text: 'Votre cerveau a besoin de <span class="hl">15 à 20 minutes</span> pour recevoir les signaux de satiété. Posez vos couverts entre les bouchées.',
+    expand: 'Manger lentement réduit la prise alimentaire de <strong>~70 kcal par repas</strong>. Mastiquer davantage augmente aussi la thermogenèse post-repas.',
+    tips: 'Astuces concrètes', tipsList: ['Posez vos couverts entre chaque bouchée', 'Mâchez 15 à 20 fois avant d\'avaler', 'Mangez sans écran (TV, téléphone)', 'Servez-vous dans une assiette, jamais au plat'],
+    src: 'Andrade 2008 · Scientific Reports 2021', condition: null
+  },
+  {
+    id: 'etiquettes', icon: 'tag', title: 'Lisez les étiquettes',
+    text: 'Si vous avez des allergies ou intolérances, <span class="hl">vérifiez systématiquement les étiquettes</span>. Les compositions peuvent changer.',
+    expand: 'En Europe, <strong>14 allergènes</strong> doivent être déclarés (en gras dans la liste d\'ingrédients). Les mentions «\u00a0peut contenir des traces de…\u00a0» sont volontaires et ne reflètent pas toujours le vrai risque.',
+    tips: 'Réflexes sécurité', tipsList: ['Relisez l\'étiquette à chaque achat — les recettes changent', 'En cas de doute, contactez directement le fabricant', 'Au restaurant, informez le serveur <strong>avant</strong> de commander', 'Gardez votre stylo auto-injecteur accessible si prescrit'],
+    src: 'Règlement UE 1169/2011 · FARE 2024',
+    condition: 'has_allergies'
+  },
+  {
+    id: 'b12', icon: 'pill', title: 'Vitamine B12 : supplément obligatoire',
+    text: 'La vitamine B12 est absente des aliments d\'origine végétale. <span class="hl">Un supplément quotidien est indispensable</span>.',
+    expand: 'Vos réserves hépatiques de B12 s\'épuisent en 2-5 ans sans apport animal. Une carence provoque fatigue, anémie et troubles neurologiques irréversibles.',
+    tips: 'En pratique', tipsList: ['Cyanocobalamine 10 µg/jour OU 2000 µg/semaine', 'Aussi disponible en spray sublingual', 'Demandez à votre pharmacien ou médecin'],
+    src: 'EFSA AI 4.0 µg/j · CSS Belgique',
+    condition: 'is_vegetarian'
+  },
+];
+
+// ── SVG icons (inline) ──
+const ICONS = {
+  drumstick: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.821 22.7a3.339 3.339 0 0 1 -0.673 -2.795 3.428 3.428 0 0 1 -2.848 -0.722c-2.493 -2.493 1.381 -6.367 4.076 -2.7l3.015 -3.073 2.122 2.121L7.5 18.606c3.69 2.673 -0.185 6.594 -2.679 4.094Z"/><path d="m11.27 16.289 -3.535 -3.537c-1.891 -1.89 6.435 -17.678 13.813 -10.3 7.43 7.428 -8.628 15.486 -10.278 13.837Z"/></svg>',
+  flame: '<svg viewBox="0 0 24 24"><path d="M13.38 0.518a0.25 0.25 0 0 1 0.238 0.423A4.787 4.787 0 0 0 12 4.27a4.815 4.815 0 0 0 1.5 3.5 5.327 5.327 0 0 0 1.44 -2.681 0.25 0.25 0 0 1 0.362 -0.168A7.235 7.235 0 0 1 19 11.269a7 7 0 0 1 -14 0A11.446 11.446 0 0 1 13.38 0.518Z"/></svg>',
+  salt: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 21.5a2.151 2.151 0 0 0 -2 -2H8a2.151 2.151 0 0 0 -2 2v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1 -1Z"/><path d="M16 5.5v2.154a1.989 1.989 0 0 1 -0.115 0.666 10.314 10.314 0 0 0 0 8.36 1.989 1.989 0 0 1 0.115 0.666V19.5"/><path d="M8 5.5v2.154a1.989 1.989 0 0 0 0.115 0.666 10.314 10.314 0 0 1 0 8.36 1.989 1.989 0 0 0 -0.115 0.666V19.5"/><path d="M18 4a1.5 1.5 0 0 0 -1.5 -1.5h-9A1.5 1.5 0 0 0 6 4h0a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 4Z"/></svg>',
+  ban: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 12a11.5 11.5 0 1 0 23 0 11.5 11.5 0 1 0 -23 0Z"/><path d="M3.869 20.131 20.131 3.869"/></svg>',
+  bread: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0.68 20.07a1 1 0 0 1 -0.07 -1 1 1 0 0 1 0.89 -0.54h21a1 1 0 0 1 0.89 0.54 1 1 0 0 1 -0.07 1l-1.21 1.72a4 4 0 0 1 -3.27 1.71H5.16a4 4 0 0 1 -3.27 -1.71Z"/><path d="M11 16.5a4.09 4.09 0 0 1 4.19 -4h3.14a4.1 4.1 0 0 1 4.19 4 2.05 2.05 0 0 1 -2.1 2h-7.35a2 2 0 0 1 -2.07 -2Z"/><path d="m18.1 9.86 4 -4a3.14 3.14 0 1 0 -4.44 -4.44L2.56 16.5"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 12a7 7 0 0 0 -7 -7h0a7 7 0 0 0 -7 7h0a7 7 0 0 0 7 7h0a7 7 0 0 0 7 -7Z"/><path d="m12 21 0 2"/><path d="m21 12 2 0"/><path d="m12 3 0 -2"/><path d="m3 12 -2 0"/><path d="m5.637 18.364 -1.415 1.415"/><path d="m18.364 18.364 1.414 1.414"/><path d="m18.365 5.637 1.414 -1.414"/><path d="M5.636 5.637 4.222 4.223"/></svg>',
+  cocktail: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 13.293 12 23.5"/><path d="m7.5 23.5 9 0"/><path d="M3.854 5.354a0.5 0.5 0 0 1 0.353 -0.854h15.586a0.5 0.5 0 0 1 0.353 0.854l-7.792 7.792a0.5 0.5 0 0 1 -0.708 0Z"/><path d="M21 7.355A3.5 3.5 0 1 0 16.837 2.5"/></svg>',
+  zap: '<svg viewBox="0 0 24 24"><path d="M11 20v-4.5H8.5L12 10v3.5h2.5L11 20Z"/><path d="M17 23.5H7L5.5 22V8.5l3 -3h7l3 3V22L17 23.5Z"/><path d="M7 5.5h10"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 12a12.763 12.763 0 0 1 5.381 -10.58 0.5 0.5 0 0 0 -0.3 -0.913 11.5 11.5 0 0 0 0 22.986 0.5 0.5 0 0 0 0.3 -0.913A12.766 12.766 0 0 1 6.5 12Z"/><path d="M22.5 18.5c-2.584 -0.01 -3.869 1.375 -4 4 -0.022 -2.474 -1.131 -4 -4 -4 2.568 -0.035 3.989 -1.275 4 -4 -0.008 2.512 1.215 3.942 4 4"/></svg>',
+  clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11.5"/><path d="M12 5.5v7l4.5 4.5"/></svg>',
+  tag: '<svg viewBox="0 0 24 24"><path d="M21.707 2.293a1 1 0 0 0-1.414 0L12.5 10.086V14.5h4.414l7.793-7.793a1 1 0 0 0 0-1.414Z"/><path d="M0.5 14.5h7"/><path d="M0.5 18.5h12"/><path d="M0.5 22.5h12"/></svg>',
+  pill: '<svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="4" ry="4" transform="rotate(-45 12 12)"/><path d="M12 12 7.05 7.05"/></svg>',
+  star: '<svg viewBox="0 0 24 24"><path d="m12 0.5 3.5 7.5 8 1 -6 5.5 1.5 8L12 18.5 5 22.5l1.5-8-6-5.5 8-1Z"/></svg>',
+};
+
+// ── Render cards ──
+async function init() {
+  // Get client profile for conditionals
+  let profile = { diet_profile: null, allergies: [] };
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      const { data: client } = await sb.from('clients').select('diet_profile').eq('auth_user_id', session.user.id).single();
+      const { data: quest } = await sb.from('questionnaire_responses')
+        .select('responses')
+        .eq('client_id', client?.id)
+        .order('created_at', { ascending: false }).limit(1).single();
+      if (client) profile.diet_profile = client.diet_profile;
+      if (quest?.responses?.allergies) profile.allergies = quest.responses.allergies;
+    }
+  } catch (e) { /* non-auth or error — show all universal cards */ }
+
+  const isVege = ['vegetarian', 'vegetarien', 'pescetarian', 'pescovegetarien'].includes(profile.diet_profile);
+  const hasAllergies = profile.allergies && profile.allergies.length > 0 && profile.allergies[0] !== 'none';
+
+  const grid = document.getElementById('reperes-grid');
+  let html = '';
+
+  for (const c of CARDS) {
+    // Check condition
+    if (c.condition === 'is_vegetarian' && !isVege) continue;
+    if (c.condition === 'has_allergies' && !hasAllergies) continue;
+
+    const icon = ICONS[c.icon] || '';
+    let tipsHtml = '';
+    if (c.tips && c.tipsList) {
+      tipsHtml += `<div class="tips"><div class="tips-title">${c.tips}</div><ul>${c.tipsList.map(t => `<li>${t}</li>`).join('')}</ul></div>`;
+    }
+    if (c.tips2 && c.tipsList2) {
+      tipsHtml += `<div class="tips"><div class="tips-title">${c.tips2}</div><ul>${c.tipsList2.map(t => `<li>${t}</li>`).join('')}</ul></div>`;
+    }
+
+    html += `
+      <div class="r-card">
+        <div class="r-card-head">
+          <div class="r-card-icon">${icon}</div>
+          <h3>${c.title}</h3>
+        </div>
+        <p>${c.text}</p>
+        <details>
+          <summary>En savoir plus</summary>
+          <div class="more">${c.expand}${tipsHtml}</div>
+        </details>
+        <span class="src">${c.src}</span>
+      </div>`;
+  }
+
+  // Essential card (always last, full width)
+  html += `
+    <div class="r-card full">
+      <div class="r-card-head">
+        <div class="r-card-icon" style="background:var(--gold);"><svg viewBox="0 0 24 24" style="stroke:var(--navy);"><path d="m12 0.5 3.5 7.5 8 1 -6 5.5 1.5 8L12 18.5 5 22.5l1.5-8-6-5.5 8-1Z"/></svg></div>
+        <h3>L'essentiel à retenir</h3>
+      </div>
+      <p>Votre plan est un <strong>cadre</strong> — pas une prison. L'objectif est de construire des habitudes durables, pas de viser la perfection.
+      Un écart occasionnel n'annule pas vos progrès. Ce qui compte, c'est la <span class="hl">régularité sur le long terme</span>.
+      En cas de questions, votre diététicien est là pour vous accompagner.</p>
+    </div>`;
+
+  grid.innerHTML = html;
+}
+
+init();
+</script>
+</body>
+</html>
