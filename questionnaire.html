@@ -447,6 +447,18 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       <span class="spinner"></span>
     </button>
   </div>
+
+  <!-- Modal garde de faisabilité (T-005) -->
+  <div id="guardModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(14,30,46,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+    <div style="background:var(--white);border-radius:16px;max-width:520px;width:90%;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+      <h3 style="font-family:var(--serif);font-size:1.4rem;color:var(--navy);margin:0 0 16px;">Adaptation de votre plan</h3>
+      <div id="guardMessages" style="font-family:var(--sans);font-size:0.95rem;color:var(--text-dark);line-height:1.6;"></div>
+      <div style="display:flex;gap:12px;margin-top:24px;justify-content:flex-end;">
+        <button id="guardBack" style="padding:10px 20px;border:1px solid var(--border-soft);border-radius:8px;background:var(--white);font-family:var(--sans);font-size:0.9rem;cursor:pointer;color:var(--text-muted);">Modifier mes réponses</button>
+        <button id="guardContinue" style="padding:10px 24px;border:none;border-radius:8px;background:var(--gold);font-family:var(--sans);font-size:0.9rem;font-weight:500;cursor:pointer;color:var(--white);">J'ai compris, continuer</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -968,7 +980,19 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     steps.push({
       id: 'collation', title: 'Ta <em>collation</em>', icon: '\uD83C\uDF6B',
       fields: [
-        { name: 'snack_time_choice', type: 'radio', label: 'Souhaites-tu une collation dans ton plan ?', condition: function() { return !isGainGoal(); }, options: [
+        { name: 'collation_required_note', type: 'section', className: 'field-note', label: 'Ton programme inclut une collation pour bien r\u00E9partir ton \u00E9nergie sur la journ\u00E9e. Cela favorise une meilleure r\u00E9gulation de la glyc\u00E9mie et \u00E9vite la fatigue de fin de journ\u00E9e.', condition: function() {
+          if (isGainGoal()) return false;
+          var noPdj = v('has_breakfast') === 'no' && v('include_breakfast') !== 'yes';
+          var noEncas = v('morning_light_snack') !== 'yes';
+          return noPdj && noEncas;
+        }},
+        { name: 'snack_time_choice', type: 'radio', label: 'Souhaites-tu une collation dans ton plan ?', condition: function() {
+          if (isGainGoal()) return false;
+          var noPdj = v('has_breakfast') === 'no' && v('include_breakfast') !== 'yes';
+          var noEncas = v('morning_light_snack') !== 'yes';
+          if (noPdj && noEncas) return false;
+          return true;
+        }, options: [
           { label: 'Oui', value: 'flexible' },
           { label: 'Non', value: 'none' }
         ]},
@@ -1069,6 +1093,16 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       // Sync coldmeal_type_pref from PDM-specific field
       if (formData.coldmeal_type_pref_pdm) {
         formData.coldmeal_type_pref = formData.coldmeal_type_pref_pdm;
+        saveToStorage();
+      }
+    }
+
+    // R23: Force collation when no PDJ and no en-cas matinal (3 repas min)
+    if (!isGainGoal()) {
+      var noPdj = v('has_breakfast') === 'no' && v('include_breakfast') !== 'yes';
+      var noEncas = v('morning_light_snack') !== 'yes';
+      if (noPdj && noEncas) {
+        formData.snack_time_choice = 'flexible';
         saveToStorage();
       }
     }
@@ -1509,12 +1543,100 @@ input[type="number"].field-input { -moz-appearance: textfield; }
     saveToStorage();
   }
 
+  // ── Guard check (T-005) — estimation kcal simplifiée + messages ──
+  function estimateKcal() {
+    var gender = v('gender');
+    var age = parseInt(v('age')) || 30;
+    var weight = parseFloat(v('weight_kg')) || 70;
+    var height = parseFloat(v('height_m')) || 1.70;
+    if (height > 3) height = height / 100; // cm → m
+
+    // Henry 2005 BMR
+    var coeffs;
+    if (gender === 'M') {
+      coeffs = age < 30 ? [14.4, 313, 113] : (age < 60 ? [11.4, 541, -137] : [11.4, 541, -256]);
+    } else {
+      coeffs = age < 30 ? [10.4, 615, -282] : (age < 60 ? [8.18, 502, -11.6] : [8.52, 421, 10.7]);
+    }
+    var bmr = coeffs[0] * weight + coeffs[1] * height + coeffs[2];
+
+    // NAP
+    var napMap = { tres_sedentaire: 1.30, sedentaire: 1.40, moderement_actif: 1.55, actif: 1.55, tres_actif: 1.72, extremement_actif: 1.90 };
+    var nap = napMap[v('job_activity')] || 1.40;
+    if (v('has_physical_activity') === 'yes') {
+      var freqMap = { '1-2': 0.05, '1_2_seances': 0.05, '3-4': 0.10, '3_4_seances': 0.10, '5+': 0.15, '5_6_seances': 0.15 };
+      nap += freqMap[v('activity_frequency')] || 0.05;
+    }
+
+    var bej = bmr * nap;
+
+    // Goal: PW = -15%, MAINT = 0, GAIN = +surplus
+    var goal = v('primary_goal');
+    if (goal === 'weight_loss') return Math.max(1650, bej * 0.85);
+    if (goal === 'muscle_gain' || goal === 'recomposition') return bej + 250;
+    return bej; // maintenance
+  }
+
+  function checkGuards() {
+    var messages = [];
+    var kcal = estimateKcal();
+    var hasPdj = v('has_breakfast') !== 'no';
+    var snack = v('snack_time_choice');
+    var hasColl = snack && snack !== 'none' && snack !== 'aucune';
+
+    // S-A1
+    if (!hasPdj && kcal > 1500) {
+      messages.push(
+        'Nous avons bien noté que vous ne prenez pas de petit-déjeuner. '
+        + 'Cependant, avec vos besoins énergétiques, deux repas ne suffisent pas '
+        + 'à les couvrir correctement. Un petit-déjeuner léger sera ajouté '
+        + 'à votre plan pour éviter de surcharger vos autres repas.'
+      );
+    }
+
+    // S-A2
+    if (!hasColl && kcal > 2400) {
+      messages.push(
+        'Nous avons bien noté que vous ne souhaitez pas de collation. '
+        + 'Avec vos besoins énergétiques, trois repas seuls ne suffisent pas '
+        + 'à les couvrir sans surcharger les portions. Une collation '
+        + 'l\'après-midi sera ajoutée à votre plan.'
+      );
+    }
+
+    // S-B info (exclusions)
+    var excl = formData['food_exclusions'];
+    if (Array.isArray(excl) && excl.length >= 3) {
+      messages.push(
+        'Vos exclusions alimentaires ont bien été prises en compte. '
+        + 'Votre plan sera adapté avec des alternatives pour assurer '
+        + 'un apport nutritionnel complet.'
+      );
+    }
+
+    return messages;
+  }
+
+  var _guardConfirmed = false;
+
   // ── Submit ──
   el('btnSubmit').addEventListener('click', function() {
     if (!validateStep()) return;
 
     // Purge stale values from hidden conditional fields before sending
     clearHiddenFieldValues();
+
+    // Guard check — show modal if adaptations needed
+    if (!_guardConfirmed) {
+      var msgs = checkGuards();
+      if (msgs.length > 0) {
+        var html = msgs.map(function(m) { return '<p style="margin:0 0 12px;">' + m + '</p>'; }).join('');
+        el('guardMessages').innerHTML = html;
+        el('guardModal').style.display = 'flex';
+        return;
+      }
+    }
+    _guardConfirmed = false;
 
     var btn = el('btnSubmit');
     if (btn.classList.contains('loading')) return;
@@ -1559,6 +1681,16 @@ input[type="number"].field-input { -moz-appearance: textfield; }
       btn.classList.remove('loading');
       btn.disabled = false;
     });
+  });
+
+  // ── Guard modal handlers ──
+  el('guardContinue').addEventListener('click', function() {
+    el('guardModal').style.display = 'none';
+    _guardConfirmed = true;
+    el('btnSubmit').click();
+  });
+  el('guardBack').addEventListener('click', function() {
+    el('guardModal').style.display = 'none';
   });
 
   // ── Keyboard nav ──
