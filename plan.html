@@ -94,7 +94,7 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .hero-cta-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198, 160, 91, 0.3); }
 .hero-cta-secondary { font-family: var(--sans); font-size: 0.82rem; font-weight: 400; color: var(--cream); text-decoration: none; opacity: 0.7; transition: opacity 0.3s; border-bottom: 1px solid rgba(198,160,91,0.3); padding-bottom: 2px; }
 .hero-cta-secondary:hover { opacity: 1; }
-.hero-scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.6rem; opacity: 0; animation: fadeUp 1s var(--ease) 1.2s forwards; }
+.hero-scroll-hint { position: absolute; bottom: 3rem; left: 0; right: 0; margin: 0 auto; width: fit-content; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; opacity: 0; animation: fadeUp 1s var(--ease) 1.2s forwards; }
 .hero-scroll-hint span { font-family: var(--sans); font-size: 0.68rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); opacity: 0.5; }
 .hero-scroll-hint .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
 @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 0.8; transform: scaleY(1.2); } }
