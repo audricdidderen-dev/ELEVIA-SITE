@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>Redirection — Élevia Nutrition</title>
-<script>window.location.replace('/');</script>
+<title>Ton plan nutritionnel — Élevia Nutrition</title>
+<meta name="description" content="Un plan nutritionnel navigable et interactif, conçu par un diététicien diplômé. Explore ce dont tu as besoin, quand tu en as besoin. Deviens autonome sans t'en rendre compte.">
+<link rel="canonical" href="https://www.elevianutrition.com/plan.html">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ton plan nutritionnel — Élevia Nutrition">
-<meta property="og:description" content="Un plan nutritionnel premium, pensé pour être utilisé. Équivalences, portions, cibles macros — conçu par un diététicien diplômé.">
+<meta property="og:description" content="Un plan nutritionnel navigable et interactif, conçu par un diététicien diplômé. Explore ce dont tu as besoin, quand tu en as besoin.">
 <meta property="og:url" content="https://www.elevianutrition.com/plan.html">
 <meta property="og:image" content="https://www.elevianutrition.com/og-image.jpg">
 <meta property="og:locale" content="fr_BE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ton plan nutritionnel — Élevia Nutrition">
-<meta name="twitter:description" content="Un plan nutritionnel premium, pensé pour être utilisé.">
+<meta name="twitter:description" content="Un plan nutritionnel navigable et interactif, conçu par un diététicien diplômé.">
 <meta name="twitter:image" content="https://www.elevianutrition.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,7 @@
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Outfit', -apple-system, sans-serif;
   --header-h: 72px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 html { scroll-behavior: smooth; overflow-x: clip; }
 body { font-family: var(--sans); color: var(--text-dark); background: var(--navy); overflow-x: clip; -webkit-font-smoothing: antialiased; }
@@ -68,72 +69,160 @@ body { font-family: var(--sans); color: var(--text-dark); background: var(--navy
 .grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 10000; }
 .revealed { opacity: 1 !important; transform: none !important; }
-[data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+[data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+[data-reveal-delay="1"] { transition-delay: 0.1s; }
+[data-reveal-delay="2"] { transition-delay: 0.2s; }
+[data-reveal-delay="3"] { transition-delay: 0.3s; }
+[data-reveal-delay="4"] { transition-delay: 0.4s; }
+[data-reveal-delay="5"] { transition-delay: 0.5s; }
 .section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 1.5rem; }
+.section-headline em { font-style: italic; color: var(--gold); background: linear-gradient(90deg, rgba(198,160,91,0.18) 50%, transparent 50%); background-size: 200% 100%; background-position: 100% 0; transition: background-position 0.8s var(--ease) 0.4s; padding: 0 0.08em; }
+.section-headline.revealed em { background-position: 0% 0; }
 
-/* ===== HERO — Full-bleed immersive ===== */
+/* ===== HERO ===== */
 .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: calc(var(--header-h) + 2rem) clamp(1.5rem, 5vw, 4rem) 6rem; }
 .hero::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1000px; height: 800px; background: radial-gradient(ellipse, rgba(198,160,91,0.06), transparent 70%); pointer-events: none; }
-.hero-statement { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; color: var(--cream); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; }
+.hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-soft); border: 1px solid rgba(198,160,91,0.2); padding: 0.5rem 1.2rem; border-radius: 60px; margin-bottom: 2.5rem; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) 0.2s forwards; }
+.hero-badge svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+.hero-statement { font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 300; color: var(--cream); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; max-width: 700px; opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s var(--ease) 0.4s forwards; }
 .hero-statement em { font-style: italic; color: var(--gold); }
-.hero-sub { font-family: var(--sans); font-size: clamp(0.9rem, 1.5vw, 1.05rem); font-weight: 300; color: var(--text-soft); line-height: 1.7; max-width: 480px; margin: 0 auto 4rem; }
-.hero-page-float { position: relative; width: clamp(240px, 30vw, 340px); perspective: 1200px; }
-.hero-page-float img { width: 100%; border-radius: 8px; box-shadow: 0 40px 80px rgba(0,0,0,0.35), 0 0 60px rgba(198,160,91,0.06); transform: rotateY(-4deg) rotateX(2deg); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-.hero-page-float:hover img { transform: rotateY(0deg) rotateX(0deg); }
-.hero-scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.hero-sub { font-family: var(--sans); font-size: clamp(0.92rem, 1.5vw, 1.08rem); font-weight: 300; color: var(--text-soft); line-height: 1.8; max-width: 520px; margin: 0 auto 3rem; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) 0.7s forwards; }
+.hero-ctas { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: center; opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease) 0.9s forwards; }
+.hero-cta-primary { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 1rem 2.4rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; }
+.hero-cta-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198, 160, 91, 0.3); }
+.hero-cta-secondary { font-family: var(--sans); font-size: 0.82rem; font-weight: 400; color: var(--cream); text-decoration: none; opacity: 0.7; transition: opacity 0.3s; border-bottom: 1px solid rgba(198,160,91,0.3); padding-bottom: 2px; }
+.hero-cta-secondary:hover { opacity: 1; }
+.hero-scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.6rem; opacity: 0; animation: fadeUp 1s var(--ease) 1.2s forwards; }
 .hero-scroll-hint span { font-family: var(--sans); font-size: 0.68rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); opacity: 0.5; }
 .hero-scroll-hint .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
 @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 0.8; transform: scaleY(1.2); } }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-/* ===== FAN — Pages spread ===== */
-.section-fan { padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); background: var(--cream); text-align: center; overflow: hidden; }
-.fan-inner { max-width: 1100px; margin: 0 auto; }
-.fan-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; color: var(--text-dark); }
-.fan-headline em { font-style: italic; color: var(--gold); }
-.fan-sub { font-family: var(--sans); font-size: 0.92rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 500px; margin: 0 auto 4rem; }
-.fan-spread { display: flex; justify-content: center; gap: clamp(1rem, 3vw, 2.5rem); align-items: flex-end; perspective: 1400px; padding: 2rem 0; }
-.fan-card { flex: 0 0 auto; width: clamp(160px, 20vw, 220px); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-in; }
-.fan-card:nth-child(1) { transform: rotate(-6deg) translateY(20px); }
-.fan-card:nth-child(2) { transform: rotate(-3deg) translateY(8px); }
-.fan-card:nth-child(3) { transform: rotate(0deg) translateY(0px); }
-.fan-card:nth-child(4) { transform: rotate(3deg) translateY(8px); }
-.fan-card:nth-child(5) { transform: rotate(6deg) translateY(20px); }
-.fan-card:hover { transform: rotate(0deg) translateY(-12px) scale(1.05); z-index: 10; }
-.fan-card img { width: 100%; border-radius: 8px; box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); display: block; }
-.fan-card-label { font-family: var(--sans); font-size: 0.72rem; font-weight: 400; color: var(--text-muted); margin-top: 0.8rem; letter-spacing: 0.02em; opacity: 0; transition: opacity 0.3s; }
-.fan-card:hover .fan-card-label { opacity: 1; }
+/* ===== FORMAT SHIFT — Comparison ===== */
+.section-format { background: var(--cream); padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); position: relative; overflow: hidden; }
+.section-format::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(198,160,91,0.04), transparent 70%); pointer-events: none; }
+.format-inner { max-width: 960px; margin: 0 auto; }
+.format-intro { font-family: var(--sans); font-size: clamp(0.95rem, 1.6vw, 1.08rem); font-weight: 300; color: var(--text-muted); line-height: 1.8; max-width: 600px; margin-bottom: 4rem; }
+.format-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; }
+.format-grid::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, var(--gold), transparent); opacity: 0.25; }
+.format-col { padding: 2.5rem; }
+.format-col-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem; padding-bottom: 0.8rem; border-bottom: 1px solid; }
+.format-col--classic .format-col-label { color: var(--text-muted); border-color: rgba(107, 114, 128, 0.2); }
+.format-col--elevia .format-col-label { color: var(--gold); border-color: rgba(198,160,91,0.3); }
+.format-item { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1.8rem; }
+.format-item:last-child { margin-bottom: 0; }
+.format-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.format-col--classic .format-icon { background: rgba(107, 114, 128, 0.08); }
+.format-col--classic .format-icon svg { stroke: var(--text-muted); }
+.format-col--elevia .format-icon { background: rgba(198,160,91,0.1); }
+.format-col--elevia .format-icon svg { stroke: var(--gold); }
+.format-icon svg { width: 14px; height: 14px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.format-item h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.3rem; }
+.format-col--classic .format-item h4 { color: var(--text-muted); }
+.format-col--elevia .format-item h4 { color: var(--text-dark); }
+.format-item p { font-family: var(--sans); font-size: 0.82rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
+.format-psychology { margin-top: 4rem; padding: 2.5rem; background: var(--white); border-radius: 16px; border: 1px solid var(--border-soft); position: relative; overflow: hidden; }
+.format-psychology::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.4; }
+.format-psychology blockquote { font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 400; font-style: italic; color: var(--text-dark); line-height: 1.6; margin-bottom: 1rem; }
+.format-psychology blockquote em { color: var(--gold); font-style: italic; }
+.format-psychology cite { font-family: var(--sans); font-size: 0.75rem; font-weight: 400; color: var(--text-muted); font-style: normal; letter-spacing: 0.02em; }
 
-/* ===== SPOTLIGHTS — 3 zoom sections ===== */
-.spotlight { display: flex; align-items: center; gap: clamp(3rem, 6vw, 6rem); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); max-width: 1100px; margin: 0 auto; }
-.spotlight--reverse { flex-direction: row-reverse; }
-.spotlight-img { flex: 1; min-width: 0; }
-.spotlight-img img { width: 100%; border-radius: 10px; box-shadow: 0 24px 64px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.05); cursor: zoom-in; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s; }
-.spotlight-img img:hover { transform: translateY(-4px); box-shadow: 0 32px 80px rgba(198,160,91,0.1), 0 8px 24px rgba(0,0,0,0.08); }
-.spotlight-text { flex: 1; min-width: 0; }
-.spotlight-text .section-label { margin-bottom: 1rem; }
-.spotlight-text h3 { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 400; line-height: 1.25; margin-bottom: 1rem; color: var(--text-dark); }
-.spotlight-text h3 em { font-style: italic; color: var(--gold); }
-.spotlight-text p { font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
-.section-spotlights { background: var(--cream); }
-.spotlight-divider { width: 40px; height: 1px; background: var(--gold); opacity: 0.3; margin: 0 auto; }
+/* ===== DUAL MODE ===== */
+.section-modes { background: var(--navy); padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); position: relative; overflow: hidden; }
+.section-modes::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 600px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
+.modes-inner { max-width: 960px; margin: 0 auto; }
+.modes-inner .section-headline { color: var(--cream); }
+.modes-subtitle { font-family: var(--sans); font-size: clamp(0.92rem, 1.5vw, 1.05rem); font-weight: 300; color: var(--text-soft); line-height: 1.8; max-width: 560px; margin-bottom: 4rem; }
+.modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.mode-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(198,160,91,0.12); border-radius: 20px; padding: 3rem 2.5rem; position: relative; overflow: hidden; transition: border-color 0.4s, background 0.4s; }
+.mode-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.3; }
+.mode-card:hover { border-color: rgba(198,160,91,0.3); background: rgba(255,255,255,0.05); }
+.mode-emoji { font-size: 2rem; margin-bottom: 1.5rem; display: block; filter: grayscale(0.2); }
+.mode-card h3 { font-family: var(--serif); font-size: clamp(1.4rem, 2.5vw, 1.8rem); font-weight: 400; color: var(--cream); margin-bottom: 0.8rem; }
+.mode-card h3 em { font-style: italic; color: var(--gold); }
+.mode-card p { font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: var(--text-soft); line-height: 1.7; margin-bottom: 1.5rem; }
+.mode-features { list-style: none; }
+.mode-features li { font-family: var(--sans); font-size: 0.82rem; font-weight: 300; color: var(--text-soft); line-height: 1.6; padding: 0.4rem 0; padding-left: 1.4rem; position: relative; }
+.mode-features li::before { content: ''; position: absolute; left: 0; top: 0.7rem; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.5; }
+.modes-note { font-family: var(--serif); font-style: italic; font-size: 0.92rem; color: var(--text-soft); text-align: center; margin-top: 3rem; opacity: 0.7; max-width: 500px; margin-left: auto; margin-right: auto; }
+.modes-note em { color: var(--gold); }
 
-/* ===== NUMBERS — Animated counters ===== */
+/* ===== SHOWCASE — Plan walkthrough ===== */
+.section-showcase { background: var(--cream); padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); position: relative; }
+.showcase-inner { max-width: 1100px; margin: 0 auto; }
+.showcase-intro { font-family: var(--sans); font-size: clamp(0.95rem, 1.6vw, 1.08rem); font-weight: 300; color: var(--text-muted); line-height: 1.8; max-width: 580px; margin-bottom: 5rem; }
+
+/* Showcase flow: connected screenshots */
+.showcase-flow { margin-bottom: clamp(5rem, 10vw, 8rem); }
+.showcase-flow:last-child { margin-bottom: 0; }
+.showcase-flow-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+.showcase-flow-title { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 400; color: var(--text-dark); line-height: 1.25; margin-bottom: 0.8rem; }
+.showcase-flow-title em { font-style: italic; color: var(--gold); }
+.showcase-flow-desc { font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin-bottom: 2.5rem; }
+
+/* Connected pair: two screenshots with arrow */
+.showcase-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center; }
+.showcase-single { max-width: 420px; }
+.showcase-triple { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1rem; align-items: center; }
+.showcase-screen { background: var(--white); border: 1px solid var(--border-soft); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 6px 16px rgba(0,0,0,0.04); transition: transform 0.4s var(--ease), box-shadow 0.4s; }
+.showcase-screen:hover { transform: translateY(-4px); box-shadow: 0 28px 72px rgba(198,160,91,0.1), 0 10px 28px rgba(0,0,0,0.07); }
+.showcase-screen img { width: 100%; display: block; cursor: zoom-in; }
+.showcase-screen-caption { padding: 0.8rem 1.2rem; background: var(--white); border-top: 1px solid var(--border-soft); }
+.showcase-screen-caption span { font-family: var(--sans); font-size: 0.72rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0.02em; }
+.showcase-arrow { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex-shrink: 0; }
+.showcase-arrow svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.6; }
+
+/* Side-by-side layout with text */
+.showcase-side { display: flex; align-items: center; gap: clamp(3rem, 5vw, 5rem); }
+.showcase-side--reverse { flex-direction: row-reverse; }
+.showcase-side-visual { flex: 1.5; min-width: 0; }
+.showcase-side-text { flex: 0.7; min-width: 0; }
+
+/* Full-width hero image for sommaire */
+.showcase-hero-img { max-width: 480px; margin: 0 auto 5rem; }
+.showcase-hero-img .showcase-screen { box-shadow: 0 24px 80px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.05); }
+
+/* Compact grid for smaller items */
+.showcase-compact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+.showcase-compact-card { background: var(--white); border: 1px solid var(--border-soft); border-radius: 14px; padding: 1.5rem; transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; }
+.showcase-compact-card:hover { border-color: var(--gold-pale); box-shadow: 0 8px 32px rgba(198,160,91,0.06); transform: translateY(-2px); }
+.showcase-compact-card .bento-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(198,160,91,0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.showcase-compact-card .bento-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.showcase-compact-card h4 { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.4rem; }
+.showcase-compact-card h4 em { font-style: italic; color: var(--gold); }
+.showcase-compact-card p { font-family: var(--sans); font-size: 0.8rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
+
+/* ===== NUMBERS ===== */
 .section-numbers { background: var(--navy); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
 .section-numbers::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(198,160,91,0.05), transparent 70%); pointer-events: none; }
 .numbers-grid { display: flex; justify-content: center; gap: clamp(2rem, 5vw, 5rem); flex-wrap: wrap; max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
-.number-item { text-align: center; min-width: 120px; }
+.number-item { text-align: center; min-width: 100px; }
 .number-value { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
 .number-label { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: var(--text-soft); letter-spacing: 0.04em; }
 .numbers-sep { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(198,160,91,0.3), transparent); align-self: center; flex-shrink: 0; }
 
+/* ===== FOR YOU ===== */
+.section-for-you { background: var(--cream); padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); }
+.for-you-inner { max-width: 720px; margin: 0 auto; }
+.for-you-list { list-style: none; margin-top: 3rem; }
+.for-you-item { display: flex; align-items: flex-start; gap: 1.2rem; padding: 1.2rem 0; border-bottom: 1px solid var(--border-soft); }
+.for-you-item:last-child { border-bottom: none; }
+.for-you-check { width: 24px; height: 24px; border-radius: 50%; background: rgba(198,160,91,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.for-you-check svg { width: 12px; height: 12px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.for-you-item p { font-family: var(--sans); font-size: 1rem; font-weight: 300; color: var(--text-dark); line-height: 1.6; }
+.for-you-item p strong { font-weight: 500; }
+
 /* ===== CTA ===== */
-.section-cta { background: var(--cream); padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; }
-.cta-headline { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 300; color: var(--text-dark); line-height: 1.2; margin-bottom: 1rem; }
+.section-cta { background: var(--navy); padding: clamp(6rem, 14vw, 10rem) clamp(1.5rem, 5vw, 4rem); text-align: center; position: relative; overflow: hidden; }
+.section-cta::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(198,160,91,0.06), transparent 70%); pointer-events: none; }
+.cta-headline { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 300; color: var(--cream); line-height: 1.2; margin-bottom: 1rem; }
 .cta-headline em { font-style: italic; color: var(--gold); }
-.cta-sub { font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
+.cta-sub { font-family: var(--sans); font-size: 0.92rem; font-weight: 300; color: var(--text-soft); line-height: 1.6; margin-bottom: 2.5rem; max-width: 460px; margin-left: auto; margin-right: auto; }
 .cta-btn { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 1rem 2.8rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; }
 .cta-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198, 160, 91, 0.3); }
-.cta-trust { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-muted); margin-top: 1.5rem; opacity: 0.7; }
+.cta-trust { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--text-soft); margin-top: 1.5rem; opacity: 0.6; }
 
 /* ===== FOOTER ===== */
 footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); text-align: center; }
@@ -144,9 +233,9 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 .footer-copy { font-family: var(--sans); font-size: 0.7rem; color: var(--text-soft); opacity: 0.4; }
 
 /* ===== LIGHTBOX ===== */
-.lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-out; }
+.lightbox { position: fixed; inset: 0; z-index: 10001; background: rgba(9, 21, 32, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease); cursor: zoom-out; }
 .lightbox.active { opacity: 1; pointer-events: all; }
-.lightbox img { max-width: 88vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.lightbox img { max-width: 88vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.4s var(--ease); }
 .lightbox.active img { transform: scale(1); }
 .lightbox-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: var(--cream); opacity: 0.5; letter-spacing: 0.08em; pointer-events: none; }
 
@@ -156,14 +245,25 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   .site-header { height: 60px; }
-  .fan-spread { flex-wrap: wrap; gap: 1rem; }
-  .fan-card { width: 42%; }
-  .fan-card:nth-child(1), .fan-card:nth-child(2), .fan-card:nth-child(3),
-  .fan-card:nth-child(4), .fan-card:nth-child(5) { transform: none; }
-  .spotlight { flex-direction: column !important; gap: 2.5rem; }
+  .format-grid { grid-template-columns: 1fr; }
+  .format-grid::before { display: none; }
+  .format-col { padding: 2rem 0; }
+  .format-col--classic { padding-bottom: 0; border-bottom: 1px solid rgba(107,114,128,0.15); margin-bottom: 1rem; }
+  .modes-grid { grid-template-columns: 1fr; }
+  .showcase-pair { grid-template-columns: 1fr; gap: 1rem; }
+  .showcase-triple { grid-template-columns: 1fr; gap: 1rem; }
+  .showcase-arrow { transform: rotate(90deg); margin: 0 auto; }
+  .showcase-side { flex-direction: column !important; gap: 2.5rem; }
+  .showcase-compact { grid-template-columns: 1fr; }
   .numbers-sep { display: none; }
-  .numbers-grid { gap: 2rem; }
-  .hero-page-float { width: 200px; }
+  .numbers-grid { gap: 1.5rem; }
+  .hero-ctas { flex-direction: column; gap: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-statement { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .bento-card { padding: 1.8rem 1.5rem; }
+  .mode-card { padding: 2rem 1.8rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -184,7 +284,7 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="grain"></div>
 
-<!-- HEADER — transparent, solidifies on scroll -->
+<!-- HEADER -->
 <header class="site-header" id="siteHeader">
   <a href="/" aria-label="Élevia — Accueil">
     <svg class="header-logo" viewBox="75 140 225 82" xmlns="http://www.w3.org/2000/svg">
@@ -195,11 +295,11 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   <nav class="header-nav">
     <a href="/">Accueil</a>
     <a href="/systeme.html">Le Syst&egrave;me</a>
+    <a href="/plan.html" class="active">Le Plan</a>
     <a href="/offre.html">Offre</a>
     <a href="/cockpit.html">Cockpit</a>
     <a href="/apropos.html">&Agrave; propos</a>
     <a href="/contact.html">Contact</a>
-    <a href="/espace-client.html">Espace Client</a>
     <a href="/offre.html" class="header-cta">Recevoir mon plan en 72h</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -207,11 +307,11 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 <nav class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu de navigation">
   <a href="/" data-nav>Accueil</a>
   <a href="/systeme.html" data-nav>Le Syst&egrave;me</a>
+  <a href="/plan.html" class="active" data-nav>Le Plan</a>
   <a href="/offre.html" data-nav>Offre</a>
   <a href="/cockpit.html" data-nav>Cockpit</a>
   <a href="/apropos.html" data-nav>&Agrave; propos</a>
   <a href="/contact.html" data-nav>Contact</a>
-  <a href="/espace-client.html" data-nav>Espace Client</a>
   <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
 </nav>
 
@@ -219,11 +319,15 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
 
 <!-- ===== ACTE 1 — HERO ===== -->
 <section class="hero">
-  <p class="section-label" data-reveal>Le plan nutritionnel</p>
-  <h1 class="hero-statement" data-reveal>42<em>+</em> pages.<br>Un seul objectif&nbsp;:<br><em>le tien</em>.</h1>
-  <p class="hero-sub" data-reveal>Un document premium, conçu pour être ouvert chaque jour&nbsp;&mdash;<br><em style="font-family:var(--serif); font-size:1.15em; color:var(--gold); font-style:italic;">pas rangé dans un tiroir.</em></p>
-  <div class="hero-page-float" data-reveal>
-    <img src="images/plan-cover-muscle.webp" alt="Couverture du plan nutritionnel Élevia — Prise de masse avec trajectoire" loading="eager">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    Conçu par un diététicien diplômé
+  </div>
+  <h1 class="hero-statement">Tout est dedans.<br>Tu avances <em>à ton rythme</em>.</h1>
+  <p class="hero-sub">Un plan nutritionnel navigable et interactif&nbsp;&mdash; pas un document qu'on range dans un tiroir. Explore ce dont tu as besoin, quand tu en as besoin. Deviens autonome sans t'en rendre compte.</p>
+  <div class="hero-ctas">
+    <a href="/offre.html" class="hero-cta-primary">Recevoir mon plan <span>&rarr;</span></a>
+    <a href="#format" class="hero-cta-secondary">Pourquoi ce format change tout</a>
   </div>
   <div class="hero-scroll-hint">
     <div class="scroll-line"></div>
@@ -231,103 +335,254 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
   </div>
 </section>
 
-<!-- ===== ACTE 2 — FAN ===== -->
-<section class="section-fan">
-  <div class="fan-inner">
-    <p class="section-label" data-reveal>Ce qui t'attend</p>
-    <h2 class="fan-headline" data-reveal>Un plan complet,<br>pas <em>un simple PDF</em>.</h2>
-    <p class="fan-sub" data-reveal>Repas structurés, alternatives pour chaque aliment, recettes calibrées, conseils ciblés, progression sur 6 mois.</p>
-    <div class="fan-spread" data-reveal>
-      <div class="fan-card" data-zoomable>
-        <img src="images/plan-summary-muscle.webp" alt="Résumé du plan avec macros" loading="lazy">
-        <div class="fan-card-label">Tes repères</div>
+<!-- ===== ACTE 2 — FORMAT SHIFT ===== -->
+<section class="section-format" id="format">
+  <div class="format-inner">
+    <p class="section-label" data-reveal>Un format pensé autrement</p>
+    <h2 class="section-headline" data-reveal>Le plan classique a <em>une limite</em>.</h2>
+    <p class="format-intro" data-reveal>Un format papier ou PDF figé force ton diététicien à faire un choix&nbsp;: compresser l'information pour rester lisible, ou tout inclure au risque que tu ne l'ouvres plus jamais. Le format Élevia est conçu pour que cette limite n'existe pas.</p>
+
+    <div class="format-grid" data-reveal>
+      <div class="format-col format-col--classic">
+        <div class="format-col-label">Plan classique</div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+          <div>
+            <h4>Format figé, lecture linéaire</h4>
+            <p>Tu dois tout lire du début à la fin. Si une section ne te concerne pas, elle est quand même là.</p>
+          </div>
+        </div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+          <div>
+            <h4>Le diététicien doit compresser</h4>
+            <p>Moins de détails, moins d'alternatives, moins de contexte. L'essentiel seulement.</p>
+          </div>
+        </div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+          <div>
+            <h4>Tu lis une fois, tu ranges</h4>
+            <p>Après la première lecture, il finit dans un dossier. Tu ne le rouvres plus.</p>
+          </div>
+        </div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+          <div>
+            <h4>Une seule façon de l'utiliser</h4>
+            <p>Tu le lis dans l'ordre, tu appliques tel quel. Peu de marge pour adapter à ton quotidien.</p>
+          </div>
+        </div>
       </div>
-      <div class="fan-card" data-zoomable>
-        <img src="images/plan-eq-feculents.webp" alt="Équivalences alimentaires" loading="lazy">
-        <div class="fan-card-label">Équivalences</div>
+
+      <div class="format-col format-col--elevia">
+        <div class="format-col-label">Plan Élevia</div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Format navigable, tu explores</h4>
+            <p>Chaque section est accessible indépendamment. Tu vas droit à ce qui t'est utile aujourd'hui.</p>
+          </div>
+        </div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Tout le contenu utile, sans compromis</h4>
+            <p>350+ aliments, variantes, recettes, guides. Rien n'est sacrifié parce que le format le permet.</p>
+          </div>
+        </div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Tu reviens, tu pioches, tu progresses</h4>
+            <p>C'est un outil de référence. Tu l'ouvres quand tu en as besoin, encore et encore.</p>
+          </div>
+        </div>
+        <div class="format-item">
+          <div class="format-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>"C'est ton plan, avance à ton rythme"</h4>
+            <p>Pas de perfection. Chaque petite exploration te rapproche de l'autonomie.</p>
+          </div>
+        </div>
       </div>
-      <div class="fan-card" data-zoomable>
-        <img src="images/plan-meal-rc.webp" alt="Plan repas chaud" loading="lazy">
-        <div class="fan-card-label">Tes repas</div>
+    </div>
+
+    <div class="format-psychology" data-reveal>
+      <blockquote>"L'autonomie ne se décrète pas, elle se construit&nbsp;&mdash; par de <em>petites actions choisies</em>, répétées à son propre rythme."</blockquote>
+      <cite>Deci & Ryan, Théorie de l'Autodétermination (Self-Determination Theory, 2000)</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTE 3 — DUAL MODE ===== -->
+<section class="section-modes">
+  <div class="modes-inner">
+    <p class="section-label" data-reveal>Deux façons de l'utiliser</p>
+    <h2 class="section-headline" data-reveal>Un plan, <em>deux approches</em>.</h2>
+    <p class="modes-subtitle" data-reveal>Que tu veuilles tout structurer dès le premier jour ou y aller progressivement, ton plan s'adapte à ta façon de fonctionner.</p>
+
+    <div class="modes-grid">
+      <div class="mode-card" data-reveal>
+        <span class="mode-emoji" role="img" aria-label="fusée">&#x1F680;</span>
+        <h3>"Je me <em>lance</em>"</h3>
+        <p>Tu veux du concret, maintenant. Tout est prêt pour que tu commences dès réception.</p>
+        <ul class="mode-features">
+          <li>Tes repas sont structurés, prêts à suivre</li>
+          <li>Chaque aliment a ses alternatives cliquables</li>
+          <li>Les portions sont calibrées pour toi</li>
+          <li>Les recettes sont intégrées à ton plan</li>
+          <li>Tu sais exactement quoi manger, quand, combien</li>
+        </ul>
       </div>
-      <div class="fan-card" data-zoomable>
-        <img src="images/plan-recettes-hub.webp" alt="Recettes et sauces" loading="lazy">
-        <div class="fan-card-label">Recettes</div>
+
+      <div class="mode-card" data-reveal data-reveal-delay="1">
+        <span class="mode-emoji" role="img" aria-label="feuille">&#x1F343;</span>
+        <h3>"À mon <em>rythme</em>"</h3>
+        <p>Tu préfères y aller doucement. Ton plan est là, il t'attend, sans pression.</p>
+        <ul class="mode-features">
+          <li>Tu explores une section quand tu en as envie</li>
+          <li>Tu découvres tes équivalences petit à petit</li>
+          <li>Tu testes une recette par semaine, ou par mois</li>
+          <li>Tu intègres les conseils quand tu te sens prêt</li>
+          <li>Chaque visite te rapproche de l'autonomie</li>
+        </ul>
       </div>
-      <div class="fan-card" data-zoomable>
-        <img src="images/plan-guides.webp" alt="Guides de situations" loading="lazy">
-        <div class="fan-card-label">Guides</div>
+    </div>
+
+    <p class="modes-note" data-reveal>Les deux chemins mènent au même endroit&nbsp;: <em>ton autonomie alimentaire</em>.</p>
+  </div>
+</section>
+
+<!-- ===== ACTE 4 — SHOWCASE ===== -->
+<section class="section-showcase">
+  <div class="showcase-inner">
+    <p class="section-label" data-reveal>Visite guidée</p>
+    <h2 class="section-headline" data-reveal>Ton plan de l'intérieur<em>.</em></h2>
+    <p class="showcase-intro" data-reveal>Chaque section est cliquable. Tu navigues, tu explores, tu reviens au sommaire. Voici à quoi ça ressemble concrètement.</p>
+
+    <!-- FLOW 0: Sommaire + Mode d'emploi -->
+    <div class="showcase-flow" data-reveal>
+      <div class="showcase-side">
+        <div class="showcase-side-visual">
+          <div class="showcase-pair">
+            <div class="showcase-screen">
+              <img src="images/plan-sommaire-new.webp" alt="Sommaire du plan — chaque section est cliquable, navigue librement" data-zoomable loading="lazy">
+              <div class="showcase-screen-caption"><span>Sommaire &mdash; ton point de départ</span></div>
+            </div>
+            <div class="showcase-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            <div class="showcase-screen">
+              <img src="images/plan-mode-emploi.webp" alt="Mode d'emploi — ton plan en 4 étapes avec repères pratiques" data-zoomable loading="lazy">
+              <div class="showcase-screen-caption"><span>Mode d'emploi &mdash; par où commencer</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-side-text">
+          <div class="showcase-flow-label">Structure</div>
+          <h3 class="showcase-flow-title" style="white-space:nowrap">10 sections. <em>Navigue librement.</em></h3>
+          <p class="showcase-flow-desc">Ton sommaire est ton point de départ. Chaque section est accessible en un clic, et chaque page te ramène au sommaire. Tu ne te perds jamais, tu explores ce que tu veux.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW 1: Repas → Équivalences -->
+    <div class="showcase-flow" data-reveal>
+      <div class="showcase-side showcase-side--reverse">
+        <div class="showcase-side-visual">
+          <div class="showcase-pair">
+            <div class="showcase-screen">
+              <img src="images/plan-meal-rc.webp" alt="Page repas chaud — chaque équivalence est cliquable" data-zoomable loading="lazy">
+              <div class="showcase-screen-caption"><span>Ton repas chaud &mdash; clique sur une catégorie</span></div>
+            </div>
+            <div class="showcase-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            <div class="showcase-screen">
+              <img src="images/plan-eq-viandes.webp" alt="Équivalence viandes maigres — 12 options avec portions" data-zoomable loading="lazy">
+              <div class="showcase-screen-caption"><span>Viandes maigres &mdash; tes 12 options</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-side-text">
+          <div class="showcase-flow-label">Équivalences</div>
+          <h3 class="showcase-flow-title">Clique, découvre, <em>choisis</em>.</h3>
+          <p class="showcase-flow-desc">Dans ton plan repas, chaque catégorie d'aliments est cliquable. Tu atterris sur la liste complète de tes options avec les portions adaptées. Tu en as marre du poulet&nbsp;? Tu choisis la dinde, le chevreuil ou le poisson. C'est ça, une équivalence.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW 2: Recettes → Détail -->
+    <div class="showcase-flow" data-reveal>
+      <div class="showcase-side">
+        <div class="showcase-side-visual">
+          <div class="showcase-pair">
+            <div class="showcase-screen">
+              <img src="images/plan-recettes-index.webp" alt="Index des 13 recettes et sauces maison — chacune cliquable" data-zoomable loading="lazy">
+              <div class="showcase-screen-caption"><span>13 recettes &mdash; clique pour voir</span></div>
+            </div>
+            <div class="showcase-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            <div class="showcase-screen">
+              <img src="images/plan-recette-detail.webp" alt="Recette vinaigrette tahini — ingrédients, étapes, astuces" data-zoomable loading="lazy">
+              <div class="showcase-screen-caption"><span>Vinaigrette tahini &mdash; 3 min, express</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-side-text">
+          <div class="showcase-flow-label">Recettes & sauces</div>
+          <h3 class="showcase-flow-title">Du goût, <em>pas de la privation</em>.</h3>
+          <p class="showcase-flow-desc">13 sauces et recettes maison, chacune cliquable depuis l'index. Ingrédients en portions simples, étapes numérotées, astuce du chef. 6 minutes en moyenne. Chaque recette utilise des ingrédients issus de tes équivalences.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW 3: Conseil detail -->
+    <div class="showcase-flow" data-reveal>
+      <div class="showcase-side showcase-side--reverse">
+        <div class="showcase-side-visual showcase-single">
+          <div class="showcase-screen">
+            <img src="images/plan-conseil-detail.webp" alt="Conseil personnalisé — sucreries et grignotage avec plan d'action" data-zoomable loading="lazy">
+            <div class="showcase-screen-caption"><span>Conseil &mdash; sucreries et grignotage</span></div>
+          </div>
+        </div>
+        <div class="showcase-side-text">
+          <div class="showcase-flow-label">Conseils personnalisés</div>
+          <h3 class="showcase-flow-title">Pas des interdits. <em>Des stratégies.</em></h3>
+          <p class="showcase-flow-desc">Chaque conseil est choisi pour ton profil. Pas un paragraphe générique&nbsp;&mdash; un vrai plan d'action&nbsp;: pourquoi c'est important, quoi faire concrètement, et une astuce pratique à appliquer dès demain.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compact grid: remaining content -->
+    <div class="showcase-compact" data-reveal>
+      <div class="showcase-compact-card">
+        <div class="bento-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h4>5 guides <em>situations</em></h4>
+        <p>Restaurant, soirées, vacances, imprévus. Des stratégies concrètes adaptées à ton objectif.</p>
+      </div>
+      <div class="showcase-compact-card">
+        <div class="bento-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h4>Ta <em>progression</em></h4>
+        <p>4 phases sur 6 mois. Tu sais exactement où tu en es et ce qui t'attend ensuite.</p>
+      </div>
+      <div class="showcase-compact-card">
+        <div class="bento-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <h4>Tes repères <em>santé</em></h4>
+        <p>Cuissons, sel, ultra-transformé, sommeil, vitamine&nbsp;D&nbsp;&mdash; les choix du quotidien qui complètent ton plan.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== ACTE 3 — SPOTLIGHTS ===== -->
-<section class="section-spotlights">
-
-  <div class="spotlight" data-reveal>
-    <div class="spotlight-img">
-      <img src="images/plan-eq-feculents.webp" alt="Page équivalences avec valeurs usuelles et grammages" data-zoomable loading="lazy">
-    </div>
-    <div class="spotlight-text">
-      <p class="section-label">Équivalences & valeurs usuelles</p>
-      <h3>350+ aliments.<br>Jamais besoin <em>de peser</em>.</h3>
-      <p>Chaque aliment est exprimé en portions du quotidien&nbsp;&mdash; une poignée, une cuillère, un bol. Tu veux être précis&nbsp;? Les grammages sont là aussi, pour calibrer visuellement au début. Ensuite, tu sais. Zéro monotonie&nbsp;: chaque catégorie te donne des alternatives équivalentes. Tu choisis ce que tu veux, quand tu veux.</p>
-    </div>
-  </div>
-
-  <div class="spotlight-divider"></div>
-
-  <div class="spotlight spotlight--reverse" data-reveal>
-    <div class="spotlight-img">
-      <img src="images/plan-meal-rc.webp" alt="Page plan repas chaud personnalisé" data-zoomable loading="lazy">
-    </div>
-    <div class="spotlight-text">
-      <p class="section-label">Ton plan repas</p>
-      <h3>Structuré pour toi.<br>Par <em>un diététicien</em>.</h3>
-      <p>C'est toi qui choisis la structure qui te convient depuis le questionnaire&nbsp;&mdash; bowls, tartines, plats chauds, collations. Mon expertise nutritionnelle assemble le tout en respectant tes choix et tes besoins individuels. Chaque ligne est cliquable et t'amène dans le détail de chaque équivalence sélectionnée pour toi&nbsp;: variantes, portions, fréquences. Simple en surface, complet en profondeur.</p>
-    </div>
-  </div>
-
-  <div class="spotlight-divider"></div>
-
-  <div class="spotlight" data-reveal>
-    <div class="spotlight-img">
-      <img src="images/plan-recettes-hub.webp" alt="Page recettes et sauces maison" data-zoomable loading="lazy">
-    </div>
-    <div class="spotlight-text">
-      <p class="section-label">Recettes & sauces</p>
-      <h3>Des recettes qui <em>s'intègrent</em>.<br>Pas qui compliquent.</h3>
-      <p>14 sauces maison et 7 recettes protéinées sont incluses dans ton plan. Et dans ton <a href="recettes.html" style="color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(198,160,91,0.3);">espace recettes</a>, 30+ recettes complètes t'attendent&nbsp;&mdash; bowls, tartines, plats chauds&nbsp;&mdash; toutes calibrées sur tes portions. De nouvelles recettes sont ajoutées chaque mois.</p>
-    </div>
-  </div>
-
-  <div class="spotlight-divider"></div>
-
-  <div class="spotlight spotlight--reverse" data-reveal>
-    <div class="spotlight-img">
-      <img src="images/plan-guides.webp" alt="Guides de situations pratiques" data-zoomable loading="lazy">
-    </div>
-    <div class="spotlight-text">
-      <p class="section-label">Guides & conseils</p>
-      <h3>Restaurant, fêtes, voyage.<br><em>Tu sais quoi faire</em>.</h3>
-      <p>Des stratégies concrètes pour chaque situation délicate&nbsp;&mdash; adaptées à ton objectif, parce qu'un restaurant en perte de poids, ce n'est pas un restaurant en prise de masse. Et 7 conseils prioritaires choisis pour ton profil. Tu en veux plus&nbsp;? Ton <a href="cockpit.html" style="color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(198,160,91,0.3);">Cockpit</a> prolonge l'accompagnement au quotidien.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- ===== ACTE 4 — NUMBERS ===== -->
+<!-- ===== ACTE 6 — NUMBERS ===== -->
 <section class="section-numbers">
   <div class="numbers-grid" data-reveal>
     <div class="number-item">
-      <div class="number-value" data-count="42">0</div>
-      <div class="number-label">pages<em style="color:var(--gold);">+</em></div>
-    </div>
-    <div class="numbers-sep"></div>
-    <div class="number-item">
       <div class="number-value" data-count="350">0</div>
-      <div class="number-label">aliments</div>
+      <div class="number-label">aliments<em style="color:var(--gold);">+</em></div>
     </div>
     <div class="numbers-sep"></div>
     <div class="number-item">
@@ -347,18 +602,49 @@ footer { background: var(--navy-deep); padding: 3rem clamp(1.5rem, 5vw, 4rem); t
     <div class="numbers-sep"></div>
     <div class="number-item">
       <div class="number-value" data-count="6">0</div>
-      <div class="number-label">mois pour devenir autonome</div>
+      <div class="number-label">mois vers l'autonomie</div>
     </div>
   </div>
 </section>
 
-<!-- ===== ACTE 5 — CTA ===== -->
+<!-- ===== ACTE 7 — POUR QUI ===== -->
+<section class="section-for-you">
+  <div class="for-you-inner">
+    <p class="section-label" data-reveal>Pour qui</p>
+    <h2 class="section-headline" data-reveal>Ce plan est fait pour toi si<em>...</em></h2>
+
+    <ul class="for-you-list">
+      <li class="for-you-item" data-reveal>
+        <div class="for-you-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Tu veux <strong>manger mieux</strong> sans te priver, sans frustration, sans aliments interdits.</p>
+      </li>
+      <li class="for-you-item" data-reveal data-reveal-delay="1">
+        <div class="for-you-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Tu en as marre des <strong>régimes qui ne tiennent pas</strong>&nbsp;&mdash; tu cherches quelque chose de durable.</p>
+      </li>
+      <li class="for-you-item" data-reveal data-reveal-delay="2">
+        <div class="for-you-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Tu veux un <strong>cadre clair</strong>, pas des interdictions. Savoir quoi manger sans y penser des heures.</p>
+      </li>
+      <li class="for-you-item" data-reveal data-reveal-delay="3">
+        <div class="for-you-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Tu cherches un <strong>vrai accompagnement professionnel</strong>, pas un template téléchargeable.</p>
+      </li>
+      <li class="for-you-item" data-reveal data-reveal-delay="4">
+        <div class="for-you-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Tu veux devenir <strong>autonome</strong>&nbsp;&mdash; comprendre ce que tu manges, pas juste suivre des consignes.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== ACTE 8 — CTA ===== -->
 <section class="section-cta">
   <p class="section-label" data-reveal>Prêt ?</p>
   <h2 class="cta-headline" data-reveal>Ton plan, livré <em>en 72h</em>.</h2>
-  <p class="cta-sub" data-reveal>Analyse de profil &middot; Plan sur mesure &middot; Conçu par un diététicien diplômé</p>
-  <a href="/offre.html" class="cta-btn" data-reveal>Recevoir mon plan <span>&rarr;</span></a>
-  <p class="cta-trust" data-reveal>Données 100% privées &middot; Sans engagement &middot; Satisfait ou remboursé</p>
+  <p class="cta-sub" data-reveal>Commence par le questionnaire&nbsp;&mdash; gratuit et sans engagement. Ton plan est construit sur mesure par un diététicien diplômé.</p>
+  <a href="/offre.html" class="cta-btn" data-reveal>Découvrir les formules <span>&rarr;</span></a>
+  <p class="cta-trust" data-reveal>Paiement sécurisé &middot; Satisfait ou remboursé &middot; Support personnel</p>
 </section>
 
 </main>
@@ -429,7 +715,7 @@ const counterObserver = new IntersectionObserver(entries => {
     if (!entry.isIntersecting) return;
     entry.target.querySelectorAll('[data-count]').forEach(el => {
       const target = parseInt(el.dataset.count);
-      const suffix = target >= 42 ? '+' : '';
+      const suffix = target >= 350 ? '+' : '';
       let current = 0;
       const step = Math.max(1, Math.ceil(target / 40));
       const interval = setInterval(() => {
