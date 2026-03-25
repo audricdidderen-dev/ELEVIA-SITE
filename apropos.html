@@ -94,7 +94,10 @@
         .header-nav a.active::after { width: 100%; }
         .header-cta { font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 0.6rem 1.6rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; white-space: nowrap; }
         .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(198, 160, 91, 0.25); }
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; z-index: 1002; background: none; border: none; }
+        .header-cta-outline { font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(198,160,91,0.35); padding: 0.55rem 1.4rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, border-color 0.3s, transform 0.2s; white-space: nowrap; }
+.header-cta-outline:hover { background: rgba(198,160,91,0.1); border-color: var(--gold); transform: translateY(-1px); }
+.mobile-nav .header-cta-outline { font-family: var(--sans); font-size: 0.82rem; padding: 0.7rem 1.8rem; border: 1px solid rgba(198,160,91,0.4); color: var(--gold); background: transparent; border-radius: 60px; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; z-index: 1002; background: none; border: none; }
         .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--cream); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
         .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
@@ -569,28 +572,24 @@
     </svg>
   </a>
   <nav class="header-nav">
-    <a href="/">Accueil</a>
     <a href="/systeme.html">Le Système</a>
     <a href="/plan.html">Le Plan</a>
-    <a href="/offre.html">Offre</a>
     <a href="/cockpit.html">Cockpit</a>
+    <a href="/offre.html">Offre & Tarifs</a>
     <a href="/apropos.html" class="active">À propos</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/espace-client.html">Espace Client</a>
-    <a href="/offre.html" class="header-cta">Recevoir mon plan en 72h</a>
+    <a href="/espace-client.html" class="header-cta-outline">Espace Client</a>
+    <a href="/offre.html" class="header-cta">Recevoir mon plan &rarr;</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 <nav class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu de navigation">
-  <a href="/" data-nav>Accueil</a>
   <a href="/systeme.html" data-nav>Le Système</a>
   <a href="/plan.html" data-nav>Le Plan</a>
-  <a href="/offre.html" data-nav>Offre</a>
   <a href="/cockpit.html" data-nav>Cockpit</a>
+  <a href="/offre.html" data-nav>Offre & Tarifs</a>
   <a href="/apropos.html" class="active" data-nav>À propos</a>
-  <a href="/contact.html" data-nav>Contact</a>
-  <a href="/espace-client.html" data-nav>Espace Client</a>
-  <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan en 72h</a>
+  <a href="/espace-client.html" class="header-cta-outline" data-nav>Espace Client</a>
+  <a href="/offre.html" class="header-cta" data-nav>Recevoir mon plan &rarr;</a>
 </nav>
 
     <main id="main-content">

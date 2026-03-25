@@ -219,6 +219,9 @@
     .nav-desktop a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); }
     .header-cta { font-family: var(--font-sans); font-weight: 400; font-size: 0.78rem; color: var(--navy); background: var(--gold); padding: 0.55rem 1.3rem; border-radius: 100px; letter-spacing: 0.02em; transition: all 0.3s var(--ease-out); white-space: nowrap; }
     .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .header-cta-outline { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(198,160,91,0.35); padding: 0.55rem 1.4rem; border-radius: 60px; text-decoration: none; transition: background 0.3s, border-color 0.3s; white-space: nowrap; }
+    .header-cta-outline:hover { background: rgba(198,160,91,0.1); border-color: var(--gold); }
+    .nav-mobile-overlay .header-cta-outline { font-size: 0.85rem; padding: 0.7rem 1.8rem; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; z-index: 1001; }
     .hamburger span { width: 22px; height: 1.5px; background: var(--cream); transition: all 0.3s var(--ease-out); border-radius: 2px; }
     .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -432,16 +435,14 @@
     </svg>
       </a>
       <nav class="nav-desktop" aria-label="Navigation principale">
-        <a href="/">Accueil</a>
         <a href="/systeme.html">Le Système</a>
         <a href="/plan.html">Le Plan</a>
-    <a href="/offre.html">Offre</a>
         <a href="/cockpit.html">Cockpit</a>
-        <a href="/articles.html" class="active" aria-current="page">Articles</a>
+        <a href="/offre.html">Offre & Tarifs</a>
         <a href="/apropos.html">À propos</a>
-        <a href="/contact.html">Contact</a>
       </nav>
-      <a href="/offre.html" class="header-cta desktop-only">Recevoir mon plan en 72h</a>
+      <a href="/espace-client.html" class="header-cta-outline desktop-only">Espace Client</a>
+      <a href="/offre.html" class="header-cta desktop-only">Recevoir mon plan &rarr;</a>
       <div class="hamburger" id="hamburger" role="button" aria-label="Ouvrir le menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </div>
@@ -449,16 +450,13 @@
   </header>
 
   <div class="nav-mobile-overlay" id="mobileNav" role="dialog" aria-label="Menu de navigation">
-    <a href="/">Accueil</a>
     <a href="/systeme.html">Le Système</a>
     <a href="/plan.html">Le Plan</a>
-    <a href="/offre.html">Offre</a>
     <a href="/cockpit.html">Cockpit</a>
-    <a href="/articles.html">Articles</a>
+    <a href="/offre.html">Offre & Tarifs</a>
     <a href="/apropos.html">À propos</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/espace-client.html">Espace Client</a>
-    <a href="/offre.html" class="header-cta" style="margin-top:1rem;">Recevoir mon plan en 72h</a>
+    <a href="/espace-client.html" class="header-cta-outline" style="margin-top:0.5rem;">Espace Client</a>
+    <a href="/offre.html" class="header-cta" style="margin-top:0.5rem;">Recevoir mon plan &rarr;</a>
   </div>
 
   <main id="main-content">
