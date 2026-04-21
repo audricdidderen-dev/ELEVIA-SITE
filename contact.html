@@ -904,11 +904,11 @@
         honeypot: formData.get('website') || '',
       };
 
-      fetch('https://rlemorqfkuloyxoydmdj.supabase.co/functions/v1/send-contact-email', {
+      fetch('https://qjafswdhrlpwagpvjsna.supabase.co/functions/v1/send-contact-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZW1vcnFma3Vsb3l4b3lkbWRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MzgwMTAsImV4cCI6MjA4NzIxNDAxMH0.5l_-bwLdDR745IsJCOJGDnIlnGp0fMDXxGlW93n5Ivg'
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqYWZzd2Rocmxwd2FncHZqc25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjczMDQsImV4cCI6MjA4OTg0MzMwNH0.CNeqZVcLCRGw_1MfrElr4w2eX7XnK-mapGvPVq1Nsd4'
         },
         body: JSON.stringify(payload)
       })

@@ -1006,8 +1006,8 @@ body::after {
 (function() {
   'use strict';
 
-  const SUPABASE_URL = 'https://rlemorqfkuloyxoydmdj.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZW1vcnFma3Vsb3l4b3lkbWRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MzgwMTAsImV4cCI6MjA4NzIxNDAxMH0.5l_-bwLdDR745IsJCOJGDnIlnGp0fMDXxGlW93n5Ivg';
+  const SUPABASE_URL = 'https://qjafswdhrlpwagpvjsna.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqYWZzd2Rocmxwd2FncHZqc25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjczMDQsImV4cCI6MjA4OTg0MzMwNH0.CNeqZVcLCRGw_1MfrElr4w2eX7XnK-mapGvPVq1Nsd4';
   const EDGE_FN_URL = SUPABASE_URL + '/functions/v1/create-checkout-session';
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -2435,7 +2435,11 @@ body::after {
   };
 
   function promptSlotAndUse(r) {
-    // Determine which slots this recipe can fill
+    // MIG-SITE Étape 2 (2026-04-21) : RPC use_recipe_for_meal indisponible
+    // pendant la migration. Réactivation en Phase 3 du chantier R.
+    showToast('Cette fonctionnalité revient très prochainement', 'info');
+    return;
+    // eslint-disable-next-line no-unreachable
     var tplCode = r.template_code;
     var TEMPLATE_SLOT_MAP = {
       REPAS_CHAUD_COMPLET: 'REPAS_CHAUD',
