@@ -1334,12 +1334,15 @@ body::after {
         .limit(1)
         .single();
 
-      // Map plan objective_style → recipe objective codes
+      // Map plan objective_style → recipe objective codes (alignés solveur depuis mig 468)
+      // recipe_objectives contient : PW / MAINT / GAIN_LEAN / GAIN_COMFORT
+      // plan.objective_style peut contenir : new codes OR legacy (weight_loss, PDM, etc.)
       var objMap = {
-        PW: 'loss', MAINT: 'maintain', GAIN_LEAN: 'mass', GAIN_COMFORT: 'mass',
-        // Legacy fallbacks
-        weight_loss: 'loss', maintenance: 'maintain', muscle_gain: 'mass', recomposition: 'mass',
-        PDM: 'loss', MAINTIEN: 'maintain', MUSCLE: 'mass', RECOMPOSITION: 'mass'
+        // Identity pour nouveaux codes (alignés solveur)
+        PW: 'PW', MAINT: 'MAINT', GAIN_LEAN: 'GAIN_LEAN', GAIN_COMFORT: 'GAIN_COMFORT',
+        // Legacy fallbacks → nouveaux codes
+        weight_loss: 'PW', maintenance: 'MAINT', muscle_gain: 'GAIN_COMFORT', recomposition: 'GAIN_LEAN',
+        PDM: 'PW', MAINTIEN: 'MAINT', MUSCLE: 'GAIN_COMFORT', RECOMPOSITION: 'GAIN_LEAN',
       };
       var rawObj = plan ? plan.objective_style : null;
       var clientObjective = objMap[rawObj] || rawObj;
@@ -2358,13 +2361,19 @@ body::after {
     } else {
       var linkedIngs = (r.ingredients || []).filter(function(ing) { return ing.ingredient_type === 'linked' && ing.parent_eq_id; });
       var unlinkedIngs = (r.ingredients || []).filter(function(ing) { return ing.ingredient_type !== 'linked' || !ing.parent_eq_id; });
-      linkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
-      html += '</ul>';
-      if (unlinkedIngs.length > 0) {
-        html += '<div class="fullpage-touche-finale"><ul class="fullpage-ingredients">';
-        html += '<li class="ingredients-separator">Touche finale</li>';
+      if (linkedIngs.length === 0) {
+        // Tout unlinked (cas extras kind='extra' via query recipes) → pas de séparation Touche finale
         unlinkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
-        html += '</ul></div>';
+        html += '</ul>';
+      } else {
+        linkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
+        html += '</ul>';
+        if (unlinkedIngs.length > 0) {
+          html += '<div class="fullpage-touche-finale"><ul class="fullpage-ingredients">';
+          html += '<li class="ingredients-separator">Touche finale</li>';
+          unlinkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
+          html += '</ul></div>';
+        }
       }
     }
     html += '</div>';
