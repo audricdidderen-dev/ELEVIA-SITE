@@ -1550,10 +1550,12 @@ body::after {
         extrasMaisonRecipes = extras || [];
       }
 
-      // 5. Full recipes with template + objectives + slot definitions
+      // 5. Full recipes : meals + extras uniquement. Les components (sauces/soupes/protéines végé)
+      //    sont déjà chargés via ref_sub_recipes (vue compat). Sans ce filtre → doublons.
       const { data: recipes, error: recipeErr } = await sb.from('recipes')
         .select('*, recipe_slot_items(*), recipe_meal_types(*), recipe_objectives(*), template:recipe_templates(template_code, recipe_template_slots(slot_id, is_optional, slot_code))')
-        .eq('status', 'published');
+        .eq('status', 'published')
+        .in('recipe_kind', ['meal', 'extra']);
       if (recipeErr) console.error('Recipe fetch error:', recipeErr);
 
       // Template code → required plan slot mapping
@@ -1772,10 +1774,15 @@ body::after {
         if (clientLactoseLevel === 2 && fullAllergenTags.indexOf('lait') !== -1) return;
 
         // ── STRUCTURAL FILTER: slot + eq_id matching ──
-        if (plan && Object.keys(activeSlots).length > 0) {
+        // S'applique UNIQUEMENT aux Repas (kind='meal'). Les Extras sont visibles
+        // pour tout le monde sans restriction de structure alimentaire (uniquement
+        // filtrage médical allergies/intolérances/aversions appliqué au-dessus).
+        // Le filtrage structure n'est appliqué que si le plan patient est "complet"
+        // (au moins 5 équivalences actives) — sinon un diet en test sans plan verrait 0 repas.
+        if (recipeKind === 'meal' && plan && Object.keys(activeSlots).length > 0 && Object.keys(activeEqIds).length >= 5) {
           // 1. Check template matches a slot the client has
           var requiredSlot = TEMPLATE_SLOT_MAP[tplCode];
-          if (requiredSlot && !activeSlots[requiredSlot]) return; // skip: client doesn't have this meal structure
+          if (requiredSlot && !activeSlots[requiredSlot]) return;
 
           // 2. Build optional slot_ids set from template definition
           var optionalSlotIds = {};
@@ -1791,12 +1798,11 @@ body::after {
           });
           var hasMissingRequired = linkedIngs.some(function(ing) {
             if (!activeEqIds[ing.parent_eq_id]) {
-              // Check if this ingredient is in an optional slot
               return !optionalSlotIds[ing.slot_id];
             }
             return false;
           });
-          if (hasMissingRequired) return; // skip: missing required eq_id
+          if (hasMissingRequired) return;
 
           // 4. Garniture count: pain recipes must match client's garnitures-per-meal
           if (tplCode === 'REPAS_FROID_PAIN' && clientPainGarnitureCount > 0) {
@@ -1817,12 +1823,11 @@ body::after {
 
         var vedette = vedettesMap[r.recipe_id] || {};
         var recipeMealTypes = (r.recipe_meal_types || []).map(function(m) { return m.meal_type; });
-        // Kind: meal/component/extra basé sur recipe_kind DB. Fallback 'meal'.
+        // Kind: meal/extra (pas de component ici — déjà chargés via ref_sub_recipes)
         var recipeKind = r.recipe_kind || 'meal';
-        // Sub-category pour components (sauce/soupe/proteine_vege), null pour meal/extra
-        var recipeSubCat = null;
-        if (recipeKind === 'component') {
-          recipeSubCat = r.recipe_category === 'vege' ? 'proteine_vege' : (r.recipe_category || null);
+        // Override category pour extras pour avoir le bon badge (sinon fallback 'chaud' erroné)
+        if (recipeKind === 'extra') {
+          category = 'extras_maison';
         }
         allRecipes.push({
           id: r.recipe_id, type: 'recipe',
