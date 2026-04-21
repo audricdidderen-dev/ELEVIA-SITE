@@ -2216,10 +2216,15 @@ body::after {
     } else {
       var linkedIngs = (r.ingredients || []).filter(function(ing) { return ing.ingredient_type === 'linked' && ing.parent_eq_id; });
       var unlinkedIngs = (r.ingredients || []).filter(function(ing) { return ing.ingredient_type !== 'linked' || !ing.parent_eq_id; });
-      linkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
-      if (unlinkedIngs.length > 0) {
-        html += '<li class="ingredients-separator">Touche finale</li>';
+      if (linkedIngs.length === 0) {
+        // Tout unlinked (cas extras kind='extra' via query recipes) → pas de séparation Touche finale
         unlinkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
+      } else {
+        linkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
+        if (unlinkedIngs.length > 0) {
+          html += '<li class="ingredients-separator">Touche finale</li>';
+          unlinkedIngs.forEach(function(ing) { html += renderIngredientLine(ing); });
+        }
       }
     }
     html += '</ul>';
