@@ -1751,6 +1751,9 @@ body::after {
           }
         }
 
+        // Kind déclaré tôt (utilisé par le filtrage structure ci-dessous)
+        var recipeKind = r.recipe_kind || 'meal';
+
         // Allergen/aversion filter via recipes.allergen_tags[] / aversion_tags[] / diet_tags[]
         // (source de vérité auto-calculée par trigger compute_recipe_tags — G17).
         // Harmonisé avec le pattern soupes/extras ci-dessus.
@@ -1823,8 +1826,8 @@ body::after {
 
         var vedette = vedettesMap[r.recipe_id] || {};
         var recipeMealTypes = (r.recipe_meal_types || []).map(function(m) { return m.meal_type; });
-        // Kind: meal/extra (pas de component ici — déjà chargés via ref_sub_recipes)
-        var recipeKind = r.recipe_kind || 'meal';
+        // Pas de sub_category pour meal/extra (sub_category uniquement pour component via ref_sub_recipes)
+        var recipeSubCat = null;
         // Override category pour extras pour avoir le bon badge (sinon fallback 'chaud' erroné)
         if (recipeKind === 'extra') {
           category = 'extras_maison';
