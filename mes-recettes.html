@@ -206,6 +206,66 @@ body::after {
   .hero-week-img, .hero-week-img-placeholder { min-height: 160px; max-height: 200px; }
 }
 
+/* ===== FEATURED (recommandations du diet — G15) ===== */
+.featured-section {
+  max-width: 1100px; margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  opacity: 0; animation: fadeUp 0.7s var(--transition) 0.45s forwards;
+}
+.featured-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.featured-title {
+  font-family: var(--serif); font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  font-weight: 500; color: var(--text-dark); letter-spacing: -0.01em;
+}
+.featured-title em {
+  font-style: italic; color: var(--gold);
+}
+.featured-row {
+  display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 16px;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  scrollbar-width: thin; scrollbar-color: var(--gold-pale) transparent;
+}
+.featured-row::-webkit-scrollbar { height: 6px; }
+.featured-row::-webkit-scrollbar-thumb { background: var(--gold-pale); border-radius: 3px; }
+.featured-card {
+  flex: 0 0 240px; scroll-snap-align: start;
+  background: var(--white); border-radius: 16px;
+  border: 1px solid rgba(198,160,91,0.16); overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: transform 0.3s var(--transition), box-shadow 0.3s;
+  display: flex; flex-direction: column;
+}
+.featured-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(198,160,91,0.12);
+}
+.featured-card-img, .featured-card-img-placeholder {
+  width: 100%; height: 140px; object-fit: cover; display: block;
+}
+.featured-card-img-placeholder {
+  display: flex; align-items: center; justify-content: center;
+}
+.featured-card-body {
+  padding: 0.75rem 0.9rem 0.95rem;
+}
+.featured-card-title {
+  font-family: var(--serif); font-size: 0.98rem; font-weight: 500;
+  color: var(--text-dark); line-height: 1.25; margin-bottom: 0.3rem;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.featured-card-meta {
+  font-size: 0.68rem; color: var(--text-muted); font-weight: 400;
+}
+.featured-card-badge {
+  position: absolute; margin: -140px 0 0 0.6rem;
+  background: var(--gold); color: #fff; padding: 3px 9px; border-radius: 999px;
+  font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+}
+
 /* ===== INSPIRE ME ===== */
 .inspire-row {
   max-width: 960px; margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
@@ -252,12 +312,38 @@ body::after {
   color: var(--text-dark); white-space: nowrap;
 }
 
+/* ===== TAB BAR (Repas / Composantes / Extras — Chantier R Phase 3) ===== */
+.tab-bar {
+  max-width: 1140px; margin: 0 auto 1.2rem;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  display: flex; gap: 4px; justify-content: center;
+  border-bottom: 1px solid var(--border-soft);
+  opacity: 0; animation: fadeUp 0.5s var(--transition) 0.48s forwards;
+}
+.tab-btn {
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+  letter-spacing: 0.02em; color: var(--text-muted);
+  padding: 0.85rem 1.4rem; border: none; background: transparent;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+  margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--text-dark); }
+.tab-btn.active {
+  color: var(--text-dark); font-weight: 600;
+  border-bottom-color: var(--gold);
+}
+
 /* ===== FILTER BAR ===== */
 .filter-bar {
   padding: 0 clamp(1rem, 3vw, 2rem); max-width: 1140px;
   margin: 0 auto clamp(1.2rem, 2vw, 1.8rem);
   display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
   opacity: 0; animation: fadeUp 0.5s var(--transition) 0.5s forwards;
+}
+.sub-pills {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+  flex: 1 1 auto; min-width: 0;
 }
 .filter-pill {
   font-family: var(--sans); font-size: 0.75rem; font-weight: 400;
@@ -347,7 +433,6 @@ body::after {
   align-items: center; gap: 0.2rem;
 }
 .recipe-time svg { width: 12px; height: 12px; stroke: var(--text-soft); fill: none; stroke-width: 1.5; }
-.recipe-price { font-size: 0.68rem; color: var(--text-soft); letter-spacing: 0.02em; }
 
 /* Locked card */
 .recipe-card.locked { position: relative; }
@@ -891,8 +976,16 @@ body::after {
       <p class="subtitle">Tes recettes, tes quantit&eacute;s, tes go&ucirc;ts. Installe-toi, choisis ce qui te fait envie, et r&eacute;gale-toi.</p>
     </section>
 
-    <!-- HERO — RECIPE OF THE WEEK -->
+    <!-- HERO — RECIPE OF THE WEEK (highlighted unique du workspace — G15) -->
     <section class="hero-week" id="hero-week" style="display:none"></section>
+
+    <!-- FEATURED — Recommandations du cabinet (featured N du workspace — G15) -->
+    <section class="featured-section" id="featured-section" style="display:none">
+      <div class="featured-header">
+        <h2 class="featured-title" id="featured-title">Les recommandations du cabinet</h2>
+      </div>
+      <div class="featured-row" id="featured-row"></div>
+    </section>
 
     <!-- INSPIRE ME -->
     <div class="inspire-row">
@@ -907,21 +1000,20 @@ body::after {
       <div class="section-divider-inner"><span>Toutes les recettes</span></div>
     </div>
 
-    <!-- FILTER BAR -->
+    <!-- TABS PRIMAIRES (Repas / Composantes / Extras — Chantier R Phase 3) -->
+    <div class="tab-bar" id="tab-bar">
+      <button class="tab-btn active" data-tab="meal">Repas</button>
+      <button class="tab-btn" data-tab="component">Composantes</button>
+      <button class="tab-btn" data-tab="extra">Extras</button>
+    </div>
+
+    <!-- FILTER BAR : sous-pills dynamiques (selon tab actif) + recherche + tri -->
     <div class="filter-bar" id="filter-bar">
-      <button class="filter-pill active" data-filter="all" id="pill-all">Tout</button>
-      <button class="filter-pill" data-filter="sauce" id="pill-sauce">Sauces</button>
-      <button class="filter-pill" data-filter="soupe" id="pill-soupe">Soupes</button>
-      <button class="filter-pill" data-filter="extras_maison" id="pill-extras_maison">Extras maison</button>
-      <button class="filter-pill" data-filter="vege" id="pill-vege">Prot&eacute;ines v&eacute;g&eacute;</button>
-      <button class="filter-pill" data-filter="chaud" id="pill-chaud">Repas chaud</button>
-      <button class="filter-pill" data-filter="bowl" id="pill-bowl">Bowl</button>
-      <button class="filter-pill" data-filter="pain" id="pill-pain">Tartine</button>
+      <div class="sub-pills" id="sub-pills"></div>
       <input type="search" class="filter-search" id="filter-search" placeholder="Rechercher une recette...">
       <select class="filter-sort" id="filter-sort">
         <option value="alpha">A-Z</option>
         <option value="time">Temps</option>
-        <option value="price">Budget</option>
       </select>
     </div>
 
@@ -1012,6 +1104,71 @@ body::after {
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  // ── BRANDING MULTI-TENANT (Chantier R Phase 3 — G22 + G16) ──
+  // Résout le subdomain, charge le branding du diet via RPC get_public_branding,
+  // injecte les CSS variables, stocke les toggles workspace dans window.__elevioCtx.
+  window.__elevioCtx = {
+    workspace_id: null,
+    dietitian_id: null,
+    show_elevia_recipes: true,
+    enable_patient_space: true,
+    display_name: 'Élevia Nutrition',
+    is_elevia_default: true,
+  };
+
+  function resolveSubdomain() {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') return 'elevia';
+    if (host.endsWith('.elevianutrition.com')) {
+      const sub = host.split('.')[0];
+      if (['app', 'admin', 'api', 'www'].includes(sub)) return null;
+      return sub;
+    }
+    return { customDomain: host };
+  }
+
+  function injectBrandingCss(b) {
+    const root = document.documentElement;
+    if (b.primary_color) root.style.setProperty('--navy', b.primary_color);
+    if (b.accent_color) root.style.setProperty('--gold', b.accent_color);
+    if (b.secondary_color) root.style.setProperty('--cream-dark', b.secondary_color);
+    if (b.display_name) document.title = 'Mes Recettes — ' + b.display_name;
+    if (b.favicon_url) {
+      const link = document.querySelector('link[rel="icon"][type="image/png"]');
+      if (link) link.href = b.favicon_url;
+    }
+    if (b.logo_url) {
+      const logoSlot = document.getElementById('brand-logo');
+      if (logoSlot) { logoSlot.src = b.logo_url; logoSlot.style.display = 'block'; }
+    }
+  }
+
+  async function loadBrandingAndToggles() {
+    const sub = resolveSubdomain();
+    if (!sub) return;
+    try {
+      let res;
+      if (typeof sub === 'object' && sub.customDomain) {
+        res = await sb.rpc('get_public_branding_by_domain', { p_domain: sub.customDomain });
+      } else {
+        res = await sb.rpc('get_public_branding', { p_subdomain: sub });
+      }
+      if (res.error || !res.data || res.data.length === 0) return;
+      const b = res.data[0];
+      window.__elevioCtx = {
+        workspace_id: b.workspace_id,
+        dietitian_id: b.dietitian_id,
+        show_elevia_recipes: b.show_elevia_recipes !== false,
+        enable_patient_space: b.enable_patient_space !== false,
+        display_name: b.display_name || 'Élevia Nutrition',
+        is_elevia_default: (typeof sub === 'string' && (sub === 'elevia' || sub === 'audric-elevia')),
+      };
+      injectBrandingCss(b);
+    } catch (e) {
+      console.warn('[branding] load failed, fallback Élevia default', e);
+    }
+  }
+
   // DOM
   const loadingState = document.getElementById('loading-state');
   const mainContent = document.getElementById('main-content');
@@ -1020,6 +1177,9 @@ body::after {
   const filterSearch = document.getElementById('filter-search');
   const filterSort = document.getElementById('filter-sort');
   const heroWeek = document.getElementById('hero-week');
+  const featuredSection = document.getElementById('featured-section');
+  const featuredRow = document.getElementById('featured-row');
+  const featuredTitle = document.getElementById('featured-title');
   const modal = document.getElementById('recipe-modal');
   const modalHero = document.getElementById('modal-hero');
   const modalBody = document.getElementById('modal-body');
@@ -1031,6 +1191,27 @@ body::after {
   let allRecipes = [];
   let planItems = [];
   let activeFilter = 'all';
+  let activeTab = 'meal';
+
+  // Mapping sub-filters par tab (Chantier R Phase 3 — structure cohérente admin/patient)
+  const SUB_FILTERS = {
+    meal: [
+      { value: 'all', label: 'Tout' },
+      { value: 'breakfast', label: 'Petit-déj' },
+      { value: 'lunch', label: 'Repas froid' },
+      { value: 'dinner', label: 'Repas chaud' },
+      { value: 'snack', label: 'Collation' },
+    ],
+    component: [
+      { value: 'all', label: 'Tout' },
+      { value: 'sauce', label: 'Sauces' },
+      { value: 'soupe', label: 'Soupes' },
+      { value: 'proteine_vege', label: 'Protéines végé' },
+    ],
+    extra: [
+      { value: 'all', label: 'Tout' },
+    ],
+  };
   var refItemMap = {};
   var eqSlotQty = {};   // eq_id → { qty_max, slot_id } from adjusted_state
   var eqMasterMap = {}; // eq_id → { eq_mode, ref_qty }
@@ -1096,12 +1277,24 @@ body::after {
 
   // ── AUTH ──
   async function init() {
+    // Charge le branding en premier (pré-auth) pour que les couleurs soient
+    // appliquées même avant le login. Cf. workflow recettes.md §8.2.
+    await loadBrandingAndToggles();
+
     const { data: { session } } = await sb.auth.getSession();
     if (!session) {
       window.location.href = '/espace-client.html';
       return;
     }
     document.getElementById('rh-user').textContent = session.user.email;
+
+    // Si le workspace du patient a désactivé l'Espace Client (Q4), rediriger
+    // vers le hub avec message "livraison PDF/email" géré par espace-client.html.
+    if (window.__elevioCtx && window.__elevioCtx.enable_patient_space === false) {
+      window.location.href = '/espace-client.html?patient_space_disabled=1';
+      return;
+    }
+
     await loadData(session);
   }
 
@@ -1357,10 +1550,12 @@ body::after {
         extrasMaisonRecipes = extras || [];
       }
 
-      // 5. Full recipes with template + objectives + slot definitions
+      // 5. Full recipes : meals + extras uniquement. Les components (sauces/soupes/protéines végé)
+      //    sont déjà chargés via ref_sub_recipes (vue compat). Sans ce filtre → doublons.
       const { data: recipes, error: recipeErr } = await sb.from('recipes')
         .select('*, recipe_slot_items(*), recipe_meal_types(*), recipe_objectives(*), template:recipe_templates(template_code, recipe_template_slots(slot_id, is_optional, slot_code))')
-        .eq('status', 'published');
+        .eq('status', 'published')
+        .in('recipe_kind', ['meal', 'extra']);
       if (recipeErr) console.error('Recipe fetch error:', recipeErr);
 
       // Template code → required plan slot mapping
@@ -1382,6 +1577,7 @@ body::after {
         }
         allRecipes.push({
           id: s.id, type: 'sauce', category: 'sauce',
+          kind: 'component', sub_category: 'sauce', meal_types: [],
           title: s.title, prep_time: s.prep_time_min,
           price_tier: 'low', ingredients: s.ingredients || [],
           steps: s.steps || [], tips: s.tips,
@@ -1397,6 +1593,7 @@ body::after {
         (vegeSubRecipes || []).forEach(function(s) {
           allRecipes.push({
             id: s.id, type: 'vege_sub', category: 'vege',
+            kind: 'component', sub_category: 'proteine_vege', meal_types: [],
             title: s.title, prep_time: s.prep_time_min,
             price_tier: 'low', ingredients: s.ingredients || [],
             steps: s.steps || [], tips: s.tips,
@@ -1424,11 +1621,14 @@ body::after {
           if (hasAversion) return;
         }
 
-        // Gluten intolerance: skip if soup doesn't have sans_gluten in diet_tags
+        // Gluten intolerance (sensitive/celiac identiques côté filtrage)
         if (clientGlutenIntol && dTags.indexOf('sans_gluten') === -1) return;
 
-        // Lactose intolerance: skip if soup doesn't have sans_lactose in diet_tags
-        if (clientLactoseLevel >= 2 && dTags.indexOf('sans_lactose') === -1) return;
+        // Lactose intolerance granulaire :
+        //   mild (level=1) → exclut level 2 (crèmes, lait frais, fromages frais) via diet_tags
+        //   severe (level=2) → exclut aussi level 1 (gouda, beurre) via allergen_tags 'lait'
+        if (clientLactoseLevel >= 1 && dTags.indexOf('sans_lactose') === -1) return;
+        if (clientLactoseLevel === 2 && tags.indexOf('lait') !== -1) return;
 
         // Diet filter: vegetarian/pesco/vegan clients → soup must have matching diet_tag
         if (clientDiet && clientDiet !== 'omnivore' && dTags.length > 0) {
@@ -1438,6 +1638,7 @@ body::after {
 
         allRecipes.push({
           id: s.id, type: 'soup', category: 'soupe',
+          kind: 'component', sub_category: 'soupe', meal_types: [],
           title: s.title, prep_time: s.prep_time_min,
           speed: s.speed, price_tier: 'low',
           ingredients: s.ingredients || [],
@@ -1466,11 +1667,12 @@ body::after {
           if (hasAversion) return;
         }
 
-        // Gluten intolerance
+        // Gluten intolerance (sensitive/celiac identiques côté filtrage)
         if (clientGlutenIntol && dTags.indexOf('sans_gluten') === -1) return;
 
-        // Lactose intolerance (severe)
-        if (clientLactoseLevel >= 2 && dTags.indexOf('sans_lactose') === -1) return;
+        // Lactose intolerance granulaire (mild→level≥2, severe→level≥1)
+        if (clientLactoseLevel >= 1 && dTags.indexOf('sans_lactose') === -1) return;
+        if (clientLactoseLevel === 2 && tags.indexOf('lait') !== -1) return;
 
         // Diet filter
         if (clientDiet && clientDiet !== 'omnivore' && dTags.length > 0) {
@@ -1480,6 +1682,7 @@ body::after {
 
         allRecipes.push({
           id: s.id, type: 'extras_maison', category: 'extras_maison',
+          kind: 'extra', sub_category: 'extra', meal_types: [],
           title: s.title, prep_time: s.prep_time_min,
           speed: s.speed, price_tier: 'low',
           ingredients: s.ingredients || [],
@@ -1490,6 +1693,22 @@ body::after {
           portion_value: s.portion_value,
         });
       });
+
+      // Vedettes (highlighted + featured) du workspace (Chantier R Phase 3 — G15)
+      var ctx = window.__elevioCtx || {};
+      var vedettesMap = {};  // recipe_id → { highlighted, featured, pinned_at }
+      if (ctx.workspace_id) {
+        try {
+          var vedResp = await sb.from('workspace_vedette_recipes')
+            .select('recipe_id, kind, pinned_at')
+            .eq('workspace_id', ctx.workspace_id);
+          (vedResp.data || []).forEach(function(v) {
+            if (!vedettesMap[v.recipe_id]) vedettesMap[v.recipe_id] = { highlighted: false, featured: false };
+            vedettesMap[v.recipe_id][v.kind] = true;
+            if (v.kind === 'featured') vedettesMap[v.recipe_id].pinned_at = v.pinned_at;
+          });
+        } catch (e) { console.warn('[vedettes] fetch failed', e); }
+      }
 
       (recipes || []).forEach(function(r) {
         // Filter by objective: skip recipes that don't match client's goal
@@ -1532,20 +1751,38 @@ body::after {
           }
         }
 
-        // Allergen/aversion filter: skip recipes containing excluded ingredients
-        if (excludedItems.size > 0 && r.recipe_slot_items) {
-          var hasExcluded = r.recipe_slot_items.some(function(ing) {
-            if (!ing.parent_eq_id || !ing.parent_item_id) return false;
-            return excludedItems.has(ing.parent_eq_id + ':' + ing.parent_item_id);
-          });
-          if (hasExcluded) return;
+        // Allergen/aversion filter via recipes.allergen_tags[] / aversion_tags[] / diet_tags[]
+        // (source de vérité auto-calculée par trigger compute_recipe_tags — G17).
+        // Harmonisé avec le pattern soupes/extras ci-dessus.
+        var fullAllergenTags = r.allergen_tags || [];
+        var fullAversionTags = r.aversion_tags || [];
+        var fullDietTags = r.diet_tags || [];
+        if (normalizedAllergens && normalizedAllergens.length > 0) {
+          var hasFullAllergen = fullAllergenTags.some(function(t) { return normalizedAllergens.indexOf(t) !== -1; });
+          if (hasFullAllergen) return;
         }
+        if (aversionCodes && aversionCodes.length > 0) {
+          var hasFullAversion = fullAversionTags.some(function(t) { return aversionCodes.indexOf(t) !== -1; });
+          if (hasFullAversion) return;
+        }
+        // Gluten intolerance (sensitive/celiac identiques côté filtrage)
+        if (clientGlutenIntol && fullDietTags.indexOf('sans_gluten') === -1) return;
+        // Lactose intolerance granulaire :
+        //   mild (level=1) → exclut recettes avec level 2 (crèmes, lait frais, fromages frais)
+        //   severe (level=2) → exclut aussi level 1 (gouda, beurre) via allergen_tags 'lait'
+        if (clientLactoseLevel >= 1 && fullDietTags.indexOf('sans_lactose') === -1) return;
+        if (clientLactoseLevel === 2 && fullAllergenTags.indexOf('lait') !== -1) return;
 
         // ── STRUCTURAL FILTER: slot + eq_id matching ──
-        if (plan && Object.keys(activeSlots).length > 0) {
+        // S'applique UNIQUEMENT aux Repas (kind='meal'). Les Extras sont visibles
+        // pour tout le monde sans restriction de structure alimentaire (uniquement
+        // filtrage médical allergies/intolérances/aversions appliqué au-dessus).
+        // Le filtrage structure n'est appliqué que si le plan patient est "complet"
+        // (au moins 5 équivalences actives) — sinon un diet en test sans plan verrait 0 repas.
+        if (recipeKind === 'meal' && plan && Object.keys(activeSlots).length > 0 && Object.keys(activeEqIds).length >= 5) {
           // 1. Check template matches a slot the client has
           var requiredSlot = TEMPLATE_SLOT_MAP[tplCode];
-          if (requiredSlot && !activeSlots[requiredSlot]) return; // skip: client doesn't have this meal structure
+          if (requiredSlot && !activeSlots[requiredSlot]) return;
 
           // 2. Build optional slot_ids set from template definition
           var optionalSlotIds = {};
@@ -1561,12 +1798,11 @@ body::after {
           });
           var hasMissingRequired = linkedIngs.some(function(ing) {
             if (!activeEqIds[ing.parent_eq_id]) {
-              // Check if this ingredient is in an optional slot
               return !optionalSlotIds[ing.slot_id];
             }
             return false;
           });
-          if (hasMissingRequired) return; // skip: missing required eq_id
+          if (hasMissingRequired) return;
 
           // 4. Garniture count: pain recipes must match client's garnitures-per-meal
           if (tplCode === 'REPAS_FROID_PAIN' && clientPainGarnitureCount > 0) {
@@ -1585,9 +1821,20 @@ body::after {
 
         var isFree = isVege; // veggie recipes are free for sauce_only users
 
+        var vedette = vedettesMap[r.recipe_id] || {};
+        var recipeMealTypes = (r.recipe_meal_types || []).map(function(m) { return m.meal_type; });
+        // Kind: meal/extra (pas de component ici — déjà chargés via ref_sub_recipes)
+        var recipeKind = r.recipe_kind || 'meal';
+        // Override category pour extras pour avoir le bon badge (sinon fallback 'chaud' erroné)
+        if (recipeKind === 'extra') {
+          category = 'extras_maison';
+        }
         allRecipes.push({
           id: r.recipe_id, type: 'recipe',
           category: category,
+          kind: recipeKind,
+          sub_category: recipeSubCat,
+          meal_types: recipeMealTypes,
           template_code: tplCode,
           title: r.title, prep_time: r.prep_time_min,
           cook_time: r.cook_time_min,
@@ -1599,22 +1846,31 @@ body::after {
           instructions: r.instructions || [],
           tips: r.tips, image_url: r.image_url || null,
           free: isFree, diet_tags: r.diet_tags || [],
+          is_highlighted: !!vedette.highlighted,
+          is_featured: !!vedette.featured,
+          featured_at: vedette.pinned_at || null,
+          author_workspace_id: r.author_workspace_id || null,
         });
       });
 
-      // Lock premium pills if sauce_only
-      if (accessLevel !== 'full') {
-        ['pill-chaud','pill-bowl','pill-pain'].forEach(function(id) {
-          var el = document.getElementById(id);
-          if (el) el.classList.add('locked');
+      // G16 : si le workspace a désactivé "inclure Élevia", filtrer les recettes
+      // Élevia par défaut (author_workspace_id IS NULL) + sauces/soupes/extras/vege
+      // qui sont des briques Élevia par nature.
+      if (ctx.workspace_id && ctx.show_elevia_recipes === false) {
+        allRecipes = allRecipes.filter(function(rec) {
+          if (rec.type === 'recipe') return rec.author_workspace_id === ctx.workspace_id;
+          return false;
         });
       }
 
-      // Add counts to pills
-      updatePillCounts();
+      // Sous-pills dynamiques selon tab actif (remplace updatePillCounts + lock)
+      renderSubFilters();
 
-      // Render hero
+      // Render hero (highlighted workspace)
       renderHero();
+
+      // Render featured row (recommandations du diet)
+      renderFeatured();
 
       // Render grid
       renderRecipes();
@@ -1642,22 +1898,52 @@ body::after {
   }
 
   // ── PILL COUNTS ──
-  function updatePillCounts() {
-    var counts = { all: allRecipes.length, sauce: 0, soupe: 0, extras_maison: 0, vege: 0, chaud: 0, bowl: 0, pain: 0 };
-    allRecipes.forEach(function(r) { if (counts[r.category] !== undefined) counts[r.category]++; });
-    // Hide soupe/extras pills if empty (conditional on questionnaire/plan)
-    var soupePill = document.getElementById('pill-soupe');
-    if (soupePill && counts.soupe === 0) soupePill.style.display = 'none';
-    var extrasPill = document.getElementById('pill-extras_maison');
-    if (extrasPill && counts.extras_maison === 0) extrasPill.style.display = 'none';
-    Object.keys(counts).forEach(function(cat) {
-      var pill = document.getElementById('pill-' + cat);
-      if (pill && counts[cat] > 0) {
-        var span = document.createElement('span');
-        span.className = 'pill-count';
-        span.textContent = counts[cat];
-        pill.appendChild(span);
+  // Popule les sous-pills selon activeTab, avec count par sub-filter (Chantier R Phase 3)
+  function renderSubFilters() {
+    var subPills = document.getElementById('sub-pills');
+    if (!subPills) return;
+
+    var configs = SUB_FILTERS[activeTab] || [];
+
+    // Recettes du tab actif (kind)
+    var tabRecipes = allRecipes.filter(function(r) {
+      if (activeTab === 'meal') return r.kind === 'meal';
+      if (activeTab === 'component') return r.kind === 'component';
+      if (activeTab === 'extra') return r.kind === 'extra';
+      return false;
+    });
+
+    // Verrou premium sur tout le tab si accessLevel !== 'full' et que toutes les recettes sont payantes
+    var tabLocked = accessLevel !== 'full' && tabRecipes.every(function(r) { return !r.free; });
+
+    subPills.innerHTML = configs.map(function(cfg) {
+      var count;
+      if (cfg.value === 'all') {
+        count = tabRecipes.length;
+      } else if (activeTab === 'meal') {
+        count = tabRecipes.filter(function(r) { return (r.meal_types || []).includes(cfg.value); }).length;
+      } else if (activeTab === 'component') {
+        count = tabRecipes.filter(function(r) { return r.sub_category === cfg.value; }).length;
+      } else {
+        count = tabRecipes.length;
       }
+      // Masquer les pills vides (sauf "Tout")
+      if (cfg.value !== 'all' && count === 0) return '';
+      var isActive = activeFilter === cfg.value ? ' active' : '';
+      var lockedCls = tabLocked ? ' locked' : '';
+      return '<button class="filter-pill' + isActive + lockedCls + '" data-filter="' + cfg.value + '">' +
+        cfg.label + ' <span class="pill-count">' + count + '</span>' +
+      '</button>';
+    }).join('');
+
+    // Event delegation sur les pills dynamiques
+    subPills.querySelectorAll('.filter-pill').forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        if (pill.classList.contains('locked')) { openUpsellModal(); return; }
+        activeFilter = pill.dataset.filter;
+        renderSubFilters();
+        renderRecipes();
+      });
     });
   }
 
@@ -1673,14 +1959,19 @@ body::after {
     var eligible = allRecipes.filter(function(r) { return r.free || accessLevel === 'full'; });
     if (eligible.length === 0) return;
 
-    // Deterministic weekly pick — never sauces, prefer recipes with images
-    var now = new Date();
-    var jan1 = new Date(now.getFullYear(), 0, 1);
-    var weekNum = Math.floor(((now - jan1) / 86400000 + jan1.getDay() + 1) / 7);
-    var weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.category !== 'soupe' && r.category !== 'extras_maison' && r.image_url; });
-    if (!weeklyPool.length) weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.category !== 'soupe' && r.category !== 'extras_maison'; });
-    if (!weeklyPool.length) weeklyPool = eligible;
-    var pick = weeklyPool[weekNum % weeklyPool.length];
+    // Priorité : recette highlighted du workspace (Chantier R Phase 3 — G15)
+    var pick = eligible.find(function(r) { return r.type === 'recipe' && r.is_highlighted; });
+
+    if (!pick) {
+      // Fallback déterministe hebdomadaire (pas de highlighted compatible)
+      var now = new Date();
+      var jan1 = new Date(now.getFullYear(), 0, 1);
+      var weekNum = Math.floor(((now - jan1) / 86400000 + jan1.getDay() + 1) / 7);
+      var weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.category !== 'soupe' && r.category !== 'extras_maison' && r.image_url; });
+      if (!weeklyPool.length) weeklyPool = eligible.filter(function(r) { return r.category !== 'sauce' && r.category !== 'soupe' && r.category !== 'extras_maison'; });
+      if (!weeklyPool.length) weeklyPool = eligible;
+      pick = weeklyPool[weekNum % weeklyPool.length];
+    }
 
     var imgHtml;
     if (pick.image_url) {
@@ -1697,7 +1988,7 @@ body::after {
       '<div class="hero-week-card" id="hero-week-card">' +
         imgHtml +
         '<div class="hero-week-body">' +
-          '<div class="hero-week-label">Recette de la semaine</div>' +
+          '<div class="hero-week-label">' + (pick.is_highlighted ? 'À la une cette semaine' : 'Recette de la semaine') + '</div>' +
           '<div class="hero-week-title">' + esc(pick.title) + '</div>' +
           (pick.description_short ? '<div class="hero-week-desc">' + esc(pick.description_short) + '</div>' : '') +
           '<div class="hero-week-meta">' +
@@ -1715,6 +2006,53 @@ body::after {
     });
   }
 
+  // ── FEATURED (recommandations du diet — Chantier R Phase 3, G15) ──
+  function renderFeatured() {
+    if (!featuredSection || !featuredRow) return;
+    var ctx = window.__elevioCtx || {};
+    var featuredPicks = allRecipes.filter(function(r) {
+      return r.type === 'recipe' && r.is_featured && (r.free || accessLevel === 'full');
+    });
+    // Tri par pinned_at DESC (plus récent en premier), fallback A-Z
+    featuredPicks.sort(function(a, b) {
+      if (a.featured_at && b.featured_at) return new Date(b.featured_at) - new Date(a.featured_at);
+      return (a.title || '').localeCompare(b.title || '', 'fr');
+    });
+    if (featuredPicks.length === 0) {
+      featuredSection.style.display = 'none';
+      return;
+    }
+    if (featuredTitle && ctx.display_name) {
+      featuredTitle.textContent = 'Les recommandations de ' + ctx.display_name;
+    }
+    featuredRow.innerHTML = featuredPicks.map(function(r) {
+      var colors = catColors[r.category] || catColors.chaud;
+      var badge = catLabels[r.category] || r.category;
+      var imgHtml;
+      if (r.image_url) {
+        imgHtml = '<img class="featured-card-img" src="' + esc(optimizeImg(r.image_url, 400)) + '" alt="' + esc(r.title) + '" loading="lazy">';
+      } else {
+        var icon = catIcons[r.category] || catIcons.chaud;
+        imgHtml = '<div class="featured-card-img-placeholder" style="background:linear-gradient(135deg,' + colors[0] + ',' + colors[1] + ')">' + icon + '</div>';
+      }
+      return '<div class="featured-card" data-recipe-id="' + esc(r.id) + '">' +
+        imgHtml +
+        '<div class="featured-card-body">' +
+          '<div class="featured-card-title">' + esc(r.title) + '</div>' +
+          '<div class="featured-card-meta">' + esc(badge) + (r.prep_time ? ' · ' + r.prep_time + ' min' : '') + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    featuredSection.style.display = '';
+    featuredRow.querySelectorAll('.featured-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var id = card.getAttribute('data-recipe-id');
+        var recipe = allRecipes.find(function(rr) { return String(rr.id) === String(id); });
+        if (recipe) openRecipeModal(recipe);
+      });
+    });
+  }
+
   // ── INSPIRE ME ──
   document.getElementById('inspire-btn').addEventListener('click', function() {
     var eligible = allRecipes.filter(function(r) { return r.free || accessLevel === 'full'; });
@@ -1729,7 +2067,17 @@ body::after {
     var sort = filterSort.value;
 
     var filtered = allRecipes.filter(function(r) {
-      if (activeFilter !== 'all' && r.category !== activeFilter) return false;
+      // Filtre tab primaire (kind : meal / component / extra)
+      if (activeTab === 'meal' && r.kind !== 'meal') return false;
+      if (activeTab === 'component' && r.kind !== 'component') return false;
+      if (activeTab === 'extra' && r.kind !== 'extra') return false;
+
+      // Filtre sub-filter selon tab
+      if (activeFilter !== 'all') {
+        if (activeTab === 'meal' && !(r.meal_types || []).includes(activeFilter)) return false;
+        if (activeTab === 'component' && r.sub_category !== activeFilter) return false;
+      }
+
       if (search && !r.title.toLowerCase().includes(search)) return false;
       return true;
     });
@@ -1737,10 +2085,6 @@ body::after {
     filtered.sort(function(a, b) {
       if (sort === 'alpha') return a.title.localeCompare(b.title, 'fr');
       if (sort === 'time') return (a.prep_time || 99) - (b.prep_time || 99);
-      if (sort === 'price') {
-        var order = { low: 0, medium: 1, high: 2 };
-        return (order[a.price_tier] || 1) - (order[b.price_tier] || 1);
-      }
       var catOrder = { chaud: 0, bowl: 1, pain: 2, vege: 3, sauce: 4 };
       return (catOrder[a.category] || 0) - (catOrder[b.category] || 0);
     });
@@ -1782,7 +2126,6 @@ body::after {
             '<span class="recipe-badge badge-' + r.category + '">' + badge + '</span>' +
             budgetBadge +
             (r.prep_time ? '<span class="recipe-time"><svg viewBox="0 0 24 24"><path d="M2.5 13a9.5 9.5 0 1 0 19 0 9.5 9.5 0 1 0-19 0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M6.653 20.849 4 23.501" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M17.345 20.847 20 23.501" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="m8.5 13.502 4 0 0-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M7.832 2.292a3.993 3.993 0 1 0-5.939 5.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M16.168 2.292a3.993 3.993 0 1 1 5.939 5.22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>' + r.prep_time + ' min</span>' : '') +
-            '<span class="recipe-price">' + priceLabel + '</span>' +
           '</div>' +
         '</div>' +
         (isLocked ? '<div class="recipe-lock-overlay"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span>35\u20AC \u00e0 vie</span></div>' : '');
@@ -1796,16 +2139,20 @@ body::after {
     });
   }
 
-  // ── FILTERS ──
-  document.querySelectorAll('.filter-pill').forEach(function(pill) {
-    pill.addEventListener('click', function() {
-      if (pill.classList.contains('locked')) { openUpsellModal(); return; }
-      document.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
-      pill.classList.add('active');
-      activeFilter = pill.dataset.filter;
+  // ── TABS PRIMAIRES (Repas / Composantes / Extras) ──
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeTab = btn.dataset.tab;
+      activeFilter = 'all';  // reset sub-filter au changement de tab
+      renderSubFilters();
       renderRecipes();
     });
   });
+
+  // ── Note : les event handlers des .filter-pill sont attachés dans renderSubFilters()
+  //     car les pills sont générés dynamiquement à chaque changement de tab.
 
   filterSearch.addEventListener('input', renderRecipes);
   filterSort.addEventListener('change', renderRecipes);
@@ -2092,6 +2439,11 @@ body::after {
 
   // ── UPSELL ──
   function openUpsellModal() {
+    // G24 : masquer l'upsell Élevia 35€ si le patient arrive via un subdomain
+    // de diet abonné (pas Élevia par défaut). Le patient a déjà payé son plan
+    // au diet, pas besoin de proposer l'abonnement Élevia direct.
+    var ctx = window.__elevioCtx || {};
+    if (ctx.is_elevia_default === false) return;
     upsellModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
