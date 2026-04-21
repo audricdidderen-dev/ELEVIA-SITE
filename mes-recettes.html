@@ -1247,7 +1247,7 @@ body::after {
     garnitures_tartinables_vege_riche_p: true, garnitures_tartinables_vege_legumes: true,
     fromages_20_30_mg: true, fromages_10_20_mg: true,
   };
-  var usualProfileMap = {};       // usual_profile_id → [bracket rules]
+  var usualProfileMap = {};       // 'eq_id:item_id:grams' → usual_text (ref_item_usual_grid)
   var clientPainGarnitureCount = 0;
   var weeklyBudget = [];           // [{ eq_id, freq_budget, freq_used, freq_remaining }]
   var clientPlanId = null;         // active plan id for RPCs
@@ -1352,8 +1352,10 @@ body::after {
       if (plan) {
         clientPlanId = plan.id;
 
+        // usual_text est pré-calculé en DB par elevia_resolve_usual_grid (migs 343-345)
+        // via ref_item_usual_grid. On le lit direct, zéro recalcul front.
         const { data: items } = await sb.from('plan_items')
-          .select('eq_id, item_id, qty_1x, food_label, unit, usual_mode, usual_g_per_unit, usual_unit_sg, usual_unit_pl, usual_profile_id, is_active')
+          .select('eq_id, item_id, qty_1x, food_label, unit, usual_g_per_unit, usual_unit_sg, usual_unit_pl, usual_round_step, usual_text, is_active')
           .eq('plan_id', plan.id)
           .eq('is_active', true);
         planItems = items || [];
@@ -1408,24 +1410,20 @@ body::after {
 
       // Fetch reference items (includes usual unit conversion fields)
       const { data: refItems } = await sb.from('ref_eq_items')
-        .select('eq_id, item_id, qty_1x, unit, food_label, usual_mode, usual_profile_id, usual_g_per_unit, usual_unit_sg, usual_unit_pl, usual_round_step');
+        .select('eq_id, item_id, qty_1x, unit, food_label, usual_mode, usual_g_per_unit, usual_unit_sg, usual_unit_pl, usual_round_step, usual_text');
       refItemMap = {};
       (refItems || []).forEach(function(ri) {
         refItemMap[ri.eq_id + ':' + ri.item_id] = ri;
       });
 
-      // Fetch usual rules for PROFILE mode items (bracket-based conversions: avocat, oils, sauces)
-      const { data: usualRules } = await sb.from('calc_usual_rules')
-        .select('usual_profile_id, min_g, max_g, usual_g_per_unit, usual_unit_sg, usual_unit_pl, display_priority');
-      usualProfileMap = {};
-      (usualRules || []).forEach(function(r) {
-        if (!usualProfileMap[r.usual_profile_id]) usualProfileMap[r.usual_profile_id] = [];
-        usualProfileMap[r.usual_profile_id].push(r);
-      });
-      Object.keys(usualProfileMap).forEach(function(pid) {
-        usualProfileMap[pid].sort(function(a, b) {
-          return (a.display_priority || 0) - (b.display_priority || 0) || (a.min_g || 0) - (b.min_g || 0);
-        });
+      // Fetch ref_item_usual_grid : grille de valeurs usuelles pré-calculées
+      // (eq_id, item_id, qty_grams, usual_text) — source unique pour les items
+      // hors plan. Pour items du plan, plan_items.usual_text est déjà pré-calculé.
+      const { data: usualGrid } = await sb.from('ref_item_usual_grid')
+        .select('eq_id, item_id, qty_grams, usual_text');
+      (usualGrid || []).forEach(function(g) {
+        var key = g.eq_id + ':' + g.item_id + ':' + Math.round(g.qty_grams);
+        usualProfileMap[key] = g.usual_text;
       });
 
       // 3. Allergens, aversions, intolerances filtering
@@ -2558,47 +2556,37 @@ body::after {
     soupe_faible_kcal: { per: 250, singular: 'bol', plural: 'bols' },
   };
 
-  // Dynamic usual text from DB fields (FIXED mode) or calc_usual_rules (PROFILE mode)
+  // Valeur usuelle : lookup direct, zéro calcul (refactor 2026-04-22)
+  // Source 1 : plan_items.usual_text (pré-calculé DB par elevia_resolve_usual_grid)
+  // Source 2 : ref_item_usual_grid (eq_id, item_id, qty_grams) pour items hors plan
+  // Source 3 : FOOD_USUAL legacy hardcoded (soupes, chocolat — eq-level)
+  //
+  // Match grammage :
+  //   Mode F : qty_grams = plan.qty_plan_grams (identique tous items)
+  //   Mode R : qty_grams = item.qty_1x × plan.qty_plan_grams
+  //   FOOF  : idem F
   function computeUsualText(eqId, itemId, grams, planItemFallback) {
-    var key = eqId + ':' + itemId;
-    var item = refItemMap[key];
-    // Fallback: use planItem's usual fields if ref lookup has no usual data
-    if ((!item || (!item.usual_mode && !item.usual_g_per_unit)) && planItemFallback && (planItemFallback.usual_mode || planItemFallback.usual_g_per_unit)) {
-      item = planItemFallback;
-    }
-    if (!item || !grams || grams <= 0) return null;
+    if (!grams || grams <= 0) return null;
 
-    var mode = item.usual_mode || 'NONE';
-
-    // FIXED mode (explicit or implicit: usual_g_per_unit set without usual_mode)
-    if ((mode === 'FIXED' || (mode === 'NONE' && item.usual_g_per_unit > 0)) && item.usual_g_per_unit > 0 && item.usual_unit_sg) {
-      var count = Math.round(grams / item.usual_g_per_unit);
-      if (count <= 0) return null;
-      // Only show usual if within 15% of actual (avoids "≈ 1 noisette" for 6g beurre)
-      if (Math.abs(count * item.usual_g_per_unit - grams) / grams > 0.15) return null;
-      return count + ' ' + (count <= 1 ? item.usual_unit_sg : (item.usual_unit_pl || item.usual_unit_sg));
+    // 1. Si le patient a cet item dans son plan, usual_text est déjà pré-calculé
+    if (planItemFallback && planItemFallback.usual_text) {
+      return planItemFallback.usual_text;
     }
 
-    // PROFILE mode: bracket lookup from calc_usual_rules
-    // Bracket labels are self-descriptive (e.g. "6 c. à soupe (cru)") — return directly
-    if (mode === 'PROFILE' && item.usual_profile_id && usualProfileMap[item.usual_profile_id]) {
-      var brackets = usualProfileMap[item.usual_profile_id];
-      for (var i = 0; i < brackets.length; i++) {
-        var b = brackets[i];
-        if (grams >= (b.min_g || 0) && grams <= (b.max_g || 99999)) {
-          return b.usual_unit_sg;
-        }
-      }
+    // 2. Lookup ref_item_usual_grid par (eq_id, item_id, grammes arrondi)
+    var gridKey = eqId + ':' + itemId + ':' + Math.round(grams);
+    if (usualProfileMap[gridKey]) {
+      return usualProfileMap[gridKey];
     }
 
-    // Fallback: FOOD_USUAL eq-level conversion (legacy hardcoded)
+    // 3. Fallback FOOD_USUAL legacy (eq-level, hardcoded)
     var foodCalc = FOOD_USUAL[eqId];
     if (foodCalc && grams >= foodCalc.per) {
       var fCount = Math.round(grams / foodCalc.per);
       return fCount + ' ' + (fCount <= 1 ? foodCalc.singular : foodCalc.plural);
     }
 
-    return null; // display in grams
+    return null;
   }
 
   // Beautify fractions: "1 1/2" → "1½", "1/2" → "½"
