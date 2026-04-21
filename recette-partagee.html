@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recette partagée — Élevia Nutrition</title>
+<meta name="description" content="Recette partagée par ton diététicien via Élevia Nutrition.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #0E1E2E; --gold: #C6A05B; --cream: #F6F3EE; --cream-dark: #EDE8E0;
+  --warm: #FAF7F2; --text-dark: #1A1A1A; --text-muted: #6B7280;
+  --border-soft: #F5EEE1;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', -apple-system, sans-serif;
+  --radius: 16px;
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.05);
+  --transition: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); color: var(--text-dark);
+  background: var(--warm); min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 820px; margin: 0 auto; padding: clamp(1rem, 3vw, 2rem); }
+
+/* Header branded */
+.brand-header {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--border-soft);
+  background: #fff;
+}
+.brand-logo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.brand-name {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
+  color: var(--navy); letter-spacing: 0.01em;
+}
+
+/* Hero recette */
+.rec-hero {
+  margin: 1.5rem 0;
+  background: #fff; border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+.rec-hero__img {
+  width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; background: var(--cream-dark);
+}
+.rec-hero__body { padding: 1.5rem clamp(1rem, 3vw, 2rem); }
+.rec-hero__label {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+}
+.rec-hero__title {
+  font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 500; line-height: 1.2; color: var(--navy); margin-bottom: 0.6rem;
+}
+.rec-hero__desc {
+  font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; max-width: 60ch;
+}
+.rec-hero__meta {
+  display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;
+  font-size: 0.8rem; color: var(--text-muted);
+}
+.rec-hero__meta span { display: inline-flex; align-items: center; gap: 0.3rem; }
+
+/* Section */
+.section {
+  background: #fff; border-radius: var(--radius);
+  padding: 1.5rem clamp(1rem, 3vw, 2rem);
+  margin-bottom: 1rem; box-shadow: var(--shadow-soft);
+}
+.section-title {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 500;
+  color: var(--navy); margin-bottom: 1rem;
+}
+.ingredients { list-style: none; }
+.ingredients li {
+  padding: 0.6rem 0; border-bottom: 1px solid var(--border-soft);
+  font-size: 0.9rem; display: flex; align-items: baseline; gap: 0.6rem;
+}
+.ingredients li:last-child { border-bottom: 0; }
+.ingredients li::before {
+  content: ''; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 0.5rem;
+}
+.ing-qty { color: var(--gold); font-weight: 500; }
+.ing-sep {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-muted); padding-top: 0.5rem;
+  border-bottom: 0 !important;
+}
+.ing-sep::before { display: none !important; }
+.steps { counter-reset: step; list-style: none; }
+.steps li {
+  counter-increment: step; padding: 0.75rem 0 0.75rem 2.5rem; position: relative;
+  font-size: 0.92rem; line-height: 1.55; border-bottom: 1px solid var(--border-soft);
+}
+.steps li:last-child { border-bottom: 0; }
+.steps li::before {
+  content: counter(step); position: absolute; left: 0; top: 0.8rem;
+  width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  background: var(--gold); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 600;
+}
+.tips {
+  background: var(--cream-dark); border-radius: 8px;
+  padding: 1rem 1.2rem; font-size: 0.88rem; color: var(--text-dark);
+  font-style: italic; line-height: 1.55;
+}
+
+/* Collection grid */
+.coll-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+.coll-card {
+  background: #fff; border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow-soft); cursor: pointer;
+  transition: transform 0.3s var(--transition), box-shadow 0.3s;
+}
+.coll-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.coll-card__img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--cream-dark); }
+.coll-card__body { padding: 0.9rem 1rem 1.1rem; }
+.coll-card__title {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
+  color: var(--navy); margin-bottom: 0.3rem; line-height: 1.3;
+}
+.coll-card__meta { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Footer */
+.footer {
+  text-align: center; padding: 2rem 1rem 3rem; color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.footer a { color: var(--gold); text-decoration: none; }
+
+/* States */
+.loading, .error {
+  min-height: 60vh; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem; color: var(--text-muted);
+}
+.error { color: var(--text-dark); }
+.spinner {
+  width: 24px; height: 24px; border: 2px solid var(--cream-dark);
+  border-top-color: var(--gold); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="brand-header" id="brand-header" style="display:none">
+  <img class="brand-logo" id="brand-logo" alt="" style="display:none">
+  <div class="brand-name" id="brand-name">Élevia Nutrition</div>
+</div>
+
+<main class="page">
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Chargement…</p>
+  </div>
+
+  <div class="error" id="error" style="display:none">
+    <h1 style="font-family: var(--serif); font-size: 1.8rem; color: var(--navy)">Lien introuvable</h1>
+    <p id="error-msg">Ce lien a peut-être expiré ou été supprimé.</p>
+    <p><a href="https://www.elevianutrition.com" style="color: var(--gold)">Retour à l'accueil</a></p>
+  </div>
+
+  <div id="content" style="display:none"></div>
+</main>
+
+<footer class="footer">
+  <p>Partagé via <a href="https://www.elevianutrition.com">Élevia Nutrition</a></p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var SUPABASE_URL = 'https://qjafswdhrlpwagpvjsna.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqYWZzd2Rocmxwd2FncHZqc25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjczMDQsImV4cCI6MjA4OTg0MzMwNH0.CNeqZVcLCRGw_1MfrElr4w2eX7XnK-mapGvPVq1Nsd4';
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  var loadingEl = document.getElementById('loading');
+  var errorEl = document.getElementById('error');
+  var errorMsg = document.getElementById('error-msg');
+  var contentEl = document.getElementById('content');
+  var brandHeader = document.getElementById('brand-header');
+  var brandName = document.getElementById('brand-name');
+  var brandLogo = document.getElementById('brand-logo');
+
+  function esc(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function showError(msg) {
+    loadingEl.style.display = 'none';
+    errorEl.style.display = '';
+    if (msg) errorMsg.textContent = msg;
+  }
+
+  function applyBranding(b) {
+    if (!b) return;
+    var root = document.documentElement;
+    if (b.primary_color) root.style.setProperty('--navy', b.primary_color);
+    if (b.accent_color) root.style.setProperty('--gold', b.accent_color);
+    if (b.secondary_color) root.style.setProperty('--cream-dark', b.secondary_color);
+    if (b.brand_name) {
+      brandName.textContent = b.brand_name;
+      document.title = 'Recette partagée — ' + b.brand_name;
+    }
+    if (b.logo_url) {
+      brandLogo.src = b.logo_url;
+      brandLogo.style.display = '';
+    }
+    brandHeader.style.display = '';
+  }
+
+  function renderRecipe(content) {
+    var imgHtml = content.image_url
+      ? '<img class="rec-hero__img" src="' + esc(content.image_url) + '" alt="' + esc(content.title) + '" loading="eager">'
+      : '<div class="rec-hero__img"></div>';
+
+    var totalTime = (content.prep_time_min || 0) + (content.cook_time_min || 0);
+    var metaParts = [];
+    if (totalTime > 0) metaParts.push('<span>⏱ ' + totalTime + ' min</span>');
+    if (content.complexity) {
+      var cLabel = { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' }[content.complexity] || content.complexity;
+      metaParts.push('<span>· ' + cLabel + '</span>');
+    }
+    var metaHtml = metaParts.length ? '<div class="rec-hero__meta">' + metaParts.join('') + '</div>' : '';
+
+    var ingredients = Array.isArray(content.ingredients) ? content.ingredients : [];
+    var linked = ingredients.filter(function (i) { return i.parent_eq_id && i.parent_item_id; });
+    var unlinked = ingredients.filter(function (i) { return !(i.parent_eq_id && i.parent_item_id); });
+
+    function renderIngLine(ing) {
+      var name = ing.label_override || ing.unlinked_label || 'Ingrédient';
+      var qty = ing.unlinked_qty_text || '';
+      return '<li>' + (qty ? '<span class="ing-qty">' + esc(qty) + '</span>' : '') + ' ' + esc(name) + '</li>';
+    }
+
+    var ingsHtml = '';
+    if (linked.length === 0) {
+      // Cas Extras / Composants : tout unlinked, pas de séparateur
+      ingsHtml = unlinked.map(renderIngLine).join('');
+    } else {
+      ingsHtml = linked.map(renderIngLine).join('');
+      if (unlinked.length > 0) {
+        ingsHtml += '<li class="ing-sep">Touche finale</li>';
+        ingsHtml += unlinked.map(renderIngLine).join('');
+      }
+    }
+
+    var steps = Array.isArray(content.instructions) ? content.instructions : [];
+    var stepsHtml = steps.length
+      ? '<ol class="steps">' + steps.map(function (s) { return '<li>' + esc(s.text || s) + '</li>'; }).join('') + '</ol>'
+      : '';
+
+    var tipsHtml = content.tips ? '<div class="tips">' + esc(content.tips) + '</div>' : '';
+
+    contentEl.innerHTML =
+      '<article class="rec-hero">' +
+        imgHtml +
+        '<div class="rec-hero__body">' +
+          '<div class="rec-hero__label">Recette</div>' +
+          '<h1 class="rec-hero__title">' + esc(content.title) + '</h1>' +
+          (content.description_short ? '<p class="rec-hero__desc">' + esc(content.description_short) + '</p>' : '') +
+          metaHtml +
+        '</div>' +
+      '</article>' +
+      (ingsHtml ? '<section class="section"><h2 class="section-title">Ingrédients</h2><ul class="ingredients">' + ingsHtml + '</ul></section>' : '') +
+      (stepsHtml ? '<section class="section"><h2 class="section-title">Préparation</h2>' + stepsHtml + '</section>' : '') +
+      (tipsHtml ? '<section class="section"><h2 class="section-title">Astuces</h2>' + tipsHtml + '</section>' : '');
+  }
+
+  function renderCollection(content) {
+    var recipes = Array.isArray(content.recipes) ? content.recipes : [];
+    var cardsHtml = recipes.map(function (r) {
+      var imgHtml = r.image_url
+        ? '<img class="coll-card__img" src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '" loading="lazy">'
+        : '<div class="coll-card__img"></div>';
+      var total = (r.prep_time_min || 0) + (r.cook_time_min || 0);
+      var metaParts = [];
+      if (total > 0) metaParts.push(total + ' min');
+      if (r.complexity) {
+        var cL = { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' }[r.complexity] || r.complexity;
+        metaParts.push(cL);
+      }
+      return '<div class="coll-card">' +
+        imgHtml +
+        '<div class="coll-card__body">' +
+          '<div class="coll-card__title">' + esc(r.title) + '</div>' +
+          (metaParts.length ? '<div class="coll-card__meta">' + esc(metaParts.join(' · ')) + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    contentEl.innerHTML =
+      '<article class="rec-hero">' +
+        '<div class="rec-hero__body">' +
+          '<div class="rec-hero__label">Collection</div>' +
+          '<h1 class="rec-hero__title">' + esc(content.name || 'Collection') + '</h1>' +
+          '<p class="rec-hero__desc">' + recipes.length + ' recette' + (recipes.length > 1 ? 's' : '') + '</p>' +
+        '</div>' +
+      '</article>' +
+      (cardsHtml ? '<section class="section"><div class="coll-grid">' + cardsHtml + '</div></section>' : '<p style="text-align:center;color:var(--text-muted);padding:2rem">Collection vide.</p>');
+  }
+
+  async function init() {
+    try {
+      var params = new URL(window.location).searchParams;
+      var token = params.get('t') || params.get('token');
+
+      if (!token) {
+        showError('Aucun lien spécifié.');
+        return;
+      }
+
+      var resp = await sb.rpc('get_public_share', { p_token: token });
+
+      if (resp.error) {
+        console.error('[get_public_share]', resp.error);
+        showError('Erreur lors du chargement.');
+        return;
+      }
+      if (!resp.data) {
+        showError('Ce lien est introuvable ou a expiré.');
+        return;
+      }
+
+      var payload = resp.data;
+      applyBranding(payload.branding);
+
+      if (payload.kind === 'recipe') {
+        renderRecipe(payload.content);
+      } else if (payload.kind === 'collection') {
+        renderCollection(payload.content);
+      } else {
+        showError('Format de lien inconnu.');
+        return;
+      }
+
+      loadingEl.style.display = 'none';
+      contentEl.style.display = '';
+    } catch (e) {
+      console.error('[init]', e);
+      showError('Erreur inattendue.');
+    }
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>
