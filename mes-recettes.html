@@ -1933,8 +1933,10 @@ body::after {
       } else {
         count = tabRecipes.length;
       }
-      // Masquer les pills vides (sauf "Tout")
-      if (cfg.value !== 'all' && count === 0) return '';
+      // Pour Repas : toujours afficher les 4 sous-filtres (PDJ/Froid/Chaud/Collation)
+      //   même si vides, pour donner au patient une vision de la structure
+      // Pour Composantes/Extras : masquer les pills vides (plus propre)
+      if (activeTab !== 'meal' && cfg.value !== 'all' && count === 0) return '';
       var isActive = activeFilter === cfg.value ? ' active' : '';
       var lockedCls = tabLocked ? ' locked' : '';
       return '<button class="filter-pill' + isActive + lockedCls + '" data-filter="' + cfg.value + '">' +
