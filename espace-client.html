@@ -771,6 +771,11 @@ body.state-portal::before {
   </div>
   <h1>Espace <em>Client</em></h1>
   <p class="login-sub">Ton espace personnel. Plan, suivi, recettes, communauté — tout est ici.</p>
+  <div id="magic-expired-banner" hidden style="background:rgba(198,160,91,0.12);border:1px solid rgba(198,160,91,0.4);border-radius:8px;padding:0.85rem 1rem;margin-bottom:1rem;font-size:0.92rem;line-height:1.5;color:#f6f3ee">
+    <strong style="color:var(--gold)">Ce lien a expiré.</strong>
+    <p id="magic-expired-msg" style="margin:0.35rem 0 0.6rem 0">Les liens d'invitation et de connexion sont valables un temps limité pour ta sécurité.</p>
+    <button type="button" id="magic-expired-resend" style="background:var(--gold);color:#0E1E2E;border:none;border-radius:6px;padding:0.55rem 1rem;font-weight:500;cursor:pointer;font-size:0.9rem">Demander un nouveau lien</button>
+  </div>
   <form id="login-form" autocomplete="on">
     <div class="form-group">
       <label for="login-email">Email</label>
@@ -1104,8 +1109,50 @@ body.state-portal::before {
     // onAuthStateChange will take over after password update (USER_UPDATED → SIGNED_IN)
   });
 
+  function detectAuthError() {
+    // Supabase renvoie les erreurs d'auth (lien expiré, invalide…) soit dans le hash soit dans la query.
+    // Exemples : #error=access_denied&error_code=otp_expired / ?error_code=otp_invalid
+    const hash = (window.location.hash || '').replace(/^#/, '');
+    const hashParams = new URLSearchParams(hash);
+    const queryParams = new URLSearchParams(window.location.search);
+    const errorCode = hashParams.get('error_code') || queryParams.get('error_code');
+    const error = hashParams.get('error') || queryParams.get('error');
+    if (!errorCode && !error) return null;
+    const banner = document.getElementById('magic-expired-banner');
+    const msg = document.getElementById('magic-expired-msg');
+    if (!banner) return errorCode || error;
+    if (errorCode === 'otp_expired') {
+      msg.textContent = "Ton lien d'invitation ou de connexion a expiré. Demande-en un nouveau ci-dessous.";
+    } else if (errorCode === 'otp_invalid' || errorCode === 'invalid_token') {
+      msg.textContent = "Ce lien n'est plus valide (déjà utilisé ou modifié). Demande un nouveau lien.";
+    } else {
+      msg.textContent = "Connexion impossible avec ce lien. Demande un nouveau lien à ton diététicien ou utilise le formulaire ci-dessous.";
+    }
+    banner.hidden = false;
+    // Nettoie l'URL pour éviter de réafficher la bannière après refresh
+    history.replaceState({}, '', window.location.pathname);
+    return errorCode || error;
+  }
+
   async function init() {
-    // Use onAuthStateChange as single source of truth
+    // 1. Détecte erreur magic-link (hash/query) AVANT le listener onAuthStateChange
+    detectAuthError();
+
+    // 2. CTA bannière → focus input email + déclenche le forgot password
+    const resendBtn = document.getElementById('magic-expired-resend');
+    if (resendBtn) {
+      resendBtn.addEventListener('click', () => {
+        const emailInput = document.getElementById('login-email');
+        if (emailInput && emailInput.value.trim()) {
+          forgotLink.click();
+        } else if (emailInput) {
+          emailInput.focus();
+          loginError.textContent = 'Entre ton email puis clique « Mot de passe oublié ».';
+        }
+      });
+    }
+
+    // 3. Source de vérité unique pour l'auth state
     sb.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && _isInviteFlow)) {
         _isInviteFlow = false;
