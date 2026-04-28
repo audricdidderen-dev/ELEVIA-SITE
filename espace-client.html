@@ -1397,7 +1397,7 @@
           showPortal();
           loadClientWithWorkspace(session);
         }
-      } else if (session && currentView !== 'portal') {
+      } else if (session && currentView !== 'portal' && currentView !== 'set-password') {
         showPortal();
         loadClientWithWorkspace(session);
       } else if (!session && currentView !== 'login') {
