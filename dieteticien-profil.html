@@ -8,7 +8,7 @@
 <link rel="canonical" id="meta-canonical" href="https://elevianutrition.com/trouver-un-dieteticien">
 <meta property="og:title" id="meta-og-title" content="Profil diététicien · Annuaire Élevia">
 <meta property="og:description" id="meta-og-description" content="Profil détaillé d'un diététicien-nutritionniste de l'annuaire Élevia, en Belgique.">
-<meta property="og:image" id="meta-og-image" content="https://elevianutrition.com/images/og-elevia-default.png">
+<meta property="og:image" id="meta-og-image" content="https://elevianutrition.com/images/logo-elevia.png">
 <meta property="og:url" id="meta-og-url" content="https://elevianutrition.com/trouver-un-dieteticien">
 <meta property="og:type" content="profile">
 <meta property="og:locale" content="fr_BE">
@@ -628,7 +628,7 @@ function populate(p) {
     : `Diététicien-nutritionniste${p.city ? ` à ${p.city}` : ''}, membre de l'annuaire Élevia. Approche fondée sur la rigueur clinique.`;
   const seoDesc = seoDescBase.length > 155 ? seoDescBase.slice(0, 152).trimEnd() + '…' : seoDescBase;
   const seoUrl = `https://elevianutrition.com/trouver-un-dieteticien/${p.slug}`;
-  const seoImg = p.photo_url || 'https://elevianutrition.com/images/og-elevia-default.png';
+  const seoImg = p.photo_url || 'https://elevianutrition.com/images/logo-elevia.png';
 
   document.title = seoTitle;
   const setMeta = (id, attr, value) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, value); };
