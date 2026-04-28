@@ -1397,6 +1397,10 @@
           showPortal();
           loadClientWithWorkspace(session);
         }
+      } else if (event === 'USER_UPDATED') {
+        // Mot de passe défini via updateUser → passer au portail
+        showPortal();
+        if (session) loadClientWithWorkspace(session);
       } else if (session && currentView !== 'portal' && currentView !== 'set-password') {
         showPortal();
         loadClientWithWorkspace(session);
