@@ -1307,13 +1307,18 @@ body::after {
   async function loadData(session) {
     try {
       // 1. Client info (includes questionnaire_id for allergen filtering)
-      const { data: client } = await sb.from('clients')
+      // W-RECIPES-BUG fix: maybeSingle() + workspace_id filter (robustesse multi-workspace)
+      // Requiert migration 630 (backfill auth_user_id pour clients existants).
+      var clientQuery = sb.from('clients')
         .select('id, first_name, last_name, has_recipes, has_cockpit, diet_profile, questionnaire_id')
-        .eq('auth_user_id', session.user.id)
-        .single();
+        .eq('auth_user_id', session.user.id);
+      var ctx = window.__elevioCtx || {};
+      if (ctx.workspace_id) clientQuery = clientQuery.eq('workspace_id', ctx.workspace_id);
+      const { data: client, error: clientErr } = await clientQuery.limit(1).maybeSingle();
 
       if (!client) {
-        loadingState.innerHTML = '<div class="empty-state"><p>Aucun profil client trouv\u00e9. <a href="mailto:contact@elevianutrition.com" style="color:var(--gold)">Contacte-nous</a></p></div>';
+        console.warn('[mes-recettes] profil client introuvable', { uid: session.user.id, workspace_id: ctx.workspace_id, err: clientErr });
+        loadingState.innerHTML = '<div class="empty-state"><p>Profil non trouv\u00e9 pour <strong>' + esc(session.user.email) + '</strong>. <a href="mailto:contact@elevianutrition.com" style="color:var(--gold)">Contacte-nous</a></p></div>';
         return;
       }
 
@@ -1580,7 +1585,7 @@ body::after {
           id: s.id, type: 'sauce', category: 'sauce',
           kind: 'component', sub_category: 'sauce', meal_types: [],
           title: s.title, prep_time: s.prep_time_min,
-          price_tier: 'low', ingredients: s.ingredients || [],
+          ingredients: s.ingredients || [],
           steps: s.steps || [], tips: s.tips,
           conservation: s.conservation, image_url: s.image_url || null,
           free: true, total_weight_g: s.total_weight_g,
@@ -1596,7 +1601,7 @@ body::after {
             id: s.id, type: 'vege_sub', category: 'vege',
             kind: 'component', sub_category: 'proteine_vege', meal_types: [],
             title: s.title, prep_time: s.prep_time_min,
-            price_tier: 'low', ingredients: s.ingredients || [],
+            ingredients: s.ingredients || [],
             steps: s.steps || [], tips: s.tips,
             conservation: s.conservation, image_url: s.image_url || null,
             free: true, total_weight_g: s.total_weight_g,
@@ -1641,7 +1646,7 @@ body::after {
           id: s.id, type: 'soup', category: 'soupe',
           kind: 'component', sub_category: 'soupe', meal_types: [],
           title: s.title, prep_time: s.prep_time_min,
-          speed: s.speed, price_tier: 'low',
+          speed: s.speed,
           ingredients: s.ingredients || [],
           steps: s.steps || [], tips: s.tips,
           conservation: s.conservation, image_url: s.image_url || null,
@@ -1685,7 +1690,7 @@ body::after {
           id: s.id, type: 'extras_maison', category: 'extras_maison',
           kind: 'extra', sub_category: 'extra', meal_types: [],
           title: s.title, prep_time: s.prep_time_min,
-          speed: s.speed, price_tier: 'low',
+          speed: s.speed,
           ingredients: s.ingredients || [],
           steps: s.steps || [], tips: s.tips,
           conservation: s.conservation, image_url: s.image_url || null,
@@ -1842,7 +1847,6 @@ body::after {
           template_code: tplCode,
           title: r.title, prep_time: r.prep_time_min,
           cook_time: r.cook_time_min,
-          price_tier: r.price_tier || 'medium',
           complexity: r.complexity,
           description_short: r.description_short || '',
           ingredients: visibleIngredients,
@@ -2101,7 +2105,6 @@ body::after {
     filtered.forEach(function(r) {
       var isLocked = !r.free && accessLevel !== 'full';
       var colors = catColors[r.category] || catColors.chaud;
-      var priceLabel = r.price_tier === 'low' ? '\u20AC' : r.price_tier === 'high' ? '\u20AC\u20AC\u20AC' : '\u20AC\u20AC';
       var badge = catLabels[r.category] || r.category;
 
       var imgHtml;
