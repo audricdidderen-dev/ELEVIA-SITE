@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trouver un diététicien Élevia · Annuaire des praticiens en Belgique</title>
+<meta name="description" content="Trouvez un diététicien-nutritionniste Élevia près de chez vous. Un cercle naissant de praticiens qui placent la rigueur clinique au-dessus du raccourci.">
+<link rel="canonical" href="https://elevianutrition.com/trouver-un-dieteticien">
+<meta property="og:title" content="Trouver un diététicien Élevia">
+<meta property="og:description" content="Cercle naissant de praticiens qui placent la rigueur clinique au-dessus du raccourci. Belgique entière.">
+<meta property="og:url" content="https://elevianutrition.com/trouver-un-dieteticien">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   TOKENS — charte marketing Élevia (depuis _marketing.css)
+   ══════════════════════════════════════════════════════════ */
+:root {
+  --navy:        #0E1E2E;
+  --navy-deep:   #091520;
+  --navy-soft:   #1A2C40;
+  --gold:        #C6A05B;
+  --gold-light:  #D4B878;
+  --gold-pale:   #E8D5A8;
+  --gold-glow:   rgba(198,160,91,0.15);
+  --cream:       #F6F3EE;
+  --cream-dark:  #EDE8E0;
+  --cream-warm:  #FBF8F2;
+  --white:       #FFFFFF;
+  --text-dark:   #1A1A1A;
+  --text-muted:  #6B7280;
+  --text-soft:   #8B9AAC;
+  --border-soft: #F5EEE1;
+  --border-line: #E5DFD2;
+  --error:       #C45B5B;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --shadow-card: 0 1px 2px rgba(14,30,46,0.04), 0 8px 32px rgba(14,30,46,0.06);
+  --shadow-hover: 0 4px 12px rgba(14,30,46,0.08), 0 24px 48px rgba(14,30,46,0.10);
+  --shadow-gold:  0 8px 24px rgba(198,160,91,0.20);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur:  280ms;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  color: var(--text-dark); background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: 0; background: 0; padding: 0; color: inherit; }
+input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--gold-glow); color: var(--navy); }
+
+/* ══════════════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════════════ */
+.elv-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246,243,238,0.88);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.elv-header-inner {
+  max-width: 1280px; margin: 0 auto; padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.header-logo { width: 110px; height: auto; transition: opacity var(--dur) var(--ease); }
+.header-logo:hover { opacity: 0.8; }
+.elv-nav {
+  display: flex; gap: 28px; align-items: center;
+  font-size: 14px; font-weight: 500; color: var(--text-muted);
+}
+.elv-nav a { position: relative; transition: color var(--dur) var(--ease); }
+.elv-nav a:hover { color: var(--navy); }
+.elv-nav a.is-current { color: var(--navy); }
+.elv-nav a.is-current::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -17px; height: 2px;
+  background: var(--gold);
+}
+.elv-nav-cta {
+  padding: 9px 18px; border-radius: 999px;
+  background: var(--navy); color: var(--cream);
+  font-size: 13px; font-weight: 500;
+  transition: all var(--dur) var(--ease);
+}
+.elv-nav-cta:hover {
+  background: var(--navy-deep); transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(14,30,46,0.20);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 48px; padding: 0 26px; border-radius: 999px;
+  font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
+  transition: all var(--dur) var(--ease); white-space: nowrap;
+}
+.btn-gold { background: var(--gold); color: var(--navy); box-shadow: 0 1px 2px rgba(198,160,91,0.30); }
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+.btn-outline { background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1px rgba(14,30,46,0.18); }
+.btn-outline:hover { background: var(--white); box-shadow: inset 0 0 0 1px var(--navy); transform: translateY(-1px); }
+.btn-lg { height: 56px; padding: 0 32px; font-size: 15px; }
+
+/* ── Badge ── */
+.elv-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  background: var(--gold-glow); color: var(--gold);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.elv-badge .dot {
+  width: 5px; height: 5px; border-radius: 999px; background: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-glow);
+}
+
+/* ── Avatar placeholder ── */
+.elv-avatar {
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--gold-pale) 0%, var(--cream-warm) 100%);
+  color: var(--navy); font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em;
+  position: relative; overflow: hidden;
+}
+.elv-avatar::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.5) 0%, transparent 60%);
+}
+.elv-avatar > span { position: relative; z-index: 1; }
+
+/* ── Fade-in on scroll ── */
+.fade-up {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+}
+.fade-up.is-in { opacity: 1; transform: none; }
+
+/* ── Eyebrow ── */
+.elv-eyebrow {
+  font-family: var(--sans); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════════════ */
+.annuaire-hero {
+  padding: 80px 32px 48px;
+  text-align: center;
+  max-width: 760px; margin: 0 auto;
+}
+.annuaire-hero h1 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: 1.06; letter-spacing: -0.02em;
+  color: var(--navy); margin: 20px 0 18px;
+}
+.annuaire-hero h1 em { font-style: italic; color: var(--gold); }
+.annuaire-hero .hero-sub {
+  font-size: 19px; line-height: 1.6; color: var(--text-muted);
+  max-width: 560px; margin: 0 auto;
+}
+
+/* ── Search bar ── */
+.search-bar {
+  margin: 36px auto 0; max-width: 580px;
+  background: var(--white); border-radius: 999px;
+  padding: 8px 8px 8px 24px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 1px 2px rgba(14,30,46,0.04), 0 12px 40px rgba(14,30,46,0.08);
+  transition: all var(--dur) var(--ease);
+}
+.search-bar:focus-within {
+  box-shadow: 0 1px 2px rgba(14,30,46,0.04), 0 16px 48px rgba(14,30,46,0.12), 0 0 0 4px var(--gold-glow);
+}
+.search-bar svg { color: var(--text-soft); flex-shrink: 0; }
+.search-bar input {
+  flex: 1; border: 0; outline: 0; background: transparent;
+  font-size: 16px; font-weight: 400; padding: 12px 0;
+}
+.search-bar input::placeholder { color: var(--text-soft); }
+.search-bar .geo-btn {
+  height: 44px; padding: 0 20px; border-radius: 999px;
+  background: var(--navy); color: var(--cream);
+  font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all var(--dur) var(--ease);
+}
+.search-bar .geo-btn:hover { background: var(--navy-deep); }
+
+.meta-line {
+  margin-top: 18px; font-size: 13px; color: var(--text-soft);
+  display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap;
+}
+.meta-line .sep { width: 3px; height: 3px; border-radius: 999px; background: var(--text-soft); opacity: 0.5; }
+
+/* ══════════════════════════════════════════════════════════
+   FILTER BAR
+   ══════════════════════════════════════════════════════════ */
+.filter-bar {
+  position: sticky; top: 64px; z-index: 20;
+  background: rgba(246,243,238,0.92);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 14px 0;
+}
+.filter-row {
+  max-width: 1280px; margin: 0 auto; padding: 0 32px;
+  display: flex; gap: 10px; align-items: center;
+  overflow-x: auto;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-pill {
+  flex-shrink: 0; padding: 8px 14px; border-radius: 999px;
+  background: var(--white); box-shadow: inset 0 0 0 1px var(--border-line);
+  font-size: 13px; font-weight: 500; color: var(--navy);
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 200ms var(--ease);
+}
+.filter-pill:hover { box-shadow: inset 0 0 0 1px var(--gold); transform: translateY(-1px); }
+.filter-pill.is-active { background: var(--navy); color: var(--cream); box-shadow: inset 0 0 0 1px var(--navy); }
+.filter-pill .count { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 999px; background: var(--gold-glow); color: var(--gold); }
+.filter-pill.is-active .count { background: var(--gold); color: var(--navy); }
+.filter-divider { width: 1px; height: 22px; background: var(--border-line); flex-shrink: 0; }
+
+/* ══════════════════════════════════════════════════════════
+   SPLIT LAYOUT : map + cards
+   ══════════════════════════════════════════════════════════ */
+.annuaire-split {
+  max-width: 1480px; margin: 0 auto; padding: 32px;
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .annuaire-split { grid-template-columns: 1fr; padding: 24px; }
+  .map-col { position: static !important; height: 320px !important; }
+  .filter-bar { display: none; }
+}
+
+/* ── Map ── */
+.map-col {
+  position: sticky; top: 132px;
+  height: calc(100vh - 156px); min-height: 480px;
+  border-radius: 24px; overflow: hidden;
+  background: var(--cream-warm); box-shadow: var(--shadow-card);
+}
+.map-svg { width: 100%; height: 100%; }
+.map-pin { cursor: pointer; transition: transform 200ms var(--ease); transform-origin: center bottom; }
+.map-pin:hover, .map-pin.is-active { transform: scale(1.18); }
+.map-pin.is-active circle.pin-glow { opacity: 1; }
+.map-overlay-controls {
+  position: absolute; top: 16px; right: 16px;
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--white); border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(14,30,46,0.08);
+}
+.map-overlay-controls button { width: 36px; height: 36px; display: grid; place-items: center; color: var(--navy); }
+.map-overlay-controls button:hover { background: var(--cream); }
+.map-overlay-controls button + button { border-top: 1px solid var(--border-line); }
+.map-result-count {
+  position: absolute; top: 16px; left: 16px;
+  background: var(--white); padding: 8px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; color: var(--navy);
+  box-shadow: 0 2px 8px rgba(14,30,46,0.08);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.map-result-count .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+.map-popup {
+  position: absolute; background: var(--white); border-radius: 14px; padding: 12px;
+  box-shadow: 0 8px 32px rgba(14,30,46,0.18); width: 220px; z-index: 5;
+  display: flex; gap: 10px; align-items: center; pointer-events: none;
+  opacity: 0; transform: translate(-50%, calc(-100% - 18px)) scale(0.95);
+  transition: all 200ms var(--ease);
+}
+.map-popup.is-shown { opacity: 1; transform: translate(-50%, calc(-100% - 14px)) scale(1); }
+.map-popup::after {
+  content: ''; position: absolute; bottom: -6px; left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px; height: 12px; background: var(--white);
+  box-shadow: 2px 2px 4px rgba(14,30,46,0.04);
+}
+.map-popup .pp-avatar { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; background: var(--cream-warm); overflow: hidden; }
+.map-popup .pp-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.map-popup .pp-avatar .elv-avatar { width: 100%; height: 100%; font-size: 16px; }
+.map-popup .pp-name { font-family: var(--serif); font-size: 16px; font-weight: 500; color: var(--navy); line-height: 1.2; }
+.map-popup .pp-city { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── Cards ── */
+.cards-col { min-width: 0; }
+.results-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; font-size: 14px; color: var(--text-muted);
+}
+.sort-select { background: transparent; padding: 6px 10px; font-size: 13px; font-weight: 500; color: var(--navy); border: 0; cursor: pointer; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+
+.pcard {
+  background: var(--white); border-radius: 20px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(14,30,46,0.04), 0 4px 16px rgba(14,30,46,0.04);
+  transition: all 280ms var(--ease); cursor: pointer;
+  display: flex; flex-direction: column;
+}
+.pcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.pcard-photo { aspect-ratio: 1/1; background: var(--cream-warm); position: relative; overflow: hidden; }
+.pcard-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease); }
+.pcard:hover .pcard-photo img { transform: scale(1.04); }
+.pcard-photo .elv-avatar { width: 100%; height: 100%; font-size: 64px; }
+.pcard-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.pcard h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; letter-spacing: -0.01em; color: var(--navy); margin: 0; line-height: 1.2; }
+.pcard-role { font-size: 13px; color: var(--text-muted); margin: 2px 0 0; }
+.pcard-founder { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--gold); margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; }
+.pcard-founder::before { content: ''; width: 14px; height: 1px; background: var(--gold); }
+.pcard-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.pcard-tag { font-size: 11px; color: var(--text-muted); padding: 4px 10px; border-radius: 999px; background: var(--cream); }
+.pcard-meta {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; color: var(--text-soft);
+  padding-top: 8px; border-top: 1px solid var(--border-soft); margin-top: auto;
+}
+.pcard-meta .item { display: inline-flex; align-items: center; gap: 5px; }
+.pcard-meta .item svg { color: var(--text-soft); }
+.pcard-meta .item.online { color: var(--gold); }
+.pcard-meta .item.online svg { color: var(--gold); }
+.pcard-cta {
+  margin-top: 4px; height: 40px; padding: 0 16px; border-radius: 999px;
+  background: transparent; color: var(--navy);
+  box-shadow: inset 0 0 0 1px var(--border-line);
+  font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all var(--dur) var(--ease); align-self: stretch;
+}
+.pcard:hover .pcard-cta { background: var(--navy); color: var(--cream); box-shadow: inset 0 0 0 1px var(--navy); }
+
+/* ── Empty state ── */
+.empty-state {
+  margin-top: 48px; background: var(--white); border-radius: 24px;
+  padding: 56px 40px; text-align: center; border: 1px dashed var(--border-line);
+}
+.empty-state h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; color: var(--navy); margin: 20px 0 8px; }
+.empty-state p { color: var(--text-muted); max-width: 380px; margin: 0 auto 20px; }
+.empty-illust {
+  width: 80px; height: 80px; margin: 0 auto; border-radius: 999px;
+  background: var(--cream-warm); display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1px var(--gold-pale);
+}
+
+/* ══════════════════════════════════════════════════════════
+   B2B TEASER
+   ══════════════════════════════════════════════════════════ */
+.b2b-teaser {
+  background: var(--navy); color: var(--cream);
+  padding: 80px 32px; margin-top: 64px; text-align: center;
+}
+.b2b-teaser h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(28px, 4vw, 40px); line-height: 1.2;
+  color: var(--cream); max-width: 580px; margin: 12px auto 12px;
+}
+.b2b-teaser p { color: var(--text-soft); max-width: 480px; margin: 0 auto 28px; }
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════ */
+.elv-footer {
+  background: var(--navy-deep); color: var(--text-soft);
+  padding: 64px 32px 32px; font-size: 13px; line-height: 1.7;
+}
+.elv-footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+}
+.elv-footer-brand .footer-logo { width: 100px; height: auto; opacity: 0.6; margin-bottom: 16px; }
+.elv-footer-brand p { max-width: 280px; }
+.elv-footer h4 {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cream); margin: 0 0 16px;
+}
+.elv-footer ul { list-style: none; padding: 0; margin: 0; }
+.elv-footer li { margin-bottom: 10px; }
+.elv-footer a { transition: color var(--dur) var(--ease); }
+.elv-footer a:hover { color: var(--gold-light); }
+.elv-footer-bottom {
+  max-width: 1280px; margin: 48px auto 0; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--text-soft);
+}
+@media (max-width: 768px) {
+  .elv-footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .elv-header-inner { padding: 12px 20px; }
+  .elv-nav { display: none; }
+  .annuaire-hero { padding: 56px 20px 36px; }
+  .annuaire-split { padding: 16px; gap: 16px; }
+  .b2b-teaser { padding: 56px 24px; }
+  .elv-footer { padding: 48px 24px 24px; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════ -->
+<header class="elv-header">
+  <div class="elv-header-inner">
+    <a href="/">
+      <img src="/images/logo-elevia.png" class="header-logo" alt="Élevia Nutrition" width="110">
+    </a>
+    <nav class="elv-nav">
+      <a href="/trouver-un-dieteticien" class="is-current">Trouver un diététicien</a>
+      <a href="/apropos.html">À propos</a>
+      <a href="/dieteticiens-fondateurs.html">Pour les diététiciens</a>
+      <a href="https://pro.elevianutrition.com" class="elv-nav-cta" target="_blank" rel="noopener">Accès pro →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO — générique, aucune mention Audric (garde-fou #4)
+════════════════════════════════════════════════ -->
+<section class="annuaire-hero">
+  <span class="elv-badge"><span class="dot"></span>Annuaire Élevia</span>
+  <h1>Trouvez un <em>diététicien</em></h1>
+  <p class="hero-sub">Un cercle naissant de praticiens qui placent la rigueur clinique au-dessus du raccourci.</p>
+
+  <form class="search-bar" onsubmit="event.preventDefault()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+    </svg>
+    <input type="text" placeholder="Ville, code postal ou spécialité…" id="search-input" autocomplete="off">
+    <button type="button" class="geo-btn" onclick="triggerGeo()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+      </svg>
+      Près de moi
+    </button>
+  </form>
+
+  <div class="meta-line">
+    <span>Belgique entière</span>
+    <span class="sep"></span>
+    <span>FR · NL · EN</span>
+    <span class="sep"></span>
+    <span>Présentiel &amp; en ligne</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FILTER BAR
+════════════════════════════════════════════════ -->
+<div class="filter-bar">
+  <div class="filter-row" id="filter-row">
+    <button class="filter-pill is-active" data-filter="all">Toutes les villes</button>
+    <div class="filter-divider"></div>
+    <button class="filter-pill" data-filter="spec">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 6h16M7 12h10M10 18h4"/>
+      </svg>
+      Spécialités
+    </button>
+    <button class="filter-pill" data-filter="lang">Langues</button>
+    <button class="filter-pill" data-filter="online">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/>
+      </svg>
+      Consultation en ligne
+    </button>
+    <button class="filter-pill" data-filter="lib">Cabinet libéral</button>
+    <div class="filter-divider"></div>
+    <button class="filter-pill" data-filter="reset">Réinitialiser</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SPLIT : carte + grille cards
+════════════════════════════════════════════════ -->
+<section class="annuaire-split">
+
+  <!-- Colonne carte (SVG statique — Mapbox en Phase 3) -->
+  <div class="map-col">
+    <svg class="map-svg" viewBox="0 0 600 700" preserveAspectRatio="xMidYMid slice" id="map-svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(198,160,91,0.08)" stroke-width="1"/>
+        </pattern>
+        <radialGradient id="bg-grad" cx="50%" cy="40%" r="80%">
+          <stop offset="0%" stop-color="#FBF8F2"/>
+          <stop offset="100%" stop-color="#EDE8E0"/>
+        </radialGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#bg-grad)"/>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+
+      <!-- Contour Belgique stylisé -->
+      <path d="M 110 200 Q 130 160 170 145 Q 220 130 270 140 Q 310 130 350 150 Q 400 145 440 170 Q 480 200 490 250 Q 500 310 480 360 Q 460 410 420 440 Q 380 470 320 480 Q 260 490 210 470 Q 160 450 130 410 Q 95 360 95 300 Q 95 240 110 200 Z"
+            fill="#F6F3EE" stroke="rgba(198,160,91,0.30)" stroke-width="1.5"/>
+
+      <!-- Rivière suggérée -->
+      <path d="M 200 230 Q 270 280 300 350 Q 320 410 380 440"
+            fill="none" stroke="#D4DDE5" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+
+      <!-- Labels villes -->
+      <text x="280" y="218" font-family="Outfit,sans-serif" font-size="11" font-weight="500" fill="#0E1E2E" opacity="0.55" text-anchor="middle">Bruxelles</text>
+      <text x="395" y="320" font-family="Outfit,sans-serif" font-size="11" font-weight="500" fill="#0E1E2E" opacity="0.55" text-anchor="middle">Liège</text>
+      <text x="180" y="200" font-family="Outfit,sans-serif" font-size="10" font-weight="500" fill="#0E1E2E" opacity="0.45" text-anchor="middle">Gand</text>
+      <text x="240" y="170" font-family="Outfit,sans-serif" font-size="10" font-weight="500" fill="#0E1E2E" opacity="0.45" text-anchor="middle">Anvers</text>
+      <text x="320" y="380" font-family="Outfit,sans-serif" font-size="10" font-weight="500" fill="#0E1E2E" opacity="0.45" text-anchor="middle">Namur</text>
+
+      <!-- Pins praticiens (même style pour tous — garde-fou #2) -->
+      <g class="map-pin" data-id="1" transform="translate(395,310)">
+        <circle class="pin-glow" cx="0" cy="-2" r="18" fill="rgba(198,160,91,0.22)" opacity="0"/>
+        <path d="M 0 0 C -8 -10 -10 -16 -10 -22 a 10 10 0 1 1 20 0 C 10 -16 8 -10 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.5"/>
+        <circle cx="0" cy="-22" r="4" fill="#0E1E2E"/>
+      </g>
+      <g class="map-pin" data-id="2" transform="translate(280,210)">
+        <circle class="pin-glow" cx="0" cy="-2" r="18" fill="rgba(198,160,91,0.22)" opacity="0"/>
+        <path d="M 0 0 C -8 -10 -10 -16 -10 -22 a 10 10 0 1 1 20 0 C 10 -16 8 -10 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.5"/>
+        <circle cx="0" cy="-22" r="4" fill="#0E1E2E"/>
+      </g>
+      <g class="map-pin" data-id="3" transform="translate(180,195)">
+        <circle class="pin-glow" cx="0" cy="-2" r="18" fill="rgba(198,160,91,0.22)" opacity="0"/>
+        <path d="M 0 0 C -8 -10 -10 -16 -10 -22 a 10 10 0 1 1 20 0 C 10 -16 8 -10 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.5"/>
+        <circle cx="0" cy="-22" r="4" fill="#0E1E2E"/>
+      </g>
+      <g class="map-pin" data-id="4" transform="translate(240,160)">
+        <circle class="pin-glow" cx="0" cy="-2" r="18" fill="rgba(198,160,91,0.22)" opacity="0"/>
+        <path d="M 0 0 C -8 -10 -10 -16 -10 -22 a 10 10 0 1 1 20 0 C 10 -16 8 -10 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.5"/>
+        <circle cx="0" cy="-22" r="4" fill="#0E1E2E"/>
+      </g>
+      <g class="map-pin" data-id="5" transform="translate(320,370)">
+        <circle class="pin-glow" cx="0" cy="-2" r="18" fill="rgba(198,160,91,0.22)" opacity="0"/>
+        <path d="M 0 0 C -8 -10 -10 -16 -10 -22 a 10 10 0 1 1 20 0 C 10 -16 8 -10 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.5"/>
+        <circle cx="0" cy="-22" r="4" fill="#0E1E2E"/>
+      </g>
+      <g class="map-pin" data-id="6" transform="translate(355,230)">
+        <circle class="pin-glow" cx="0" cy="-2" r="18" fill="rgba(198,160,91,0.22)" opacity="0"/>
+        <path d="M 0 0 C -8 -10 -10 -16 -10 -22 a 10 10 0 1 1 20 0 C 10 -16 8 -10 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.5"/>
+        <circle cx="0" cy="-22" r="4" fill="#0E1E2E"/>
+      </g>
+    </svg>
+
+    <div class="map-result-count">
+      <span class="pulse"></span>
+      <span id="result-label">Chargement…</span>
+    </div>
+    <div class="map-overlay-controls">
+      <button title="Zoom +">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <button title="Zoom -">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+      </button>
+    </div>
+    <div class="map-popup" id="map-popup">
+      <div class="pp-avatar"><div class="elv-avatar"><span>AD</span></div></div>
+      <div>
+        <div class="pp-name">Audric Didderen</div>
+        <div class="pp-city">Liège · Cercle naissant</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colonne cards -->
+  <div class="cards-col">
+    <div class="results-bar">
+      <span id="results-bar-label">Chargement…</span>
+      <select class="sort-select" aria-label="Trier par">
+        <option>Trier par proximité</option>
+        <option>Trier par nom</option>
+        <option>Spécialité</option>
+      </select>
+    </div>
+
+    <!-- Loading cards -->
+    <div id="cards-loading" style="display:flex;gap:20px;flex-wrap:wrap;">
+      <div style="height:320px;flex:1;min-width:240px;border-radius:20px;background:linear-gradient(90deg,#F0EDEA 25%,#F6F3EE 50%,#F0EDEA 75%);background-size:400% 100%;animation:shimmer 1.4s infinite;"></div>
+      <div style="height:320px;flex:1;min-width:240px;border-radius:20px;background:linear-gradient(90deg,#F0EDEA 25%,#F6F3EE 50%,#F0EDEA 75%);background-size:400% 100%;animation:shimmer 1.4s infinite 0.2s;"></div>
+      <div style="height:320px;flex:1;min-width:240px;border-radius:20px;background:linear-gradient(90deg,#F0EDEA 25%,#F6F3EE 50%,#F0EDEA 75%);background-size:400% 100%;animation:shimmer 1.4s infinite 0.4s;"></div>
+    </div>
+
+    <div class="cards-grid" id="cards-grid" style="display:none;"></div>
+
+    <!-- Empty state (masqué par défaut) -->
+    <div class="empty-state" id="empty-state" style="display:none;">
+      <div class="empty-illust">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C6A05B" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+      </div>
+      <h3>Aucun praticien dans cette zone</h3>
+      <p>Notre cercle grandit chaque semaine. Revenez bientôt, ou élargissez votre recherche.</p>
+      <button class="btn btn-outline" onclick="resetFilters()">Élargir la recherche</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     B2B TEASER (garde-fou #7)
+════════════════════════════════════════════════ -->
+<section class="b2b-teaser">
+  <div class="elv-eyebrow" style="color:rgba(198,160,91,0.8);">Vous êtes diététicien ?</div>
+  <h2>Rejoignez les premiers praticiens à façonner Élevia.</h2>
+  <p>10 places dans le Cercle des Fondateurs, un compagnon de route, pas une méthode imposée.</p>
+  <a href="/dieteticiens-fondateurs.html" class="btn btn-gold btn-lg">Découvrir le Cercle →</a>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer class="elv-footer">
+  <div class="elv-footer-inner">
+    <div class="elv-footer-brand">
+      <img src="/images/logo-elevia.png" class="footer-logo" alt="Élevia Nutrition">
+      <p>Née d'un diététicien, pour des praticiens qui placent la rigueur clinique au-dessus du raccourci.</p>
+    </div>
+    <div>
+      <h4>Annuaire</h4>
+      <ul>
+        <li><a href="/trouver-un-dieteticien.html">Trouver un diététicien</a></li>
+        <li><a href="/trouver-un-dieteticien.html">Par spécialité</a></li>
+        <li><a href="/trouver-un-dieteticien.html">Par ville</a></li>
+        <li><a href="/trouver-un-dieteticien.html">En ligne</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Élevia</h4>
+      <ul>
+        <li><a href="/apropos.html">À propos</a></li>
+        <li><a href="/dieteticiens-fondateurs.html">Cercle des Fondateurs</a></li>
+        <li><a href="https://pro.elevianutrition.com">Pour les diététiciens</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/confidentialite.html">Politique RGPD</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="elv-footer-bottom">
+    <span>© 2026 Élevia · Liège, Belgique</span>
+    <span>Cercle des Fondateurs · 10 places</span>
+  </div>
+</footer>
+
+<style>
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+</style>
+<script>
+const EDGE_FN = 'https://qjafswdhrlpwagpvjsna.supabase.co/functions/v1/get_public_directory';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqYWZzd2Rocmxwd2FncHZqc25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjczMDQsImV4cCI6MjA4OTg0MzMwNH0.CNeqZVcLCRGw_1MfrElr4w2eX7XnK-mapGvPVq1Nsd4';
+
+const SPEC = { nutrition_generale:'Nutrition générale', pediatrie:'Pédiatrie', sport:'Sport & performance', geriatrie:'Gériatrie', pathologies_digestives:'Pathologies digestives', diabete_irc:'Diabète & IRC', oncologie:'Oncologie', comportement_alimentaire:'Comportement alimentaire' };
+const LANG = { fr:'FR', nl:'NL', en:'EN', de:'DE' };
+const SVG_PIN = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+const SVG_SCREEN = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="14" rx="2"/></svg>';
+const SVG_ARR = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+let activeFilters = { city: '', specialty: '', online_only: false };
+
+function buildCard(p) {
+  const ini = (p.display_name || '?').split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+  const photo = p.photo_url
+    ? `<img src="${esc(p.photo_url)}" alt="${esc(p.display_name)}" loading="lazy">`
+    : `<div class="elv-avatar"><span>${esc(ini)}</span></div>`;
+  const tags = (p.specialties || []).slice(0,2).map(s=>`<span class="pcard-tag">${esc(SPEC[s]||s)}</span>`).join('');
+  const modes = p.consultation_modes || [];
+  const onlineBadge = modes.includes('online') ? `<span class="item online">${SVG_SCREEN} en ligne</span>` : '';
+  const langs = (p.languages||[]).map(l=>LANG[l]||l).join(' · ');
+  const founder = p.is_founder ? `<p class="pcard-founder">Membre du Cercle des Fondateurs</p>` : '';
+  return `<article class="pcard fade-up" data-slug="${esc(p.slug)}">
+    <div class="pcard-photo">${photo}</div>
+    <div class="pcard-body">
+      <div>
+        <h3>${esc(p.display_name)}</h3>
+        <p class="pcard-role">Diététicien${p.city ? ` à ${esc(p.city)}` : ''}</p>
+        ${founder}
+      </div>
+      <div class="pcard-tags">${tags}</div>
+      <div class="pcard-meta">
+        <span class="item">${SVG_PIN} ${esc(p.city||'')}</span>
+        ${onlineBadge}
+        ${langs ? `<span class="item">${esc(langs)}</span>` : ''}
+      </div>
+      <a href="/trouver-un-dieteticien/${esc(p.slug)}" class="pcard-cta">Voir le profil ${SVG_ARR}</a>
+    </div>
+  </article>`;
+}
+
+function renderProfiles(profiles, total) {
+  const grid = document.getElementById('cards-grid');
+  const loading = document.getElementById('cards-loading');
+  const empty = document.getElementById('empty-state');
+  const label = document.getElementById('result-label');
+
+  loading.style.display = 'none';
+
+  if (!profiles || profiles.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = '';
+    label.textContent = '0 praticien visible';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = profiles.map(buildCard).join('');
+  grid.style.display = '';
+  const lbl = `${total} praticien${total > 1 ? 's' : ''} · triés par proximité`;
+  label.textContent = lbl;
+  const bar = document.getElementById('results-bar-label');
+  if (bar) bar.innerHTML = `<strong style="color:var(--navy);font-weight:600;">${total} praticien${total > 1 ? 's' : ''}</strong> · triés par proximité`;
+
+  // Fade-up
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('is-in'), i * 60); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  grid.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+}
+
+async function loadProfiles() {
+  document.getElementById('cards-loading').style.display = 'flex';
+  document.getElementById('cards-grid').style.display = 'none';
+  document.getElementById('empty-state').style.display = 'none';
+  try {
+    const body = { limit: 50, ...activeFilters };
+    if (!body.city) delete body.city;
+    if (!body.specialty) delete body.specialty;
+    if (!body.online_only) delete body.online_only;
+    const res = await fetch(EDGE_FN, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': ANON_KEY },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { profiles, total } = await res.json();
+    renderProfiles(profiles, total);
+  } catch (err) {
+    console.error('[annuaire] fetch error', err);
+    document.getElementById('cards-loading').style.display = 'none';
+    document.getElementById('result-label').textContent = 'Erreur de chargement';
+  }
+}
+
+// Init
+loadProfiles();
+
+// Search input (debounce 400ms)
+let searchTimer;
+document.getElementById('search-input').addEventListener('input', (e) => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    activeFilters.city = e.target.value.trim();
+    loadProfiles();
+  }, 400);
+});
+
+// Géolocalisation
+function triggerGeo() {
+  const btn = event.currentTarget;
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<span style="display:inline-block;width:14px;height:14px;border:2px solid currentColor;border-top-color:transparent;border-radius:999px;animation:spin 0.7s linear infinite"></span> Localisation…';
+  if (!navigator.geolocation) { setTimeout(() => { btn.innerHTML = orig; }, 1200); return; }
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      btn.innerHTML = orig;
+      fetch(EDGE_FN, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': ANON_KEY },
+        body: JSON.stringify({ limit: 50, visitor_lat: pos.coords.latitude, visitor_lng: pos.coords.longitude })
+      }).then(r => r.json()).then(({ profiles, total }) => renderProfiles(profiles, total))
+        .catch(err => console.error(err));
+    },
+    () => { btn.innerHTML = orig; }
+  );
+}
+
+// Filtres pills
+document.querySelectorAll('.filter-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    const f = p.dataset.filter;
+    if (f === 'all' || f === 'reset') {
+      document.querySelectorAll('.filter-pill').forEach(x => x.classList.remove('is-active'));
+      document.querySelector('[data-filter="all"]').classList.add('is-active');
+      activeFilters = { city: activeFilters.city, specialty: '', online_only: false };
+    } else if (f === 'online') {
+      p.classList.toggle('is-active');
+      activeFilters.online_only = p.classList.contains('is-active');
+      document.querySelector('[data-filter="all"]').classList.remove('is-active');
+    } else {
+      p.classList.toggle('is-active');
+      document.querySelector('[data-filter="all"]').classList.remove('is-active');
+    }
+    loadProfiles();
+  });
+});
+
+function resetFilters() {
+  document.querySelectorAll('.filter-pill').forEach(x => x.classList.remove('is-active'));
+  document.querySelector('[data-filter="all"]').classList.add('is-active');
+  activeFilters = { city: '', specialty: '', online_only: false };
+  document.getElementById('search-input').value = '';
+  loadProfiles();
+}
+</script>
+
+</body>
+</html>

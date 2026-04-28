@@ -67,6 +67,10 @@
     {
       "source": "/articles/pourquoi-les-calories-ne-suffisent-pas",
       "destination": "/articles.html"
+    },
+    {
+      "source": "/trouver-un-dieteticien/:slug",
+      "destination": "/dieteticien-profil.html"
     }
   ],
   "redirects": [

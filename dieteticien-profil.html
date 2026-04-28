@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audric Didderen — Diététicien à Liège · Élevia</title>
+<meta name="description" content="Audric Didderen, diététicien-nutritionniste agréé (INAMI 478749) à Liège. Approche fondée sur la rigueur clinique et la planification nutritionnelle personnalisée. Consultations en ligne.">
+<link rel="canonical" href="https://elevianutrition.com/trouver-un-dieteticien/audric-didderen-liege">
+<meta property="og:title" content="Audric Didderen — Diététicien à Liège · Élevia">
+<meta property="og:description" content="Diététicien-nutritionniste agréé à Liège. Approche fondée sur la rigueur clinique et la planification nutritionnelle personnalisée.">
+<meta property="og:image" content="https://elevianutrition.com/images/audric-portrait.webp">
+<meta property="og:url" content="https://elevianutrition.com/trouver-un-dieteticien/audric-didderen-liege">
+<meta property="og:type" content="profile">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json" id="schema-org">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Audric Didderen",
+  "jobTitle": "Diététicien-nutritionniste",
+  "image": "https://elevianutrition.com/images/audric-portrait.webp",
+  "description": "Diététicien-nutritionniste agréé, fondateur d'Élevia. Pratique fondée sur la rigueur clinique et la planification nutritionnelle personnalisée.",
+  "knowsLanguage": ["French", "English"],
+  "memberOf": {
+    "@type": "Organization",
+    "name": "Élevia Nutrition",
+    "url": "https://elevianutrition.com"
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Élevia Nutrition",
+    "url": "https://elevianutrition.com"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Liège",
+    "addressCountry": "BE"
+  }
+}
+</script>
+
+<style>
+/* ══════════════════════════════════════════════
+   TOKENS
+   ══════════════════════════════════════════════ */
+:root {
+  --navy:        #0E1E2E;
+  --navy-deep:   #091520;
+  --gold:        #C6A05B;
+  --gold-light:  #D4B878;
+  --gold-pale:   #E8D5A8;
+  --gold-glow:   rgba(198,160,91,0.15);
+  --cream:       #F6F3EE;
+  --cream-dark:  #EDE8E0;
+  --cream-warm:  #FBF8F2;
+  --white:       #FFFFFF;
+  --text-dark:   #1A1A1A;
+  --text-muted:  #6B7280;
+  --text-soft:   #8B9AAC;
+  --border-soft: #F5EEE1;
+  --border-line: #E5DFD2;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Outfit', -apple-system, sans-serif;
+  --shadow-card: 0 1px 2px rgba(14,30,46,0.04), 0 8px 32px rgba(14,30,46,0.06);
+  --shadow-hover: 0 4px 12px rgba(14,30,46,0.08), 0 24px 48px rgba(14,30,46,0.10);
+  --shadow-gold:  0 8px 24px rgba(198,160,91,0.20);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur:  280ms;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  color: var(--text-dark); background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: 0; background: 0; padding: 0; color: inherit; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--gold-glow); color: var(--navy); }
+
+/* ══ Header ══ */
+.elv-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(246,243,238,0.88);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.elv-header-inner {
+  max-width: 1280px; margin: 0 auto; padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.header-logo { width: 110px; height: auto; transition: opacity var(--dur) var(--ease); }
+.header-logo:hover { opacity: 0.8; }
+.elv-nav { display: flex; gap: 28px; align-items: center; font-size: 14px; font-weight: 500; color: var(--text-muted); }
+.elv-nav a { position: relative; transition: color var(--dur) var(--ease); }
+.elv-nav a:hover { color: var(--navy); }
+.elv-nav a.is-current { color: var(--navy); }
+.elv-nav a.is-current::after { content: ''; position: absolute; left: 0; right: 0; bottom: -17px; height: 2px; background: var(--gold); }
+.elv-nav-cta { padding: 9px 18px; border-radius: 999px; background: var(--navy); color: var(--cream); font-size: 13px; font-weight: 500; transition: all var(--dur) var(--ease); }
+.elv-nav-cta:hover { background: var(--navy-deep); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(14,30,46,0.20); }
+
+/* ══ Buttons ══ */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; padding: 0 26px; border-radius: 999px; font-family: var(--sans); font-size: 14px; font-weight: 500; transition: all var(--dur) var(--ease); white-space: nowrap; }
+.btn-gold { background: var(--gold); color: var(--navy); box-shadow: 0 1px 2px rgba(198,160,91,0.30); }
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+.btn-outline { background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1px rgba(14,30,46,0.18); }
+.btn-outline:hover { background: var(--white); box-shadow: inset 0 0 0 1px var(--navy); transform: translateY(-1px); }
+.btn-lg { height: 56px; padding: 0 32px; font-size: 15px; }
+
+/* ══ Eyebrow ══ */
+.elv-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: block; }
+
+/* ══ Section titles ══ */
+.elv-section-title { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; letter-spacing: -0.015em; color: var(--navy); margin: 0 0 16px; }
+
+/* ══════════════════════════════════════════════
+   BREADCRUMB
+   ══════════════════════════════════════════════ */
+.breadcrumb {
+  max-width: 1200px; margin: 0 auto; padding: 22px 32px 0;
+  font-size: 13px; color: var(--text-soft);
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--text-muted); transition: color var(--dur) var(--ease); }
+.breadcrumb a:hover { color: var(--navy); }
+.breadcrumb .sep { opacity: 0.4; }
+
+/* ══════════════════════════════════════════════
+   HERO PROFIL
+   ══════════════════════════════════════════════ */
+.profil-hero {
+  max-width: 1200px; margin: 0 auto;
+  padding: 48px 32px 40px;
+  display: grid; grid-template-columns: 0.85fr 1fr; gap: 56px;
+  align-items: center;
+}
+@media (max-width: 880px) {
+  .profil-hero { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
+  .profil-photo { max-width: 320px; margin: 0 auto; }
+}
+.profil-photo {
+  aspect-ratio: 1 / 1;
+  border-radius: 28px; overflow: hidden;
+  background: var(--cream-warm);
+  box-shadow: 0 1px 2px rgba(14,30,46,0.04), 0 24px 64px rgba(14,30,46,0.10);
+  position: relative;
+}
+.profil-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.profil-photo::after {
+  content: ''; position: absolute; inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(198,160,91,0.18);
+  border-radius: inherit; pointer-events: none;
+}
+.profil-meta { display: flex; flex-direction: column; gap: 16px; }
+.profil-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); display: inline-flex; align-items: center; gap: 10px;
+}
+.profil-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+.profil-name {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(40px, 5.5vw, 64px);
+  line-height: 1.05; letter-spacing: -0.02em; color: var(--navy); margin: 0;
+}
+.profil-name em { font-style: italic; color: var(--gold); }
+.profil-role { font-size: 18px; color: var(--text-muted); margin: 0; }
+.profil-founder-line {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--gold);
+}
+.profil-founder-line::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+.profil-inami { font-size: 12px; color: var(--text-soft); letter-spacing: 0.04em; }
+.profil-cta-row { display: flex; gap: 12px; padding-top: 8px; flex-wrap: wrap; }
+
+/* Coordonnées révélées au clic (anti-scraping) */
+.coords-reveal {
+  padding: 16px 20px; background: var(--white); border-radius: 14px;
+  box-shadow: var(--shadow-card); display: none; animation: slideDown 250ms var(--ease);
+}
+.coords-reveal.is-open { display: block; }
+.coords-reveal .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.coords-reveal .row:last-child { margin-bottom: 0; }
+.coords-reveal .row svg { color: var(--gold); flex-shrink: 0; }
+.coords-reveal .row strong { color: var(--navy); font-weight: 500; font-size: 14px; }
+.coords-reveal .row span { color: var(--text-muted); font-size: 13px; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* ══════════════════════════════════════════════
+   BIO
+   ══════════════════════════════════════════════ */
+.profil-bio {
+  max-width: 720px; margin: 0 auto;
+  padding: 72px 32px 64px; text-align: center;
+}
+.bio-mark {
+  font-family: var(--serif); font-size: 80px; line-height: 0.6;
+  color: var(--gold-pale); display: block; margin-bottom: 8px;
+}
+.bio-quote {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 26px); line-height: 1.65;
+  color: var(--navy); letter-spacing: -0.005em;
+}
+
+/* ══════════════════════════════════════════════
+   CARTE D'IDENTITÉ PRO
+   ══════════════════════════════════════════════ */
+.id-card-section {
+  background: var(--cream-warm);
+  padding: 64px 32px;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+.id-card-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+}
+@media (max-width: 880px) { .id-card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .id-card-grid { grid-template-columns: 1fr; } }
+.id-tile { display: flex; flex-direction: column; gap: 10px; }
+.id-tile .icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--white); display: grid; place-items: center;
+  color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold-pale);
+}
+.id-tile .label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
+.id-tile .value { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--navy); line-height: 1.3; }
+.id-tile .sub { font-size: 13px; color: var(--text-muted); }
+.id-tile-verify {
+  font-size: 11px; font-weight: 500; color: var(--text-soft);
+  display: inline-flex; align-items: center; gap: 3px;
+  transition: color var(--dur) var(--ease); margin-top: -2px;
+  letter-spacing: 0.01em;
+}
+.id-tile-verify:hover { color: var(--gold); }
+
+/* ══════════════════════════════════════════════
+   SPÉCIALITÉS
+   ══════════════════════════════════════════════ */
+.spec-section {
+  max-width: 880px; margin: 0 auto; padding: 72px 32px; text-align: center;
+}
+.spec-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 24px; }
+.spec-chip {
+  padding: 10px 22px; border-radius: 999px;
+  background: var(--cream-warm); box-shadow: inset 0 0 0 1px var(--gold-pale);
+  color: var(--navy); font-size: 14px; font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════
+   LOCALISATION
+   ══════════════════════════════════════════════ */
+.loca-section {
+  background: var(--cream-warm);
+  padding: 64px 32px;
+  border-top: 1px solid var(--border-soft);
+}
+.loca-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+}
+@media (max-width: 880px) { .loca-grid { grid-template-columns: 1fr; } }
+.loca-text h2 { font-family: var(--serif); font-weight: 500; font-size: 36px; color: var(--navy); margin: 12px 0 14px; line-height: 1.1; }
+.loca-address { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--navy); line-height: 1.6; }
+.loca-status {
+  margin-top: 18px; display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--gold-glow); color: var(--gold); font-size: 12px; font-weight: 500;
+}
+.mini-map {
+  aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden;
+  background: var(--cream); box-shadow: var(--shadow-card); position: relative;
+}
+.mini-map svg { width: 100%; height: 100%; display: block; }
+
+/* ══════════════════════════════════════════════
+   CTA FINALE
+   ══════════════════════════════════════════════ */
+.cta-final {
+  background: var(--cream-dark);
+  padding: 88px 32px; text-align: center;
+}
+.cta-final h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(32px, 4vw, 48px); line-height: 1.15;
+  color: var(--navy); max-width: 620px; margin: 12px auto 14px;
+}
+.cta-final .cta-note { color: var(--text-muted); max-width: 440px; margin: 0 auto 32px; font-size: 14px; }
+
+/* ══════════════════════════════════════════════
+   ABOUT ÉLEVIA
+   ══════════════════════════════════════════════ */
+.about-block { max-width: 720px; margin: 0 auto; padding: 72px 32px; text-align: center; }
+.mark-lg {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: var(--gold); font-family: var(--serif); font-size: 28px; font-weight: 600;
+  display: grid; place-items: center; margin: 0 auto 20px;
+  box-shadow: inset 0 0 0 1px rgba(198,160,91,0.20);
+}
+.about-block p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+.about-block a { color: var(--gold); font-weight: 500; }
+.about-block a:hover { color: var(--navy); }
+
+/* ══════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════ */
+.elv-footer { background: var(--navy-deep, #091520); color: var(--text-soft); padding: 64px 32px 32px; font-size: 13px; line-height: 1.7; }
+.elv-footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+.footer-logo { width: 100px; height: auto; opacity: 0.6; margin-bottom: 16px; }
+.elv-footer-brand p { max-width: 280px; }
+.elv-footer h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); margin: 0 0 16px; }
+.elv-footer ul { list-style: none; padding: 0; margin: 0; }
+.elv-footer li { margin-bottom: 10px; }
+.elv-footer a { transition: color var(--dur) var(--ease); }
+.elv-footer a:hover { color: var(--gold-light); }
+.elv-footer-bottom { max-width: 1280px; margin: 48px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; font-size: 12px; }
+@media (max-width: 768px) {
+  .elv-footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .elv-header-inner { padding: 12px 20px; }
+  .elv-nav { display: none; }
+  .profil-bio { padding: 48px 20px; }
+  .spec-section, .loca-section, .about-block { padding-left: 20px; padding-right: 20px; }
+  .id-card-section { padding: 48px 20px; }
+  .cta-final { padding: 56px 20px; }
+  .breadcrumb { padding: 16px 20px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="elv-header">
+  <div class="elv-header-inner">
+    <a href="/"><img src="/images/logo-elevia.png" class="header-logo" alt="Élevia Nutrition" width="110"></a>
+    <nav class="elv-nav">
+      <a href="/trouver-un-dieteticien.html" class="is-current">Trouver un diététicien</a>
+      <a href="/apropos.html">À propos</a>
+      <a href="/dieteticiens-fondateurs.html">Pour les diététiciens</a>
+      <a href="https://pro.elevianutrition.com" class="elv-nav-cta" target="_blank" rel="noopener">Accès pro →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Loading state -->
+<div id="page-loading" style="min-height:60vh;display:flex;align-items:center;justify-content:center;">
+  <div style="width:32px;height:32px;border:2px solid var(--gold-pale);border-top-color:var(--gold);border-radius:999px;animation:spin 0.8s linear infinite;"></div>
+</div>
+
+<!-- 404 state -->
+<div id="page-404" style="display:none;min-height:60vh;display:none;align-items:center;justify-content:center;text-align:center;padding:64px 32px;">
+  <div>
+    <div style="font-family:var(--serif);font-size:80px;color:var(--gold-pale);line-height:1;">404</div>
+    <h1 style="font-family:var(--serif);font-size:32px;color:var(--navy);margin:16px 0 12px;">Profil introuvable</h1>
+    <p style="color:var(--text-muted);margin-bottom:28px;">Ce praticien n'est pas encore dans l'annuaire, ou son profil n'est pas encore publié.</p>
+    <a href="/trouver-un-dieteticien.html" class="btn btn-outline">← Retour à l'annuaire</a>
+  </div>
+</div>
+
+<!-- Page content (masqué pendant le chargement) -->
+<div id="page-content" style="display:none;">
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+  <a href="/trouver-un-dieteticien.html">← Annuaire</a>
+  <span class="sep">/</span>
+  <span id="breadcrumb-city">…</span>
+  <span class="sep">/</span>
+  <span id="breadcrumb-name" style="color:var(--navy);">…</span>
+</nav>
+
+<!-- ═══ Hero profil ═══ -->
+<section class="profil-hero">
+  <div class="profil-photo" id="profil-photo"></div>
+  <div class="profil-meta">
+    <span class="profil-eyebrow" id="profil-eyebrow">Annuaire Élevia</span>
+    <h1 class="profil-name" id="profil-name"></h1>
+    <p class="profil-role" id="profil-role"></p>
+    <span class="profil-founder-line" id="profil-founder-line" style="display:none;">Membre du Cercle des Fondateurs</span>
+    <span class="profil-inami" id="profil-inami" style="display:none;"></span>
+    <div class="profil-cta-row" id="profil-cta-row"></div>
+    <div class="coords-reveal" id="coords-reveal"></div>
+  </div>
+</section>
+
+<!-- ═══ Bio ═══ -->
+<section class="profil-bio" id="bio-section" style="display:none;">
+  <span class="bio-mark">"</span>
+  <p class="bio-quote" id="bio-quote"></p>
+</section>
+
+<!-- ═══ Carte d'identité pro ═══ -->
+<section class="id-card-section">
+  <div class="id-card-grid">
+    <div class="id-tile" id="tile-inami" style="display:none;">
+      <div class="icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <span class="label">INAMI</span>
+      <span class="value" id="tile-inami-value"></span>
+      <span class="sub">Diététicien agréé INAMI</span>
+      <a href="https://webappsa.riziv-inami.fgov.be/silverpages/Home/Search/"
+         target="_blank" rel="noopener noreferrer" class="id-tile-verify">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg>
+        Vérifier sur RIZIV
+      </a>
+    </div>
+    <div class="id-tile">
+      <div class="icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <span class="label">Langues</span>
+      <span class="value" id="tile-langs-value">Français</span>
+      <span class="sub" id="tile-langs-sub">Consultation en français</span>
+    </div>
+    <div class="id-tile">
+      <div class="icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg>
+      </div>
+      <span class="label">Modes</span>
+      <span class="value" id="tile-modes-value">En ligne</span>
+      <span class="sub" id="tile-modes-sub">Visioconsultation</span>
+    </div>
+    <div class="id-tile">
+      <div class="icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <span class="label">Outil</span>
+      <span class="value">Élevia</span>
+      <span class="sub">Plans sur mesure</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Spécialités ═══ -->
+<section class="spec-section" id="spec-section" style="display:none;">
+  <span class="elv-eyebrow">Domaines d'accompagnement</span>
+  <h2 class="elv-section-title">Mes <em style="font-style:italic;color:var(--gold);">spécialités</em></h2>
+  <div class="spec-chips" id="spec-chips"></div>
+</section>
+
+<!-- ═══ Localisation ═══ -->
+<section class="loca-section">
+  <div class="loca-grid">
+    <div class="loca-text">
+      <span class="elv-eyebrow">Localisation</span>
+      <h2 id="loca-city"></h2>
+      <p class="loca-address" id="loca-address"></p>
+    </div>
+    <!-- Mini-carte SVG (Mapbox en Phase 4) -->
+    <div class="mini-map">
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="grid2" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(198,160,91,0.10)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="#FBF8F2"/>
+        <rect width="100%" height="100%" fill="url(#grid2)"/>
+        <path d="M 0 180 Q 100 160 200 170 T 400 150" fill="none" stroke="#E8D5A8" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 0 100 Q 80 110 180 120 T 400 110" fill="none" stroke="#EDE8E0" stroke-width="3"/>
+        <path d="M 200 0 Q 190 80 200 150 T 210 300" fill="none" stroke="#E8D5A8" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 50 250 Q 150 220 250 230 T 400 210" fill="none" stroke="#D4DDE5" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+        <text x="120" y="92" font-family="Outfit,sans-serif" font-size="11" font-weight="500" fill="#0E1E2E" opacity="0.45">Saint-Léonard</text>
+        <text x="280" y="262" font-family="Outfit,sans-serif" font-size="11" font-weight="500" fill="#0E1E2E" opacity="0.45">Outremeuse</text>
+        <g transform="translate(200,150)">
+          <circle cx="0" cy="-2" r="22" fill="rgba(198,160,91,0.20)"/>
+          <path d="M 0 0 C -10 -12 -12 -20 -12 -26 a 12 12 0 1 1 24 0 C 12 -20 10 -12 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.8"/>
+          <circle cx="0" cy="-26" r="5" fill="#0E1E2E"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA finale ═══ -->
+<section class="cta-final" id="rdv">
+  <span class="elv-eyebrow">Premier rendez-vous</span>
+  <h2>Prendre rendez-vous avec <em style="font-style:italic;color:var(--gold);" id="cta-prenom"></em></h2>
+  <p class="cta-note" id="cta-note"></p>
+  <div id="cta-btns"></div>
+</section>
+
+</div><!-- /page-content -->
+
+<!-- ═══ À propos d'Élevia ═══ -->
+<section class="about-block">
+  <div class="mark-lg">É</div>
+  <h3 class="elv-section-title" style="font-size:28px;">À propos d'Élevia</h3>
+  <p>Élevia est un outil de nutrition pensé par et pour les diététiciens belges. Il accompagne le praticien dans l'élaboration de plans personnalisés, sans imposer de méthode.</p>
+  <p style="margin-top:10px;"><a href="/apropos.html">En savoir plus →</a></p>
+</section>
+
+<!-- Footer -->
+<footer class="elv-footer">
+  <div class="elv-footer-inner">
+    <div class="elv-footer-brand">
+      <img src="/images/logo-elevia.png" class="footer-logo" alt="Élevia Nutrition">
+      <p>Née d'un diététicien, pour des praticiens qui placent la rigueur clinique au-dessus du raccourci.</p>
+    </div>
+    <div>
+      <h4>Annuaire</h4>
+      <ul>
+        <li><a href="/trouver-un-dieteticien.html">Trouver un diététicien</a></li>
+        <li><a href="/trouver-un-dieteticien.html">Par spécialité</a></li>
+        <li><a href="/trouver-un-dieteticien.html">En ligne</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Élevia</h4>
+      <ul>
+        <li><a href="/apropos.html">À propos</a></li>
+        <li><a href="/dieteticiens-fondateurs.html">Cercle des Fondateurs</a></li>
+        <li><a href="https://pro.elevianutrition.com">Pour les diététiciens</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/confidentialite.html">Politique RGPD</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="elv-footer-bottom">
+    <span>© 2026 Élevia · Liège, Belgique</span>
+    <span>Cercle des Fondateurs · 10 places</span>
+  </div>
+</footer>
+
+<script>
+const EDGE_FN = 'https://qjafswdhrlpwagpvjsna.supabase.co/functions/v1/get_public_directory';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqYWZzd2Rocmxwd2FncHZqc25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjczMDQsImV4cCI6MjA4OTg0MzMwNH0.CNeqZVcLCRGw_1MfrElr4w2eX7XnK-mapGvPVq1Nsd4';
+
+const SPEC = { nutrition_generale:'Nutrition générale', pediatrie:'Pédiatrie', sport:'Sport & performance', geriatrie:'Gériatrie', pathologies_digestives:'Pathologies digestives', diabete_irc:'Diabète & IRC', oncologie:'Oncologie', comportement_alimentaire:'Comportement alimentaire' };
+const LANG = { fr:'FR', nl:'NL', en:'EN', de:'DE' };
+const MODE_LABELS = { cabinet:'Présentiel', online:'En ligne', home:'À domicile' };
+const SVG_PHONE = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+const SVG_MAIL = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+const SVG_CAL = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>';
+
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function show404() {
+  document.getElementById('page-loading').style.display = 'none';
+  const el = document.getElementById('page-404');
+  el.style.display = 'flex';
+}
+
+function populate(p) {
+  const prenom = (p.display_name || '').split(' ')[0];
+
+  // Title + meta
+  document.title = `${p.display_name} — Diététicien${p.city ? ` à ${p.city}` : ''} · Élevia`;
+
+  // Breadcrumb
+  document.getElementById('breadcrumb-city').textContent = p.city || 'Belgique';
+  document.getElementById('breadcrumb-name').textContent = p.display_name || '';
+
+  // Photo
+  const photoWrap = document.getElementById('profil-photo');
+  if (p.photo_url) {
+    photoWrap.innerHTML = `<img src="${esc(p.photo_url)}" alt="${esc(p.display_name)}" loading="eager" width="600" height="600">`;
+  } else {
+    const ini = (p.display_name || '?').split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+    photoWrap.innerHTML = `<div style="width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#E8D5A8,#FBF8F2);font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,96px);font-weight:500;color:#0E1E2E;">${esc(ini)}</div>`;
+  }
+
+  // Eyebrow + nom
+  document.getElementById('profil-eyebrow').textContent = p.is_founder ? 'Cercle des Fondateurs' : 'Annuaire Élevia';
+  const parts = (p.display_name || '').split(' ');
+  document.getElementById('profil-name').innerHTML = parts.length > 1
+    ? `${esc(parts[0])} <em>${esc(parts.slice(1).join(' '))}</em>` : esc(p.display_name || '');
+
+  // Rôle
+  document.getElementById('profil-role').textContent = `Diététicien-nutritionniste${p.city ? ` à ${p.city}` : ''}`;
+
+  // Founder + INAMI
+  if (p.is_founder) document.getElementById('profil-founder-line').style.display = '';
+  if (p.inami_number) {
+    const el = document.getElementById('profil-inami');
+    el.textContent = `INAMI ${p.inami_number} · Diététicien agréé`;
+    el.style.display = '';
+  }
+
+  // CTA row
+  const ctaRow = document.getElementById('profil-cta-row');
+  let ctaHtml = '';
+  if (p.external_booking_url) {
+    ctaHtml += `<a href="${esc(p.external_booking_url)}" target="_blank" rel="noopener" class="btn btn-gold">${SVG_CAL} Prendre rendez-vous</a>`;
+  }
+  if (p.email_public || p.phone_public) {
+    ctaHtml += `<button class="btn btn-outline" id="reveal-btn">${SVG_PHONE} Voir les coordonnées</button>`;
+  }
+  if (!ctaHtml) ctaRow.style.display = 'none';
+  ctaRow.innerHTML = ctaHtml;
+
+  // Coords reveal panel
+  const coordsEl = document.getElementById('coords-reveal');
+  let coordsHtml = '';
+  if (p.email_public) coordsHtml += `<div class="row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><strong>${esc(p.email_public)}</strong></div>`;
+  if (p.phone_public) coordsHtml += `<div class="row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><strong>${esc(p.phone_public)}</strong></div>`;
+  coordsEl.innerHTML = coordsHtml;
+
+  document.getElementById('reveal-btn')?.addEventListener('click', function() {
+    coordsEl.classList.toggle('is-open');
+    this.textContent = coordsEl.classList.contains('is-open') ? 'Masquer les coordonnées' : 'Voir les coordonnées';
+  });
+
+  // Bio
+  if (p.bio) {
+    document.getElementById('bio-quote').textContent = p.bio;
+    document.getElementById('bio-section').style.display = '';
+  }
+
+  // Carte identité — grille 3 cols si INAMI absent
+  if (p.inami_number) {
+    document.getElementById('tile-inami-value').textContent = p.inami_number;
+    document.getElementById('tile-inami').style.display = '';
+  } else {
+    document.querySelector('.id-card-grid').style.gridTemplateColumns = 'repeat(3, 1fr)';
+  }
+  const langs = (p.languages || []);
+  document.getElementById('tile-langs-value').textContent = langs.map(l => LANG[l] || l).join(' · ') || 'FR';
+  document.getElementById('tile-langs-sub').textContent = langs.length > 1 ? 'Consultation multilingue' : 'Consultation en français';
+  const modes = p.consultation_modes || [];
+  document.getElementById('tile-modes-value').textContent = modes.map(m => MODE_LABELS[m] || m).join(' · ') || 'En ligne';
+  document.getElementById('tile-modes-sub').textContent = modes.includes('online') ? 'Visioconsultation' : modes.includes('cabinet') ? 'En cabinet' : 'À domicile';
+
+  // Spécialités
+  const specs = p.specialties || [];
+  if (specs.length > 0) {
+    document.getElementById('spec-chips').innerHTML = specs.map(s => `<span class="spec-chip">${esc(SPEC[s] || s)}</span>`).join('');
+    document.getElementById('spec-section').style.display = '';
+  }
+
+  // Localisation
+  document.getElementById('loca-city').textContent = p.city || 'Belgique';
+  if (modes.includes('cabinet') && p.cabinet_address) {
+    document.getElementById('loca-address').innerHTML = `${esc(p.cabinet_address)}.<br>${esc(p.city || 'Belgique')}, Belgique.`;
+  } else if (modes.includes('online') && !modes.includes('cabinet')) {
+    document.getElementById('loca-address').innerHTML = `Consultations en ligne.<br>Province de ${esc(p.city || 'Belgique')}, Belgique.`;
+  } else if (modes.includes('home')) {
+    document.getElementById('loca-address').innerHTML = `Déplacements à domicile.<br>${esc(p.city || 'Belgique')}, Belgique.`;
+  } else {
+    document.getElementById('loca-address').innerHTML = `${esc(p.city || 'Belgique')}, Belgique.`;
+  }
+
+  // CTA finale
+  document.getElementById('cta-prenom').textContent = prenom;
+  let ctaFinalHtml = '';
+  if (p.external_booking_url) {
+    document.getElementById('cta-note').textContent = 'La prise de rendez-vous se fait via le lien du praticien.';
+    ctaFinalHtml = `<a href="${esc(p.external_booking_url)}" target="_blank" rel="noopener" class="btn btn-gold btn-lg">${SVG_CAL} Prendre rendez-vous</a>`;
+  } else if (p.email_public) {
+    document.getElementById('cta-note').textContent = 'Contactez le praticien directement par email.';
+    ctaFinalHtml = `<a href="mailto:${esc(p.email_public)}" class="btn btn-gold btn-lg">${SVG_MAIL} Contacter par email</a>`;
+    if (p.phone_public) ctaFinalHtml += `<a href="tel:${esc(p.phone_public)}" class="btn btn-outline btn-lg" style="margin-left:12px;">${SVG_PHONE} Appeler</a>`;
+  } else {
+    document.getElementById('rdv').style.display = 'none';
+  }
+  document.getElementById('cta-btns').innerHTML = ctaFinalHtml;
+
+  // Schema.org dynamique
+  const sd = document.getElementById('schema-org');
+  if (sd) sd.textContent = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Person',
+    name: p.display_name,
+    jobTitle: 'Diététicien-nutritionniste',
+    image: p.photo_url || undefined,
+    description: p.bio ? p.bio.slice(0, 160) : `Diététicien-nutritionniste${p.city ? ` à ${p.city}` : ''}, membre de l'annuaire Élevia.`,
+    knowsLanguage: (p.languages || []).map(l => ({ fr:'French', nl:'Dutch', en:'English', de:'German' }[l] || l)),
+    worksFor: { '@type': 'Organization', name: 'Élevia Nutrition', url: 'https://elevianutrition.com' },
+    address: { '@type': 'PostalAddress', addressLocality: p.city || '', addressCountry: 'BE' },
+  });
+
+  // Afficher la page
+  document.getElementById('page-loading').style.display = 'none';
+  document.getElementById('page-content').style.display = '';
+
+  // Fade-up
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('is-in'), i * 60); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+}
+
+async function init() {
+  const parts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+  const pathSlug = parts[parts.length - 1];
+  const isDirectFile = !pathSlug || pathSlug === 'dieteticien-profil' || pathSlug === 'dieteticien-profil.html';
+  // Fallback local dev : ?slug=audric-didderen-liege
+  const slug = isDirectFile ? new URLSearchParams(window.location.search).get('slug') : pathSlug;
+  if (!slug) { show404(); return; }
+  try {
+    const res = await fetch(EDGE_FN, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': ANON_KEY },
+      body: JSON.stringify({ slug })
+    });
+    if (res.status === 404) { show404(); return; }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { profile } = await res.json();
+    populate(profile);
+  } catch (err) {
+    console.error('[profil] fetch error', err);
+    show404();
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>
