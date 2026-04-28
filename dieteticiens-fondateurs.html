@@ -10,12 +10,45 @@
 <meta property="og:description" content="Façonnez l'outil avec Audric. −50% Pro, beta 30j d'avance, voix dans la roadmap, ligne directe.">
 <meta property="og:url" content="https://elevianutrition.com/dieteticiens-fondateurs">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Élevia Nutrition">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E1E2E">
 <meta name="robots" content="index, follow">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Qui peut rejoindre le Cercle des Fondateurs Élevia ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tout diététicien diplômé exerçant en Belgique, en cabinet libéral, hospitalier ou collectivité. INAMI demandé à l'entrée pour vérification." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quel est l'engagement attendu d'un Fondateur Élevia ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Un appel de 30 minutes par mois pour un retour terrain. Aucun engagement de durée. Vous restez libre." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quand ferme le programme Cercle des Fondateurs ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Au 10e membre, sans date imposée. Si nous y sommes en six mois, tant mieux. Si cela prend deux ans, je préfère prendre le temps." }
+    },
+    {
+      "@type": "Question",
+      "name": "Que se passe-t-il après le 10e Fondateur ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Le Cercle ferme. Élevia continue d'accueillir des praticiens, mais sans le statut Fondateur. Cette porte ne se rouvrira pas." }
+    }
+  ]
+}
+</script>
 
 <style>
 /* ══ Tokens ══ */
@@ -264,10 +297,10 @@ a { color: inherit; text-decoration: none; }
   <h1>Rejoignez le <em>Cercle</em> des Fondateurs</h1>
   <p class="cf-hero-sub">10 places. Les 10 premiers diététiciens à façonner Élevia avec moi.</p>
   <p class="cf-hero-sig">— Audric, fondateur d'Élevia</p>
-  <div class="cf-hero-counter">
-    <div><div class="num">1<span>/10</span></div><div class="lbl">place prise</div></div>
+  <div class="cf-hero-counter" aria-live="polite">
+    <div><div class="num"><span id="counter-prises">—</span><span>/10</span></div><div class="lbl" id="counter-prises-lbl">places prises</div></div>
     <div class="sep"></div>
-    <div><div class="num">9</div><div class="lbl">places restantes</div></div>
+    <div><div class="num" id="counter-restantes">—</div><div class="lbl" id="counter-restantes-lbl">places restantes</div></div>
     <div class="sep"></div>
     <div><div class="num">∞</div><div class="lbl">engagement non-imposé</div></div>
   </div>
@@ -372,6 +405,11 @@ a { color: inherit; text-decoration: none; }
         <input type="checkbox" id="cf-consent" required>
         <span>J'accepte qu'Élevia stocke ces informations pour traiter ma candidature, conformément au RGPD. Je peux retirer mon consentement à tout moment.</span>
       </label>
+      <!-- Honeypot anti-spam — laissé vide par les humains, rempli par les bots -->
+      <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" tabindex="-1">
+        <label for="cf-website">Site web (laissez vide)</label>
+        <input type="text" id="cf-website" name="website" autocomplete="off" tabindex="-1">
+      </div>
       <div class="cf-error" id="cf-error">Merci de remplir tous les champs obligatoires.</div>
       <button type="submit" class="cf-submit" id="cf-submit-btn">Demander à rejoindre le Cercle</button>
       <p class="cf-microcopy">— Audric vous répondra personnellement sous 48h.</p>
@@ -449,6 +487,34 @@ a { color: inherit; text-decoration: none; }
 <script>
 const SUPABASE_URL  = 'https://qjafswdhrlpwagpvjsna.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqYWZzd2Rocmxwd2FncHZqc25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjczMDQsImV4cCI6MjA4OTg0MzMwNH0.CNeqZVcLCRGw_1MfrElr4w2eX7XnK-mapGvPVq1Nsd4';
+const EDGE_DIRECTORY = `${SUPABASE_URL}/functions/v1/get_public_directory`;
+const FOUNDER_TOTAL = 10;
+
+// Compteur Fondateurs dynamique : count des profils is_founder publiés
+async function refreshFounderCounter() {
+  try {
+    const res = await fetch(EDGE_DIRECTORY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
+      body: JSON.stringify({ is_founder: true, limit: 1 })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { total } = await res.json();
+    const taken = Math.max(0, Math.min(FOUNDER_TOTAL, total | 0));
+    const left  = FOUNDER_TOTAL - taken;
+    const elTaken = document.getElementById('counter-prises');
+    const elLeft  = document.getElementById('counter-restantes');
+    if (elTaken) elTaken.textContent = taken;
+    if (elLeft)  elLeft.textContent  = left;
+    document.getElementById('counter-prises-lbl').textContent    = taken === 1 ? 'place prise'      : 'places prises';
+    document.getElementById('counter-restantes-lbl').textContent = left  === 1 ? 'place restante'   : 'places restantes';
+  } catch (err) {
+    console.warn('[Cercle] counter fallback', err);
+    document.getElementById('counter-prises').textContent    = '1';
+    document.getElementById('counter-restantes').textContent = '9';
+  }
+}
+refreshFounderCounter();
 
 // FAQ accordéon
 document.querySelectorAll('.cf-faq-item').forEach(item => {
@@ -468,6 +534,9 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
+// Timestamp de chargement pour anti-bot (rejette les submits < 2 secondes)
+const CF_FORM_LOADED_AT = Date.now();
+
 // Formulaire → Supabase
 document.getElementById('cf-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -476,6 +545,20 @@ document.getElementById('cf-form').addEventListener('submit', async (e) => {
   const errEl   = document.getElementById('cf-error');
   const success = document.getElementById('cf-success');
 
+  // Anti-spam : honeypot rempli OU submit trop rapide → fake success silencieux
+  const hp = document.getElementById('cf-website');
+  if (hp && hp.value.trim() !== '') {
+    console.warn('[Cercle] honeypot triggered');
+    form.style.display = 'none';
+    success.classList.add('is-shown');
+    success.style.display = 'block';
+    return;
+  }
+  if (Date.now() - CF_FORM_LOADED_AT < 2000) {
+    console.warn('[Cercle] submit too fast');
+    return;
+  }
+
   // Validation basique
   const prenom  = form.prenom.value.trim();
   const nom     = form.nom.value.trim();
@@ -483,8 +566,13 @@ document.getElementById('cf-form').addEventListener('submit', async (e) => {
   const city    = form.city.value.trim();
   const consent = document.getElementById('cf-consent').checked;
 
+  // Validation email basique
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   errEl.classList.remove('is-shown');
-  if (!prenom || !nom || !email || !city || !consent) {
+  if (!prenom || !nom || !email || !city || !consent || !emailRe.test(email)) {
+    errEl.textContent = !emailRe.test(email) && email
+      ? "Adresse email invalide."
+      : "Merci de remplir tous les champs obligatoires.";
     errEl.classList.add('is-shown');
     return;
   }
@@ -519,6 +607,12 @@ document.getElementById('cf-form').addEventListener('submit', async (e) => {
       form.style.display = 'none';
       success.classList.add('is-shown');
       success.style.display = 'block';
+    } else if (res.status === 409) {
+      // Déjà inscrit
+      btn.disabled = false;
+      btn.textContent = 'Demander à rejoindre le Cercle';
+      errEl.textContent = "Cette adresse email a déjà candidaté. Audric vous a déjà répondu ou va le faire sous 48h.";
+      errEl.classList.add('is-shown');
     } else {
       throw new Error(`HTTP ${res.status}`);
     }

@@ -3,14 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Audric Didderen — Diététicien à Liège · Élevia</title>
-<meta name="description" content="Audric Didderen, diététicien-nutritionniste agréé (INAMI 478749) à Liège. Approche fondée sur la rigueur clinique et la planification nutritionnelle personnalisée. Consultations en ligne.">
-<link rel="canonical" href="https://elevianutrition.com/trouver-un-dieteticien/audric-didderen-liege">
-<meta property="og:title" content="Audric Didderen — Diététicien à Liège · Élevia">
-<meta property="og:description" content="Diététicien-nutritionniste agréé à Liège. Approche fondée sur la rigueur clinique et la planification nutritionnelle personnalisée.">
-<meta property="og:image" content="https://elevianutrition.com/images/audric-portrait.webp">
-<meta property="og:url" content="https://elevianutrition.com/trouver-un-dieteticien/audric-didderen-liege">
+<title>Profil diététicien · Annuaire Élevia</title>
+<meta name="description" id="meta-description" content="Profil détaillé d'un diététicien-nutritionniste de l'annuaire Élevia, en Belgique.">
+<link rel="canonical" id="meta-canonical" href="https://elevianutrition.com/trouver-un-dieteticien">
+<meta property="og:title" id="meta-og-title" content="Profil diététicien · Annuaire Élevia">
+<meta property="og:description" id="meta-og-description" content="Profil détaillé d'un diététicien-nutritionniste de l'annuaire Élevia, en Belgique.">
+<meta property="og:image" id="meta-og-image" content="https://elevianutrition.com/images/og-elevia-default.png">
+<meta property="og:url" id="meta-og-url" content="https://elevianutrition.com/trouver-un-dieteticien">
 <meta property="og:type" content="profile">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:site_name" content="Élevia Nutrition">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E1E2E">
 <meta name="robots" content="index, follow">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -21,26 +25,13 @@
 <script type="application/ld+json" id="schema-org">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Audric Didderen",
-  "jobTitle": "Diététicien-nutritionniste",
-  "image": "https://elevianutrition.com/images/audric-portrait.webp",
-  "description": "Diététicien-nutritionniste agréé, fondateur d'Élevia. Pratique fondée sur la rigueur clinique et la planification nutritionnelle personnalisée.",
-  "knowsLanguage": ["French", "English"],
-  "memberOf": {
-    "@type": "Organization",
+  "@type": "WebPage",
+  "name": "Profil diététicien · Annuaire Élevia",
+  "description": "Profil détaillé d'un diététicien-nutritionniste de l'annuaire Élevia, en Belgique.",
+  "isPartOf": {
+    "@type": "WebSite",
     "name": "Élevia Nutrition",
     "url": "https://elevianutrition.com"
-  },
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Élevia Nutrition",
-    "url": "https://elevianutrition.com"
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Liège",
-    "addressCountry": "BE"
   }
 }
 </script>
@@ -277,10 +268,21 @@ a { color: inherit; text-decoration: none; }
   background: var(--gold-glow); color: var(--gold); font-size: 12px; font-weight: 500;
 }
 .mini-map {
-  aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden;
-  background: var(--cream); box-shadow: var(--shadow-card); position: relative;
+  aspect-ratio: 5 / 4; border-radius: 20px; overflow: hidden;
+  background: linear-gradient(135deg, #FBF8F2 0%, #EDE8E0 100%);
+  box-shadow: var(--shadow-card); position: relative;
 }
 .mini-map svg { width: 100%; height: 100%; display: block; }
+.mini-map .mini-pin { animation: minimapPinIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes minimapPinIn {
+  0%   { transform: translate(var(--mx,200px), -10px); opacity: 0; }
+  100% { transform: translate(var(--mx,200px), var(--my,150px)); opacity: 1; }
+}
+.mini-map .mini-pin-glow { animation: pulseGlow 2.4s ease-in-out infinite; transform-origin: center; }
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.85; }
+}
 
 /* ══════════════════════════════════════════════
    CTA FINALE
@@ -357,7 +359,7 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <!-- 404 state -->
-<div id="page-404" style="display:none;min-height:60vh;display:none;align-items:center;justify-content:center;text-align:center;padding:64px 32px;">
+<div id="page-404" style="display:none;min-height:60vh;align-items:center;justify-content:center;text-align:center;padding:64px 32px;">
   <div>
     <div style="font-family:var(--serif);font-size:80px;color:var(--gold-pale);line-height:1;">404</div>
     <h1 style="font-family:var(--serif);font-size:32px;color:var(--navy);margin:16px 0 12px;">Profil introuvable</h1>
@@ -456,29 +458,8 @@ a { color: inherit; text-decoration: none; }
       <h2 id="loca-city"></h2>
       <p class="loca-address" id="loca-address"></p>
     </div>
-    <!-- Mini-carte SVG (Mapbox en Phase 4) -->
-    <div class="mini-map">
-      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <pattern id="grid2" width="30" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(198,160,91,0.10)" stroke-width="1"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="#FBF8F2"/>
-        <rect width="100%" height="100%" fill="url(#grid2)"/>
-        <path d="M 0 180 Q 100 160 200 170 T 400 150" fill="none" stroke="#E8D5A8" stroke-width="3" stroke-linecap="round"/>
-        <path d="M 0 100 Q 80 110 180 120 T 400 110" fill="none" stroke="#EDE8E0" stroke-width="3"/>
-        <path d="M 200 0 Q 190 80 200 150 T 210 300" fill="none" stroke="#E8D5A8" stroke-width="3" stroke-linecap="round"/>
-        <path d="M 50 250 Q 150 220 250 230 T 400 210" fill="none" stroke="#D4DDE5" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
-        <text x="120" y="92" font-family="Outfit,sans-serif" font-size="11" font-weight="500" fill="#0E1E2E" opacity="0.45">Saint-Léonard</text>
-        <text x="280" y="262" font-family="Outfit,sans-serif" font-size="11" font-weight="500" fill="#0E1E2E" opacity="0.45">Outremeuse</text>
-        <g transform="translate(200,150)">
-          <circle cx="0" cy="-2" r="22" fill="rgba(198,160,91,0.20)"/>
-          <path d="M 0 0 C -10 -12 -12 -20 -12 -26 a 12 12 0 1 1 24 0 C 12 -20 10 -12 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.8"/>
-          <circle cx="0" cy="-26" r="5" fill="#0E1E2E"/>
-        </g>
-      </svg>
-    </div>
+    <!-- Mini-carte SVG dynamique : extrait Belgique centré sur la ville du praticien -->
+    <div class="mini-map" id="mini-map" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -551,6 +532,85 @@ const SVG_CAL = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" str
 
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+// ─── Mini-map : projection Mercator BE + lookup ville (~25 villes V1) ───
+const BE_BOUNDS = { minLat: 49.45, maxLat: 51.55, minLng: 2.50, maxLng: 6.45 };
+const MM_VB = { w: 600, h: 700, pad: 30 };
+const CITY_COORDS = {
+  'liege':[50.6326,5.5797], 'bruxelles':[50.8503,4.3517], 'anvers':[51.2194,4.4025],
+  'antwerpen':[51.2194,4.4025], 'gand':[51.0543,3.7174], 'gent':[51.0543,3.7174],
+  'charleroi':[50.4108,4.4446], 'mons':[50.4542,3.9514], 'namur':[50.4674,4.8718],
+  'tournai':[50.6056,3.3886], 'louvain':[50.8798,4.7005], 'leuven':[50.8798,4.7005],
+  'bruges':[51.2093,3.2247], 'brugge':[51.2093,3.2247], 'hasselt':[50.9307,5.3378],
+  'kortrijk':[50.8278,3.2649], 'malines':[51.0258,4.4776], 'mechelen':[51.0258,4.4776],
+  'ostende':[51.2287,2.9311], 'oostende':[51.2287,2.9311], 'verviers':[50.5912,5.8651],
+  'arlon':[49.6833,5.8167], 'eupen':[50.6307,6.0364], 'mouscron':[50.7402,3.2110],
+  'wavre':[50.7167,4.6000], 'huy':[50.5169,5.2393], 'dinant':[50.2603,4.9109],
+  'tongres':[50.7811,5.4674], 'tongeren':[50.7811,5.4674], 'la louviere':[50.4760,4.1875],
+};
+function normalizeCity(s) {
+  return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 -]/g, '').trim();
+}
+function projectMM(lat, lng) {
+  const x = ((lng - BE_BOUNDS.minLng) / (BE_BOUNDS.maxLng - BE_BOUNDS.minLng)) * (MM_VB.w - 2*MM_VB.pad) + MM_VB.pad;
+  const y = ((BE_BOUNDS.maxLat - lat) / (BE_BOUNDS.maxLat - BE_BOUNDS.minLat)) * (MM_VB.h - 2*MM_VB.pad) + MM_VB.pad;
+  return { x: Math.round(x*10)/10, y: Math.round(y*10)/10 };
+}
+
+function renderMiniMap(p) {
+  const wrap = document.getElementById('mini-map');
+  if (!wrap) return;
+  let lat = (typeof p.cabinet_lat === 'number') ? p.cabinet_lat : null;
+  let lng = (typeof p.cabinet_lng === 'number') ? p.cabinet_lng : null;
+  if (lat == null || lng == null) {
+    const c = CITY_COORDS[normalizeCity(p.city)];
+    if (c) { lat = c[0]; lng = c[1]; }
+  }
+  // Fallback ultime : centre BE
+  if (lat == null || lng == null) { lat = 50.5; lng = 4.5; }
+  const co = projectMM(lat, lng);
+
+  wrap.innerHTML = `<svg viewBox="0 0 600 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Carte Belgique : position de ${esc(p.display_name)}">
+    <defs>
+      <pattern id="mm-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(198,160,91,0.06)" stroke-width="1"/>
+      </pattern>
+      <radialGradient id="mm-bg" cx="50%" cy="40%" r="80%">
+        <stop offset="0%" stop-color="#FBF8F2"/>
+        <stop offset="100%" stop-color="#EDE8E0"/>
+      </radialGradient>
+      <filter id="mm-shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0E1E2E" flood-opacity="0.22"/>
+      </filter>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#mm-bg)"/>
+    <rect width="100%" height="100%" fill="url(#mm-grid)"/>
+
+    <path d="M 139 94 L 42 167 L 92 228 L 128 277 L 152 316 L 228 365 L 266 429 L 302 487 L 381 567 L 484 600 L 469 512 L 550 323 L 489 275 L 540 200 L 480 167 L 290 130 L 276 106 Z"
+          fill="#F6F3EE" stroke="rgba(198,160,91,0.42)" stroke-width="1.5" stroke-linejoin="round"/>
+
+    <g stroke="#C7D3DD" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.45">
+      <path d="M 152 316 Q 174 250 197 183 Q 240 155 290 130"/>
+      <path d="M 348 463 Q 350 440 359 423 Q 357 390 354 359 Q 400 335 451 311 Q 459 280 466 244"/>
+      <path d="M 296 377 Q 325 367 354 359"/>
+    </g>
+
+    <g font-family="Outfit, sans-serif" font-weight="500" fill="#0E1E2E" pointer-events="none">
+      <text x="290" y="124" font-size="10" opacity="0.45" text-anchor="middle">Anvers</text>
+      <text x="283" y="238" font-size="11" opacity="0.50" text-anchor="middle">Bruxelles</text>
+      <text x="451" y="307" font-size="10" opacity="0.45" text-anchor="middle">Liège</text>
+      <text x="197" y="178" font-size="9"  opacity="0.40" text-anchor="middle">Gand</text>
+      <text x="296" y="375" font-size="9"  opacity="0.40" text-anchor="middle">Charleroi</text>
+      <text x="354" y="357" font-size="9"  opacity="0.40" text-anchor="middle">Namur</text>
+    </g>
+
+    <g class="mini-pin-wrap" transform="translate(${co.x},${co.y})">
+      <circle class="mini-pin-glow" cx="0" cy="-2" r="22" fill="rgba(198,160,91,0.30)"/>
+      <path d="M 0 0 C -10 -12 -12 -20 -12 -26 a 12 12 0 1 1 24 0 C 12 -20 10 -12 0 0 Z" fill="#C6A05B" stroke="#0E1E2E" stroke-width="1.8" filter="url(#mm-shadow)"/>
+      <circle cx="0" cy="-26" r="5" fill="#0E1E2E"/>
+    </g>
+  </svg>`;
+}
+
 function show404() {
   document.getElementById('page-loading').style.display = 'none';
   const el = document.getElementById('page-404');
@@ -559,9 +619,25 @@ function show404() {
 
 function populate(p) {
   const prenom = (p.display_name || '').split(' ')[0];
+  const ville = p.city || 'Belgique';
 
-  // Title + meta
-  document.title = `${p.display_name} — Diététicien${p.city ? ` à ${p.city}` : ''} · Élevia`;
+  // Title + meta head dynamiques (SEO multi-profils)
+  const seoTitle = `${p.display_name} — Diététicien${p.city ? ` à ${p.city}` : ''} · Élevia`;
+  const seoDescBase = p.bio
+    ? p.bio.replace(/\s+/g, ' ').trim().slice(0, 155)
+    : `Diététicien-nutritionniste${p.city ? ` à ${p.city}` : ''}, membre de l'annuaire Élevia. Approche fondée sur la rigueur clinique.`;
+  const seoDesc = seoDescBase.length > 155 ? seoDescBase.slice(0, 152).trimEnd() + '…' : seoDescBase;
+  const seoUrl = `https://elevianutrition.com/trouver-un-dieteticien/${p.slug}`;
+  const seoImg = p.photo_url || 'https://elevianutrition.com/images/og-elevia-default.png';
+
+  document.title = seoTitle;
+  const setMeta = (id, attr, value) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, value); };
+  setMeta('meta-description',     'content', seoDesc);
+  setMeta('meta-canonical',       'href',    seoUrl);
+  setMeta('meta-og-title',        'content', seoTitle);
+  setMeta('meta-og-description',  'content', seoDesc);
+  setMeta('meta-og-url',          'content', seoUrl);
+  setMeta('meta-og-image',        'content', seoImg);
 
   // Breadcrumb
   document.getElementById('breadcrumb-city').textContent = p.city || 'Belgique';
@@ -600,7 +676,7 @@ function populate(p) {
     ctaHtml += `<a href="${esc(p.external_booking_url)}" target="_blank" rel="noopener" class="btn btn-gold">${SVG_CAL} Prendre rendez-vous</a>`;
   }
   if (p.email_public || p.phone_public) {
-    ctaHtml += `<button class="btn btn-outline" id="reveal-btn">${SVG_PHONE} Voir les coordonnées</button>`;
+    ctaHtml += `<button type="button" class="btn btn-outline" id="reveal-btn" aria-expanded="false" aria-controls="coords-reveal">${SVG_PHONE} Voir les coordonnées</button>`;
   }
   if (!ctaHtml) ctaRow.style.display = 'none';
   ctaRow.innerHTML = ctaHtml;
@@ -614,7 +690,9 @@ function populate(p) {
 
   document.getElementById('reveal-btn')?.addEventListener('click', function() {
     coordsEl.classList.toggle('is-open');
-    this.textContent = coordsEl.classList.contains('is-open') ? 'Masquer les coordonnées' : 'Voir les coordonnées';
+    const isOpen = coordsEl.classList.contains('is-open');
+    this.innerHTML = `${SVG_PHONE} ${isOpen ? 'Masquer les coordonnées' : 'Voir les coordonnées'}`;
+    this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 
   // Bio
@@ -656,6 +734,9 @@ function populate(p) {
     document.getElementById('loca-address').innerHTML = `${esc(p.city || 'Belgique')}, Belgique.`;
   }
 
+  // Mini-map dynamique (path BE + pin centré sur cabinet ou ville)
+  renderMiniMap(p);
+
   // CTA finale
   document.getElementById('cta-prenom').textContent = prenom;
   let ctaFinalHtml = '';
@@ -671,18 +752,33 @@ function populate(p) {
   }
   document.getElementById('cta-btns').innerHTML = ctaFinalHtml;
 
-  // Schema.org dynamique
-  const sd = document.getElementById('schema-org');
-  if (sd) sd.textContent = JSON.stringify({
+  // Schema.org dynamique — Person + BreadcrumbList (SEO premium)
+  const personSchema = {
     '@context': 'https://schema.org', '@type': 'Person',
     name: p.display_name,
     jobTitle: 'Diététicien-nutritionniste',
+    url: seoUrl,
     image: p.photo_url || undefined,
-    description: p.bio ? p.bio.slice(0, 160) : `Diététicien-nutritionniste${p.city ? ` à ${p.city}` : ''}, membre de l'annuaire Élevia.`,
+    description: seoDesc,
     knowsLanguage: (p.languages || []).map(l => ({ fr:'French', nl:'Dutch', en:'English', de:'German' }[l] || l)),
     worksFor: { '@type': 'Organization', name: 'Élevia Nutrition', url: 'https://elevianutrition.com' },
+    memberOf: p.is_founder ? { '@type': 'Organization', name: 'Cercle des Fondateurs Élevia', url: 'https://elevianutrition.com/dieteticiens-fondateurs' } : undefined,
     address: { '@type': 'PostalAddress', addressLocality: p.city || '', addressCountry: 'BE' },
-  });
+    identifier: p.inami_number ? { '@type': 'PropertyValue', propertyID: 'INAMI', value: p.inami_number } : undefined,
+  };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Annuaire', item: 'https://elevianutrition.com/trouver-un-dieteticien' },
+      { '@type': 'ListItem', position: 2, name: ville, item: `https://elevianutrition.com/trouver-un-dieteticien?city=${encodeURIComponent(ville)}` },
+      { '@type': 'ListItem', position: 3, name: p.display_name, item: seoUrl },
+    ],
+  };
+  const sd = document.getElementById('schema-org');
+  if (sd) sd.textContent = JSON.stringify(personSchema);
+  let bc = document.getElementById('schema-breadcrumb');
+  if (!bc) { bc = document.createElement('script'); bc.type = 'application/ld+json'; bc.id = 'schema-breadcrumb'; document.head.appendChild(bc); }
+  bc.textContent = JSON.stringify(breadcrumbSchema);
 
   // Afficher la page
   document.getElementById('page-loading').style.display = 'none';
