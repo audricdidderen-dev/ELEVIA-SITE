@@ -641,7 +641,9 @@
   <!-- LOGIN VIEW -->
   <div id="login-view">
     <div class="auth-logo" aria-hidden="true">
-      <span class="ec-brand-wordmark" style="font-size:32px;color:#fff">Ele<span class="vi">VIA</span></span>
+      <!-- W-PERSO I-WP-13 : logo workspace (visible si logo_url) sinon wordmark fallback -->
+      <img id="loginBrandLogo" class="ec-brand-logo" alt="" hidden style="height:48px;max-width:240px;width:auto;display:block;margin:0 auto;"/>
+      <span id="loginBrandWordmark" class="ec-brand-wordmark" style="font-size:32px;color:#fff">Ele<span class="vi">VIA</span></span>
     </div>
     <h1>Espace <em>Client</em></h1>
     <p class="auth-sub">Votre espace personnel. Plan, suivi, recettes : tout est ici.</p>
@@ -674,7 +676,9 @@
   <!-- SET PASSWORD VIEW -->
   <div id="set-password-view" hidden>
     <div class="auth-logo" aria-hidden="true">
-      <span class="ec-brand-wordmark" style="font-size:32px;color:#fff">Ele<span class="vi">VIA</span></span>
+      <!-- W-PERSO I-WP-13 : logo workspace si défini sinon wordmark fallback -->
+      <img id="setpwBrandLogo" class="ec-brand-logo" alt="" hidden style="height:48px;max-width:240px;width:auto;display:block;margin:0 auto;"/>
+      <span id="setpwBrandWordmark" class="ec-brand-wordmark" style="font-size:32px;color:#fff">Ele<span class="vi">VIA</span></span>
     </div>
     <h1>Créez votre <em>mot de passe</em></h1>
     <p class="auth-sub">Pour accéder à votre espace Élevia, choisissez un mot de passe.</p>
@@ -964,19 +968,45 @@
     root.style.setProperty('--brand-secondary', merged.secondary || DEFAULT_BRAND.secondary);
     root.style.setProperty('--brand-accent', merged.accent || DEFAULT_BRAND.accent);
 
-    // Logo vs wordmark
-    const logoEl = $('#brandLogo');
-    const wordmarkEl = $('#brandWordmark');
+    // W-PERSO I-WP-11 : update theme-color meta + favicon + document.title
+    // pour cohérence transverse browser tab + PWA shortcuts.
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta && merged.primary) themeMeta.setAttribute('content', merged.primary);
     if (merged.logoUrl) {
-      logoEl.src = merged.logoUrl;
-      logoEl.alt = merged.name || 'Logo cabinet';
-      logoEl.hidden = false;
-      wordmarkEl.hidden = true;
-    } else {
-      logoEl.hidden = true;
-      logoEl.removeAttribute('src');
-      wordmarkEl.hidden = false;
+      let link = document.querySelector("link[rel~='icon']");
+      if (link) link.href = merged.logoUrl;
     }
+    if (merged.name) document.title = `Mon espace · ${merged.name}`;
+
+    // W-PERSO I-WP-11 : cache localStorage pour pre-auth next visit (premium prod-ready V1).
+    try {
+      localStorage.setItem('elevia:hubLastBranding', JSON.stringify({
+        name: merged.name, logoUrl: merged.logoUrl,
+        primary: merged.primary, secondary: merged.secondary, accent: merged.accent,
+        _cached_at: Date.now(),
+      }));
+    } catch (_) { /* fail silencieux */ }
+
+    // Logo vs wordmark — W-PERSO I-WP-13 : couvre TOUS les wordmarks du hub
+    // (login + setPassword + main hub) pour propagation cohérente.
+    const logoSlots = [
+      { logo: $('#brandLogo'), wm: $('#brandWordmark') },
+      { logo: $('#loginBrandLogo'), wm: $('#loginBrandWordmark') },
+      { logo: $('#setpwBrandLogo'), wm: $('#setpwBrandWordmark') },
+    ];
+    logoSlots.forEach(slot => {
+      if (!slot.logo || !slot.wm) return;
+      if (merged.logoUrl) {
+        slot.logo.src = merged.logoUrl;
+        slot.logo.alt = merged.name || 'Logo cabinet';
+        slot.logo.hidden = false;
+        slot.wm.hidden = true;
+      } else {
+        slot.logo.hidden = true;
+        slot.logo.removeAttribute('src');
+        slot.wm.hidden = false;
+      }
+    });
 
     // Brand name in header eyebrow + subtitle + footer
     $('#brandEyebrow').textContent = `Espace patient · ${merged.name || DEFAULT_BRAND.name}`;
@@ -1484,6 +1514,17 @@
   });
 
   // ─────── Boot ───────
+  // W-PERSO I-WP-11 : applique le cache localStorage immediately AVANT la RPC/auth.
+  // → écran/splash brandé sans aucune latence réseau (premium prod-ready V1).
+  // Le cache est ensuite override par les vraies données (RPC en preview, clients ⋈ workspaces en prod).
+  try {
+    const cachedRaw = localStorage.getItem('elevia:hubLastBranding');
+    if (cachedRaw) {
+      const cached = JSON.parse(cachedRaw);
+      if (cached && cached.primary) applyBranding(cached);
+    }
+  } catch (_) { /* fail silencieux */ }
+
   if (isPreview) {
     bootPreview();
   } else {
