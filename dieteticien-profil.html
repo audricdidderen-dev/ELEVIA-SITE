@@ -594,13 +594,23 @@ function renderMiniMap(p) {
       <path d="M 296 377 Q 325 367 354 359"/>
     </g>
 
-    <g font-family="Outfit, sans-serif" font-weight="500" fill="#0E1E2E" pointer-events="none">
-      <text x="290" y="124" font-size="10" opacity="0.45" text-anchor="middle">Anvers</text>
-      <text x="283" y="238" font-size="11" opacity="0.50" text-anchor="middle">Bruxelles</text>
-      <text x="451" y="307" font-size="10" opacity="0.45" text-anchor="middle">Liège</text>
-      <text x="197" y="178" font-size="9"  opacity="0.40" text-anchor="middle">Gand</text>
-      <text x="296" y="375" font-size="9"  opacity="0.40" text-anchor="middle">Charleroi</text>
-      <text x="354" y="357" font-size="9"  opacity="0.40" text-anchor="middle">Namur</text>
+    <g pointer-events="none">
+      <g fill="#C6A05B" opacity="0.35">
+        <circle cx="290" cy="130" r="2"/>
+        <circle cx="283" cy="243" r="2.5"/>
+        <circle cx="451" cy="311" r="2.5"/>
+        <circle cx="197" cy="183" r="2"/>
+        <circle cx="296" cy="377" r="2"/>
+        <circle cx="354" cy="359" r="2"/>
+      </g>
+      <g font-family="Outfit, sans-serif" font-weight="500" fill="#0E1E2E">
+        <text x="290" y="120" font-size="10" opacity="0.45" text-anchor="middle">Anvers</text>
+        <text x="283" y="235" font-size="11" opacity="0.50" text-anchor="middle">Bruxelles</text>
+        <text x="451" y="303" font-size="10" opacity="0.45" text-anchor="middle">Liège</text>
+        <text x="197" y="175" font-size="9"  opacity="0.40" text-anchor="middle">Gand</text>
+        <text x="296" y="392" font-size="9"  opacity="0.40" text-anchor="middle">Charleroi</text>
+        <text x="354" y="352" font-size="9"  opacity="0.40" text-anchor="middle">Namur</text>
+      </g>
     </g>
 
     <g class="mini-pin-wrap" transform="translate(${co.x},${co.y})">
@@ -627,7 +637,7 @@ function populate(p) {
     ? p.bio.replace(/\s+/g, ' ').trim().slice(0, 155)
     : `Diététicien-nutritionniste${p.city ? ` à ${p.city}` : ''}, membre de l'annuaire Élevia. Approche fondée sur la rigueur clinique.`;
   const seoDesc = seoDescBase.length > 155 ? seoDescBase.slice(0, 152).trimEnd() + '…' : seoDescBase;
-  const seoUrl = `https://elevianutrition.com/trouver-un-dieteticien/${p.slug}`;
+  const seoUrl = `https://elevianutrition.com/dieteticien-profil?slug=${encodeURIComponent(p.slug)}`;
   const seoImg = p.photo_url || 'https://elevianutrition.com/images/logo-elevia.png';
 
   document.title = seoTitle;

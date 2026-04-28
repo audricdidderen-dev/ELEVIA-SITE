@@ -312,12 +312,12 @@ a { color: inherit; text-decoration: none; }
   background: var(--cream-warm); box-shadow: var(--shadow-card);
 }
 .map-svg { width: 100%; height: 100%; }
-.map-pin { cursor: pointer; transition: transform 220ms var(--ease); transform-origin: center bottom; outline: none; }
-.map-pin:hover, .map-pin.is-active { transform: scale(1.22); }
+.map-pin { cursor: pointer; outline: none; }
+.map-pin .pin-body { transition: fill 180ms var(--ease), stroke-width 180ms var(--ease); }
+.map-pin:hover .pin-body, .map-pin.is-active .pin-body { fill: var(--gold-light); stroke-width: 2; }
 .map-pin:focus-visible .pin-body { stroke-width: 2.5; }
-.map-pin .pin-body { transition: fill 180ms var(--ease); }
-.map-pin:hover .pin-body, .map-pin.is-active .pin-body { fill: var(--gold-light); }
-.map-pin .pin-glow { transition: opacity 220ms var(--ease); }
+.map-pin .pin-glow { transition: opacity 240ms var(--ease); pointer-events: none; }
+.map-pin > circle:last-child { pointer-events: none; }
 .map-pin:hover .pin-glow, .map-pin.is-active .pin-glow, .map-pin:focus-visible .pin-glow { opacity: 1; }
 .map-overlay-controls {
   position: absolute; top: 16px; right: 16px;
@@ -616,18 +616,32 @@ a { color: inherit; text-decoration: none; }
         <path d="M 296 377 Q 325 367 354 359"/>
       </g>
 
-      <!-- Villes repères (très discrètes, en background) -->
-      <g font-family="Outfit, sans-serif" font-weight="500" fill="#0E1E2E" pointer-events="none">
-        <text x="290" y="124" font-size="10" opacity="0.50" text-anchor="middle">Anvers</text>
-        <text x="197" y="178" font-size="10" opacity="0.50" text-anchor="middle">Gand</text>
-        <text x="139" y="89" font-size="9"  opacity="0.42" text-anchor="middle">Bruges</text>
-        <text x="283" y="238" font-size="11" opacity="0.55" text-anchor="middle">Bruxelles</text>
-        <text x="412" y="218" font-size="9"  opacity="0.42" text-anchor="middle">Hasselt</text>
-        <text x="451" y="307" font-size="11" opacity="0.55" text-anchor="middle">Liège</text>
-        <text x="296" y="375" font-size="9"  opacity="0.42" text-anchor="middle">Charleroi</text>
-        <text x="354" y="357" font-size="9"  opacity="0.42" text-anchor="middle">Namur</text>
-        <text x="228" y="364" font-size="9"  opacity="0.42" text-anchor="middle">Mons</text>
-        <text x="484" y="599" font-size="9"  opacity="0.42" text-anchor="middle">Arlon</text>
+      <!-- Villes repères : petit point doré + label (discret, background) -->
+      <g pointer-events="none">
+        <g fill="#C6A05B" opacity="0.35">
+          <circle cx="290" cy="130" r="2"/>
+          <circle cx="197" cy="183" r="2"/>
+          <circle cx="139" cy="94"  r="2"/>
+          <circle cx="283" cy="243" r="2.5"/>
+          <circle cx="412" cy="223" r="2"/>
+          <circle cx="451" cy="311" r="2.5"/>
+          <circle cx="296" cy="377" r="2"/>
+          <circle cx="354" cy="359" r="2"/>
+          <circle cx="228" cy="365" r="2"/>
+          <circle cx="484" cy="600" r="2"/>
+        </g>
+        <g font-family="Outfit, sans-serif" font-weight="500" fill="#0E1E2E">
+          <text x="290" y="120" font-size="10" opacity="0.50" text-anchor="middle">Anvers</text>
+          <text x="197" y="175" font-size="10" opacity="0.50" text-anchor="middle">Gand</text>
+          <text x="139" y="86"  font-size="9"  opacity="0.42" text-anchor="middle">Bruges</text>
+          <text x="283" y="235" font-size="11" opacity="0.55" text-anchor="middle">Bruxelles</text>
+          <text x="412" y="215" font-size="9"  opacity="0.42" text-anchor="middle">Hasselt</text>
+          <text x="451" y="303" font-size="11" opacity="0.55" text-anchor="middle">Liège</text>
+          <text x="296" y="392" font-size="9"  opacity="0.42" text-anchor="middle">Charleroi</text>
+          <text x="354" y="352" font-size="9"  opacity="0.42" text-anchor="middle">Namur</text>
+          <text x="228" y="380" font-size="9"  opacity="0.42" text-anchor="middle">Mons</text>
+          <text x="484" y="615" font-size="9"  opacity="0.42" text-anchor="middle">Arlon</text>
+        </g>
       </g>
 
       <!-- Pins praticiens (rendus dynamiquement, même style pour tous — garde-fou #2) -->
@@ -813,7 +827,7 @@ function buildCard(p) {
         ${dist}
         ${langs ? `<span class="item">${esc(langs)}</span>` : ''}
       </div>
-      <a href="/trouver-un-dieteticien/${esc(p.slug)}" class="pcard-cta" tabindex="-1">Voir le profil ${SVG_ARR}</a>
+      <a href="/dieteticien-profil?slug=${encodeURIComponent(p.slug)}" class="pcard-cta" tabindex="-1">Voir le profil ${SVG_ARR}</a>
     </div>
   </article>`;
 }
@@ -853,19 +867,27 @@ function renderProfiles(profiles, total) {
   }, { threshold: 0.1 });
   grid.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-  // Card → profil au click ailleurs que sur le CTA
+  // Card → profil au click + sync hover pin
   grid.querySelectorAll('.pcard').forEach(card => {
+    const slug = card.dataset.slug;
+    const profileUrl = `/dieteticien-profil?slug=${encodeURIComponent(slug)}`;
     card.addEventListener('click', (e) => {
       if (e.target.closest('a')) return;
-      const slug = card.dataset.slug;
-      if (slug) location.href = `/trouver-un-dieteticien/${slug}`;
+      if (slug) location.href = profileUrl;
     });
     card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if ((e.key === 'Enter' || e.key === ' ') && slug) {
         e.preventDefault();
-        const slug = card.dataset.slug;
-        if (slug) location.href = `/trouver-un-dieteticien/${slug}`;
+        location.href = profileUrl;
       }
+    });
+    card.addEventListener('mouseenter', () => {
+      const pin = document.querySelector(`.map-pin[data-slug="${slug}"]`);
+      if (pin) activatePin(pin);
+    });
+    card.addEventListener('mouseleave', () => {
+      const pin = document.querySelector(`.map-pin[data-slug="${slug}"]`);
+      if (pin) deactivatePin(pin);
     });
   });
 
@@ -1159,19 +1181,20 @@ function renderMapPins(profiles) {
     pin.addEventListener('blur', () => deactivatePin(pin));
     pin.addEventListener('click', () => {
       const slug = pin.dataset.slug;
-      if (slug) location.href = `/trouver-un-dieteticien/${slug}`;
+      if (slug) location.href = `/dieteticien-profil?slug=${encodeURIComponent(slug)}`;
     });
     pin.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const slug = pin.dataset.slug;
-        if (slug) location.href = `/trouver-un-dieteticien/${slug}`;
+        if (slug) location.href = `/dieteticien-profil?slug=${encodeURIComponent(slug)}`;
       }
     });
   });
 }
 
 function activatePin(pin) {
+  if (!pin || pin.classList.contains('is-active')) return; // idempotent
   pin.classList.add('is-active');
   const idx = parseInt(pin.dataset.idx, 10);
   const p = cachedProfiles[idx];
@@ -1180,9 +1203,11 @@ function activatePin(pin) {
   if (card) card.classList.add('is-pin-hover');
 }
 function deactivatePin(pin) {
+  if (!pin || !pin.classList.contains('is-active')) return; // idempotent
   pin.classList.remove('is-active');
   hidePopup();
-  document.querySelectorAll('.pcard.is-pin-hover').forEach(c => c.classList.remove('is-pin-hover'));
+  const card = document.querySelector(`.pcard[data-slug="${pin.dataset.slug}"]`);
+  if (card) card.classList.remove('is-pin-hover');
 }
 
 function showPopup(pin, p) {
@@ -1217,21 +1242,7 @@ function hidePopup() {
   popup.setAttribute('aria-hidden', 'true');
 }
 
-// Sync card hover → pin highlight (event delegation)
-document.addEventListener('mouseenter', (e) => {
-  if (!(e.target instanceof Element)) return;
-  const card = e.target.closest && e.target.closest('.pcard');
-  if (!card) return;
-  const pin = document.querySelector(`.map-pin[data-slug="${card.dataset.slug}"]`);
-  if (pin) activatePin(pin);
-}, true);
-document.addEventListener('mouseleave', (e) => {
-  if (!(e.target instanceof Element)) return;
-  const card = e.target.closest && e.target.closest('.pcard');
-  if (!card) return;
-  const pin = document.querySelector(`.map-pin[data-slug="${card.dataset.slug}"]`);
-  if (pin) deactivatePin(pin);
-}, true);
+// Sync card hover → pin highlight : handlers directs attachés dans renderProfiles()
 
 // ─── Init ──────────────────────────────────────────────────────────
 loadFromUrl();
