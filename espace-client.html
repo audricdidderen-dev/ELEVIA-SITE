@@ -691,6 +691,9 @@
       <button type="submit" class="auth-btn" id="set-password-btn">Accéder à mon espace</button>
       <p class="auth-error" id="set-password-error" role="alert" aria-live="polite"></p>
     </form>
+    <p id="set-password-skip-wrap" hidden style="margin-top:16px;text-align:center;">
+      <a href="#" id="set-password-skip" style="font-size:13px;color:var(--brand-accent);opacity:.75;text-decoration:none;">Plus tard — accéder sans mot de passe</a>
+    </p>
   </div>
 
   <p class="auth-footer">© 2026 Élevia Nutrition</p>
@@ -928,6 +931,8 @@
   // ─────── Auth state machine (login | set-password | portal) ───────
   let currentView = null;
   let _isInviteFlow = false;
+  let _isMagicLinkFlow = false;
+  let _magicLinkSession = null;
 
   function showLogin(){
     document.body.className = 'state-login';
@@ -1365,15 +1370,33 @@
       });
     }
 
-    // 3. Detect invite flow (#type=invite|recovery)
+    // 3. Detect invite / magic-link flow (#type=invite|recovery|magiclink)
     const _urlHash = new URLSearchParams(window.location.hash.slice(1));
-    _isInviteFlow = _urlHash.get('type') === 'invite' || _urlHash.get('type') === 'recovery';
+    const _urlType = _urlHash.get('type');
+    _isInviteFlow = _urlType === 'invite' || _urlType === 'recovery';
+    _isMagicLinkFlow = _urlType === 'magiclink';
 
     // 4. Auth state listener — source unique de vérité
     sb.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && _isInviteFlow)) {
         _isInviteFlow = false;
+        $('#set-password-view').querySelector('.auth-sub').textContent =
+          'Pour accéder à votre espace Élevia, choisissez un mot de passe.';
+        $('#set-password-skip-wrap').hidden = true;
         showSetPassword();
+      } else if (event === 'SIGNED_IN' && _isMagicLinkFlow) {
+        _isMagicLinkFlow = false;
+        _magicLinkSession = session;
+        const hasPassword = session?.user?.user_metadata?.password_set === true;
+        if (!hasPassword) {
+          $('#set-password-view').querySelector('.auth-sub').textContent =
+            'Créez un mot de passe pour vous connecter directement depuis n\'importe quel appareil.';
+          $('#set-password-skip-wrap').hidden = false;
+          showSetPassword();
+        } else {
+          showPortal();
+          loadClientWithWorkspace(session);
+        }
       } else if (session && currentView !== 'portal') {
         showPortal();
         loadClientWithWorkspace(session);
@@ -1435,13 +1458,20 @@
     if (pwd !== confirm) { errEl.textContent = 'Les mots de passe ne correspondent pas.'; return; }
     btn.disabled = true;
     btn.textContent = 'Enregistrement...';
-    const { error } = await sb.auth.updateUser({ password: pwd });
+    const { error } = await sb.auth.updateUser({ password: pwd, data: { password_set: true } });
     if (error) {
       errEl.textContent = translateAuthError(error.message);
       btn.disabled = false;
       btn.textContent = 'Accéder à mon espace';
     }
     // onAuthStateChange takes over after USER_UPDATED → SIGNED_IN
+  });
+
+  $('#set-password-skip').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const session = _magicLinkSession || (await sb.auth.getSession()).data.session;
+    showPortal();
+    if (session) loadClientWithWorkspace(session);
   });
 
   $('#logoutBtn').addEventListener('click', async () => {
